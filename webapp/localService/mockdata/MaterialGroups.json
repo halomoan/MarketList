@@ -1,0 +1,53 @@
+[{
+	"MaterialGroupID": "MG0001",
+	"MaterialGroupName": "Fruits",
+	"NumberOfMaterials": 248,
+	"__metadata": {
+		"uri": "MaterialGroups('MG0001')",
+		"type": "Master_Detail.MaterialGroup"
+	},
+	"Materials": {
+		"__deferred": {
+			"uri": "MaterialGroups('MG0001')/Materials"
+		}
+	}
+}, {
+	"MaterialGroupID": "MG0002",
+	"MaterialGroupName": "Drinks",
+	"NumberOfMaterials": 533,
+	"__metadata": {
+		"uri": "MaterialGroups('MG0002')",
+		"type": "Master_Detail.MaterialGroup"
+	},
+	"Materials": {
+		"__deferred": {
+			"uri": "MaterialGroups('MG0002')/Materials"
+		}
+	}
+}, {
+	"MaterialGroupID": "MG0003",
+	"MaterialGroupName": "Snacks",
+	"NumberOfMaterials": 1724,
+	"__metadata": {
+		"uri": "MaterialGroups('MG0003')",
+		"type": "Master_Detail.MaterialGroup"
+	},
+	"Materials": {
+		"__deferred": {
+			"uri": "MaterialGroups('MG0003')/Materials"
+		}
+	}
+}, {
+	"MaterialGroupID": "MG0004",
+	"MaterialGroupName": "Foods",
+	"NumberOfMaterials": 7612,
+	"__metadata": {
+		"uri": "MaterialGroups('MG0004')",
+		"type": "Master_Detail.MaterialGroup"
+	},
+	"Materials": {
+		"__deferred": {
+			"uri": "MaterialGroups('MG0004')/Materials"
+		}
+	}
+}]

@@ -1,0 +1,162 @@
+[{
+	"MaterialID": "M0001",
+	"MaterialGroupID": "MG0001",
+	"MaterialText": "Apple",
+	"UnitOfMeasure": "CAR",
+	"Quantity": 5104.61,
+	"Details": {
+		"Detail1": "Text1",
+		"Detail2": "Text2",
+		"Detail3": "1"
+	},
+	"__metadata": {
+		"uri": "Materials('M0001')",
+		"type": "Master_Detail.Material"
+	},
+	"MaterialGroups": {
+		"__deferred": {
+			"uri": "Materials('M0001')/MaterialGroups"
+		}
+	},
+	"UnitPrice": 100,
+	"Currency": "SGD",
+	"PriceUnit": 10
+}, {
+	"MaterialID": "M0002",
+	"MaterialGroupID": "MG0001",
+	"MaterialText": "Orange",
+	"UnitOfMeasure": "CAR",
+	"Quantity": 3669.98,
+	"Details": {
+		"Detail1": "Text1A",
+		"Detail2": "Text2A",
+		"Detail3": "2"
+	},
+	"__metadata": {
+		"uri": "Materials('M0002')",
+		"type": "Master_Detail.Material"
+	},
+	"MaterialGroups": {
+		"__deferred": {
+			"uri": "Materials('MaterialID%202')/MaterialGroups"
+		}
+	},
+	"UnitPrice": 110,
+	"Currency": "SGD",
+	"PriceUnit": 20
+}, {
+	"MaterialID": "M0003",
+	"MaterialGroupID": "MG0001",
+	"MaterialText": "Banana",
+	"UnitOfMeasure": "CAR",
+	"Quantity": 4344.01,
+	"Details": {
+		"Detail1": "Text1B",
+		"Detail2": "Text2B",
+		"Detail3": "3"
+	},
+	"__metadata": {
+		"uri": "Materials('M0003')",
+		"type": "Master_Detail.Material"
+	},
+	"MaterialGroups": {
+		"__deferred": {
+			"uri": "Materials('M0003')/MaterialGroups"
+		}
+	},
+	"UnitPrice": 120,
+	"Currency": "SGD",
+	"PriceUnit": 30
+}, {
+	"MaterialID": "M0004",
+	"MaterialGroupID": "MG0003",
+	"MaterialText": "Candy",
+	"UnitOfMeasure": "BOX",
+	"Quantity": 3342.67,
+	"Details": {
+		"Detail1": "Text1C",
+		"Detail2": "Text2C",
+		"Detail3": "4"
+	},
+	"__metadata": {
+		"uri": "Materials('M0004')",
+		"type": "Master_Detail.Material"
+	},
+	"MaterialGroups": {
+		"__deferred": {
+			"uri": "Materials('M0004')/MaterialGroups"
+		}
+	},
+	"UnitPrice": 130,
+	"Currency": "SGD",
+	"PriceUnit": 40
+}, {
+	"MaterialID": "M0005",
+	"MaterialGroupID": "MG0004",
+	"MaterialText": "Pizza",
+	"UnitOfMeasure": "BOX",
+	"Quantity": 9034.13,
+	"Details": {
+		"Detail1": "Text1",
+		"Detail2": "Text2",
+		"Detail3": "5"
+	},
+	"__metadata": {
+		"uri": "Materials('M0005')",
+		"type": "Master_Detail.Material"
+	},
+	"MaterialGroups": {
+		"__deferred": {
+			"uri": "Materials('M0005')/MaterialGroups"
+		}
+	},
+	"UnitPrice": 140,
+	"Currency": "SGD",
+	"PriceUnit": 50
+}, {
+	"MaterialID": "M0006",
+	"MaterialGroupID": "MG0004",
+	"MaterialText": "Eggs",
+	"UnitOfMeasure": "CAR",
+	"Quantity": 2527.67,
+	"Details": {
+		"Detail1": "Text1",
+		"Detail2": "Text2",
+		"Detail3": "6"
+	},
+	"__metadata": {
+		"uri": "Materials('M0006')",
+		"type": "Master_Detail.Material"
+	},
+	"MaterialGroups": {
+		"__deferred": {
+			"uri": "Materials('M0006')/MaterialGroups"
+		}
+	},
+	"UnitPrice": 150,
+	"Currency": "SGD",
+	"PriceUnit": 60
+}, {
+	"MaterialID": "M0007",
+	"MaterialGroupID": "MG0003",
+	"MaterialText": "Biscuits",
+	"UnitOfMeasure": "TIN",
+	"Quantity": 7294.29,
+	"Details": {
+		"Detail1": "Text1",
+		"Detail2": "Text2",
+		"Detail3": "7"
+	},
+	"__metadata": {
+		"uri": "Materials('M0007')",
+		"type": "Master_Detail.Material"
+	},
+	"MaterialGroups": {
+		"__deferred": {
+			"uri": "Materials('M0007')/MaterialGroups"
+		}
+	},
+	"UnitPrice": 160,
+	"Currency": "SGD",
+	"PriceUnit": 70
+}]
