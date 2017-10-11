@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<edmx:Edmx
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" Version="1.0">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="Master_Detail">
+            <EntityType Name="MaterialGroup">
+                <Key>
+                    <PropertyRef Name="MaterialGroupID"/>
+                </Key>
+                <Property MaxLength="40" Name="MaterialGroupID" Nullable="false" Type="Edm.String"/>
+                <Property MaxLength="255" Name="MaterialGroupName" Nullable="false" Type="Edm.String"/>
+                <Property Name="NumberOfMaterials" Type="Edm.Int32"/>
+                <NavigationProperty FromRole="MaterialGroups" Name="Materials" Relationship="Master_Detail.FK_MaterialGroup_Materials" ToRole="Materials"/>
+            </EntityType>
+            <EntityType Name="Material">
+                <Key>
+                    <PropertyRef Name="MaterialID"/>
+                </Key>
+                <Property MaxLength="40" Name="MaterialID" Nullable="false" Type="Edm.String"/>
+                <Property MaxLength="40" Name="MaterialGroupID" Nullable="false" Type="Edm.String"/>
+                <Property Name="MaterialText" Nullable="false" Type="Edm.String"/>
+                <Property MaxLength="3" Name="UnitOfMeasure" Nullable="false" Type="Edm.String"/>
+                <Property Name="Quantity" Nullable="false" Precision="23" Scale="4" Type="Edm.Decimal"/>
+                <Property Name="UnitPrice" Type="Edm.Decimal"/>
+                <Property Name="Currency" Type="Edm.String"/>
+                <Property Name="PriceUnit" Type="Edm.Decimal"/>
+                <NavigationProperty FromRole="Materials" Name="MaterialGroups" Relationship="Master_Detail.FK_MaterialGroup_Materials" ToRole="MaterialGroups"/>
+            </EntityType>
+            <EntityType Name="MarketListHeader">
+                <Key>
+                    <PropertyRef Name="MarketListHeaderID"/>
+                </Key>
+                <Property Name="MarketListHeaderID" Nullable="false" Type="Edm.String"/>
+                <Property Name="CoCode" Nullable="false" Type="Edm.String" MaxLength="4"/>
+                <Property Name="Plant" Nullable="false" Type="Edm.String" MaxLength="4"/>
+                <Property Name="Requisitioner" Nullable="false" Type="Edm.String"/>
+                <Property Name="CostCenterID" Nullable="false" Type="Edm.String" MaxLength="10"/>
+                <Property Name="CostCenterText" Nullable="false" Type="Edm.String"/>
+                <Property Name="UnloadingPoint" Nullable="false" Type="Edm.String"/>
+                <Property Name="Recipient" Nullable="false" Type="Edm.String"/>
+                <Property Name="Recipient" Nullable="false" Type="Edm.String"/>
+                <Property Name="TrackingNo" Nullable="false" Type="Master_Detail.MarketListH"/>
+                <NavigationProperty FromRole="From_MarketListHeader" Name="MarketListDetailSet" Relationship="Master_Detail.MarketListHeaderMarketListDetail" ToRole="To_MarketListDetail"/>
+            </EntityType>
+            <EntityType Name="MarketListDetail">
+                <Key>
+                    <PropertyRef Name="MarketListDetailID"/>
+                </Key>
+                <Property Name="MarketListDetailID" Nullable="false" Type="Edm.String"/>
+                <Property Name="MarketListHeaderID" Type="Edm.String"/>
+                <Property Name="MaterialGroupID" Type="Edm.String"  MaxLength="40"/>
+                <Property Name="MaterialID" Type="Edm.String"/>
+                <Property Name="MaterialText" Type="Edm.String"/>
+                <Property Name="UnitPrice" Type="Edm.Decimal"/>
+                <Property Name="Currency" Type="Edm.String"/>
+                <Property Name="PriceUnit" Type="Edm.Decimal"/>
+                <Property Name="Items" Nullable="false" Type="Master_Detail.MarketListItem"/>
+            </EntityType>
+            <ComplexType Name="MarketListH">
+            	<Property Name="PREQNo" Type="Edm.String" MaxLength="10"/>
+                <Property Name="Date" Type="Edm.String"/>
+            </ComplexType>
+            <ComplexType Name="MarketListItem">
+            	<Property Name="PRRow" Type="Edm.String"/>
+                <Property Name="Date" Type="Edm.String"/>
+                <Property Name="Quantity" Type="Edm.Decimal"/>
+                <Property Name="UOM" Type="Edm.String"/>
+                <Property Name="Comment" Type="Edm.String"/>
+            </ComplexType>
+            <Association Name="FK_MaterialGroup_Materials">
+                <End Multiplicity="*" Role="Materials" Type="Master_Detail.Material"/>
+                <End Multiplicity="1" Role="MaterialGroups" Type="Master_Detail.MaterialGroup"/>
+                <ReferentialConstraint>
+                    <Principal Role="MaterialGroups">
+                        <PropertyRef Name="MaterialGroupID"/>
+                    </Principal>
+                    <Dependent Role="Materials">
+                        <PropertyRef Name="MaterialGroupID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="MarketListHeaderMarketListDetail">
+                <End Multiplicity="1" Role="From_MarketListHeader" Type="Master_Detail.MarketListHeader"/>
+                <End Multiplicity="*" Role="To_MarketListDetail" Type="Master_Detail.MarketListDetail"/>
+            </Association>
+            <EntityContainer Name="Master_Detail_ENTITIES" m:IsDefaultEntityContainer="true">
+                <EntitySet EntityType="Master_Detail.MaterialGroup" Name="MaterialGroups"/>
+                <EntitySet EntityType="Master_Detail.Material" Name="Materials"/>
+                <EntitySet EntityType="Master_Detail.MarketListHeader" Name="MarketListHeaderSet"/>
+                <EntitySet EntityType="Master_Detail.MarketListDetail" Name="MarketListDetailSet"/>
+                <AssociationSet Association="Master_Detail.FK_MaterialGroup_Materials" Name="FK_MaterialGroup_Materials">
+                    <End EntitySet="Materials" Role="Materials"/>
+                    <End EntitySet="MaterialGroups" Role="MaterialGroups"/>
+                </AssociationSet>
+                <AssociationSet Association="Master_Detail.MarketListHeaderMarketListDetail" Name="MarketListHeaderMarketListDetailSet">
+                    <End EntitySet="MarketListHeaderSet" Role="From_MarketListHeader"/>
+                    <End EntitySet="MarketListDetailSet" Role="To_MarketListDetail"/>
+                </AssociationSet>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

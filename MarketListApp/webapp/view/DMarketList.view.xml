@@ -1,0 +1,308 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.ui.table" xmlns:m="sap.m" xmlns:semantic="sap.m.semantic" xmlns:u="sap.ui.unified" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="sap.ui.demo.masterdetail.controller.DMarketList">
+	
+	<semantic:DetailPage title="M A R K E T L I S T" showHeader="true" enableScrolling="false">
+		
+		
+		<semantic:content>
+				<Table id="mktlistTable" selectionMode="MultiToggle" enableBusyIndicator="true"  class="sapUiResponsiveMargin">
+					<title>
+					<m:HBox>
+						<m:items>
+							<core:Icon src="sap-icon://cart" alt="Cart" size="1.25rem"/>
+							<m:Title text="Purchase Requisition" titleStyle="H3" class="sapUiTinyMarginBeginEnd"/>
+						</m:items>
+					</m:HBox>
+					</title>
+					 <toolbar>
+					    	<m:Toolbar>
+							
+						    	<m:ToolbarSpacer/>
+						    	<m:ToggleButton icon="sap-icon://resize-horizontal" tooltip="Enable / Disable Freezing Menu Entries" pressed="{detailView>/toogleFreeze}" press="toggleFreeze"/>
+						
+							   	<m:Select id="selectDays" width="8rem" items="{detailView>/noOfDays}" selectedKey="MultiToggle" change="onNoOfDaysChange">
+									<core:Item key="{detailView>key}" text="{detailView>text}"/>
+								</m:Select>
+							
+							</m:Toolbar>
+					    </toolbar>
+						<columns>
+							<Column width="8rem" sortProperty="MaterialID" filterProperty="MaterialID">
+								<multiLabels>
+								<m:Label text=""/>
+								<m:Label text=""/>
+								<m:Label text=""/>
+								<m:Label text="{i18n>materialID}" textAlign="Center" width="100%"/>
+								</multiLabels>
+								<template>
+								<m:Text text="{mktlist>MaterialID}"/>
+								</template>
+							</Column>
+							<Column width="15rem" sortProperty="MaterialText" filterProperty="MaterialText">
+								<multiLabels>
+								<m:Label text=""/>
+								<m:Label text=""/>
+								<m:Label text=""/>
+								<m:Label text="{i18n>materialText}" textAlign="Center" width="100%"/>
+								</multiLabels>
+								<template>
+								<m:Text text="{mktlist>MaterialText}"/>
+								</template>
+							</Column>
+							<Column width="8rem" hAlign="End">
+								<multiLabels>
+								<m:Label text=""/>
+								<m:Label text=""/>
+								<m:Label text=""/>
+								<m:Label text="{i18n>unitPrice}" textAlign="Center" width="100%"/>
+								</multiLabels>
+								<template>
+										<u:Currency value="{mktlist>UnitPrice}" currency="{mktlist>Currency}" maxPrecision="0" useSymbol="false"/>
+								</template>
+							</Column>
+							<Column width="8rem">
+								<multiLabels>
+								<m:Label text="Delivery Date"  width="100%"/>	
+								<m:Label text="Total Items"  width="100%"/>	
+								<m:Label text="Total Amount"  width="100%"/>	
+								
+								<m:Label text="{i18n>priceUnit}"  width="100%"/>
+								</multiLabels>
+								<template>
+									<u:Currency value="{mktlist>PriceUnit}" currency="{mktlist>Currency}" maxPrecision="0" useSymbol="false"/>
+								</template>
+							</Column>
+							<Column width="12rem" visible="{detailView>/columns/7/visible}">
+								<multiLabels>
+									<m:Label text="{path: 'Headers/7/Date', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor1"/>
+									<m:Label text="{detailView>/columns/7/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/7/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{path: 'Headers/7/Date', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor1"/>
+								</multiLabels>
+								<template>
+									<m:HBox class="sapUiNoMargin" >
+										<m:Button icon="sap-icon://request"  press="addCommentPress">
+    										<m:customData>
+    											<core:CustomData key="myId" value="{mktlist>MaterialID}_07" writeToDom="false"/>
+    											<core:CustomData key="myText" value="{mktlist>MaterialText}" writeToDom="false"/>
+    											<core:CustomData key="myComment" value="{mktlist>Items/7/Comment}" writeToDom="false"/>
+											</m:customData>
+										</m:Button>	
+										<m:Input value="{path: 'mktlist>Items/7/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" textAlign="End" description="{mktlist>Items/7/UOM}" fieldWidth="70%"/>
+									</m:HBox>	
+								</template>
+							</Column>
+							<Column width="12rem" visible="{detailView>/columns/8/visible}">
+								<multiLabels>
+									<m:Label text="{path: 'Headers/8/Date', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor2"/>
+									<m:Label text="{detailView>/columns/8/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/8/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{path: 'Headers/8/Date', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor2"/>
+								</multiLabels>
+								<template>
+									<m:HBox class="sapUiNoMargin" >
+										<m:Button icon="sap-icon://request"  press="addCommentPress">
+											<m:customData>
+    											<core:CustomData key="myId" value="{mktlist>MaterialID}_08" writeToDom="false"/>
+    											<core:CustomData key="myText" value="{mktlist>MaterialText}" writeToDom="false"/>
+    											<core:CustomData key="myComment" value="{mktlist>Items/8/Comment}" writeToDom="false"/>
+											</m:customData>
+										</m:Button>	
+										<m:Input value="{path: 'mktlist>Items/8/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" textAlign="End" description="{mktlist>Items/8/UOM}" fieldWidth="70%"/>
+									</m:HBox>
+								</template>
+							</Column>
+							<Column width="12rem" visible="{detailView>/columns/9/visible}">
+								<multiLabels>
+									<m:Label text="{path: 'Headers/9/Date', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor3"/>
+									<m:Label text="{detailView>/columns/9/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/9/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{path: 'Headers/9/Date', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor3"/>
+								</multiLabels>
+								<template>
+									<m:HBox class="sapUiNoMargin" >
+										<m:Button icon="sap-icon://request"  press="addCommentPress">
+											<m:customData>
+    											<core:CustomData key="myId" value="{mktlist>MaterialID}_09" writeToDom="false"/>
+    											<core:CustomData key="myText" value="{mktlist>MaterialText}" writeToDom="false"/>
+    											<core:CustomData key="myComment" value="{mktlist>Items/9/Comment}" writeToDom="false"/>
+											</m:customData>
+										</m:Button>	
+										<m:Input value="{path: 'mktlist>Items/9/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" textAlign="End" description="{mktlist>Items/9/UOM}" fieldWidth="70%"/>
+									</m:HBox>									
+								</template>
+							</Column>
+							<Column width="12rem" visible="{detailView>/columns/10/visible}">
+								<multiLabels>
+									<m:Label text="{path: 'Headers/10/Date', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor4"/>
+									<m:Label text="{detailView>/columns/10/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/10/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{path: 'Headers/10/Date', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor4"/>
+								</multiLabels>
+								<template>
+									<m:HBox class="sapUiNoMargin" >
+										<m:Button icon="sap-icon://request"  press="addCommentPress">
+											<m:customData>
+    											<core:CustomData key="myId" value="{mktlist>MaterialID}_10" writeToDom="false"/>
+    											<core:CustomData key="myText" value="{mktlist>MaterialText}" writeToDom="false"/>
+    											<core:CustomData key="myComment" value="{mktlist>Items/10/Comment}" writeToDom="false"/>
+											</m:customData>
+										</m:Button>	
+										<m:Input value="{path: 'mktlist>Items/10/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" textAlign="End" description="{mktlist>Items/10/UOM}" fieldWidth="70%"/>
+									</m:HBox>
+								</template>
+							</Column>
+							<Column width="12rem" visible="{detailView>/columns/11/visible}">
+								<multiLabels>
+									<m:Label text="{path: 'Headers/11/Date', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor5"/>
+									<m:Label text="{detailView>/columns/11/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/11/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{path: 'Headers/11/Date', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor5"/>
+								</multiLabels>
+								<template>
+									<m:HBox class="sapUiNoMargin" >
+										<m:Button icon="sap-icon://request"  press="addCommentPress">
+											<m:customData>
+    											<core:CustomData key="myId" value="{mktlist>MaterialID}_11" writeToDom="false"/>
+    											<core:CustomData key="myText" value="{mktlist>MaterialText}" writeToDom="false"/>
+    											<core:CustomData key="myComment" value="{mktlist>Items/11/Comment}" writeToDom="false"/>
+											</m:customData>
+										</m:Button>	
+										<m:Input value="{path: 'mktlist>Items/11/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" textAlign="End" description="{mktlist>Items/11/UOM}" fieldWidth="70%"/>
+									</m:HBox>
+								</template>
+							</Column>
+							<Column width="12rem" visible="{detailView>/columns/12/visible}">
+								<multiLabels>
+									<m:Label text="{path: 'Headers/12/Date', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor6"/>
+									<m:Label text="{detailView>/columns/12/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/12/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{path: 'Headers/12/Date', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor6"/>
+								</multiLabels>
+								<template>
+									<m:HBox class="sapUiNoMargin" >
+										<m:Button icon="sap-icon://request"  press="addCommentPress">
+											<m:customData>
+    											<core:CustomData key="myId" value="{mktlist>MaterialID}_12" writeToDom="false"/>
+    											<core:CustomData key="myText" value="{mktlist>MaterialText}" writeToDom="false"/>
+    											<core:CustomData key="myComment" value="{mktlist>Items/12/Comment}" writeToDom="false"/>
+											</m:customData>
+										</m:Button>	
+										<m:Input value="{path: 'mktlist>Items/12/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" textAlign="End" description="{mktlist>Items/12/UOM}" fieldWidth="70%"/>
+									</m:HBox>
+								</template>
+							</Column>
+							<Column width="12rem" visible="{detailView>/columns/13/visible}">
+								<multiLabels>
+									<m:Label text="{path: 'Headers/13/Date', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor7"/>
+									<m:Label text="{detailView>/columns/13/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/13/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{path: 'Headers/13/Date', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor7"/>
+								</multiLabels>
+								<template>
+									<m:HBox class="sapUiNoMargin" >
+										<m:Button icon="sap-icon://request"  press="addCommentPress">
+											<m:customData>
+    											<core:CustomData key="myId" value="{mktlist>MaterialID}_13" writeToDom="false"/>
+    											<core:CustomData key="myText" value="{mktlist>MaterialText}" writeToDom="false"/>
+    											<core:CustomData key="myComment" value="{mktlist>Items/13/Comment}" writeToDom="false"/>
+											</m:customData>
+										</m:Button>	
+										<m:Input value="{path: 'mktlist>Items/13/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" textAlign="End" description="{mktlist>Items/13/UOM}" fieldWidth="70%"/>
+									</m:HBox>
+								</template>
+							</Column>
+							
+							<Column width="10rem" visible="{detailView>/columns/6/visible}" hAlign="End" >
+								<multiLabels>
+									<m:Label text="{path: 'Headers/6/Date', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor7"/>
+									<m:Label text="{detailView>/columns/6/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/6/total}" textAlign="End" width="100%"/>
+									<m:Label text="{path: 'Headers/6/Date', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor7"/>
+								</multiLabels>
+								<template>
+									<u:Currency value="{mktlist>Items/6/Quantity}" currency="{mktlist>Items/6/UOM}"/>
+								</template>
+							</Column>
+							<Column width="10rem" visible="{detailView>/columns/5/visible}" hAlign="End" >
+								<multiLabels>
+									<m:Label text="{path: 'Headers/5/Date', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor6"/>
+									<m:Label text="{detailView>/columns/5/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/5/total}" textAlign="End" width="100%"/>
+									<m:Label text="{path: 'Headers/5/Date', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor6"/>
+								</multiLabels>
+								<template>
+									<u:Currency value="{mktlist>Items/5/Quantity}" currency="{mktlist>Items/4/UOM}"/>
+								</template>
+							</Column>
+							<Column width="10rem" visible="{detailView>/columns/4/visible}" hAlign="End" >
+								<multiLabels>
+									<m:Label text="{path: 'Headers/4/Date', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor5" />
+									<m:Label text="{detailView>/columns/4/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/4/total}" textAlign="End" width="100%"/>
+									<m:Label text="{path: 'Headers/4/Date', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor5"/>
+								</multiLabels>
+								<template>
+									<u:Currency value="{mktlist>Items/4/Quantity}" currency="{mktlist>Items/4/UOM}"/>
+								</template>
+							</Column>
+							<Column width="10rem" visible="{detailView>/columns/3/visible}" hAlign="End" >
+								<multiLabels>
+									<m:Label text="{path: 'Headers/3/Date', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor4"/>
+									<m:Label text="{detailView>/columns/3/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/3/total}" textAlign="End" width="100%"/>
+									<m:Label text="{path: 'Headers/3/Date', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor4"/>
+								</multiLabels>
+								<template>
+									<u:Currency value="{mktlist>Items/3/Quantity}" currency="{mktlist>Items/3/UOM}"/>
+								</template>
+							</Column>
+							<Column width="10rem" visible="{detailView>/columns/2/visible}" hAlign="End" >
+								<multiLabels>
+									<m:Label text="{path: 'Headers/2/Date', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor3"/>
+									<m:Label text="{detailView>/columns/2/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/2/total}" textAlign="End" width="100%"/>
+									<m:Label text="{path: 'Headers/2/Date', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor3"/>
+								</multiLabels>
+								<template>
+									<u:Currency value="{mktlist>Items/2/Quantity}" currency="{mktlist>Items/2/UOM}"/>
+								</template>
+							</Column>
+								<Column width="10rem" visible="{detailView>/columns/1/visible}" hAlign="End" >
+								<multiLabels>
+									<m:Label text="{path: 'Headers/1/Date', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor2"/>
+									<m:Label text="{detailView>/columns/1/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/1/total}" textAlign="End" width="100%"/>
+									<m:Label text="{path: 'Headers/1/Date', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor2"/>
+								</multiLabels>
+								<template>
+									<u:Currency value="{mktlist>Items/1/Quantity}" currency="{mktlist>Items/1/UOM}"/>
+								</template>
+							</Column>
+							<Column width="10rem" visible="{detailView>/columns/0/visible}" hAlign="End" >
+								<multiLabels>
+									<m:Label text="{path: 'Headers/0/Date', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor1"/>
+									<m:Label text="{detailView>/columns/0/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/0/total}" textAlign="End" width="100%"/>
+									<m:Label text="{path: 'Headers/0/Date', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor1"/>
+								</multiLabels>
+								<template>
+									<u:Currency value="{mktlist>Items/0/Quantity}" currency="{mktlist>Items/0/UOM}"/>
+								</template>
+							</Column>
+						</columns>
+					</Table>	
+		</semantic:content>	
+
+
+		
+		<semantic:deleteAction>
+			<semantic:DeleteAction press="onRowsDelete"/>
+		</semantic:deleteAction>
+		
+		<semantic:positiveAction>
+			<semantic:PositiveAction text="{i18n>submit}" press="onSubmit"/>
+		</semantic:positiveAction>
+	
+
+	</semantic:DetailPage>
+</mvc:View>

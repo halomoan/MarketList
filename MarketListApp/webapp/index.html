@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta charset="UTF-8">
+
+		<title>SAPMM Market List</title>
+
+		<script id="sap-ui-bootstrap"
+			src="../../resources/sap-ui-core.js"
+			data-sap-ui-libs="sap.m"
+			data-sap-ui-theme="sap_bluecrystal"
+			data-sap-ui-compatVersion="edge"
+			data-sap-ui-resourceroots='{"sap.ui.demo.masterdetail": "."}'>
+		</script>
+
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+
+		<script>
+			sap.ui.getCore().attachInit(function () {
+				sap.ui.require([
+					"sap/ui/demo/masterdetail/localService/mockserver",
+					"sap/m/Shell",
+					"sap/ui/core/ComponentContainer"
+				], function (mockserver, Shell, ComponentContainer) {
+					// set up test service for local testing
+					// TODO: remove this when switching to a real service
+					mockserver.init();
+					// initialize the UI component
+				
+					new Shell({
+						app: new ComponentContainer({
+							height : "100%",
+							name : "sap.ui.demo.masterdetail"
+						})
+					}).placeAt("content");
+
+				});
+			});
+		</script>
+	</head>
+
+	<body class="sapUiBody" id="content">
+	</body>
+
+</html>
