@@ -295,9 +295,9 @@
 
 
 		
-		<semantic:deleteAction>
-			<semantic:DeleteAction press="onRowsDelete"/>
-		</semantic:deleteAction>
+		<!--<semantic:deleteAction>-->
+		<!--	<semantic:DeleteAction press="onRowsDelete"/>-->
+		<!--</semantic:deleteAction>-->
 		
 		<semantic:positiveAction>
 			<semantic:PositiveAction text="{i18n>submit}" press="onSubmit"/>
