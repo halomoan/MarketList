@@ -152,6 +152,10 @@ sap.ui.define([
 					this._oViewFormSubmit.close();
 				}
 			},
+			onClose: function(){
+				sap.ui.getCore().byId("__component0---app--idAppControl").hideMaster();
+				this.getRouter().navTo("home", null, false);
+			},
 			onRowsDelete: function() {
 					var oThis = this;
 					

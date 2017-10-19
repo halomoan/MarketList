@@ -1,18 +1,26 @@
-<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.ui.table" xmlns:m="sap.m" xmlns:semantic="sap.m.semantic" xmlns:u="sap.ui.unified" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="sap.ui.demo.masterdetail.controller.DMarketList">
+<core:View xmlns:core="sap.ui.core" xmlns="sap.ui.table" xmlns:uxap="sap.uxap" xmlns:l="sap.ui.layout" xmlns:m="sap.m" xmlns:semantic="sap.m.semantic" xmlns:u="sap.ui.unified" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="sap.ui.demo.masterdetail.controller.DMarketList">
 	
 	<semantic:DetailPage title="M A R K E T L I S T" showHeader="true" enableScrolling="false">
 		
 		
 		<semantic:content>
-				<Table id="mktlistTable" selectionMode="MultiToggle" enableBusyIndicator="true"  class="sapUiResponsiveMargin">
-					<title>
-					<m:HBox>
-						<m:items>
-							<core:Icon src="sap-icon://cart" alt="Cart" size="1.25rem"/>
-							<m:Title text="Purchase Requisition" titleStyle="H3" class="sapUiTinyMarginBeginEnd"/>
-						</m:items>
-					</m:HBox>
-					</title>
+			<uxap:ObjectPageHeaderContent>
+		<uxap:content>
+			<l:VerticalLayout  class="sapUiSmallMargin">
+			<m:Image src="images/PPHGLogo.png" height="50%"></m:Image>
+			</l:VerticalLayout>
+			<l:VerticalLayout class="sapUiSmallMargin">
+				<m:ObjectStatus title="Today Date" text="19-OCT-2017"/>	
+				<m:ObjectStatus title="User ID" text="KITCHENCHEF"/>
+				<m:ObjectStatus title="Cost Center" text="Japanese Restaurant (2001100103)"/>
+				<m:ObjectStatus title="Email" text="email@address.com"/>
+			</l:VerticalLayout>
+			
+		</uxap:content>	
+	</uxap:ObjectPageHeaderContent>	
+	
+				<Table id="mktlistTable" selectionMode="MultiToggle" enableBusyIndicator="true"  class="sapUiResponsiveMargin" visibleRowCount="7"  height = "100%">
+			
 					 <toolbar>
 					    	<m:Toolbar>
 							
@@ -295,9 +303,9 @@
 
 
 		
-		<!--<semantic:deleteAction>-->
-		<!--	<semantic:DeleteAction press="onRowsDelete"/>-->
-		<!--</semantic:deleteAction>-->
+		<semantic:negativeAction>
+	    <semantic:NegativeAction text="{i18n>close}" press="onClose"/>
+	    </semantic:negativeAction>
 		
 		<semantic:positiveAction>
 			<semantic:PositiveAction text="{i18n>submit}" press="onSubmit"/>
@@ -305,4 +313,4 @@
 	
 
 	</semantic:DetailPage>
-</mvc:View>
+</core:View>
