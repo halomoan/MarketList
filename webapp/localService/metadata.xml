@@ -5,6 +5,59 @@
     <edmx:DataServices m:DataServiceVersion="2.0">
         <Schema
             xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="Master_Detail">
+            <EntityType Name="UserProfile">
+                <Key>
+                    <PropertyRef Name="UserProfileID"/>
+                </Key>
+                <Property Name="UserProfileID" Nullable="false" Type="Edm.String"/>
+                <Property Name="UserId" Nullable="false" Type="Edm.String"/>
+                <Property Name="Name" Nullable="false" Type="Edm.String"/>
+                <NavigationProperty FromRole="From_UserProfile" Name="UserProfilePlant" Relationship="Master_Detail.UserProfileToPlantSet" ToRole="To_Plant"/>
+            </EntityType>
+            
+             <EntityType Name="Plant">
+                <Key>
+                    <PropertyRef Name="PlantID"/>
+                </Key>
+                <Property MaxLength="40" Name="PlantID" Nullable="false" Type="Edm.String"/>
+                <Property Name="UserProfileID" Nullable="false" Type="Edm.String"/>
+                <Property Name="Plant" Nullable="false" Type="Edm.String"/>
+                <NavigationProperty FromRole="From_Plant" Name="PlantToCC" Relationship="Master_Detail.PlantToCC" ToRole="To_CostCenter"/>
+            </EntityType>
+            
+             
+            <EntityType Name="CostCenter">
+                <Key>
+                    <PropertyRef Name="CostCenterID"/>
+                </Key>
+                <Property MaxLength="40" Name="CostCenterID" Nullable="false" Type="Edm.String"/>
+                <Property Name="PlantID" Nullable="false" Type="Edm.String"/>
+                <Property Name="CostCenter" Type="Edm.String"/>
+	            <NavigationProperty FromRole="From_CostCenter" Name="CCUnloadingPoint" Relationship="Master_Detail.CCToUnloadingPoint" ToRole="To_UnloadingPoint"/>
+            </EntityType>
+            <EntityType Name="UnloadingPoint">
+                <Key>
+                    <PropertyRef Name="UnLoadingPointID"/>
+                </Key>
+                <Property MaxLength="40" Name="UnLoadingPointID" Nullable="false" Type="Edm.String"/>
+                <Property Name="CostCenterID" Type="Edm.String"/>
+                <Property Name="UnLoadingPoint" Type="Edm.String"/>
+            </EntityType>
+            
+            <EntityType Name="MarketList">
+                <Key>
+                	<PropertyRef Name="PlantID"/>
+                    <PropertyRef Name="CostCenterID"/>
+                    <PropertyRef Name="UnLoadingPointID"/>
+                </Key>
+                <Property Name="PlantID" Nullable="false" Type="Edm.String"/>
+                <Property Name="CostCenterID" Type="Edm.String"/>
+                <Property Name="UnLoadingPointID" Type="Edm.String"/>
+                <Property Name="MarketListID" Type="Edm.String"/>
+            </EntityType>
+            
+            
+            
             <EntityType Name="MaterialGroup">
                 <Key>
                     <PropertyRef Name="MaterialGroupID"/>
@@ -44,6 +97,8 @@
                 <Property Name="TrackingNo" Nullable="false" Type="Master_Detail.MarketListH"/>
                 <NavigationProperty FromRole="From_MarketListHeader" Name="MarketListDetailSet" Relationship="Master_Detail.MarketListHeaderMarketListDetail" ToRole="To_MarketListDetail"/>
             </EntityType>
+            
+            
             <EntityType Name="MarketListDetail">
                 <Key>
                     <PropertyRef Name="MarketListDetailID"/>
@@ -56,14 +111,24 @@
                 <Property Name="UnitPrice" Type="Edm.Decimal"/>
                 <Property Name="Currency" Type="Edm.String"/>
                 <Property Name="PriceUnit" Type="Edm.Decimal"/>
-                <Property Name="Items" Nullable="false" Type="Master_Detail.MarketListItem"/>
+                <Property Name="Day0" Nullable="false" Type="Master_Detail.MarketListItem"/>
+                <Property Name="Day1" Nullable="false" Type="Master_Detail.MarketListItem"/>
+                <Property Name="Day2" Nullable="false" Type="Master_Detail.MarketListItem"/>
+                <Property Name="Day3" Nullable="false" Type="Master_Detail.MarketListItem"/>
+                <Property Name="Day4" Nullable="false" Type="Master_Detail.MarketListItem"/>
+                <Property Name="Day5" Nullable="false" Type="Master_Detail.MarketListItem"/>
+                <Property Name="Day6" Nullable="false" Type="Master_Detail.MarketListItem"/>
+                <Property Name="Day7" Nullable="false" Type="Master_Detail.MarketListItem"/>
+                <Property Name="Day8" Nullable="false" Type="Master_Detail.MarketListItem"/>
+                <Property Name="Day9" Nullable="false" Type="Master_Detail.MarketListItem"/>
+                <Property Name="Day10" Nullable="false" Type="Master_Detail.MarketListItem"/>
+                <Property Name="Day11" Nullable="false" Type="Master_Detail.MarketListItem"/>
+                <Property Name="Day12" Nullable="false" Type="Master_Detail.MarketListItem"/>
+                <Property Name="Day13" Nullable="false" Type="Master_Detail.MarketListItem"/>
             </EntityType>
-            <ComplexType Name="MarketListH">
-            	<Property Name="PREQNo" Type="Edm.String" MaxLength="10"/>
-                <Property Name="Date" Type="Edm.String"/>
-            </ComplexType>
+            
             <ComplexType Name="MarketListItem">
-            	<Property Name="PRRow" Type="Edm.String"/>
+            	<Property Name="PREQNo" Type="Edm.String"/>
                 <Property Name="Date" Type="Edm.String"/>
                 <Property Name="Quantity" Type="Edm.Decimal"/>
                 <Property Name="UOM" Type="Edm.String"/>
@@ -85,7 +150,41 @@
                 <End Multiplicity="1" Role="From_MarketListHeader" Type="Master_Detail.MarketListHeader"/>
                 <End Multiplicity="*" Role="To_MarketListDetail" Type="Master_Detail.MarketListDetail"/>
             </Association>
+            <Association Name="UserProfileToPlant">
+                <End Multiplicity="1" Role="From_UserProfile" Type="Master_Detail.UserProfile"/>
+                <End Multiplicity="*" Role="To_Plant" Type="Master_Detail.Plant"/>
+            </Association>
+            <Association Name="PlantToCC">
+                <End Multiplicity="1" Role="From_Plant" Type="Master_Detail.Plant"/>
+                <End Multiplicity="*" Role="To_CostCenter" Type="Master_Detail.CostCenter"/>
+                <ReferentialConstraint>
+                    <Principal Role="From_Plant">
+                        <PropertyRef Name="PlantID"/>
+                    </Principal>
+                    <Dependent Role="To_CostCenter">
+                        <PropertyRef Name="PlantID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="CCToUnloadingPoint">
+                <End Multiplicity="1" Role="From_CostCenter" Type="Master_Detail.CostCenter"/>
+                <End Multiplicity="*" Role="To_UnloadingPoint" Type="Master_Detail.UnloadingPoint"/>
+                 <ReferentialConstraint>
+                    <Principal Role="From_CostCenter">
+                        <PropertyRef Name="CostCenterID"/>
+                    </Principal>
+                    <Dependent Role="To_UnloadingPoint">
+                        <PropertyRef Name="CostCenterID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            
             <EntityContainer Name="Master_Detail_ENTITIES" m:IsDefaultEntityContainer="true">
+            	<EntitySet EntityType="Master_Detail.UserProfile" Name="UserProfileSet"/>
+            	<EntitySet EntityType="Master_Detail.MarketList" Name="MarketListSet"/>
+            	<EntitySet EntityType="Master_Detail.Plant" Name="PlantSet"/>
+            	<EntitySet EntityType="Master_Detail.CostCenter" Name="CostCenterSet"/>
+                <EntitySet EntityType="Master_Detail.UnloadingPoint" Name="UnloadingPointSet"/>
                 <EntitySet EntityType="Master_Detail.MaterialGroup" Name="MaterialGroups"/>
                 <EntitySet EntityType="Master_Detail.Material" Name="Materials"/>
                 <EntitySet EntityType="Master_Detail.MarketListHeader" Name="MarketListHeaderSet"/>
@@ -98,6 +197,20 @@
                     <End EntitySet="MarketListHeaderSet" Role="From_MarketListHeader"/>
                     <End EntitySet="MarketListDetailSet" Role="To_MarketListDetail"/>
                 </AssociationSet>
+                
+                <AssociationSet Association="Master_Detail.UserProfileToPlant" Name="UserProfileToPlantSet">
+                	<End EntitySet="UserProfileSet" Role="From_UserProfile"/>
+                    <End EntitySet="PlantSet" Role="To_Plant"/>
+	            </AssociationSet>
+	            <AssociationSet Association="Master_Detail.PlantToCC" Name="PlantToCCSet">
+                	<End EntitySet="PlantSet" Role="From_Plant"/>
+                    <End EntitySet="CostCenterSet" Role="To_CostCenter"/>
+	            </AssociationSet>
+	            <AssociationSet Association="Master_Detail.CCToUnloadingPoint" Name="CCToUnloadingPointSet">
+	            	<End EntitySet="CostCenterSet" Role="From_CostCenter"/>
+                    <End EntitySet="UnloadingPointSet" Role="To_UnloadingPoint"/>
+	            </AssociationSet>
+	          
             </EntityContainer>
         </Schema>
     </edmx:DataServices>

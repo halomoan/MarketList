@@ -109,7 +109,15 @@
 					]
 				},
 				{
+<<<<<<< HEAD
+<<<<<<< HEAD
+					"pattern": "master/{marketlistID}",
+=======
 					"pattern": "master",
+>>>>>>> branch 'master' of https://github.com/halomoan/MarketList.git
+=======
+					"pattern": "master",
+>>>>>>> branch 'master' of https://github.com/halomoan/MarketList.git
 					"name": "master",
 					"target": [
 						"object",

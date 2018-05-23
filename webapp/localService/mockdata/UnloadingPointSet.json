@@ -1,0 +1,33 @@
+[{
+	"UnLoadingPointID": "LP1304000",
+	"CostCenterID": "CC_1304001",
+	"UnLoadingPoint": "<No Unloading Point>"
+},{
+	"UnLoadingPointID": "LP1304001",
+	"CostCenterID": "CC_1304001",
+	"UnLoadingPoint": "Back Unloading"
+}, {
+	"UnLoadingPointID": "LP1304002",
+	"CostCenterID": "CC_1304001",
+	"UnLoadingPoint": "Front Unloading"
+},{
+	"UnLoadingPointID": "LP1304000",
+	"CostCenterID": "CC_1304002",
+	"UnLoadingPoint": "<No Unloading Point>"
+},{
+	"UnLoadingPointID": "LP1304003",
+	"CostCenterID": "CC_1304002",
+	"UnLoadingPoint": "Unloading"
+}, {
+	"UnLoadingPointID": "LP1305001",
+	"CostCenterID": "CC_1305001",
+	"UnLoadingPoint": "Front Door"
+}, {
+	"UnLoadingPointID": "LP1305002",
+	"CostCenterID": "CC_1305001",
+	"UnLoadingPoint": "Back Door"
+}, {
+	"UnLoadingPointID": "LP1305003",
+	"CostCenterID": "CC_1305002",
+	"UnLoadingPoint": "Unloading"
+}]

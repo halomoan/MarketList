@@ -1,0 +1,21 @@
+[{
+	"CostCenterID": "CC_1304001",
+	"PlantID": "PLT001",
+	"CostCenter": "Kitchen"
+}, {
+	"CostCenterID": "CC_1304002",
+	"PlantID": "PLT001",
+	"CostCenter": "Restaurant"
+}, {
+	"CostCenterID": "CC_1304003",
+	"PlantID": "PLT001",
+	"CostCenter": "Purchasing"
+}, {
+	"CostCenterID": "CC_1305001",
+	"PlantID": "PLT002",
+	"CostCenter": "Kitchen Storage"
+}, {
+	"CostCenterID": "CC_1305002",
+	"PlantID": "PLT002",
+	"CostCenter": "Cold Storage"
+}]

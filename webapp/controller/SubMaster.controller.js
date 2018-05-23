@@ -262,38 +262,35 @@ sap.ui.define([
 				 
 				this._oList.getSelectedItems().some(function(item){
 					
+					var oCtx = item.getBindingContext();
+					
 					var oItem = {
-						"MarketListID" : "",
 						"MaterialGroupID" : "",
 						"MaterialID" : "",
 						"MaterialText" : "",
 						"UnitPrice" : 0,
 						"Currency" : "",
 						"PriceUnit" : 0,
-							"Items" : [
-								{ "Date" : null, "Quantity" : 0, "UOM" : ""},
-								{ "Date" : null, "Quantity" : 0, "UOM" : ""},
-								{ "Date" : null, "Quantity" : 0, "UOM" : ""},
-								{ "Date" : null, "Quantity" : 0, "UOM" : ""},
-								{ "Date" : null, "Quantity" : 0, "UOM" : ""},
-								{ "Date" : null, "Quantity" : 0, "UOM" : ""},
-								{ "Date" : null, "Quantity" : 0, "UOM" : ""},
-								{ "Date" : null, "Quantity" : 0, "UOM" : ""},
-								{ "Date" : null, "Quantity" : 0, "UOM" : ""},
-								{ "Date" : null, "Quantity" : 0, "UOM" : ""},
-								{ "Date" : null, "Quantity" : 0, "UOM" : ""},
-								{ "Date" : null, "Quantity" : 0, "UOM" : ""},
-								{ "Date" : null, "Quantity" : 0, "UOM" : ""},
-								{ "Date" : null, "Quantity" : 0, "UOM" : ""}
-				                                              
-								
-							]
+						"Day0": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day1": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day2": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day3": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day4": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day5": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day6": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day7": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day8": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day9": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day10": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day11": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day12": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day13": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")}
 					};
 					
-					var oCtx = item.getBindingContext();
+					
 					
 					//console.log(oCtx.getProperty("MaterialID"));
-					oItem.MarketListID = null;
+					
 					oItem.MaterialGroupID = oCtx.getProperty("MaterialGroupID");
 					oItem.MaterialID = oCtx.getProperty("MaterialID");
 					
@@ -303,9 +300,7 @@ sap.ui.define([
 					
 					oItem.MaterialText = oCtx.getProperty("MaterialText");
 					oItem.Currency = oCtx.getProperty("Currency");
-					for(var i = 0; i < oItem.Items.length; i++) {
-						oItem.Items[i].UOM = oCtx.getProperty("UnitOfMeasure");
-					}
+					
 					
 					
 					jsonData.push(oItem);

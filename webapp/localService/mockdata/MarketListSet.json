@@ -1,0 +1,11 @@
+[{
+	"PlantID": "PLT001",
+	"CostCenterID": "CC_1304001",
+	"UnLoadingPointID": "LP1304001",
+	"MarketListID": "MKT0001"
+},{
+	"PlantID": "PLT001",
+	"CostCenterID": "CC_1304001",
+	"UnLoadingPointID": "LP1304000",
+	"MarketListID": "MKT0001"
+}]

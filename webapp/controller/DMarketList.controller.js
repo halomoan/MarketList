@@ -13,30 +13,31 @@ sap.ui.define([
 			    
 			    sap.ui.getCore().getEventBus().subscribe("marketlist","addMaterial",this._addMaterial,this);
 			    
-			    this._cData = {
+			    this.globalData = {
 			    	Dates : [],
-			    	tableChanged : true
-			    	
+			    	PREQNo : [],
+			    	tableChanged : true,
+			    	MarketListID : ""
 			    };
 			    
 				var oViewData = {
 					toogleFreeze : false,
 					freezeCol : 4,
 					columns : [
-							{"noItem": 1 , "total" : 0, "visible": true},
-							{"noItem": 0 , "total" : 0, "visible": false},
-							{"noItem": 0 , "total" : 0, "visible": false},
-							{"noItem": 0 , "total" : 0, "visible": false},
-							{"noItem": 0 , "total" : 0, "visible": false},
-							{"noItem": 0 , "total" : 0, "visible": false},
-							{"noItem": 0 , "total" : 0, "visible": false},
-							{"noItem": 1 , "total" : 0, "visible": true},
-							{"noItem": 0 , "total" : 0, "visible": false},
-							{"noItem": 0 , "total" : 0, "visible": false},
-							{"noItem": 0 , "total" : 0, "visible": false},
-							{"noItem": 0 , "total" : 0, "visible": false},
-							{"noItem": 0 , "total" : 0, "visible": false},
-							{"noItem": 0 , "total" : 0, "visible": false}
+							{"date":"","noItem": 1 , "total" : 0, "visible": true},
+							{"date":"","noItem": 0 , "total" : 0, "visible": false},
+							{"date":"","noItem": 0 , "total" : 0, "visible": false},
+							{"date":"","noItem": 0 , "total" : 0, "visible": false},
+							{"date":"","noItem": 0 , "total" : 0, "visible": false},
+							{"date":"","noItem": 0 , "total" : 0, "visible": false},
+							{"date":"","noItem": 0 , "total" : 0, "visible": false},
+							{"date":"","noItem": 1 , "total" : 0, "visible": true},
+							{"date":"","noItem": 0 , "total" : 0, "visible": false},
+							{"date":"","noItem": 0 , "total" : 0, "visible": false},
+							{"date":"","noItem": 0 , "total" : 0, "visible": false},
+							{"date":"","noItem": 0 , "total" : 0, "visible": false},
+							{"date":"","noItem": 0 , "total" : 0, "visible": false},
+							{"date":"","noItem": 0 , "total" : 0, "visible": false}
 						]
 				};
 				
@@ -57,12 +58,20 @@ sap.ui.define([
 				this.setModel(oViewModel, "detailView");
 				
 				
-				this._oModel = this.getOwnerComponent().getModel();
+				
+				//this.getView().setModel("/UserProfileSet");
 				
 				
+				
+				this.getRouter().getRoute("master").attachPatternMatched(this._onMasterMatched, this);
+				
+				
+				
+			},
+			_onMasterMatched :  function(oEvent) {
+				this.globalData.MarketListID = oEvent.getParameter("arguments").marketlistID;
 				this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
 			},
-			
 			onExit:function(){
 				
 				sap.ui.getCore().getEventBus().unsubscribe("marketlist","addMaterial",this._addMaterial,this);
@@ -213,7 +222,7 @@ sap.ui.define([
 				var iCols = 0;
 				var oViewModel = this.getModel("detailView");
 				
-				this._cData.tableChanged = false;
+				this.globalData.tableChanged = false;
 				
 				switch (keyItem){
 					case "1Day": iCols = 7; break;
@@ -254,12 +263,49 @@ sap.ui.define([
 					var data = oModelJson.getProperty("/rows");
 					
 					
-					if (data && this._cData.tableChanged) {
-						
-						console.log('changed');
+					//console.log(data);
+	
+	
+					if (data && this.globalData.tableChanged) {
 						
 						var noItems = [], totals = [];
-						for(var i = 0; i < data.length; i++) {
+						
+						for (var key in data) {
+							for (var prop in data[key]){
+								if(prop.substring(0,3) === "Day") {
+									var oDay = data[key][prop];
+									
+									if (oDay.Quantity > 0) {
+										noItems[oDay.Date] = isNaN(noItems[oDay.Date]) ? 1 : (noItems[oDay.Date] + 1);
+										if (isNaN(totals[oDay.Date])) {
+											totals[oDay.Date] = (oDay.Quantity / data[key].PriceUnit * data[key].UnitPrice);
+										}else{
+											totals[oDay.Date] = totals[oDay.Date] + (oDay.Quantity / data[key].PriceUnit * data[key].UnitPrice);
+										}
+									} else{
+										if (isNaN(noItems[oDay.Date])) {
+											noItems[oDay.Date] = 0;
+										}
+										if (isNaN(totals[oDay.Date])) {
+											totals[oDay.Date] = 0.00;
+										}
+									}
+								} 
+							}
+							/*if (data[key].Day0.Quantity > 0) {
+								noItems[data[key].Day0.Date] = isNaN(noItems[data[key].Day0.Date]) ? 1 : (noItems[data[key].Day0.Date] + 1);
+								if (isNaN(totals[data[key].Day0.Date])) {
+									totals[data[key].Day0.Date] = (data[key].Day0.Quantity / data[key].PriceUnit * data[key].UnitPrice);
+								}else{
+									totals[data[key].Day0.Date] = totals[data[key].Day0.Date] + (data[key].Day0.Quantity / data[key].PriceUnit * data[key].UnitPrice);
+								}
+							}
+							*/
+						}
+
+						
+						
+						/*for(var i = 0; i < data.length; i++) {
 							var arr = data[i].Items;
 							for (var j = 0; j < arr.length; j++) {
 								if (arr[j].Quantity > 0) {
@@ -273,14 +319,15 @@ sap.ui.define([
 									}
 								}
 							}
-						}
+						}*/
 		
 						var oViewModel = this.getModel("detailView");
 						
 					
-						i = 0;
-						for (var key in noItems) {
+						var i = 0;
+						for (key in noItems) {
 							oViewModel.setProperty("/columns/" + (i++) + "/noItem",noItems[key]);
+							
 						}
 						
 						i = 0;	
@@ -291,37 +338,90 @@ sap.ui.define([
 						
 					}
 			
-					this._cData.tableChanged = true;
+					this.globalData.tableChanged = true;
 			},
 			_onMetadataLoaded: function(){
 			
 				
 				var oTable = this.byId("mktlistTable");
+				var oViewModel = this.getModel("detailView");
 				var oModelJson = new JSONModel();
 				var oView = this.getView();
-				var Dates = [];
+				var oThis = this;
 		
 				
-			
+				var oModel = this.getOwnerComponent().getModel();
 				
-				var sPath = "/" + this._oModel.createKey("MarketListHeaderSet",{MarketListHeaderID: "MKT0001"});
+				
+				var sPath = "/" + oModel.createKey("MarketListHeaderSet",{MarketListHeaderID:  this.globalData.MarketListID});
 				
 				
 				this.getView().bindElement(sPath);
-			
+				
 				sap.ui.core.BusyIndicator.show();
-				this._oModel.read(sPath + "/MarketListDetailSet", {
+				oModel.read(sPath + "/MarketListDetailSet", {
 				    method: "GET",
 				    success: function(oData) {
-				        oModelJson.setData({ rows: oData.results } );
-				    	oView.setModel(oModelJson,"mktlist");
-				      	oTable.bindRows("mktlist>/rows");
-				      	
-				      	var colHeader = oView.getModel().getProperty(sPath + "/Headers");
-				      	var i = 0;
-						for(var key in colHeader){
-							Dates[i++] =  colHeader[key].Date;
-						}
+				    	
+				    	if (oData.results) {
+					    	oModelJson.setData({ rows : oData.results } );
+					    	oView.setModel(oModelJson,"mktlist");
+					      	oTable.bindRows("mktlist>/rows");	
+					      	var oItem = oData.results[0];
+					      	
+					      	oThis.globalData.Dates[0] = oItem.Day0.Date;
+					      	oThis.globalData.Dates[1] = oItem.Day1.Date;
+					      	oThis.globalData.Dates[2] = oItem.Day2.Date;
+					      	oThis.globalData.Dates[3] = oItem.Day3.Date;
+					      	oThis.globalData.Dates[4] = oItem.Day4.Date;
+					      	oThis.globalData.Dates[5] = oItem.Day5.Date;
+					      	oThis.globalData.Dates[6] = oItem.Day6.Date;
+					      	oThis.globalData.Dates[7] = oItem.Day7.Date;
+					      	oThis.globalData.Dates[8] = oItem.Day8.Date;
+					      	oThis.globalData.Dates[9] = oItem.Day9.Date;
+					      	oThis.globalData.Dates[10] = oItem.Day10.Date;
+					      	oThis.globalData.Dates[11] = oItem.Day11.Date;
+					      	oThis.globalData.Dates[12] = oItem.Day12.Date;
+					      	oThis.globalData.Dates[13] = oItem.Day13.Date;
+					      	
+					      	
+					      	oThis.globalData.PREQNo[0] =  oItem.Day0.PREQNo;
+					      	oThis.globalData.PREQNo[1] =  oItem.Day1.PREQNo;
+					      	oThis.globalData.PREQNo[2] =  oItem.Day2.PREQNo;
+					      	oThis.globalData.PREQNo[3] =  oItem.Day3.PREQNo;
+					      	oThis.globalData.PREQNo[4] =  oItem.Day4.PREQNo;
+					      	oThis.globalData.PREQNo[5] =  oItem.Day5.PREQNo;
+					      	oThis.globalData.PREQNo[6] =  oItem.Day6.PREQNo;
+					      	oThis.globalData.PREQNo[7] =  oItem.Day7.PREQNo;
+					      	oThis.globalData.PREQNo[8] =  oItem.Day8.PREQNo;
+					      	oThis.globalData.PREQNo[9] =  oItem.Day9.PREQNo;
+					      	oThis.globalData.PREQNo[10] =  oItem.Day10.PREQNo;
+					      	oThis.globalData.PREQNo[11] =  oItem.Day11.PREQNo;
+					      	oThis.globalData.PREQNo[12] =  oItem.Day12.PREQNo;
+					      	oThis.globalData.PREQNo[13] =  oItem.Day13.PREQNo;
+					      	
+					      	
+					      	
+					      	oViewModel.setProperty("/columns/0/date",oThis.globalData.Dates[0]);
+					      	oViewModel.setProperty("/columns/1/date",oThis.globalData.Dates[1]);
+					      	oViewModel.setProperty("/columns/2/date",oThis.globalData.Dates[2]);
+					      	oViewModel.setProperty("/columns/3/date",oThis.globalData.Dates[3]);
+					      	oViewModel.setProperty("/columns/4/date",oThis.globalData.Dates[4]);
+					      	oViewModel.setProperty("/columns/5/date",oThis.globalData.Dates[5]);
+					      	oViewModel.setProperty("/columns/6/date",oThis.globalData.Dates[6]);
+					      	oViewModel.setProperty("/columns/7/date",oThis.globalData.Dates[7]);
+					      	oViewModel.setProperty("/columns/8/date",oThis.globalData.Dates[8]);
+					      	oViewModel.setProperty("/columns/9/date",oThis.globalData.Dates[9]);
+					      	oViewModel.setProperty("/columns/10/date",oThis.globalData.Dates[10]);
+					      	oViewModel.setProperty("/columns/11/date",oThis.globalData.Dates[11]);
+					      	oViewModel.setProperty("/columns/12/date",oThis.globalData.Dates[12]);
+					      	oViewModel.setProperty("/columns/13/date",oThis.globalData.Dates[13]);
+					      	
+					      	
+					      	
+				    	}
+				    
+				      
 						
 						sap.ui.core.BusyIndicator.hide();	
 				    },
@@ -338,7 +438,7 @@ sap.ui.define([
 				}.bind(this));
 				
 				this._oJsonModel = oModelJson;
-				this._cData.Dates = Dates;
+				
 			
 			},
 			
@@ -347,11 +447,9 @@ sap.ui.define([
 				
 				if (oData ) {
 					
-					
-					var tableRows = this._oJsonModel.getData().rows;
 				
-					
-					var iCol = 0;
+					var tableRows = this._oJsonModel.getData().rows;
+
 					var bNew = true,bAdded = false;
 					for (var i = 0; i < oData.data.length; i++ ){
 						
@@ -360,15 +458,47 @@ sap.ui.define([
 							if (tableRows[j].MaterialID === oData.data[i].MaterialID ){
 								bNew = false;
 								j = tableRows.length + 1;
-							}
+							} 
+							
 						}
 						
 						if (bNew) {
-							iCol = 0;
-							for(var key in oData.data[i].Items){
-								oData.data[i].Items[key].Date =  this._cData.Dates[iCol++];
-							}		
+				
+							
+							oData.data[i].Day0.Date = this.globalData.Dates[0];
+							oData.data[i].Day1.Date = this.globalData.Dates[1];
+							oData.data[i].Day2.Date = this.globalData.Dates[2];
+							oData.data[i].Day3.Date = this.globalData.Dates[3];
+							oData.data[i].Day4.Date = this.globalData.Dates[4];
+							oData.data[i].Day5.Date = this.globalData.Dates[5];
+							oData.data[i].Day6.Date = this.globalData.Dates[6];
+							oData.data[i].Day7.Date = this.globalData.Dates[7];
+							oData.data[i].Day8.Date = this.globalData.Dates[8];
+							oData.data[i].Day9.Date = this.globalData.Dates[9];
+							oData.data[i].Day10.Date = this.globalData.Dates[10];
+							oData.data[i].Day11.Date = this.globalData.Dates[11];
+							oData.data[i].Day12.Date = this.globalData.Dates[12];
+							
+							oData.data[i].Day0.PREQNo = this.globalData.PREQNo[0];
+							oData.data[i].Day1.PREQNo = this.globalData.PREQNo[1];
+							oData.data[i].Day2.PREQNo = this.globalData.PREQNo[2];
+							oData.data[i].Day3.PREQNo = this.globalData.PREQNo[3];
+							oData.data[i].Day4.PREQNo = this.globalData.PREQNo[4];
+							oData.data[i].Day5.PREQNo = this.globalData.PREQNo[5];
+							oData.data[i].Day6.PREQNo = this.globalData.PREQNo[6];
+							oData.data[i].Day7.PREQNo = this.globalData.PREQNo[7];
+							oData.data[i].Day8.PREQNo = this.globalData.PREQNo[8];
+							oData.data[i].Day9.PREQNo = this.globalData.PREQNo[9];
+							oData.data[i].Day10.PREQNo = this.globalData.PREQNo[10];
+							oData.data[i].Day11.PREQNo = this.globalData.PREQNo[11];
+							oData.data[i].Day12.PREQNo = this.globalData.PREQNo[12];
+							
+							oData.data[i].MarketListHeaderID =  this.globalData.MarketListID;
+							oData.data[i].MarketListDetailID = null;
+							
+						
 							tableRows.push(oData.data[i]);
+						
 							
 							bAdded = true;
 						} else {
