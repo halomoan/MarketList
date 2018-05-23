@@ -58,11 +58,6 @@ sap.ui.define([
 				this.setModel(oViewModel, "detailView");
 				
 				
-				
-				//this.getView().setModel("/UserProfileSet");
-				
-				
-				
 				this.getRouter().getRoute("master").attachPatternMatched(this._onMasterMatched, this);
 				
 				
@@ -97,6 +92,7 @@ sap.ui.define([
 				var sComment = oEvent.getSource().data("myComment");
 				var oModel = this._oJsonModel;
 			
+				
 				var itemId = sId.substr(0,sId.length - 3);
 				var itemIdx = parseInt(sId.slice(-2));
 				
@@ -116,9 +112,12 @@ sap.ui.define([
 								var sText = sap.ui.getCore().byId('commentTextArea').getValue();
 								sap.m.MessageToast.show('Add Comment : ' + sText);
 								var rows = oModel.getData().rows;
+								
+							
+								
 								for(var key in rows) {
 									if (rows[key].MaterialID === itemId){
-										rows[key].Items[itemIdx].Comment = sText;
+										rows[key]["Day" + itemIdx].Comment = sText;
 										oModel.refresh();
 										break;
 									}
@@ -259,13 +258,8 @@ sap.ui.define([
 			
 			_onTableChanged : function(oModelJson) {
 				
-					
 					var data = oModelJson.getProperty("/rows");
 					
-					
-					//console.log(data);
-	
-	
 					if (data && this.globalData.tableChanged) {
 						
 						var noItems = [], totals = [];
@@ -334,8 +328,6 @@ sap.ui.define([
 						for (key in totals) {
 							oViewModel.setProperty("/columns/" + (i++) + "/total",formatter.currencyValue(totals[key]));
 						}
-					
-						
 					}
 			
 					this.globalData.tableChanged = true;
@@ -348,7 +340,6 @@ sap.ui.define([
 				var oModelJson = new JSONModel();
 				var oView = this.getView();
 				var oThis = this;
-		
 				
 				var oModel = this.getOwnerComponent().getModel();
 				
@@ -368,6 +359,8 @@ sap.ui.define([
 					    	oView.setModel(oModelJson,"mktlist");
 					      	oTable.bindRows("mktlist>/rows");	
 					      	var oItem = oData.results[0];
+					      	
+					      	
 					      	
 					      	oThis.globalData.Dates[0] = oItem.Day0.Date;
 					      	oThis.globalData.Dates[1] = oItem.Day1.Date;
