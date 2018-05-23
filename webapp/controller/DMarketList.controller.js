@@ -16,7 +16,8 @@ sap.ui.define([
 			    this.globalData = {
 			    	Dates : [],
 			    	PREQNo : [],
-			    	tableChanged : true,
+			    	iRefresh : 0,
+			    	tableChanged : false,
 			    	MarketListID : ""
 			    };
 			    
@@ -64,8 +65,10 @@ sap.ui.define([
 				
 			},
 			_onMasterMatched :  function(oEvent) {
-				this.globalData.MarketListID = oEvent.getParameter("arguments").marketlistID;
-				this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
+				if (this.globalData.iRefresh === 0) {
+					this.globalData.MarketListID = oEvent.getParameter("arguments").marketlistID;
+					this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
+				}
 			},
 			onExit:function(){
 				
@@ -123,6 +126,7 @@ sap.ui.define([
 									}
 								}
 								
+								this.globalData.tableChanged = true;
 								dialog.close();
 							}
 						}),
@@ -153,7 +157,8 @@ sap.ui.define([
 			},
 			
 			doSaveData: function() {
-				
+				var tableRows = this._oJsonModel.getData().rows;
+			
 			},
 			closeSaveDialog: function() {
 				if (this._oViewFormSubmit) {
@@ -161,8 +166,29 @@ sap.ui.define([
 				}
 			},
 			onClose: function(){
-				sap.ui.getCore().byId("__component0---app--idAppControl").hideMaster();
-				this.getRouter().navTo("home", null, false);
+				var oThis = this;
+				
+				if (this.globalData.tableChanged === true) {
+					sap.m.MessageBox.confirm(this.getResourceBundle().getText("msgConfirmUnsavedClose"),{
+							icon: sap.m.MessageBox.Icon.INFORMATION,
+							title: this.getResourceBundle().getText("confirm"),
+							actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
+							onClose: function(oAction){
+								if (oAction === sap.m.MessageBox.Action.YES) {
+									oThis.globalData.tableChanged = false;
+									sap.ui.getCore().byId("__component0---app--idAppControl").hideMaster();
+									oThis.getRouter().navTo("home", null, false);
+									
+								}
+							}
+						});
+				} else{
+					this.globalData.tableChanged = false;
+					sap.ui.getCore().byId("__component0---app--idAppControl").hideMaster();
+					this.getRouter().navTo("home", null, false);
+					
+				}
+			
 			},
 			onRowsDelete: function() {
 					var oThis = this;
@@ -207,7 +233,7 @@ sap.ui.define([
 					oTable.clearSelection();
 					oThis._oJsonModel.refresh();
 				}
-				
+				this.globalData.tableChanged = true;
 				
 				
 			},
@@ -221,7 +247,6 @@ sap.ui.define([
 				var iCols = 0;
 				var oViewModel = this.getModel("detailView");
 				
-				this.globalData.tableChanged = false;
 				
 				switch (keyItem){
 					case "1Day": iCols = 7; break;
@@ -260,7 +285,10 @@ sap.ui.define([
 				
 					var data = oModelJson.getProperty("/rows");
 					
-					if (data && this.globalData.tableChanged) {
+					//if (data && this.globalData.tableChanged) {
+					if(data) {
+					
+						
 						
 						var noItems = [], totals = [];
 						
@@ -329,8 +357,11 @@ sap.ui.define([
 							oViewModel.setProperty("/columns/" + (i++) + "/total",formatter.currencyValue(totals[key]));
 						}
 					}
+					
+					if(this.globalData.iRefresh++ > 0) {
+						this.globalData.tableChanged = true;
+					}
 			
-					this.globalData.tableChanged = true;
 			},
 			_onMetadataLoaded: function(){
 			
@@ -500,6 +531,7 @@ sap.ui.define([
 					}
 					
 					if (bAdded) {
+						this.globalData.tableChanged = true;
 						this._oJsonModel.refresh();
 						sap.ui.getCore().byId("__component0---app--idAppControl").hideMaster();
 					}

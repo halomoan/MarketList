@@ -13,7 +13,7 @@
 			<l:VerticalLayout class="sapUiSmallMargin">
 				<Title text="Purchasing Requisition" level="H1" titleStyle="H1"/>
 				<Title text="SAP Material Management" level="H4" titleStyle="H4"/>
-				<ObjectStatus title="User ID" text="KITCHENCHEF"/>
+				<ObjectStatus title="User ID" text="{UserID}"/>
 			</l:VerticalLayout>
 		</uxap:content>	
 	</uxap:ObjectPageHeaderContent>	

@@ -40,7 +40,6 @@ sap.ui.define([
 			
 			var oThis = this;
 			
-			console.log(sPath);
 			var oViewModel = this.getModel("viewModel");
 			oViewModel.setProperty("/busy", true);
 			oModel.read(sPath, {
@@ -68,6 +67,9 @@ sap.ui.define([
 					busy: false,
 					busyIndicatorDelay : 10
 				};
+				
+			
+				
 				var oViewModel = new JSONModel(oViewData);
 				this.setModel(oViewModel, "viewModel");
 				var oPlant = this.getView().byId("plant");
@@ -90,9 +92,15 @@ sap.ui.define([
 					
 				});
 				
+				this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
+				
 				this.getRouter().getRoute("home").attachPatternMatched(this._onMasterMatched, this);
 		},
 
+		_onMetadataLoaded: function(oEvent) {
+			//	console.log('aneh');
+			//	this.getView().bindElement("/UserProfileSet");
+		},
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
 		 * (NOT before the first rendering! onInit() is used for that one!).
