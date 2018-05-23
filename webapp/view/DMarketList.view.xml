@@ -19,7 +19,8 @@
 		</uxap:content>	
 	</uxap:ObjectPageHeaderContent>	
 	
-				<Table id="mktlistTable" selectionMode="MultiToggle" enableBusyIndicator="true"  class="sapUiResponsiveMargin" visibleRowCount="7"  height = "100%">
+				<Table id="mktlistTable" selectionMode="MultiToggle" enableBusyIndicator="true"  class="sapUiResponsiveMargin" visibleRowCount="10"  height = "100%">
+					<!--<Table id="mktlistTable" selectionMode="MultiToggle" enableBusyIndicator="true"  class="sapUiResponsiveMargin" visibleRowCount="{= ${device>/system/phone} ? 7 : 10 }"  height = "100%">-->
 			
 					 <toolbar>
 					    	<m:Toolbar>
