@@ -150,10 +150,6 @@
                 <End Multiplicity="1" Role="From_MarketListHeader" Type="Master_Detail.MarketListHeader"/>
                 <End Multiplicity="*" Role="To_MarketListDetail" Type="Master_Detail.MarketListDetail"/>
             </Association>
-            <Association Name="UserProfileToPlant">
-                <End Multiplicity="1" Role="From_UserProfile" Type="Master_Detail.UserProfile"/>
-                <End Multiplicity="*" Role="To_Plant" Type="Master_Detail.Plant"/>
-            </Association>
             <Association Name="PlantToCC">
                 <End Multiplicity="1" Role="From_Plant" Type="Master_Detail.Plant"/>
                 <End Multiplicity="*" Role="To_CostCenter" Type="Master_Detail.CostCenter"/>
@@ -198,10 +194,6 @@
                     <End EntitySet="MarketListDetailSet" Role="To_MarketListDetail"/>
                 </AssociationSet>
                 
-                <AssociationSet Association="Master_Detail.UserProfileToPlant" Name="UserProfileToPlantSet">
-                	<End EntitySet="UserProfileSet" Role="From_UserProfile"/>
-                    <End EntitySet="PlantSet" Role="To_Plant"/>
-	            </AssociationSet>
 	            <AssociationSet Association="Master_Detail.PlantToCC" Name="PlantToCCSet">
                 	<End EntitySet="PlantSet" Role="From_Plant"/>
                     <End EntitySet="CostCenterSet" Role="To_CostCenter"/>

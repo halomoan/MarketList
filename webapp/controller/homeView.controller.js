@@ -98,8 +98,7 @@ sap.ui.define([
 		},
 
 		_onMetadataLoaded: function(oEvent) {
-			//	console.log('aneh');
-			//	this.getView().bindElement("/UserProfileSet");
+			this.getView().bindElement("/UserProfileSet('USR001')");
 		},
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

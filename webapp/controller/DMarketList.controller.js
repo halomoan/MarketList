@@ -116,8 +116,9 @@ sap.ui.define([
 								sap.m.MessageToast.show('Add Comment : ' + sText);
 								var rows = oModel.getData().rows;
 								
-							
+								this.globalData.tableChanged = true;
 								
+								dialog.close();
 								for(var key in rows) {
 									if (rows[key].MaterialID === itemId){
 										rows[key]["Day" + itemIdx].Comment = sText;
@@ -126,8 +127,8 @@ sap.ui.define([
 									}
 								}
 								
-								this.globalData.tableChanged = true;
-								dialog.close();
+								
+								
 							}
 						}),
 						endButton: new sap.m.Button({
