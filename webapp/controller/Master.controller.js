@@ -272,7 +272,7 @@ sap.ui.define([
 
 				
 				if (sFilterValue){
-				    aFilters.push( new Filter("PlantID", FilterOperator.Contains, sFilterValue) );
+				    aFilters.push( new Filter("PlantID", FilterOperator.EQ, sFilterValue) );
 				}
 				oBinding.filter(aFilters, sap.ui.model.FilterType.Application);  
 			},
