@@ -1,6 +1,7 @@
 [{
 	"MaterialID": "M0001",
 	"MaterialGroupID": "MG0001",
+	"PlantID" : "DHUA",
 	"MaterialText": "Apple",
 	"UnitOfMeasure": "CAR",
 	"Quantity": 5104.61,
@@ -24,6 +25,7 @@
 }, {
 	"MaterialID": "M0002",
 	"MaterialGroupID": "MG0001",
+	"PlantID" : "DHUA",
 	"MaterialText": "Orange",
 	"UnitOfMeasure": "CAR",
 	"Quantity": 3669.98,
@@ -47,6 +49,7 @@
 }, {
 	"MaterialID": "M0003",
 	"MaterialGroupID": "MG0001",
+	"PlantID" : "DHUA",
 	"MaterialText": "Banana",
 	"UnitOfMeasure": "CAR",
 	"Quantity": 4344.01,
@@ -70,6 +73,7 @@
 }, {
 	"MaterialID": "M0004",
 	"MaterialGroupID": "MG0003",
+	"PlantID" : "DHUA",
 	"MaterialText": "Candy",
 	"UnitOfMeasure": "BOX",
 	"Quantity": 3342.67,
@@ -93,6 +97,7 @@
 }, {
 	"MaterialID": "M0005",
 	"MaterialGroupID": "MG0004",
+	"PlantID" : "DHUA",
 	"MaterialText": "Pizza",
 	"UnitOfMeasure": "BOX",
 	"Quantity": 9034.13,
@@ -116,6 +121,7 @@
 }, {
 	"MaterialID": "M0006",
 	"MaterialGroupID": "MG0004",
+	"PlantID" : "DHUA",
 	"MaterialText": "Eggs",
 	"UnitOfMeasure": "CAR",
 	"Quantity": 2527.67,
@@ -139,6 +145,7 @@
 }, {
 	"MaterialID": "M0007",
 	"MaterialGroupID": "MG0003",
+	"PlantID" : "DBBD",
 	"MaterialText": "Biscuits",
 	"UnitOfMeasure": "TIN",
 	"Quantity": 7294.29,

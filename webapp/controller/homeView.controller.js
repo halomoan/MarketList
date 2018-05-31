@@ -34,8 +34,9 @@ sap.ui.define([
 			}
 			
 			
+			this.getRouter().navTo("master", {plantID : oPlant.getProperty("key")}, false);
 				
-			var oModel = this.getOwnerComponent().getModel();
+			/*var oModel = this.getOwnerComponent().getModel();
 			var sPath = "/" + oModel.createKey("MarketListSet",{PlantID: oPlant.getProperty("key"), CostCenterID : oCostCenter.getProperty("key"), UnLoadingPointID: oUnloadingPoint.getProperty("key")});
 			
 			var oThis = this;
@@ -54,7 +55,7 @@ sap.ui.define([
 				    	  
 				    }
 			});
-			
+			*/
 			
 		},
 		/**

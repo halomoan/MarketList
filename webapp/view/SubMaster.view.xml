@@ -34,7 +34,7 @@
 					refresh="onRefresh" />
 			<!-- For client side filtering add this to the items attribute:  parameters: {operationMode: 'Client'}}" -->
 			<List
-					id="list"
+					id="materiallist"
 					items="{path: 'Materials',
 						sorter: {
 							path: 'MaterialText',

@@ -26,7 +26,7 @@ sap.ui.define([
 			 */
 			onInit : function () {
 				// Control state model
-				var oList = this.byId("list"),
+				var oList = this.byId("matgrouplist"),
 					oViewModel = this._createViewModel(),
 					// Put down master list's original value for busy indicator delay,
 					// so it can be restored later on. Busy handling on the master list is
@@ -264,8 +264,17 @@ sap.ui.define([
 			 * listLoading is done and the first item in the list is known
 			 * @private
 			 */
-			_onMasterMatched :  function() {
-				//TODO
+			_onMasterMatched :  function(oEvent) {
+				var oList = this.getView().byId("matgrouplist");
+				var oBinding = oList.getBinding("items");
+				var sFilterValue =  oEvent.getParameter("arguments").plantID;
+				var aFilters = [];
+
+				
+				if (sFilterValue){
+				    aFilters.push( new Filter("PlantID", FilterOperator.Contains, sFilterValue) );
+				}
+				oBinding.filter(aFilters, sap.ui.model.FilterType.Application);  
 			},
 
 			/**

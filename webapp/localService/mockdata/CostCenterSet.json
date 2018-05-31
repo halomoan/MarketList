@@ -1,21 +1,21 @@
 [{
 	"CostCenterID": "CC_1304001",
-	"PlantID": "PLT001",
+	"PlantID": "DHUA",
 	"CostCenter": "Kitchen"
 }, {
 	"CostCenterID": "CC_1304002",
-	"PlantID": "PLT001",
+	"PlantID": "DHUA",
 	"CostCenter": "Restaurant"
 }, {
 	"CostCenterID": "CC_1304003",
-	"PlantID": "PLT001",
+	"PlantID": "DHUA",
 	"CostCenter": "Purchasing"
 }, {
 	"CostCenterID": "CC_1305001",
-	"PlantID": "PLT002",
+	"PlantID": "DHUA",
 	"CostCenter": "Kitchen Storage"
 }, {
 	"CostCenterID": "CC_1305002",
-	"PlantID": "PLT002",
+	"PlantID": "DHUA",
 	"CostCenter": "Cold Storage"
 }]

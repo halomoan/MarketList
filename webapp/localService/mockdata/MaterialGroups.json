@@ -1,4 +1,5 @@
 [{
+	"PlantID" : "DHUA",
 	"MaterialGroupID": "MG0001",
 	"MaterialGroupName": "Fruits",
 	"NumberOfMaterials": 248,
@@ -12,6 +13,7 @@
 		}
 	}
 }, {
+	"PlantID" : "DHUA",
 	"MaterialGroupID": "MG0002",
 	"MaterialGroupName": "Drinks",
 	"NumberOfMaterials": 533,
@@ -25,6 +27,7 @@
 		}
 	}
 }, {
+	"PlantID" : "DHUA",
 	"MaterialGroupID": "MG0003",
 	"MaterialGroupName": "Snacks",
 	"NumberOfMaterials": 1724,
@@ -38,6 +41,7 @@
 		}
 	}
 }, {
+	"PlantID" : "DHXUA",
 	"MaterialGroupID": "MG0004",
 	"MaterialGroupName": "Foods",
 	"NumberOfMaterials": 7612,

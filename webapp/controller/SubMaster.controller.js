@@ -26,7 +26,7 @@ sap.ui.define([
 			 */
 			onInit : function () {
 				// Control state model
-				var oList = this.byId("list"),
+				var oList = this.byId("materiallist"),
 					oViewModel = this._createViewModel(),
 					// Put down master list's original value for busy indicator delay,
 					// so it can be restored later on. Busy handling on the master list is
@@ -340,14 +340,15 @@ sap.ui.define([
 			 */
 			_onMasterMatched :  function(oEvent) {
 				var objectId =  oEvent.getParameter("arguments").groupId;
+				
 				this.getModel().metadataLoaded().then( function() {
 					var sObjectPath = this.getModel().createKey("MaterialGroups", {
 						MaterialGroupID :  objectId
 					});
-					
 					this._bindView("/" + sObjectPath );
 				
 				}.bind(this));
+				
 			},
 
 			/**
@@ -360,15 +361,28 @@ sap.ui.define([
 			_bindView : function (sObjectPath) {
 				// Set busy indicator during view binding
 				var oViewModel = this.getModel("masterView");
+				var oThis = this;
 
 				// If the view was not bound yet its not busy, only if the binding requests data it is set to busy again
-				//oViewModel.setProperty("/busy", false);
-				
+				oViewModel.setProperty("/busy", true);
 				
 				this.getView().bindElement({
 					path : sObjectPath,
 					events: {
-						change : this._onBindingChange.bind(this),
+						change : function() {
+							oViewModel.setProperty("/busy", false);
+							var plantId = 	oThis.getView().getBindingContext().getProperty("PlantID");
+				
+				
+							var oList = oThis.getView().byId("materiallist");
+							var oBinding = oList.getBinding("items");
+							var aFilters = [];
+			
+							
+							aFilters.push( new Filter("PlantID", FilterOperator.Contains, plantId) );
+							
+							oBinding.filter(aFilters, sap.ui.model.FilterType.Application);  
+						},
 						dataReceived: function () {
 							oViewModel.setProperty("/busy", false);
 						},
@@ -378,12 +392,6 @@ sap.ui.define([
 					}
 				});
 			},
-			
-			_onBindingChange : function () {
-				
-				
-			},
-			
 			_listUpdated: function(){
 				/*var firstItem = this._oList.getItems()[0];
 				if (firstItem) {

@@ -18,12 +18,13 @@ sap.ui.define([
 			    	PREQNo : [],
 			    	iRefresh : 0,
 			    	tableChanged : false,
-			    	MarketListID : ""
+			    	MarketListID : "MKT0001"
 			    };
 			    
 				var oViewData = {
 					toogleFreeze : false,
-					freezeCol : 4,
+					freezeCold : 4,
+					freezeColm : 1,
 					columns : [
 							{"date":"","noItem": 1 , "total" : 0, "visible": true},
 							{"date":"","noItem": 0 , "total" : 0, "visible": false},
@@ -66,7 +67,7 @@ sap.ui.define([
 			},
 			_onMasterMatched :  function(oEvent) {
 				if (this.globalData.iRefresh === 0) {
-					this.globalData.MarketListID = oEvent.getParameter("arguments").marketlistID;
+					//this.globalData.MarketListID = oEvent.getParameter("arguments").marketlistID;
 					this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
 				}
 			},
@@ -78,8 +79,14 @@ sap.ui.define([
 			toggleFreeze: function(){
 				
 				var oViewModel = this.getModel("detailView"),
-				    toogleFreeze = oViewModel.getProperty("/toogleFreeze"),
-				    freezeCol =  oViewModel.getProperty("/freezeCol");
+				    toogleFreeze = oViewModel.getProperty("/toogleFreeze");
+				var freezeCol;
+				 
+				if(!sap.ui.Device.system.phone) {   
+				    freezeCol =  oViewModel.getProperty("/freezeColm");
+				} else {
+				 	freezeCol =  oViewModel.getProperty("/freezeCold");
+				}
 				if(toogleFreeze){
 					this.byId("mktlistTable").setFixedColumnCount(freezeCol);   
 				} else{
@@ -94,6 +101,7 @@ sap.ui.define([
 				var sId = oEvent.getSource().data("myId");
 				var sComment = oEvent.getSource().data("myComment");
 				var oModel = this._oJsonModel;
+				var oThis = this;
 			
 				
 				var itemId = sId.substr(0,sId.length - 3);
@@ -112,22 +120,20 @@ sap.ui.define([
 						beginButton: new sap.m.Button({
 							text:  this.getResourceBundle().getText("submit"),
 							press: function () {
+									
 								var sText = sap.ui.getCore().byId('commentTextArea').getValue();
 								sap.m.MessageToast.show('Add Comment : ' + sText);
 								var rows = oModel.getData().rows;
-								
-								this.globalData.tableChanged = true;
-								
-								dialog.close();
+
 								for(var key in rows) {
 									if (rows[key].MaterialID === itemId){
 										rows[key]["Day" + itemIdx].Comment = sText;
 										oModel.refresh();
+										oThis.globalData.tableChanged = true;
 										break;
 									}
 								}
-								
-								
+								dialog.close();
 								
 							}
 						}),

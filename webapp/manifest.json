@@ -109,7 +109,7 @@
 					]
 				},
 				{
-					"pattern": "master/{marketlistID}",
+					"pattern": "master/{plantID}",
 					"name": "master",
 					"target": [
 						"object",
