@@ -18,6 +18,14 @@
         "entryPath": "/test-resources"
       },
       "description": "SAPUI5 Test Resources"
+    },
+    {
+      "path": "/sm1",
+      "target": {
+        "type": "destination",
+        "name": "sm1"
+      },
+      "description": "sm1"
     }
   ],
   "sendWelcomeFileRedirect": true

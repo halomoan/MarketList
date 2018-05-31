@@ -76,7 +76,7 @@ sap.ui.define([
 				var oPlant = this.getView().byId("plant");
 				var oItemSelectTemplate = new sap.ui.core.Item({
 		            key : "{PlantID}",
-		            text : "{Plant}"
+		            text : "{PlantText}"
     			});
 				oPlant.bindItems({ 
 					"path": "/PlantSet",
@@ -99,7 +99,7 @@ sap.ui.define([
 		},
 
 		_onMetadataLoaded: function(oEvent) {
-			this.getView().bindElement("/UserProfileSet('USR001')");
+			this.getView().bindElement("/UserProfileSet('USP001')");
 		},
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
@@ -137,7 +137,7 @@ sap.ui.define([
 			
 			var oItemSelectTemplate = new sap.ui.core.Item({
 	            key : "{CostCenterID}",
-	            text : "{CostCenter}"
+	            text : "{CostCenterText}"
     		});
         
         //	oViewModel.setProperty("/busy", true);

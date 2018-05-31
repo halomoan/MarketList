@@ -24,6 +24,14 @@
 					"localUri": "localService/metadata.xml"
 				},
 				"uri": "localService/metadata.xml"
+			},
+			"ZMARKETLIST_SRV": {
+				"uri": "/sm1/sap/opu/odata/sap/ZMARKETLIST_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZMARKETLIST_SRV/metadata.xml"
+				}
 			}
 		}
 	},
@@ -75,7 +83,7 @@
 				}
 			},
 			"": {
-				"dataSource": "mainService"
+				"dataSource": "ZMARKETLIST_SRV"
 			}
 		},
 		"resources": {
@@ -123,7 +131,6 @@
 						"home"
 					]
 				},
-				
 				{
 					"pattern": "submaster/{groupId}",
 					"name": "submaster",
@@ -146,7 +153,6 @@
 					"viewName": "homeView",
 					"viewLevel": 1,
 					"viewId": "home"
-					
 				},
 				"master": {
 					"viewName": "Master",

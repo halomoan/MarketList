@@ -13,7 +13,7 @@
 			<l:VerticalLayout class="sapUiSmallMargin">
 				<Title text="Purchasing Requisition" level="H1" titleStyle="H1"/>
 				<Title text="SAP Material Management" level="H4" titleStyle="H4"/>
-				<ObjectStatus title="User ID" text="{UserID}"/>
+				<ObjectStatus title="User ID" text="{UserId}"/>
 			</l:VerticalLayout>
 		</uxap:content>	
 	</uxap:ObjectPageHeaderContent>	
@@ -45,7 +45,7 @@
 				<Label text="{i18n>plant}" />
 					
 				<Select id="plant" change="onPlantChange">
-					<core:Item text="{Plant}" key="{PlantID}"/>
+					<core:Item text="{PlantText}" key="{PlantID}"/>
 				</Select>
 				
 				<Label text="{i18n>costCenter}" />

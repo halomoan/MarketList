@@ -12,7 +12,7 @@
     {
       "templateId": "servicecatalog.connectivityComponent",
       "templateVersion": "0.0.0",
-      "dateTimeStamp": "Wed, 13 Jan 2016 12:57:19 GMT"
+      "dateTimeStamp": "Thu, 31 May 2018 09:41:58 GMT"
     },
     {
       "templateId": "wysiwygtemplate.quickStart",
@@ -34,7 +34,7 @@
   },
   "dataBinding": {},
   "mockpreview": {
-    "mockUri": "localService/metadata.xml",
+    "mockUri": "/sm1/sap/opu/odata/sap/ZMARKETLIST_SRV",
     "metadataFilePath": "localService/metadata.xml",
     "loadJSONFiles": true,
     "loadCustomRequests": false,
