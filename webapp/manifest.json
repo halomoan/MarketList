@@ -132,7 +132,7 @@
 					]
 				},
 				{
-					"pattern": "submaster/{groupId}",
+					"pattern": "submaster/plantId/:plantId:/groupId/:groupId:",
 					"name": "submaster",
 					"target": [
 						"object",

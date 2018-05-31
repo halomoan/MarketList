@@ -60,7 +60,7 @@ sap.ui.define([
 				this.setModel(oViewModel, "detailView");
 				
 				
-				this.getRouter().getRoute("master").attachPatternMatched(this._onMasterMatched, this);
+				/////this.getRouter().getRoute("master").attachPatternMatched(this._onMasterMatched, this);
 				
 				
 				

@@ -41,6 +41,8 @@ sap.ui.define([
 					aFilter : [],
 					aSearch : []
 				};
+				
+				this.PlantID = "";
 
 				this.setModel(oViewModel, "masterView");
 				// Make sure, busy indication is showing immediately so there is no
@@ -101,9 +103,11 @@ sap.ui.define([
 				var sQuery = oEvent.getParameter("query");
 
 				if (sQuery) {
-					this._oListFilterState.aSearch = [new Filter("MaterialGroupName", FilterOperator.Contains, sQuery)];
+					this._oListFilterState.aSearch = [
+						new Filter("PlantID", FilterOperator.EQ, this.PlantID), 
+						new Filter("MaterialGroupName", FilterOperator.Contains, sQuery)];
 				} else {
-					this._oListFilterState.aSearch = [];
+					this._oListFilterState.aSearch = [	new Filter("PlantID", FilterOperator.EQ, this.PlantID) ];
 				}
 				this._applyFilterSearch();
 
@@ -268,6 +272,7 @@ sap.ui.define([
 				var oList = this.getView().byId("matgrouplist");
 				var oBinding = oList.getBinding("items");
 				var sFilterValue =  oEvent.getParameter("arguments").plantID;
+				this.PlantID =  oEvent.getParameter("arguments").plantID;
 				var aFilters = [];
 
 				
@@ -285,9 +290,8 @@ sap.ui.define([
 			 */
 			
 			_showSubMaster : function(oItem) {
-			
 				var sObjectId = oItem.getBindingContext().getProperty("MaterialGroupID");
-				this.getRouter().navTo("submaster", {groupId : sObjectId}, false);
+				this.getRouter().navTo("submaster", {plantId: this.PlantID, groupId : sObjectId}, false);
 			
 			},
 

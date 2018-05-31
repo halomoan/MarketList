@@ -35,13 +35,6 @@
 			<!-- For client side filtering add this to the items attribute:  parameters: {operationMode: 'Client'}}" -->
 			<List
 					id="materiallist"
-					items="{path: 'Materials',
-						sorter: {
-							path: 'MaterialText',
-							descending: false
-							},
-						groupHeaderFactory: '.createGroupHeader'
-					}"
 					busyIndicatorDelay="{masterView>/delay}"
 					busy="{masterView>/busy}"
 					noDataText="{masterView>/noDataText}"
@@ -62,20 +55,7 @@
 					</Toolbar>
 				</infoToolbar>
 				<items>
-					<ObjectListItem
-							type="{= ${device>/system/phone} ? 'Active' : 'Inactive'}"
-							press="onSelectionChange"
-							title="{MaterialText}"
-							number="{
-								path: 'Quantity',
-								formatter: '.formatter.currencyValue'
-							}"
-							numberUnit="{UnitOfMeasure}"
-							icon="sap-icon://add-product"
-							iconDensityAware="false"
-    						iconInset="false"
-						>
-					</ObjectListItem>
+				
 				</items>
 			</List>
 		</semantic:content>

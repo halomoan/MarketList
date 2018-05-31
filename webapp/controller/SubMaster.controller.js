@@ -42,7 +42,8 @@ sap.ui.define([
 					aFilter : [],
 					aSearch : []
 				};
-
+	
+				this.PlantID = "";
 				this.setModel(oViewModel, "masterView");
 				// Make sure, busy indication is showing immediately so there is no
 				// break after the busy indication for loading the view's meta data is
@@ -106,9 +107,12 @@ sap.ui.define([
 				var sQuery = oEvent.getParameter("query");
 
 				if (sQuery) {
-					this._oListFilterState.aSearch = [new Filter("MaterialText", FilterOperator.Contains, sQuery)];
+					this._oListFilterState.aSearch = [
+						new Filter("PlantID", FilterOperator.EQ, this.PlantID),
+						new Filter("MaterialText", FilterOperator.Contains, sQuery)
+					];
 				} else {
-					this._oListFilterState.aSearch = [];
+					this._oListFilterState.aSearch = [new Filter("PlantID", FilterOperator.EQ, this.PlantID)];
 				}
 				this._applyFilterSearch();
 
@@ -340,14 +344,49 @@ sap.ui.define([
 			 */
 			_onMasterMatched :  function(oEvent) {
 				var objectId =  oEvent.getParameter("arguments").groupId;
+				var plantId =  oEvent.getParameter("arguments").plantId;
 				
-				this.getModel().metadataLoaded().then( function() {
+				
+				/*this.getModel().metadataLoaded().then( function() {
 					var sObjectPath = this.getModel().createKey("MaterialGroups", {
 						MaterialGroupID :  objectId
 					});
 					this._bindView("/" + sObjectPath );
 				
 				}.bind(this));
+				*/
+				var sObjectPath = this.getModel().createKey("/MaterialGroups", {
+						MaterialGroupID :  objectId
+				});
+				
+				
+				var oList = this.getView().byId("materiallist");
+				
+				var sFilterValue = plantId;
+				this.PlantID = plantId;
+				var oFilters = [];
+
+				
+				if (sFilterValue){
+				    oFilters.push( new Filter("PlantID", FilterOperator.EQ, sFilterValue) );
+				}
+				
+				var oItems = new sap.m.ObjectListItem({
+					title : "{MaterialText}",
+				    number: {	path: "NetPrice",
+								formatter: ".formatter.currencyValue"
+							},
+				    numberUnit: "{UnitOfMeasure}",
+				    icon: "sap-icon://add-product",
+					iconDensityAware: false,
+					iconInset:false,
+				    type: "Active"
+				});
+				oList.bindItems({
+					path : sObjectPath + "/Materials",
+					 template: oItems,
+    				filters: oFilters
+				});
 				
 			},
 
@@ -441,6 +480,7 @@ sap.ui.define([
 			_applyFilterSearch : function () {
 				var aFilters = this._oListFilterState.aSearch.concat(this._oListFilterState.aFilter),
 					oViewModel = this.getModel("masterView");
+				
 				this._oList.getBinding("items").filter(aFilters, "Application");
 				// changes the noDataText of the list in case there are no filter results
 				if (aFilters.length !== 0) {
