@@ -10,10 +10,10 @@
 			<m:Image src="images/PPHGLogo.png" height="50%"></m:Image>
 			</l:VerticalLayout>
 			<l:VerticalLayout class="sapUiSmallMargin">
-				<m:ObjectStatus title="{i18n>date}" text="{Date}"/>	
-				<m:ObjectStatus title="{i18n>userid}" text="{UserID}"/>
-				<m:ObjectStatus title="{i18n>costCenter}" text="{CostCenterID} - {CostCenterText}"/>
-				<m:ObjectStatus title="{i18n>unloadingPoint}" text="{UnloadingPoint}"/>
+				<m:ObjectStatus title="{i18n>date}" text="{detailView>/Date}"/>	
+				<m:ObjectStatus title="{i18n>plant}" text="{detailView>/PlantID} - {detailView>/Plant}"/>
+				<m:ObjectStatus title="{i18n>costCenter}" text="{detailView>/CostCenterID} - {detailView>/CostCenterText}"/>
+				<m:ObjectStatus title="{i18n>unloadingPoint}" text="{detailView>/UnloadingPoint}"/>
 			</l:VerticalLayout>
 			
 		</uxap:content>	

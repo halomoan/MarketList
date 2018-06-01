@@ -14,11 +14,11 @@
 					multiSelect="false">
 				<items>
 					<ViewSettingsItem
-							text="{i18n>masterFilter1}"
-							key="Filter1"
+							text="{i18n>matFilter1}"
+							key="Locked"
 							id="viewFilter1"/>
 					<ViewSettingsItem
-							text="{i18n>masterFilter2}"
+							text="{i18n>matFilter1}"
 							key="Filter2"
 							id="viewFilter2"/>
 				</items>

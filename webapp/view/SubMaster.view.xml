@@ -70,15 +70,19 @@
 				<core:Item
 						id="masterSort1"
 						key="MaterialText"
-						text="{i18n>masterSort1}"/>
+						text="{i18n>sortByText}"/>
 				<core:Item
 						id="masterSort2"
 						key="MaterialID"
-						text="{i18n>masterSort2}"/>
+						text="{i18n>sortByID}"/>
+				<core:Item
+						id="masterSort3"
+						key="Locked"
+						text="{i18n>sortByLocked}"/>		
 			</semantic:SortSelect>
 		</semantic:sort>
 
-		<semantic:filter>
+		<!--<semantic:filter>
 			<semantic:FilterAction
 					id="filter"
 					press="onOpenViewSettings" />
@@ -99,7 +103,7 @@
 						text="{i18n>masterGroup1}"/>
 			</semantic:GroupSelect>
 		</semantic:group>
-
+		-->
 	</semantic:MasterPage>
 
 </mvc:View>

@@ -269,17 +269,20 @@ sap.ui.define([
 			 * @private
 			 */
 			_onMasterMatched :  function(oEvent) {
-				var oList = this.getView().byId("matgrouplist");
-				var oBinding = oList.getBinding("items");
 				var sFilterValue =  oEvent.getParameter("arguments").plantID;
-				this.PlantID =  oEvent.getParameter("arguments").plantID;
-				var aFilters = [];
-
 				
-				if (sFilterValue){
-				    aFilters.push( new Filter("PlantID", FilterOperator.EQ, sFilterValue) );
+				if (this.PlantID !== sFilterValue ) {
+					var oList = this.getView().byId("matgrouplist");
+					var oBinding = oList.getBinding("items");
+					
+					this.PlantID =  oEvent.getParameter("arguments").plantID;
+					var aFilters = [];
+					
+					if (sFilterValue){
+					    aFilters.push( new Filter("PlantID", FilterOperator.EQ, sFilterValue) );
+					}
+					oBinding.filter(aFilters, sap.ui.model.FilterType.Application);  
 				}
-				oBinding.filter(aFilters, sap.ui.model.FilterType.Application);  
 			},
 
 			/**

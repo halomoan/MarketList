@@ -40,7 +40,13 @@ sap.ui.define([
 							{"date":"","noItem": 0 , "total" : 0, "visible": false},
 							{"date":"","noItem": 0 , "total" : 0, "visible": false},
 							{"date":"","noItem": 0 , "total" : 0, "visible": false}
-						]
+						],
+					Date: "",
+					PlantID: "",
+					Plant: "",
+					CostCenterID : "",
+					CostCenterText: "",
+					UnloadingPoint: ""
 				};
 				
 				var aSelectionItems = [];
@@ -60,7 +66,7 @@ sap.ui.define([
 				this.setModel(oViewModel, "detailView");
 				
 				
-				/////this.getRouter().getRoute("master").attachPatternMatched(this._onMasterMatched, this);
+				this.getRouter().getRoute("master").attachPatternMatched(this._onMasterMatched, this);
 				
 				
 				
@@ -379,13 +385,29 @@ sap.ui.define([
 				var oView = this.getView();
 				var oThis = this;
 				
+				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+				var oData = oStorage.get("localStorage");
+				var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "dd-MM-YYYY" });   
+				var oDate = new Date();
+				
+				if (oData) {
+					oViewModel.setProperty("/Date",dateFormat.format(oDate));
+					oViewModel.setProperty("/PlantID",oData.PlantID);
+					oViewModel.setProperty("/Plant",oData.Plant);
+					oViewModel.setProperty("/CostCenterID",oData.CostCenterID);
+					oViewModel.setProperty("/CostCenterText",oData.CostCenter);
+					oViewModel.setProperty("/UnloadingPoint",oData.UnloadingPoint);
+				}
+				return;
+				
 				var oModel = this.getOwnerComponent().getModel();
 				
 				
 				var sPath = "/" + oModel.createKey("MarketListHeaderSet",{MarketListHeaderID:  this.globalData.MarketListID});
 				
-				
+				/*
 				this.getView().bindElement(sPath);
+				*/
 				
 				sap.ui.core.BusyIndicator.show();
 				oModel.read(sPath + "/MarketListDetailSet", {

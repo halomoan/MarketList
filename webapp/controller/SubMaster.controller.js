@@ -105,12 +105,21 @@ sap.ui.define([
 				}
 
 				var sQuery = oEvent.getParameter("query");
-
+				var regNumeric = /^\d+$/;
+				
 				if (sQuery) {
-					this._oListFilterState.aSearch = [
-						new Filter("PlantID", FilterOperator.EQ, this.PlantID),
-						new Filter("MaterialText", FilterOperator.Contains, sQuery)
-					];
+					
+					if (regNumeric.test(sQuery)) {
+						this._oListFilterState.aSearch = [
+							new Filter("PlantID", FilterOperator.EQ, this.PlantID),
+							new Filter("MaterialID", FilterOperator.Contains, sQuery)
+						];	
+					} else {
+						this._oListFilterState.aSearch = [
+							new Filter("PlantID", FilterOperator.EQ, this.PlantID),
+							new Filter("MaterialText", FilterOperator.Contains, sQuery)
+						];
+					}
 				} else {
 					this._oListFilterState.aSearch = [new Filter("PlantID", FilterOperator.EQ, this.PlantID)];
 				}

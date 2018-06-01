@@ -33,29 +33,12 @@ sap.ui.define([
 				return;
 			}
 			
+			var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+			oStorage.put("localStorage",oData);
 			
 			this.getRouter().navTo("master", {plantID : oPlant.getProperty("key")}, false);
 				
-			/*var oModel = this.getOwnerComponent().getModel();
-			var sPath = "/" + oModel.createKey("MarketListSet",{PlantID: oPlant.getProperty("key"), CostCenterID : oCostCenter.getProperty("key"), UnLoadingPointID: oUnloadingPoint.getProperty("key")});
-			
-			var oThis = this;
-			
-			var oViewModel = this.getModel("viewModel");
-			oViewModel.setProperty("/busy", true);
-			oModel.read(sPath, {
-			 method: "GET",
-				    success: function(oResult) {
-				    	oViewModel.setProperty("/busy", false);
-				    	
-				    	if (oResult) {
-				    	  oThis.getRouter().navTo("master", {marketlistID : oResult.MarketListID}, false);
-				    	}
-				    	
-				    	  
-				    }
-			});
-			*/
+		
 			
 		},
 		/**

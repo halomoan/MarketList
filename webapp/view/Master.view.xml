@@ -80,20 +80,15 @@
 				<core:Item
 						id="masterSort1"
 						key="MaterialGroupName"
-						text="{i18n>masterSort1}"/>
+						text="{i18n>sortByText}"/>
 				<core:Item
 						id="masterSort2"
 						key="MaterialGroupID"
-						text="{i18n>masterSort2}"/>
+						text="{i18n>sortByID}"/>
 			</semantic:SortSelect>
 		</semantic:sort>
 
-		<semantic:filter>
-			<semantic:FilterAction
-					id="filter"
-					press="onOpenViewSettings" />
-		</semantic:filter>
-
+		
 		<semantic:group>
 			<semantic:GroupSelect
 					id="group"
