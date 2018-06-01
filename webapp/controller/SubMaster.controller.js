@@ -373,14 +373,21 @@ sap.ui.define([
 				
 				var oItems = new sap.m.ObjectListItem({
 					title : "{MaterialText}",
-				    number: {	path: "NetPrice",
+				    /*number: {	path: "PriceUnit",
 								formatter: ".formatter.currencyValue"
 							},
 				    numberUnit: "{UnitOfMeasure}",
-				    icon: "sap-icon://add-product",
+				    */
+				    icon: "{= ${Locked} === true ? 'sap-icon://decline' : 'sap-icon://add-product'}",
 					iconDensityAware: false,
 					iconInset:false,
-				    type: "Active"
+				    type: "Inactive",
+				    attributes: [
+			            new sap.m.ObjectAttribute({text: "ID: {MaterialID}"})
+			        ],
+			        firstStatus: new sap.m.ObjectStatus({text: "{= ${Locked} === true ? 'Not Available' : 'Available'}", state: "{= ${Locked} === true ? 'Error' : 'Success'}"})
+			        //secondStatus: new sap.m.ObjectStatus({text: "Second status info"})
+				    
 				});
 				oList.bindItems({
 					path : sObjectPath + "/Materials",
