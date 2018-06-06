@@ -7,34 +7,34 @@ sap.ui.define([
 	return BaseController.extend("sap.ui.demo.masterdetail.controller.homeView", {
 		gotoForm: function(){
 
-			var oData = {};
+			var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+			var oLocal = oStorage.get("localStorage");
+			
 			var oPlant = this.getView().byId("plant").getSelectedItem();
 			if(oPlant){
-				oData.PlantID = oPlant.getProperty("key");
-				oData.Plant = oPlant.getProperty("text");
+				oLocal.PlantID = oPlant.getProperty("key");
+				oLocal.Plant = oPlant.getProperty("text");
 			} else {
 				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectPlant"));
 				return;
 			}
 			var oCostCenter = this.getView().byId("costcenter").getSelectedItem();
 			if(oCostCenter){
-				oData.CostCenterID = oCostCenter.getProperty("key");
-				oData.CostCenter = oCostCenter.getProperty("text");
+				oLocal.CostCenterID = oCostCenter.getProperty("key");
+				oLocal.CostCenter = oCostCenter.getProperty("text");
 			} else {
 				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectCC"));	
 				return;
 			}
 			var oUnloadingPoint = this.getView().byId("unloadingpoint").getSelectedItem();
 			if(oUnloadingPoint){
-				oData.UnloadingPointID = oUnloadingPoint.getProperty("key");
-				oData.UnloadingPoint = oUnloadingPoint.getProperty("text");
+				oLocal.UnloadingPointID = oUnloadingPoint.getProperty("key");
+				oLocal.UnloadingPoint = oUnloadingPoint.getProperty("text");
 			} else {
 				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectUnloadingPoint"));	
 				return;
 			}
-			
-			var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-			oStorage.put("localStorage",oData);
+			oStorage.put("localStorage",oLocal);
 			
 			this.getRouter().navTo("master", {plantID : oPlant.getProperty("key")}, false);
 				
@@ -82,7 +82,23 @@ sap.ui.define([
 		},
 
 		_onMetadataLoaded: function(oEvent) {
-			this.getView().bindElement("/UserProfileSet('USP001')");
+			this.getView().bindElement({
+					path: "/UserProfileSet('USP001')",
+					events: {
+						dataReceived: function(rData){
+							var oData = rData.getParameter("data");
+							if(oData){
+								var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+								var oLocal = oStorage.get("localStorage"); 
+								oLocal.UserId = oData.UserId;
+								oLocal.Name = oData.Name;
+			
+								oStorage.put("localStorage",oLocal);
+							}
+						}
+					}
+			});
+			
 		},
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

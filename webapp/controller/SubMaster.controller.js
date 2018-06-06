@@ -277,6 +277,7 @@ sap.ui.define([
 					
 					var oCtx = item.getBindingContext();
 					
+					
 					var oItem = {
 						"MaterialGroupID" : "",
 						"MaterialID" : "",
@@ -300,21 +301,15 @@ sap.ui.define([
 						"Day13": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")}
 					};
 					
-					
-					
-					//console.log(oCtx.getProperty("MaterialID"));
-					
 					oItem.MaterialGroupID = oCtx.getProperty("MaterialGroupID");
 					oItem.MaterialID = oCtx.getProperty("MaterialID");
 					
-					oItem.UnitPrice = oCtx.getProperty("UnitPrice");
-					oItem.PriceUnit = oCtx.getProperty("PriceUnit");
+					oItem.UnitPrice = parseFloat(oCtx.getProperty("NetPrice"));
+					oItem.PriceUnit = parseFloat(oCtx.getProperty("PriceUnit"));
 	
 					
 					oItem.MaterialText = oCtx.getProperty("MaterialText");
 					oItem.Currency = oCtx.getProperty("Currency");
-					
-					
 					
 					jsonData.push(oItem);
 					

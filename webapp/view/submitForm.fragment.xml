@@ -17,17 +17,17 @@
 						singleContainerFullSize="false">
 						<f:content>
 							<Label text="{i18n>requisitioner}" required="true"/>
-							<Text text="{Requisitioner}"/>
+							<Text text="{detailView>/UserId}"/>
 							<Label text="{i18n>plant}"/>
-							<Text text="{Plant}"/>
+							<Text text="{detailView>/Plant}"/>
 							<Label text="{i18n>costCenter}"/>
-							<Text text="{CostCenterID} - {CostCenterText}"/>
+							<Text text="{detailView>/CostCenterID} - {detailView>/CostCenterText}"/>
 							<Label text="{i18n>unloadingPoint}"/>
-							<Input value="{UnloadingPoint}"/>
+							<Input value="{detailView>/UnloadingPoint}"/>
 							<Label text="{i18n>recipient}"/>
-							<Input value="{Recipient}"/>
+							<Input value="{detailView>/Recipient}"/>
 							<Label text="{i18n>trackingNo}"/>
-							<Input value="{TrackingNo}"/>
+							<Input value="{detailView>/TrackingNo}"/>
 						</f:content>
 					</f:SimpleForm>
 				</items>

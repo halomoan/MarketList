@@ -11,7 +11,7 @@ sap.ui.define([
 		 * @memberOf sap.ui.demo.masterdetail.view.view.submitForm
 		 */
 		//	onInit: function() {
-		//
+		//	
 		//	},
 
 		/**
