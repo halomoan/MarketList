@@ -9,6 +9,7 @@ sap.ui.define([
 
 			var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 			var oLocal = oStorage.get("localStorage");
+			if (!oLocal) { oLocal = {}; }
 			
 			var oPlant = this.getView().byId("plant").getSelectedItem();
 			if(oPlant){

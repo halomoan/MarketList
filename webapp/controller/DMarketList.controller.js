@@ -434,6 +434,7 @@ sap.ui.define([
 				
 				this.getView().bindElement({
 					path: sPath,
+					parameters: { custom: { WERKS : oLocalData.PlantID, KOSTL : oLocalData.CostCenterID, ABLAD: oLocalData.UnloadingPoint } },
 					events: {
                         dataReceived: function(rData){
                             sap.ui.core.BusyIndicator.hide();
@@ -461,7 +462,7 @@ sap.ui.define([
                       	sap.ui.core.BusyIndicator.show();
                       }
 					}    
-				});
+				},{custom: { WERKS : oLocalData.PlantID, KOSTL : oLocalData.CostCenterID, ABLAD: oLocalData.UnloadingPoint }});
 				
 				/*
 				sap.ui.core.BusyIndicator.show();
