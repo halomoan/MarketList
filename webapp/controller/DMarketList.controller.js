@@ -32,14 +32,14 @@ sap.ui.define([
 					freezeCold : 4,
 					freezeColm : 1,
 					columns : [
-							{"noItem": 1 , "total" : 0, "visible": true},
+							{"noItem": 0 , "total" : 0, "visible": true},
 							{"noItem": 0 , "total" : 0, "visible": false},
 							{"noItem": 0 , "total" : 0, "visible": false},
 							{"noItem": 0 , "total" : 0, "visible": false},
 							{"noItem": 0 , "total" : 0, "visible": false},
 							{"noItem": 0 , "total" : 0, "visible": false},
 							{"noItem": 0 , "total" : 0, "visible": false},
-							{"noItem": 1 , "total" : 0, "visible": true},
+							{"noItem": 0 , "total" : 0, "visible": true},
 							{"noItem": 0 , "total" : 0, "visible": false},
 							{"noItem": 0 , "total" : 0, "visible": false},
 							{"noItem": 0 , "total" : 0, "visible": false},
@@ -182,27 +182,97 @@ sap.ui.define([
 				
 				var tableRows = this._oJsonModel.getData().rows;
 				var oModel = this.getView().getModel();
-				var oEntry = {};
-				/*console.log(this.globalData);
-				console.log(tableRows);
-				*/
-				oModel.create("/MarketListHeaderSet",oEntry,null,
-					function(oData,oResponse){
-						console.log('Success');
-					},
-					function(){
-						console.log('Failed');	
-					});
-				/*oModel.update("/MarketListDetail('"+ this.globalData.MarketListID +"')", oEntry, {
-			    	method: "PUT",
-				    success: function(data) {
-				     alert("success");
-				    },
-				    error: function(e) {
-				     alert("error");
-				    }
-			   });
-				*/
+				var oViewModel = this.getModel("detailView");
+				
+				
+				
+				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+				var oLocalData = oStorage.get("localStorage");
+				
+				//TODO
+				oLocalData.Recipient = oViewModel.getProperty("/Recipient");
+				oLocalData.TrackingNo = oViewModel.getProperty("/TrackingNo");
+				oLocalData.MarketListHeaderID = this.globalData.MarketListID;
+				//oStorage.put("localStorage",oLocalData);
+                            	
+				var oHeader = {};
+				oHeader.PlantID = oLocalData.PlantID;
+				oHeader.CostCenterID = oLocalData.CostCenterID;
+				oHeader.UnloadingPoint = oLocalData.UnloadingPoint;
+				oHeader.MarketListHeaderID = oLocalData.MarketListHeaderID;
+				oHeader.CostCenterText = "";
+				oHeader.Plant = "";
+				oHeader.Requisitioner = oLocalData.UserId;
+				oHeader.Recipient = oLocalData.Recipient;
+				oHeader.TrackingNo = oLocalData.TrackingNo;
+				oHeader.TableH = [];
+				
+				var oHeaderD = {};
+				
+				oHeaderD.Date0 = this.globalData.Dates[0];
+				oHeaderD.PRID0 = this.globalData.PRID[0];
+				oHeader.TableH = oHeaderD;
+				
+				oHeaderD.Date1 = this.globalData.Dates[1];
+				oHeaderD.PRID1 = this.globalData.PRID[1];
+				oHeader.TableH = oHeaderD;
+				
+				oHeaderD.Date2 = this.globalData.Dates[2];
+				oHeaderD.PRID2 = this.globalData.PRID[2];
+				oHeader.TableH = oHeaderD;
+
+				oHeaderD.Date3 = this.globalData.Dates[3];
+				oHeaderD.PRID3 = this.globalData.PRID[3];
+				oHeader.TableH = oHeaderD;
+				
+				oHeaderD.Date4 = this.globalData.Dates[4];
+				oHeaderD.PRID4 = this.globalData.PRID[4];
+				oHeader.TableH = oHeaderD;
+				
+				oHeaderD.Date5 = this.globalData.Dates[5];
+				oHeaderD.PRID5 = this.globalData.PRID[5];
+				oHeader.TableH = oHeaderD;
+				
+				oHeaderD.Date6 = this.globalData.Dates[6];
+				oHeaderD.PRID6 = this.globalData.PRID[6];
+				oHeader.TableH = oHeaderD;
+				
+				oHeaderD.Date7 = this.globalData.Dates[7];
+				oHeaderD.PRID7 = this.globalData.PRID[7];
+				oHeader.TableH = oHeaderD;
+				
+				oHeaderD.Date7 = this.globalData.Dates[7];
+				oHeaderD.PRID7 = this.globalData.PRID[7];
+				oHeader.TableH = oHeaderD;
+				
+				oHeaderD.Date8 = this.globalData.Dates[8];
+				oHeaderD.PRID8 = this.globalData.PRID[8];
+				oHeader.TableH = oHeaderD;
+				
+				oHeaderD.Date9 = this.globalData.Dates[9];
+				oHeaderD.PRID9 = this.globalData.PRID[9];
+				oHeader.TableH = oHeaderD;
+				
+				oHeaderD.Date10 = this.globalData.Dates[10];
+				oHeaderD.PRID10 = this.globalData.PRID[10];
+				oHeader.TableH = oHeaderD;
+				
+				oHeaderD.Date11 = this.globalData.Dates[11];
+				oHeaderD.PRID11 = this.globalData.PRID[11];
+				oHeader.TableH = oHeaderD;
+				
+				oHeaderD.Date12 = this.globalData.Dates[12];
+				oHeaderD.PRID12 = this.globalData.PRID[12];
+				oHeader.TableH = oHeaderD;
+				
+				oHeaderD.Date13 = this.globalData.Dates[13];
+				oHeaderD.PRID13 = this.globalData.PRID[13];
+				oHeader.TableH = oHeaderD;
+				
+			
+				console.log(oHeader);
+				
+				
 			},
 			closeSaveDialog: function() {
 				if (this._oViewFormSubmit) {
@@ -392,7 +462,7 @@ sap.ui.define([
 						
 						var oViewModel = this.getModel("detailView");
 						
-					
+						
 						var i = 0;
 						for (key in noItems) {
 							oViewModel.setProperty("/columns/" + (i++) + "/noItem",noItems[key]);
@@ -459,6 +529,8 @@ sap.ui.define([
                             
                             var oData = rData.getParameter("data");
                             if(oData){
+                            	
+                            	
                             	oThis.globalData.MarketListID = oData.MarketListHeaderID;
                             	oThis.globalData.Dates[0] = oData.TableH.Date0;
 						      	oThis.globalData.Dates[1] = oData.TableH.Date1;
