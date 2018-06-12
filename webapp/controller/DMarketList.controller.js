@@ -19,7 +19,7 @@ sap.ui.define([
 			     
 			    this.globalData = {
 			    	Dates : [],
-			    	PREQNo : [null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+			    	PRID : [null,null,null,null,null,null,null,null,null,null,null,null,null,null],
 			    	iRefresh : 0,
 			    	tableChanged : false,
 			    	MarketListID : "MKT0001"
@@ -183,8 +183,17 @@ sap.ui.define([
 				var tableRows = this._oJsonModel.getData().rows;
 				var oModel = this.getView().getModel();
 				var oEntry = {};
-				
-				oModel.update("/MarketListDetail('"+ this.globalData.MarketListID +"')", oEntry, {
+				/*console.log(this.globalData);
+				console.log(tableRows);
+				*/
+				oModel.create("/MarketListHeaderSet",oEntry,null,
+					function(oData,oResponse){
+						console.log('Success');
+					},
+					function(){
+						console.log('Failed');	
+					});
+				/*oModel.update("/MarketListDetail('"+ this.globalData.MarketListID +"')", oEntry, {
 			    	method: "PUT",
 				    success: function(data) {
 				     alert("success");
@@ -193,7 +202,7 @@ sap.ui.define([
 				     alert("error");
 				    }
 			   });
-			
+				*/
 			},
 			closeSaveDialog: function() {
 				if (this._oViewFormSubmit) {
@@ -429,18 +438,28 @@ sap.ui.define([
 				var oModel = this.getOwnerComponent().getModel();
 				
 				
-				var sPath = "/" + oModel.createKey("MarketListHeaderSet",{MarketListHeaderID:  this.globalData.MarketListID});
+				//var sPath = "/" + oModel.createKey("MarketListHeaderSet",{MarketListHeaderID:  this.globalData.MarketListID});
+				var sPath = "/" + oModel.createKey("MarketListHeaderSet",{
+					PlantID : oLocalData.PlantID,
+					CostCenterID: oLocalData.CostCenterID,
+					UnloadingPoint: oLocalData.UnloadingPoint
+				});
 				
+				/*var oFilters = [];
+				oFilters.push( new sap.ui.model.Filter("PlantID", sap.ui.model.FilterOperator.EQ, oLocalData.PlantID) );
+				oFilters.push( new sap.ui.model.Filter("CostCenterID", sap.ui.model.FilterOperator.EQ, oLocalData.CostCenterID) );
+				oFilters.push( new sap.ui.model.Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, oLocalData.UnloadingPoint) );
+				*/
 				
 				this.getView().bindElement({
 					path: sPath,
-					parameters: { custom: { WERKS : oLocalData.PlantID, KOSTL : oLocalData.CostCenterID, ABLAD: oLocalData.UnloadingPoint } },
 					events: {
                         dataReceived: function(rData){
                             sap.ui.core.BusyIndicator.hide();
                             
                             var oData = rData.getParameter("data");
                             if(oData){
+                            	oThis.globalData.MarketListID = oData.MarketListHeaderID;
                             	oThis.globalData.Dates[0] = oData.TableH.Date0;
 						      	oThis.globalData.Dates[1] = oData.TableH.Date1;
 						      	oThis.globalData.Dates[2] = oData.TableH.Date2;
@@ -455,6 +474,22 @@ sap.ui.define([
 						      	oThis.globalData.Dates[11] = oData.TableH.Date11;
 						      	oThis.globalData.Dates[12] = oData.TableH.Date12;
 						      	oThis.globalData.Dates[13] = oData.TableH.Date13;
+						      	
+						      	oThis.globalData.PRID[0] = oData.TableH.PRID0;
+						      	oThis.globalData.PRID[1] = oData.TableH.PRID1;
+						      	oThis.globalData.PRID[2] = oData.TableH.PRID2;
+						      	oThis.globalData.PRID[3] = oData.TableH.PRID3;
+						      	oThis.globalData.PRID[4] = oData.TableH.PRID4;
+						      	oThis.globalData.PRID[5] = oData.TableH.PRID5;
+						      	oThis.globalData.PRID[6] = oData.TableH.PRID6;
+						      	oThis.globalData.PRID[7] = oData.TableH.PRID7;
+						      	oThis.globalData.PRID[8] = oData.TableH.PRID8;
+						      	oThis.globalData.PRID[9] = oData.TableH.PRID9;
+						      	oThis.globalData.PRID[10] = oData.TableH.PRID10;
+						      	oThis.globalData.PRID[11] = oData.TableH.PRID11;
+						      	oThis.globalData.PRID[12] = oData.TableH.PRID12;
+						      	oThis.globalData.PRID[13] = oData.TableH.PRID13;
+						      	
 					      	
                             }
                         },
@@ -462,7 +497,7 @@ sap.ui.define([
                       	sap.ui.core.BusyIndicator.show();
                       }
 					}    
-				},{custom: { WERKS : oLocalData.PlantID, KOSTL : oLocalData.CostCenterID, ABLAD: oLocalData.UnloadingPoint }});
+				});
 				
 				/*
 				sap.ui.core.BusyIndicator.show();
@@ -601,20 +636,20 @@ sap.ui.define([
 							oData.data[i].Day12.Date = this.globalData.Dates[12];
 							oData.data[i].Day13.Date = this.globalData.Dates[13];
 							
-							oData.data[i].Day0.PREQNo = this.globalData.PREQNo[0];
-							oData.data[i].Day1.PREQNo = this.globalData.PREQNo[1];
-							oData.data[i].Day2.PREQNo = this.globalData.PREQNo[2];
-							oData.data[i].Day3.PREQNo = this.globalData.PREQNo[3];
-							oData.data[i].Day4.PREQNo = this.globalData.PREQNo[4];
-							oData.data[i].Day5.PREQNo = this.globalData.PREQNo[5];
-							oData.data[i].Day6.PREQNo = this.globalData.PREQNo[6];
-							oData.data[i].Day7.PREQNo = this.globalData.PREQNo[7];
-							oData.data[i].Day8.PREQNo = this.globalData.PREQNo[8];
-							oData.data[i].Day9.PREQNo = this.globalData.PREQNo[9];
-							oData.data[i].Day10.PREQNo = this.globalData.PREQNo[10];
-							oData.data[i].Day11.PREQNo = this.globalData.PREQNo[11];
-							oData.data[i].Day12.PREQNo = this.globalData.PREQNo[12];
-							oData.data[i].Day13.PREQNo = this.globalData.PREQNo[13];
+							oData.data[i].Day0.PRID = this.globalData.PRID[0];
+							oData.data[i].Day1.PRID = this.globalData.PRID[1];
+							oData.data[i].Day2.PRID = this.globalData.PRID[2];
+							oData.data[i].Day3.PRID = this.globalData.PRID[3];
+							oData.data[i].Day4.PRID = this.globalData.PRID[4];
+							oData.data[i].Day5.PRID = this.globalData.PRID[5];
+							oData.data[i].Day6.PRID = this.globalData.PRID[6];
+							oData.data[i].Day7.PRID = this.globalData.PRID[7];
+							oData.data[i].Day8.PRID = this.globalData.PRID[8];
+							oData.data[i].Day9.PRID = this.globalData.PRID[9];
+							oData.data[i].Day10.PRID = this.globalData.PRID[10];
+							oData.data[i].Day11.PRID = this.globalData.PRID[11];
+							oData.data[i].Day12.PRID = this.globalData.PRID[12];
+							oData.data[i].Day13.PRID = this.globalData.PRID[13];
 							
 							oData.data[i].MarketListHeaderID =  this.globalData.MarketListID;
 							oData.data[i].MarketListDetailID = null;

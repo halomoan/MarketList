@@ -285,20 +285,20 @@ sap.ui.define([
 						"UnitPrice" : 0,
 						"Currency" : "",
 						"PriceUnit" : 0,
-						"Day0": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day1": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day2": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day3": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day4": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day5": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day6": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day7": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day8": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day9": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day10": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day11": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day12": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day13": { "PREQNo" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")}
+						"Day0": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day1": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day2": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day3": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day4": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day5": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day6": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day7": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day8": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day9": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day10": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day11": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day12": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+						"Day13": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")}
 					};
 					
 					oItem.MaterialGroupID = oCtx.getProperty("MaterialGroupID");
@@ -395,7 +395,7 @@ sap.ui.define([
 				});
 				oList.bindItems({
 					path : sObjectPath + "/Materials",
-					 template: oItems,
+					template: oItems,
     				filters: oFilters
 				});
 				
