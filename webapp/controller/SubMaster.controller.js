@@ -310,6 +310,7 @@ sap.ui.define([
 					
 					oItem.MaterialText = oCtx.getProperty("MaterialText");
 					oItem.Currency = oCtx.getProperty("Currency");
+					oItem.UOM = oCtx.getProperty("UnitOfMeasure");
 					
 					jsonData.push(oItem);
 					

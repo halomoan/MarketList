@@ -269,7 +269,38 @@ sap.ui.define([
 				oHeaderD.PRID13 = this.globalData.PRID[13];
 				oHeader.TableH = oHeaderD;
 				
-			
+				oHeader.MarketListDetailSet = {};
+				oHeader.MarketListDetailSet.results = [];
+				
+				
+				var oDetail = {};
+				oDetail.MarketListDetailID = oLocalData.MarketListDetailID;
+				oDetail.MarketListHeaderID = oLocalData.MarketListHeaderID;
+				for(var i in tableRows){
+					oDetail.MaterialGroupID = tableRows[i].MaterialGroupID;
+					oDetail.MaterialID = tableRows[i].MaterialID;
+					oDetail.MaterialText = "";
+					oDetail.UnitPrice = tableRows[i].UnitPrice;
+					oDetail.Currency = tableRows[i].Currency;
+					oDetail.PriceUnit = tableRows[i].PriceUnit;
+					oDetail.Day0 = tableRows[i].Day0;
+					oDetail.Day1 = tableRows[i].Day1;
+					oDetail.Day2 = tableRows[i].Day2;
+					oDetail.Day3 = tableRows[i].Day3;
+					oDetail.Day4 = tableRows[i].Day4;
+					oDetail.Day5 = tableRows[i].Day5;
+					oDetail.Day6 = tableRows[i].Day6;
+					oDetail.Day7 = tableRows[i].Day7;
+					oDetail.Day8 = tableRows[i].Day8;
+					oDetail.Day9 = tableRows[i].Day9;
+					oDetail.Day10 = tableRows[i].Day10;
+					oDetail.Day11 = tableRows[i].Day11;
+					oDetail.Day12 = tableRows[i].Day12;
+					oDetail.Day13 = tableRows[i].Day13;
+					oHeader.MarketListDetailSet.results.push(oDetail);
+				}
+				
+				console.log(tableRows);
 				console.log(oHeader);
 				
 				
@@ -601,20 +632,20 @@ sap.ui.define([
 					      	oThis.globalData.Dates[13] = oItem.Day13.Date;
 					      	
 					      	
-					      	oThis.globalData.PREQNo[0] =  oItem.Day0.PREQNo;
-					      	oThis.globalData.PREQNo[1] =  oItem.Day1.PREQNo;
-					      	oThis.globalData.PREQNo[2] =  oItem.Day2.PREQNo;
-					      	oThis.globalData.PREQNo[3] =  oItem.Day3.PREQNo;
-					      	oThis.globalData.PREQNo[4] =  oItem.Day4.PREQNo;
-					      	oThis.globalData.PREQNo[5] =  oItem.Day5.PREQNo;
-					      	oThis.globalData.PREQNo[6] =  oItem.Day6.PREQNo;
-					      	oThis.globalData.PREQNo[7] =  oItem.Day7.PREQNo;
-					      	oThis.globalData.PREQNo[8] =  oItem.Day8.PREQNo;
-					      	oThis.globalData.PREQNo[9] =  oItem.Day9.PREQNo;
-					      	oThis.globalData.PREQNo[10] =  oItem.Day10.PREQNo;
-					      	oThis.globalData.PREQNo[11] =  oItem.Day11.PREQNo;
-					      	oThis.globalData.PREQNo[12] =  oItem.Day12.PREQNo;
-					      	oThis.globalData.PREQNo[13] =  oItem.Day13.PREQNo;
+					      	oThis.globalData.PRID[0] =  oItem.Day0.PRID;
+					      	oThis.globalData.PRID[1] =  oItem.Day1.PRID;
+					      	oThis.globalData.PRID[2] =  oItem.Day2.PRID;
+					      	oThis.globalData.PRID[3] =  oItem.Day3.PRID;
+					      	oThis.globalData.PRID[4] =  oItem.Day4.PRID;
+					      	oThis.globalData.PRID[5] =  oItem.Day5.PRID;
+					      	oThis.globalData.PRID[6] =  oItem.Day6.PRID;
+					      	oThis.globalData.PRID[7] =  oItem.Day7.PRID;
+					      	oThis.globalData.PRID[8] =  oItem.Day8.PRID;
+					      	oThis.globalData.PRID[9] =  oItem.Day9.PRID;
+					      	oThis.globalData.PRID[10] =  oItem.Day10.PRID;
+					      	oThis.globalData.PRID[11] =  oItem.Day11.PRID;
+					      	oThis.globalData.PRID[12] =  oItem.Day12.PRID;
+					      	oThis.globalData.PRID[13] =  oItem.Day13.PRID;
 					      	
 					      	
 					      	
