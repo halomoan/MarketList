@@ -274,34 +274,57 @@ sap.ui.define([
 				
 				
 				var oDetail = {};
-				oDetail.MarketListDetailID = oLocalData.MarketListDetailID;
-				oDetail.MarketListHeaderID = oLocalData.MarketListHeaderID;
+				oDetail.MarketListDetailID = oLocalData.MarketListDetailID ?  oLocalData.MarketListDetailID : "MKD0001" ;
+				oDetail.MarketListHeaderID = oLocalData.MarketListHeaderID ? oLocalData.MarketListHeaderID : "MKT0001" ;
 				for(var i in tableRows){
+				
 					oDetail.MaterialGroupID = tableRows[i].MaterialGroupID;
 					oDetail.MaterialID = tableRows[i].MaterialID;
 					oDetail.MaterialText = "";
-					oDetail.UnitPrice = tableRows[i].UnitPrice;
+					oDetail.UnitPrice = String(tableRows[i].UnitPrice);
 					oDetail.Currency = tableRows[i].Currency;
-					oDetail.PriceUnit = tableRows[i].PriceUnit;
+					oDetail.PriceUnit = String(tableRows[i].PriceUnit);
 					oDetail.Day0 = tableRows[i].Day0;
+					oDetail.Day0.Quantity = String(tableRows[i].Day0.Quantity);
 					oDetail.Day1 = tableRows[i].Day1;
+					oDetail.Day1.Quantity = String(tableRows[i].Day1.Quantity);
 					oDetail.Day2 = tableRows[i].Day2;
+					oDetail.Day2.Quantity = String(tableRows[i].Day2.Quantity);
 					oDetail.Day3 = tableRows[i].Day3;
+					oDetail.Day3.Quantity = String(tableRows[i].Day3.Quantity);
 					oDetail.Day4 = tableRows[i].Day4;
+					oDetail.Day4.Quantity = String(tableRows[i].Day4.Quantity);
 					oDetail.Day5 = tableRows[i].Day5;
+					oDetail.Day5.Quantity = String(tableRows[i].Day5.Quantity);
 					oDetail.Day6 = tableRows[i].Day6;
+					oDetail.Day6.Quantity = String(tableRows[i].Day6.Quantity);
 					oDetail.Day7 = tableRows[i].Day7;
+					oDetail.Day7.Quantity = String(tableRows[i].Day7.Quantity);
 					oDetail.Day8 = tableRows[i].Day8;
+					oDetail.Day8.Quantity = String(tableRows[i].Day8.Quantity);
 					oDetail.Day9 = tableRows[i].Day9;
+					oDetail.Day9.Quantity = String(tableRows[i].Day9.Quantity);
 					oDetail.Day10 = tableRows[i].Day10;
+					oDetail.Day10.Quantity = String(tableRows[i].Day10.Quantity);
 					oDetail.Day11 = tableRows[i].Day11;
+					oDetail.Day11.Quantity = String(tableRows[i].Day11.Quantity);
 					oDetail.Day12 = tableRows[i].Day12;
+					oDetail.Day12.Quantity = String(tableRows[i].Day12.Quantity);
 					oDetail.Day13 = tableRows[i].Day13;
+					oDetail.Day13.Quantity = String(tableRows[i].Day13.Quantity);
 					oHeader.MarketListDetailSet.results.push(oDetail);
 				}
-				
-				console.log(tableRows);
 				console.log(oHeader);
+				
+				oModel.create("/MarketListHeaderSet", oHeader, {
+			    	method: "POST",
+				    success: function(data) {
+				     alert("success");
+				    },
+				    error: function(e) {
+				     alert("error");
+				    }
+			   });
 				
 				
 			},

@@ -89,6 +89,7 @@ sap.ui.define([
 						dataReceived: function(rData){
 							var oData = rData.getParameter("data");
 							if(oData){
+								console.log(oData);
 								var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 								var oLocal = oStorage.get("localStorage"); 
 								oLocal.UserId = oData.UserId;
