@@ -273,11 +273,12 @@ sap.ui.define([
 				oHeader.MarketListDetailSet.results = [];
 				
 				
-				var oDetail = {};
-				oDetail.MarketListDetailID = oLocalData.MarketListDetailID ?  oLocalData.MarketListDetailID : "MKD0001" ;
-				oDetail.MarketListHeaderID = oLocalData.MarketListHeaderID ? oLocalData.MarketListHeaderID : "MKT0001" ;
+			
+			
 				for(var i in tableRows){
-				
+					var oDetail = {};
+					oDetail.MarketListDetailID = oLocalData.MarketListDetailID ?  oLocalData.MarketListDetailID : "MKD0001" ;
+					oDetail.MarketListHeaderID = oLocalData.MarketListHeaderID ? oLocalData.MarketListHeaderID : "MKT0001" ;
 					oDetail.MaterialGroupID = tableRows[i].MaterialGroupID;
 					oDetail.MaterialID = tableRows[i].MaterialID;
 					oDetail.MaterialText = "";

@@ -65,7 +65,7 @@
 								<m:Label text="{i18n>unitPrice}" textAlign="Center" width="100%"/>
 								</multiLabels>
 								<template>
-										<u:Currency value="{mktlist>UnitPrice}" currency="{mktlist>Currency}" maxPrecision="0" useSymbol="false"/>
+										<u:Currency value="{mktlist>UnitPrice}" currency="{mktlist>Currency}" maxPrecision="2" useSymbol="false"/>
 								</template>
 							</Column>
 							<Column width="8rem">
@@ -77,7 +77,7 @@
 								<m:Label text="{i18n>priceUnit}"  width="100%"/>
 								</multiLabels>
 								<template>
-									<u:Currency value="{mktlist>PriceUnit}" currency="{mktlist>UOM}" maxPrecision="0" useSymbol="false"/>
+									<u:Currency value="{mktlist>PriceUnit}" currency="{mktlist>UOM}" maxPrecision="2" useSymbol="false"/>
 								</template>
 							</Column>
 							<Column width="12rem" visible="{detailView>/columns/7/visible}">
