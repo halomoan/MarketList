@@ -22,7 +22,8 @@ sap.ui.define([
 			    	PRID : [null,null,null,null,null,null,null,null,null,null,null,null,null,null],
 			    	iRefresh : 0,
 			    	tableChanged : false,
-			    	MarketListID : "MKT0001"
+			    	MarketListID : "MKT0001",
+			    	noOfDay : 0
 			    };
 			    
 			   
@@ -209,65 +210,49 @@ sap.ui.define([
 				
 				var oHeaderD = {};
 				
-				oHeaderD.Date0 = this.globalData.Dates[0];
-				oHeaderD.PRID0 = this.globalData.PRID[0];
-				oHeader.TableH = oHeaderD;
-				
-				oHeaderD.Date1 = this.globalData.Dates[1];
-				oHeaderD.PRID1 = this.globalData.PRID[1];
-				oHeader.TableH = oHeaderD;
-				
-				oHeaderD.Date2 = this.globalData.Dates[2];
-				oHeaderD.PRID2 = this.globalData.PRID[2];
-				oHeader.TableH = oHeaderD;
-
-				oHeaderD.Date3 = this.globalData.Dates[3];
-				oHeaderD.PRID3 = this.globalData.PRID[3];
-				oHeader.TableH = oHeaderD;
-				
-				oHeaderD.Date4 = this.globalData.Dates[4];
-				oHeaderD.PRID4 = this.globalData.PRID[4];
-				oHeader.TableH = oHeaderD;
-				
-				oHeaderD.Date5 = this.globalData.Dates[5];
-				oHeaderD.PRID5 = this.globalData.PRID[5];
-				oHeader.TableH = oHeaderD;
-				
-				oHeaderD.Date6 = this.globalData.Dates[6];
-				oHeaderD.PRID6 = this.globalData.PRID[6];
-				oHeader.TableH = oHeaderD;
+				if (this.globalData.noOfDay >= 1) {
 				
 				oHeaderD.Date7 = this.globalData.Dates[7];
 				oHeaderD.PRID7 = this.globalData.PRID[7];
 				oHeader.TableH = oHeaderD;
 				
-				oHeaderD.Date7 = this.globalData.Dates[7];
-				oHeaderD.PRID7 = this.globalData.PRID[7];
-				oHeader.TableH = oHeaderD;
+				}
 				
+				if (this.globalData.noOfDay >= 2) {
 				oHeaderD.Date8 = this.globalData.Dates[8];
 				oHeaderD.PRID8 = this.globalData.PRID[8];
 				oHeader.TableH = oHeaderD;
+				}
 				
+				if (this.globalData.noOfDay >= 3) {
 				oHeaderD.Date9 = this.globalData.Dates[9];
 				oHeaderD.PRID9 = this.globalData.PRID[9];
 				oHeader.TableH = oHeaderD;
+				}
 				
+				if (this.globalData.noOfDay >= 4) {
 				oHeaderD.Date10 = this.globalData.Dates[10];
 				oHeaderD.PRID10 = this.globalData.PRID[10];
 				oHeader.TableH = oHeaderD;
+				}
 				
+				if (this.globalData.noOfDay >= 5) {
 				oHeaderD.Date11 = this.globalData.Dates[11];
 				oHeaderD.PRID11 = this.globalData.PRID[11];
 				oHeader.TableH = oHeaderD;
+				}
 				
+				if (this.globalData.noOfDay >= 6) {
 				oHeaderD.Date12 = this.globalData.Dates[12];
 				oHeaderD.PRID12 = this.globalData.PRID[12];
 				oHeader.TableH = oHeaderD;
+				}
 				
+				if (this.globalData.noOfDay >= 7) {
 				oHeaderD.Date13 = this.globalData.Dates[13];
 				oHeaderD.PRID13 = this.globalData.PRID[13];
 				oHeader.TableH = oHeaderD;
+				}
 				
 				oHeader.MarketListDetailSet = {};
 				oHeader.MarketListDetailSet.results = [];
@@ -285,34 +270,36 @@ sap.ui.define([
 					oDetail.UnitPrice = String(tableRows[i].UnitPrice);
 					oDetail.Currency = tableRows[i].Currency;
 					oDetail.PriceUnit = String(tableRows[i].PriceUnit);
-					oDetail.Day0 = tableRows[i].Day0;
-					oDetail.Day0.Quantity = String(tableRows[i].Day0.Quantity);
-					oDetail.Day1 = tableRows[i].Day1;
-					oDetail.Day1.Quantity = String(tableRows[i].Day1.Quantity);
-					oDetail.Day2 = tableRows[i].Day2;
-					oDetail.Day2.Quantity = String(tableRows[i].Day2.Quantity);
-					oDetail.Day3 = tableRows[i].Day3;
-					oDetail.Day3.Quantity = String(tableRows[i].Day3.Quantity);
-					oDetail.Day4 = tableRows[i].Day4;
-					oDetail.Day4.Quantity = String(tableRows[i].Day4.Quantity);
-					oDetail.Day5 = tableRows[i].Day5;
-					oDetail.Day5.Quantity = String(tableRows[i].Day5.Quantity);
-					oDetail.Day6 = tableRows[i].Day6;
-					oDetail.Day6.Quantity = String(tableRows[i].Day6.Quantity);
+					
+					
+					if (this.globalData.noOfDay >= 1) {
 					oDetail.Day7 = tableRows[i].Day7;
 					oDetail.Day7.Quantity = String(tableRows[i].Day7.Quantity);
+					}
+					if (this.globalData.noOfDay >= 2) {
 					oDetail.Day8 = tableRows[i].Day8;
 					oDetail.Day8.Quantity = String(tableRows[i].Day8.Quantity);
+					}
+					if (this.globalData.noOfDay >= 3) {
 					oDetail.Day9 = tableRows[i].Day9;
 					oDetail.Day9.Quantity = String(tableRows[i].Day9.Quantity);
+					}
+					if (this.globalData.noOfDay >= 4) {
 					oDetail.Day10 = tableRows[i].Day10;
 					oDetail.Day10.Quantity = String(tableRows[i].Day10.Quantity);
+					}
+					if (this.globalData.noOfDay >= 5) {
 					oDetail.Day11 = tableRows[i].Day11;
 					oDetail.Day11.Quantity = String(tableRows[i].Day11.Quantity);
+					}
+					if (this.globalData.noOfDay >= 6) {
 					oDetail.Day12 = tableRows[i].Day12;
 					oDetail.Day12.Quantity = String(tableRows[i].Day12.Quantity);
+					}
+					if (this.globalData.noOfDay >= 7) {
 					oDetail.Day13 = tableRows[i].Day13;
 					oDetail.Day13.Quantity = String(tableRows[i].Day13.Quantity);
+					}
 					oHeader.MarketListDetailSet.results.push(oDetail);
 				}
 				console.log(oHeader);
@@ -418,14 +405,14 @@ sap.ui.define([
 				
 				
 				switch (keyItem){
-					case "1Day": iCols = 7; break;
-					case "2Day": iCols = 8; break;
-					case "3Day": iCols = 9; break;
-					case "4Day": iCols = 10; break;
-					case "5Day": iCols = 11; break;	
-					case "6Day": iCols = 12; break;
-					case "7Day": iCols = 13; break;
-					default:  iCols = 7; break; 
+					case "1Day": iCols = 7; this.globalData.noOfDay = 1; break;
+					case "2Day": iCols = 8; this.globalData.noOfDay = 2; break;
+					case "3Day": iCols = 9; this.globalData.noOfDay = 3; break;
+					case "4Day": iCols = 10; this.globalData.noOfDay = 4; break;
+					case "5Day": iCols = 11; this.globalData.noOfDay = 5; break;	
+					case "6Day": iCols = 12; this.globalData.noOfDay = 6; break;
+					case "7Day": iCols = 13; this.globalData.noOfDay = 7; break;
+					default:  iCols = 7; this.globalData.noOfDay = 1; break; 
 				}
 				
 				//Current and Future Days
