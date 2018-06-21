@@ -781,7 +781,7 @@ sap.ui.define([
 					if (bAdded) {
 						this.globalData.tableChanged = true;
 						this._oJsonModel.refresh();
-						sap.ui.getCore().byId("__component0---app--idAppControl").hideMaster();
+						//sap.ui.getCore().byId("__component0---app--idAppControl").hideMaster();
 					}
 					
 					
