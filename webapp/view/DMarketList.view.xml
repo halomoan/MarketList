@@ -82,10 +82,10 @@
 							</Column>
 							<Column width="12rem" visible="{detailView>/columns/7/visible}">
 								<multiLabels>
-									<m:Label text="{path: 'TableH/Date7', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor1"/>
+									<m:Label text="{path: 'TableH>/Date0', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor1" tooltip="PReq: {TableH>/PRID0}"/>
 									<m:Label text="{detailView>/columns/7/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/7/total}" textAlign="End" width="100%" design="Bold" class="green"/>
-									<m:Label text="{path: 'TableH/Date7', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor1"/>
+									<m:Label text="{path: 'TableH>/Date0', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor1"/>
 								</multiLabels>
 								<template>
 									<m:HBox class="sapUiNoMargin" >
@@ -102,10 +102,10 @@
 							</Column>
 							<Column width="12rem" visible="{detailView>/columns/8/visible}">
 								<multiLabels>
-									<m:Label text="{path: 'TableH/Date8', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor2"/>
+									<m:Label text="{path: 'TableH>/Date1', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor2" tooltip="PReq: {TableH>/PRID1}"/>
 									<m:Label text="{detailView>/columns/8/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/8/total}" textAlign="End" width="100%" design="Bold" class="green"/>
-									<m:Label text="{path: 'TableH/Date8', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor2"/>
+									<m:Label text="{path: 'TableH>/Date1', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor2"/>
 								</multiLabels>
 								<template>
 									<m:HBox class="sapUiNoMargin" >
@@ -122,10 +122,10 @@
 							</Column>
 							<Column width="12rem" visible="{detailView>/columns/9/visible}">
 								<multiLabels>
-									<m:Label text="{path: 'TableH/Date9', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor3"/>
+									<m:Label text="{path: 'TableH>/Date2', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor3"/>
 									<m:Label text="{detailView>/columns/9/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/9/total}" textAlign="End" width="100%" design="Bold" class="green"/>
-									<m:Label text="{path: 'TableH/Date9', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor3"/>
+									<m:Label text="{path: 'TableH>/Date2', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor3"/>
 								</multiLabels>
 								<template>
 									<m:HBox class="sapUiNoMargin" >
@@ -142,10 +142,10 @@
 							</Column>
 							<Column width="12rem" visible="{detailView>/columns/10/visible}">
 								<multiLabels>
-									<m:Label text="{path: 'TableH/Date10', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor4"/>
+									<m:Label text="{path: 'TableH>/Date3', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor4"/>
 									<m:Label text="{detailView>/columns/10/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/10/total}" textAlign="End" width="100%" design="Bold" class="green"/>
-									<m:Label text="{path: 'TableH/Date10', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor4"/>
+									<m:Label text="{path: 'TableH>/Date3', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor4"/>
 								</multiLabels>
 								<template>
 									<m:HBox class="sapUiNoMargin" >
@@ -162,10 +162,10 @@
 							</Column>
 							<Column width="12rem" visible="{detailView>/columns/11/visible}">
 								<multiLabels>
-									<m:Label text="{path: 'TableH/Date11', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor5"/>
+									<m:Label text="{path: 'TableH>/Date4', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor5"/>
 									<m:Label text="{detailView>/columns/11/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/11/total}" textAlign="End" width="100%" design="Bold" class="green"/>
-									<m:Label text="{path: 'TableH/Date11', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor5"/>
+									<m:Label text="{path: 'TableH>/Date4', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor5"/>
 								</multiLabels>
 								<template>
 									<m:HBox class="sapUiNoMargin" >
@@ -182,10 +182,10 @@
 							</Column>
 							<Column width="12rem" visible="{detailView>/columns/12/visible}">
 								<multiLabels>
-									<m:Label text="{path: 'TableH/Date12', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor6"/>
+									<m:Label text="{path: 'TableH>/Date5', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor6"/>
 									<m:Label text="{detailView>/columns/12/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/12/total}" textAlign="End" width="100%" design="Bold" class="green"/>
-									<m:Label text="{path: 'TableH/Date12', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor6"/>
+									<m:Label text="{path: 'TableH>/Date5', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor6"/>
 								</multiLabels>
 								<template>
 									<m:HBox class="sapUiNoMargin" >
@@ -202,10 +202,10 @@
 							</Column>
 							<Column width="12rem" visible="{detailView>/columns/13/visible}">
 								<multiLabels>
-									<m:Label text="{path: 'TableH/Date13', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor7"/>
+									<m:Label text="{path: 'TableH>/Date6', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor7"/>
 									<m:Label text="{detailView>/columns/13/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/13/total}" textAlign="End" width="100%" design="Bold" class="green"/>
-									<m:Label text="{path: 'TableH/Date13', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor7"/>
+									<m:Label text="{path: 'TableH>/Date6', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor7"/>
 								</multiLabels>
 								<template>
 									<m:HBox class="sapUiNoMargin" >
@@ -223,10 +223,10 @@
 							
 							<Column width="10rem" visible="{detailView>/columns/6/visible}" hAlign="End" >
 								<multiLabels>
-									<m:Label text="{path: 'TableH/Date6', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor7"/>
+									<m:Label text="{path: 'TableH>/Date7', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor7"/>
 									<m:Label text="{detailView>/columns/6/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/6/total}" textAlign="End" width="100%"/>
-									<m:Label text="{path: 'TableH/Date6', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor7"/>
+									<m:Label text="{path: 'TableH>/Date7', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor7"/>
 								</multiLabels>
 								<template>
 									<u:Currency value="{mktlist>Day6/Quantity}" currency="{mktlist>Day6/UOM}"/>
@@ -234,10 +234,10 @@
 							</Column>
 							<Column width="10rem" visible="{detailView>/columns/5/visible}" hAlign="End" >
 								<multiLabels>
-									<m:Label text="{path: 'TableH/Date5', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor6"/>
+									<m:Label text="{path: 'TableH>/Date8', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor6"/>
 									<m:Label text="{detailView>/columns/5/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/5/total}" textAlign="End" width="100%"/>
-									<m:Label text="{path: 'TableH/Date5', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor6"/>
+									<m:Label text="{path: 'TableH>/Date8', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor6"/>
 								</multiLabels>
 								<template>
 									<u:Currency value="{mktlist>Day4/Quantity}" currency="{mktlist>Day4/UOM}"/>
@@ -245,10 +245,10 @@
 							</Column>
 							<Column width="10rem" visible="{detailView>/columns/4/visible}" hAlign="End" >
 								<multiLabels>
-									<m:Label text="{path: 'TableH/Date4', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor5" />
+									<m:Label text="{path: 'TableH>/Date9', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor5" />
 									<m:Label text="{detailView>/columns/4/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/4/total}" textAlign="End" width="100%"/>
-									<m:Label text="{path: 'TableH/Date4', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor5"/>
+									<m:Label text="{path: 'TableH>/Date9', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor5"/>
 								</multiLabels>
 								<template>
 									<u:Currency value="{mktlist>Day4/Quantity}" currency="{mktlist>Day4/UOM}"/>
@@ -256,10 +256,10 @@
 							</Column>
 							<Column width="10rem" visible="{detailView>/columns/3/visible}" hAlign="End" >
 								<multiLabels>
-									<m:Label text="{path: 'TableH/Date3', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor4"/>
+									<m:Label text="{path: 'TableH>/Date10', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor4"/>
 									<m:Label text="{detailView>/columns/3/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/3/total}" textAlign="End" width="100%"/>
-									<m:Label text="{path: 'TableH/Date3', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor4"/>
+									<m:Label text="{path: 'TableH>/Date10', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor4"/>
 								</multiLabels>
 								<template>
 									<u:Currency value="{mktlist>Day3/Quantity}" currency="{mktlist>Day3/UOM}"/>
@@ -267,10 +267,10 @@
 							</Column>
 							<Column width="10rem" visible="{detailView>/columns/2/visible}" hAlign="End" >
 								<multiLabels>
-									<m:Label text="{path: 'TableH/Date2', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor3"/>
+									<m:Label text="{path: 'TableH>/Date11', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor3"/>
 									<m:Label text="{detailView>/columns/2/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/2/total}" textAlign="End" width="100%"/>
-									<m:Label text="{path: 'TableH/Date2', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor3"/>
+									<m:Label text="{path: 'TableH>/Date11', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor3"/>
 								</multiLabels>
 								<template>
 									<u:Currency value="{mktlist>Day2/Quantity}" currency="{mktlist>Day2/UOM}"/>
@@ -278,10 +278,10 @@
 							</Column>
 								<Column width="10rem" visible="{detailView>/columns/1/visible}" hAlign="End" >
 								<multiLabels>
-									<m:Label text="{path: 'TableH/Date1', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor2"/>
+									<m:Label text="{path: 'TableH>/Date12', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor2"/>
 									<m:Label text="{detailView>/columns/1/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/1/total}" textAlign="End" width="100%"/>
-									<m:Label text="{path: 'TableH/Date1', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor2"/>
+									<m:Label text="{path: 'TableH>/Date12', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor2"/>
 								</multiLabels>
 								<template>
 									<u:Currency value="{mktlist>Day1/Quantity}" currency="{mktlist>Day1/UOM}"/>
@@ -289,10 +289,10 @@
 							</Column>
 							<Column width="10rem" visible="{detailView>/columns/0/visible}" hAlign="End" >
 								<multiLabels>
-									<m:Label text="{path: 'TableH/Date0', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor1"/>
+									<m:Label text="{path: 'TableH>/Date13', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor1"/>
 									<m:Label text="{detailView>/columns/0/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/0/total}" textAlign="End" width="100%"/>
-									<m:Label text="{path: 'TableH/Date0', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor1"/>
+									<m:Label text="{path: 'TableH>/Date13', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor1"/>
 								</multiLabels>
 								<template>
 									<u:Currency value="{mktlist>Day0/Quantity}" currency="{mktlist>Day0/UOM}"/>

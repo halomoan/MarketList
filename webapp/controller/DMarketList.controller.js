@@ -13,7 +13,7 @@ sap.ui.define([
 			    
 			    sap.ui.getCore().getEventBus().subscribe("marketlist","addMaterial",this._addMaterial,this);
 			    
-			    var oDate = new Date();
+			    //var oDate = new Date();
 			    var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "YYYY-MM-dd" });   
 			    
 			     
@@ -24,6 +24,7 @@ sap.ui.define([
 			    	tableChanged : false,
 			    	MarketListID : "MKT0001",
 			    	noOfDay : 0
+			    	
 			    };
 			    
 			   
@@ -48,7 +49,7 @@ sap.ui.define([
 							{"noItem": 0 , "total" : 0, "visible": false},
 							{"noItem": 0 , "total" : 0, "visible": false}
 						],
-					Date: dateFormat.format(oDate),
+					Date: dateFormat.format(new Date()),
 					PlantID: "",
 					Plant: "",
 					CostCenterID : "",
@@ -472,35 +473,8 @@ sap.ui.define([
 									}
 								} 
 							}
-							/*if (data[key].Day0.Quantity > 0) {
-								noItems[data[key].Day0.Date] = isNaN(noItems[data[key].Day0.Date]) ? 1 : (noItems[data[key].Day0.Date] + 1);
-								if (isNaN(totals[data[key].Day0.Date])) {
-									totals[data[key].Day0.Date] = (data[key].Day0.Quantity / data[key].PriceUnit * data[key].UnitPrice);
-								}else{
-									totals[data[key].Day0.Date] = totals[data[key].Day0.Date] + (data[key].Day0.Quantity / data[key].PriceUnit * data[key].UnitPrice);
-								}
-							}
-							*/
+							
 						}
-
-						
-						
-						/*for(var i = 0; i < data.length; i++) {
-							var arr = data[i].Items;
-							for (var j = 0; j < arr.length; j++) {
-								if (arr[j].Quantity > 0) {
-									
-									noItems[arr[j].Date] = isNaN(noItems[arr[j].Date]) ? 1 : (noItems[arr[j].Date] + 1);
-								
-									if (isNaN(totals[arr[j].Date])) {
-										totals[arr[j].Date] = (arr[j].Quantity / data[i].PriceUnit * data[i].UnitPrice);
-									}else{
-										totals[arr[j].Date] = totals[arr[j].Date] + (arr[j].Quantity / data[i].PriceUnit * data[i].UnitPrice);
-									}
-								}
-							}
-						}*/
-		
 						
 						var oViewModel = this.getModel("detailView");
 						
@@ -524,10 +498,11 @@ sap.ui.define([
 			},
 			_onMetadataLoaded: function(){
 			
-				
+				var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "YYYYMMdd" }); 
 				var oTable = this.byId("mktlistTable");
 				var oViewModel = this.getModel("detailView");
 				var oModelJson = new JSONModel();
+				var oModelHeader = new JSONModel();
 				var oView = this.getView();
 				var oThis = this;
 				
@@ -551,20 +526,49 @@ sap.ui.define([
 				
 				
 				//var sPath = "/" + oModel.createKey("MarketListHeaderSet",{MarketListHeaderID:  this.globalData.MarketListID});
-				var sPath = "/" + oModel.createKey("MarketListHeaderSet",{
-					PlantID : oLocalData.PlantID,
-					CostCenterID: oLocalData.CostCenterID,
-					UnloadingPoint: oLocalData.UnloadingPoint
-				});
+				//var sPath = "/" + oModel.createKey("MarketListHeaderSet");
 				
-				/*var oFilters = [];
+				//var sPath = "/MarketListHeaderSet"; 
+				
+				
+				var oFilters = [];
 				oFilters.push( new sap.ui.model.Filter("PlantID", sap.ui.model.FilterOperator.EQ, oLocalData.PlantID) );
 				oFilters.push( new sap.ui.model.Filter("CostCenterID", sap.ui.model.FilterOperator.EQ, oLocalData.CostCenterID) );
 				oFilters.push( new sap.ui.model.Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, oLocalData.UnloadingPoint) );
-				*/
+				//oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, dateFormat.format(new Date())));
+				oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, "20180622"));
 				
-				this.getView().bindElement({
-					path: sPath,
+				sap.ui.core.BusyIndicator.show();
+				oModel.read("/MarketListHeaderSet", {
+				    urlParameters: {
+				        "$expand": "NavDetail"
+				    },
+				    filters: oFilters,
+				    success: function(rData) {
+				    	
+				    	var oHeader = rData.results[0];
+				    	
+				    	oModelHeader.setData(oHeader.TableH);
+				    	oThis.getView().setModel(oModelHeader,"TableH");
+				    	
+				    	var oDetail = oHeader.NavDetail.results;
+				    	console.log(oDetail);
+				    	oModelJson.setData({ rows : oDetail } );
+					    oView.setModel(oModelJson,"mktlist");
+					    oTable.bindRows("mktlist>/rows");
+				    	sap.ui.core.BusyIndicator.hide();
+				    },
+				    error: function(oError) {
+			            console.log(oError);
+			            sap.ui.core.BusyIndicator.hide();
+			        }
+				});
+
+			/*	this.getView().bindElement({
+					path: "/MarketListHeaderSet",
+					parameters: {
+						expand: "NavDetail"
+					},
 					events: {
                         dataReceived: function(rData){
                             sap.ui.core.BusyIndicator.hide();
@@ -572,6 +576,7 @@ sap.ui.define([
                             var oData = rData.getParameter("data");
                             if(oData){
                             	
+                            	console.log(oData);
                             	
                             	oThis.globalData.MarketListID = oData.MarketListHeaderID;
                             	oThis.globalData.Dates[0] = oData.TableH.Date0;
