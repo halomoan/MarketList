@@ -42,12 +42,12 @@ sap.ui.define([
 							{"noItem": 0 , "total" : 0, "visible": false},
 							{"noItem": 0 , "total" : 0, "visible": false},
 							{"noItem": 0 , "total" : 0, "visible": true},
-							{"noItem": 0 , "total" : 0, "visible": false},
-							{"noItem": 0 , "total" : 0, "visible": false},
-							{"noItem": 0 , "total" : 0, "visible": false},
-							{"noItem": 0 , "total" : 0, "visible": false},
-							{"noItem": 0 , "total" : 0, "visible": false},
-							{"noItem": 0 , "total" : 0, "visible": false}
+							{"noItem": 0 , "total" : 0, "visible": true},
+							{"noItem": 0 , "total" : 0, "visible": true},
+							{"noItem": 0 , "total" : 0, "visible": true},
+							{"noItem": 0 , "total" : 0, "visible": true},
+							{"noItem": 0 , "total" : 0, "visible": true},
+							{"noItem": 0 , "total" : 0, "visible": true}
 						],
 					Date: dateFormat.format(new Date()),
 					PlantID: "",
@@ -406,29 +406,30 @@ sap.ui.define([
 				
 				
 				switch (keyItem){
-					case "1Day": iCols = 7; this.globalData.noOfDay = 1; break;
-					case "2Day": iCols = 8; this.globalData.noOfDay = 2; break;
-					case "3Day": iCols = 9; this.globalData.noOfDay = 3; break;
-					case "4Day": iCols = 10; this.globalData.noOfDay = 4; break;
-					case "5Day": iCols = 11; this.globalData.noOfDay = 5; break;	
-					case "6Day": iCols = 12; this.globalData.noOfDay = 6; break;
-					case "7Day": iCols = 13; this.globalData.noOfDay = 7; break;
-					default:  iCols = 7; this.globalData.noOfDay = 1; break; 
+					case "1Day": iCols = 0; this.globalData.noOfDay = 1; break;
+					case "2Day": iCols = 1; this.globalData.noOfDay = 2; break;
+					case "3Day": iCols = 2; this.globalData.noOfDay = 3; break;
+					case "4Day": iCols = 3; this.globalData.noOfDay = 4; break;
+					case "5Day": iCols = 4; this.globalData.noOfDay = 5; break;	
+					case "6Day": iCols = 5; this.globalData.noOfDay = 6; break;
+					case "7Day": iCols = 6; this.globalData.noOfDay = 7; break;
+					default:  iCols = 0; this.globalData.noOfDay = 1; break; 
 				}
 				
-				//Current and Future Days
-				for (var i = 7; i <= 13; i++){
-					if (i > iCols) {
+				//Current & Past Days
+				/*for (var i = 7; i <= 13; i++){
+					if (i > (iCols - 7)) {
 						oViewModel.setProperty("/columns/" + i + "/visible",false);	
 					} else{
 						oViewModel.setProperty("/columns/" + i + "/visible",true);	
 					}
 					
-				}
+				}*/
 				
-				// Past Days
-				for (i = 0; i <= 6; i++){
-					if (i > (iCols - 7)) {
+				
+				//Future Days
+				for (var i = 0; i <= 6; i++){
+					if (i > iCols ) {
 						oViewModel.setProperty("/columns/" + i + "/visible",false);	
 					} else{
 						oViewModel.setProperty("/columns/" + i + "/visible",true);		
@@ -552,7 +553,7 @@ sap.ui.define([
 				    	oThis.getView().setModel(oModelHeader,"TableH");
 				    	
 				    	var oDetail = oHeader.NavDetail.results;
-				    	console.log(oDetail);
+				    	console.log(rData);
 				    	oModelJson.setData({ rows : oDetail } );
 					    oView.setModel(oModelJson,"mktlist");
 					    oTable.bindRows("mktlist>/rows");

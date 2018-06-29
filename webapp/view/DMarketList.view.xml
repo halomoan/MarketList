@@ -46,7 +46,7 @@
 								<m:Text text="{mktlist>MaterialText}"/>
 								</template>
 							</Column>
-							<Column width="8rem" sortProperty="MaterialID" filterProperty="MaterialID">
+							<Column width="8rem" sortProperty="MaterialID" filterProperty="MaterialID" hAlign="Center">
 								<multiLabels>
 								<m:Label text=""/>
 								<m:Label text=""/>
@@ -65,7 +65,7 @@
 								<m:Label text="{i18n>unitPrice}" textAlign="Center" width="100%"/>
 								</multiLabels>
 								<template>
-										<u:Currency value="{mktlist>UnitPrice}" currency="{mktlist>Currency}" maxPrecision="2" useSymbol="false"/>
+										<u:Currency value="{= parseFloat(${mktlist>UnitPrice}) }" currency="{mktlist>Currency}" maxPrecision="2" useSymbol="false"/>
 								</template>
 							</Column>
 							<Column width="8rem">
@@ -77,225 +77,225 @@
 								<m:Label text="{i18n>priceUnit}"  width="100%"/>
 								</multiLabels>
 								<template>
-									<u:Currency value="{mktlist>PriceUnit}" currency="{mktlist>UOM}" maxPrecision="2" useSymbol="false"/>
+									<u:Currency value="{= parseFloat(${mktlist>PriceUnit}) }" currency="{mktlist>Day0/UOM}" maxPrecision="2" useSymbol="false"/>
 								</template>
 							</Column>
-							<Column width="12rem" visible="{detailView>/columns/7/visible}">
+							<Column width="12rem" visible="{detailView>/columns/0/visible}">
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date0', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor1" tooltip="PReq: {TableH>/PRID0}"/>
-									<m:Label text="{detailView>/columns/7/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/7/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{detailView>/columns/0/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/0/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date0', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor1"/>
 								</multiLabels>
 								<template>
 									<m:HBox class="sapUiNoMargin" >
 										<m:Button icon="sap-icon://request"  press="addCommentPress">
     										<m:customData>
-    											<core:CustomData key="myId" value="{mktlist>MaterialID}_07" writeToDom="false"/>
+    											<core:CustomData key="myId" value="{mktlist>MaterialID}_00" writeToDom="false"/>
     											<core:CustomData key="myText" value="{mktlist>MaterialText}" writeToDom="false"/>
-    											<core:CustomData key="myComment" value="{mktlist>Day7/Comment}" writeToDom="false"/>
+    											<core:CustomData key="myComment" value="{mktlist>Day0/Comment}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input placeholder="Zero To Remove" value="{path: 'mktlist>Day7/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" textAlign="End" description="{mktlist>Day7/UOM}" fieldWidth="70%"/>
+										<m:Input placeholder="Zero To Remove" value="{path: 'mktlist>Day0/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" textAlign="End" description="{mktlist>Day0/UOM}" fieldWidth="70%"/>
 									</m:HBox>	
 								</template>
 							</Column>
-							<Column width="12rem" visible="{detailView>/columns/8/visible}">
+							<Column width="12rem" visible="{detailView>/columns/1/visible}">
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date1', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor2" tooltip="PReq: {TableH>/PRID1}"/>
-									<m:Label text="{detailView>/columns/8/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/8/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{detailView>/columns/1/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/1/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date1', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor2"/>
 								</multiLabels>
 								<template>
 									<m:HBox class="sapUiNoMargin" >
 										<m:Button icon="sap-icon://request"  press="addCommentPress">
 											<m:customData>
-    											<core:CustomData key="myId" value="{mktlist>MaterialID}_08" writeToDom="false"/>
+    											<core:CustomData key="myId" value="{mktlist>MaterialID}_01" writeToDom="false"/>
     											<core:CustomData key="myText" value="{mktlist>MaterialText}" writeToDom="false"/>
     											<core:CustomData key="myComment" value="{mktlist>Day8/Comment}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input placeholder="Zero To Remove" value="{path: 'mktlist>Day8/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day8/UOM}" fieldWidth="70%"/>
+										<m:Input placeholder="Zero To Remove" value="{path: 'mktlist>Day1/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day1/UOM}" fieldWidth="70%"/>
 									</m:HBox>
 								</template>
 							</Column>
-							<Column width="12rem" visible="{detailView>/columns/9/visible}">
+							<Column width="12rem" visible="{detailView>/columns/2/visible}">
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date2', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor3"/>
-									<m:Label text="{detailView>/columns/9/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/9/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{detailView>/columns/2/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/2/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date2', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor3"/>
 								</multiLabels>
 								<template>
 									<m:HBox class="sapUiNoMargin" >
 										<m:Button icon="sap-icon://request"  press="addCommentPress">
 											<m:customData>
-    											<core:CustomData key="myId" value="{mktlist>MaterialID}_09" writeToDom="false"/>
+    											<core:CustomData key="myId" value="{mktlist>MaterialID}_02" writeToDom="false"/>
     											<core:CustomData key="myText" value="{mktlist>MaterialText}" writeToDom="false"/>
-    											<core:CustomData key="myComment" value="{mktlist>Day9/Comment}" writeToDom="false"/>
+    											<core:CustomData key="myComment" value="{mktlist>Day2/Comment}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input placeholder="Zero To Remove" value="{path: 'mktlist>Day9/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day9/UOM}" fieldWidth="70%"/>
+										<m:Input placeholder="Zero To Remove" value="{path: 'mktlist>Day2/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day2/UOM}" fieldWidth="70%"/>
 									</m:HBox>									
 								</template>
 							</Column>
-							<Column width="12rem" visible="{detailView>/columns/10/visible}">
+							<Column width="12rem" visible="{detailView>/columns/3/visible}">
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date3', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor4"/>
-									<m:Label text="{detailView>/columns/10/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/10/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{detailView>/columns/3/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/3/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date3', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor4"/>
 								</multiLabels>
 								<template>
 									<m:HBox class="sapUiNoMargin" >
 										<m:Button icon="sap-icon://request"  press="addCommentPress">
 											<m:customData>
-    											<core:CustomData key="myId" value="{mktlist>MaterialID}_10" writeToDom="false"/>
+    											<core:CustomData key="myId" value="{mktlist>MaterialID}_03" writeToDom="false"/>
     											<core:CustomData key="myText" value="{mktlist>MaterialText}" writeToDom="false"/>
-    											<core:CustomData key="myComment" value="{mktlist>Day10/Comment}" writeToDom="false"/>
+    											<core:CustomData key="myComment" value="{mktlist>Day3/Comment}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input placeholder="Zero To Remove" value="{path: 'mktlist>Day10/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day10/UOM}" fieldWidth="70%"/>
+										<m:Input placeholder="Zero To Remove" value="{path: 'mktlist>Day3/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day3/UOM}" fieldWidth="70%"/>
 									</m:HBox>
 								</template>
 							</Column>
-							<Column width="12rem" visible="{detailView>/columns/11/visible}">
+							<Column width="12rem" visible="{detailView>/columns/4/visible}">
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date4', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor5"/>
-									<m:Label text="{detailView>/columns/11/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/11/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{detailView>/columns/4/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/4/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date4', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor5"/>
 								</multiLabels>
 								<template>
 									<m:HBox class="sapUiNoMargin" >
 										<m:Button icon="sap-icon://request"  press="addCommentPress">
 											<m:customData>
-    											<core:CustomData key="myId" value="{mktlist>MaterialID}_11" writeToDom="false"/>
+    											<core:CustomData key="myId" value="{mktlist>MaterialID}_04" writeToDom="false"/>
     											<core:CustomData key="myText" value="{mktlist>MaterialText}" writeToDom="false"/>
     											<core:CustomData key="myComment" value="{mktlist>Day11/Comment}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input placeholder="Zero To Remove" value="{path: 'mktlist>Day11/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day11/UOM}" fieldWidth="70%"/>
+										<m:Input placeholder="Zero To Remove" value="{path: 'mktlist>Day4/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day4/UOM}" fieldWidth="70%"/>
 									</m:HBox>
 								</template>
 							</Column>
-							<Column width="12rem" visible="{detailView>/columns/12/visible}">
+							<Column width="12rem" visible="{detailView>/columns/5/visible}">
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date5', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor6"/>
-									<m:Label text="{detailView>/columns/12/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/12/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{detailView>/columns/5/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/5/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date5', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor6"/>
 								</multiLabels>
 								<template>
 									<m:HBox class="sapUiNoMargin" >
 										<m:Button icon="sap-icon://request"  press="addCommentPress">
 											<m:customData>
-    											<core:CustomData key="myId" value="{mktlist>MaterialID}_12" writeToDom="false"/>
+    											<core:CustomData key="myId" value="{mktlist>MaterialID}_05" writeToDom="false"/>
     											<core:CustomData key="myText" value="{mktlist>MaterialText}" writeToDom="false"/>
-    											<core:CustomData key="myComment" value="{mktlist>Day12/Comment}" writeToDom="false"/>
+    											<core:CustomData key="myComment" value="{mktlist>Day5/Comment}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input placeholder="Zero To Remove" value="{path: 'mktlist>Day12/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day12/UOM}" fieldWidth="70%"/>
+										<m:Input placeholder="Zero To Remove" value="{path: 'mktlist>Day5/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day5/UOM}" fieldWidth="70%"/>
 									</m:HBox>
 								</template>
 							</Column>
-							<Column width="12rem" visible="{detailView>/columns/13/visible}">
+							<Column width="12rem" visible="{detailView>/columns/6/visible}">
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date6', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor7"/>
-									<m:Label text="{detailView>/columns/13/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/13/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{detailView>/columns/6/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/6/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date6', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor7"/>
 								</multiLabels>
 								<template>
 									<m:HBox class="sapUiNoMargin" >
 										<m:Button icon="sap-icon://request"  press="addCommentPress">
 											<m:customData>
-    											<core:CustomData key="myId" value="{mktlist>MaterialID}_13" writeToDom="false"/>
+    											<core:CustomData key="myId" value="{mktlist>MaterialID}_06" writeToDom="false"/>
     											<core:CustomData key="myText" value="{mktlist>MaterialText}" writeToDom="false"/>
-    											<core:CustomData key="myComment" value="{mktlist>Day13/Comment}" writeToDom="false"/>
+    											<core:CustomData key="myComment" value="{mktlist>Day6/Comment}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input placeholder="Zero To Remove" value="{path: 'mktlist>Day13/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day13/UOM}" fieldWidth="70%"/>
+										<m:Input placeholder="Zero To Remove" value="{path: 'mktlist>Day6/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day6/UOM}" fieldWidth="70%"/>
 									</m:HBox>
 								</template>
 							</Column>
 							
-							<Column width="10rem" visible="{detailView>/columns/6/visible}" hAlign="End" >
+							<Column width="10rem" visible="{detailView>/columns/7/visible}" hAlign="End" >
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date7', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor7"/>
-									<m:Label text="{detailView>/columns/6/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/6/total}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/7/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/7/total}" textAlign="End" width="100%"/>
 									<m:Label text="{path: 'TableH>/Date7', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor7"/>
 								</multiLabels>
 								<template>
-									<u:Currency value="{mktlist>Day6/Quantity}" currency="{mktlist>Day6/UOM}"/>
+									<u:Currency value="{= parseFloat(${mktlist>Day7/Quantity}) }" currency="{mktlist>Day7/UOM}"/>
 								</template>
 							</Column>
-							<Column width="10rem" visible="{detailView>/columns/5/visible}" hAlign="End" >
+							<Column width="10rem" visible="{detailView>/columns/8/visible}" hAlign="End" >
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date8', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor6"/>
-									<m:Label text="{detailView>/columns/5/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/5/total}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/8/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/8/total}" textAlign="End" width="100%"/>
 									<m:Label text="{path: 'TableH>/Date8', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor6"/>
 								</multiLabels>
 								<template>
-									<u:Currency value="{mktlist>Day4/Quantity}" currency="{mktlist>Day4/UOM}"/>
+									<u:Currency value="{= parseFloat(${mktlist>Day8/Quantity}) }" currency="{mktlist>Day8/UOM}"/>
 								</template>
 							</Column>
-							<Column width="10rem" visible="{detailView>/columns/4/visible}" hAlign="End" >
+							<Column width="10rem" visible="{detailView>/columns/9/visible}" hAlign="End" >
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date9', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor5" />
-									<m:Label text="{detailView>/columns/4/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/4/total}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/9/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/9/total}" textAlign="End" width="100%"/>
 									<m:Label text="{path: 'TableH>/Date9', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor5"/>
 								</multiLabels>
 								<template>
-									<u:Currency value="{mktlist>Day4/Quantity}" currency="{mktlist>Day4/UOM}"/>
+									<u:Currency value="{= parseFloat(${mktlist>Day9/Quantity}) }" currency="{mktlist>Day9/UOM}"/>
 								</template>
 							</Column>
-							<Column width="10rem" visible="{detailView>/columns/3/visible}" hAlign="End" >
+							<Column width="10rem" visible="{detailView>/columns/10/visible}" hAlign="End" >
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date10', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor4"/>
-									<m:Label text="{detailView>/columns/3/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/3/total}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/10/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/10/total}" textAlign="End" width="100%"/>
 									<m:Label text="{path: 'TableH>/Date10', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor4"/>
 								</multiLabels>
 								<template>
-									<u:Currency value="{mktlist>Day3/Quantity}" currency="{mktlist>Day3/UOM}"/>
+									<u:Currency value="{= parseFloat(${mktlist>Day10/Quantity}) }" currency="{mktlist>Day10/UOM}"/>
 								</template>
 							</Column>
-							<Column width="10rem" visible="{detailView>/columns/2/visible}" hAlign="End" >
+							<Column width="10rem" visible="{detailView>/columns/11/visible}" hAlign="End" >
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date11', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor3"/>
-									<m:Label text="{detailView>/columns/2/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/2/total}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/11/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/11/total}" textAlign="End" width="100%"/>
 									<m:Label text="{path: 'TableH>/Date11', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor3"/>
 								</multiLabels>
 								<template>
-									<u:Currency value="{mktlist>Day2/Quantity}" currency="{mktlist>Day2/UOM}"/>
+									<u:Currency value="{= parseFloat(${mktlist>Day11/Quantity}) }" currency="{mktlist>Day11/UOM}"/>
 								</template>
 							</Column>
-								<Column width="10rem" visible="{detailView>/columns/1/visible}" hAlign="End" >
+								<Column width="10rem" visible="{detailView>/columns/12/visible}" hAlign="End" >
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date12', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor2"/>
-									<m:Label text="{detailView>/columns/1/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/1/total}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/12/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/12/total}" textAlign="End" width="100%"/>
 									<m:Label text="{path: 'TableH>/Date12', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor2"/>
 								</multiLabels>
 								<template>
-									<u:Currency value="{mktlist>Day1/Quantity}" currency="{mktlist>Day1/UOM}"/>
+									<u:Currency value="{= parseFloat(${mktlist>Day12/Quantity}) }" currency="{mktlist>Day12/UOM}"/>
 								</template>
 							</Column>
 							<Column width="10rem" visible="{detailView>/columns/0/visible}" hAlign="End" >
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date13', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" class="hcolor1"/>
-									<m:Label text="{detailView>/columns/0/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/0/total}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/13/noItem}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/columns/13/total}" textAlign="End" width="100%"/>
 									<m:Label text="{path: 'TableH>/Date13', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" class="hcolor1"/>
 								</multiLabels>
 								<template>
-									<u:Currency value="{mktlist>Day0/Quantity}" currency="{mktlist>Day0/UOM}"/>
+									<u:Currency value="{= parseFloat(${mktlist>Day13/Quantity}) }" currency="{mktlist>Day13/UOM}"/>
 								</template>
 							</Column>
 						</columns>
