@@ -271,6 +271,7 @@ sap.ui.define([
 			_onMasterMatched :  function(oEvent) {
 				var sFilterValue =  oEvent.getParameter("arguments").plantID;
 				
+				
 				if (this.PlantID !== sFilterValue ) {
 					var oList = this.getView().byId("matgrouplist");
 					var oBinding = oList.getBinding("items");

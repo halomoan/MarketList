@@ -18,12 +18,10 @@ sap.ui.define([
 			    
 			     
 			    this.globalData = {
-			    	Dates : [],
-			    	PRID : [null,null,null,null,null,null,null,null,null,null,null,null,null,null],
 			    	iRefresh : 0,
 			    	tableChanged : false,
 			    	MarketListID : "MKT0001",
-			    	noOfDay : 0
+			    	noOfDay : 1
 			    	
 			    };
 			    
@@ -84,6 +82,7 @@ sap.ui.define([
 			},
 			_onMasterMatched :  function(oEvent) {
 				if (this.globalData.iRefresh === 0) {
+					//console.log(oEvent.getParameter("arguments"));
 					//this.globalData.MarketListID = oEvent.getParameter("arguments").marketlistID;
 					this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
 				}
@@ -185,7 +184,7 @@ sap.ui.define([
 				var tableRows = this._oJsonModel.getData().rows;
 				var oModel = this.getView().getModel();
 				var oViewModel = this.getModel("detailView");
-				
+				var oTableH = this.getView().getModel("TableH").getData();
 				
 				
 				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
@@ -210,50 +209,34 @@ sap.ui.define([
 				oHeader.TableH = [];
 				
 				var oHeaderD = {};
-				
-				if (this.globalData.noOfDay >= 1) {
-				
-				oHeaderD.Date7 = this.globalData.Dates[7];
-				oHeaderD.PRID7 = this.globalData.PRID[7];
+
+				oHeaderD.Date0 = oTableH.Date0;
+				oHeaderD.PRID0 = oTableH.PRID0;
 				oHeader.TableH = oHeaderD;
 				
-				}
-				
-				if (this.globalData.noOfDay >= 2) {
-				oHeaderD.Date8 = this.globalData.Dates[8];
-				oHeaderD.PRID8 = this.globalData.PRID[8];
+				oHeaderD.Date1 =  oTableH.Date1;
+				oHeaderD.PRID1 = oTableH.PRID1;
 				oHeader.TableH = oHeaderD;
-				}
-				
-				if (this.globalData.noOfDay >= 3) {
-				oHeaderD.Date9 = this.globalData.Dates[9];
-				oHeaderD.PRID9 = this.globalData.PRID[9];
+			                                               
+				oHeaderD.Date2 =  oTableH.Date2;
+				oHeaderD.PRID2 = oTableH.PRID2;
 				oHeader.TableH = oHeaderD;
-				}
-				
-				if (this.globalData.noOfDay >= 4) {
-				oHeaderD.Date10 = this.globalData.Dates[10];
-				oHeaderD.PRID10 = this.globalData.PRID[10];
+			
+				oHeaderD.Date3 =  oTableH.Date3;
+				oHeaderD.PRID3 = oTableH.PRID3;
 				oHeader.TableH = oHeaderD;
-				}
-				
-				if (this.globalData.noOfDay >= 5) {
-				oHeaderD.Date11 = this.globalData.Dates[11];
-				oHeaderD.PRID11 = this.globalData.PRID[11];
+
+				oHeaderD.Date4 =  oTableH.Date4;
+				oHeaderD.PRID4 = oTableH.PRID4;
 				oHeader.TableH = oHeaderD;
-				}
-				
-				if (this.globalData.noOfDay >= 6) {
-				oHeaderD.Date12 = this.globalData.Dates[12];
-				oHeaderD.PRID12 = this.globalData.PRID[12];
+			
+				oHeaderD.Date5 =  oTableH.Date5;
+				oHeaderD.PRID5 = oTableH.PRID5;
 				oHeader.TableH = oHeaderD;
-				}
-				
-				if (this.globalData.noOfDay >= 7) {
-				oHeaderD.Date13 = this.globalData.Dates[13];
-				oHeaderD.PRID13 = this.globalData.PRID[13];
+			
+				oHeaderD.Date6 =  oTableH.Date6;
+				oHeaderD.PRID6 = oTableH.PRID6;
 				oHeader.TableH = oHeaderD;
-				}
 				
 				oHeader.MarketListDetailSet = {};
 				oHeader.MarketListDetailSet.results = [];
@@ -274,38 +257,38 @@ sap.ui.define([
 					
 					
 					if (this.globalData.noOfDay >= 1) {
-					oDetail.Day7 = tableRows[i].Day7;
-					oDetail.Day7.Quantity = String(tableRows[i].Day7.Quantity);
+					oDetail.Day0 = tableRows[i].Day0;
+					oDetail.Day0.Quantity = String(tableRows[i].Day0.Quantity);
 					}
 					if (this.globalData.noOfDay >= 2) {
-					oDetail.Day8 = tableRows[i].Day8;
-					oDetail.Day8.Quantity = String(tableRows[i].Day8.Quantity);
+					oDetail.Day1 = tableRows[i].Day1;
+					oDetail.Day1.Quantity = String(tableRows[i].Day1.Quantity);
 					}
 					if (this.globalData.noOfDay >= 3) {
-					oDetail.Day9 = tableRows[i].Day9;
-					oDetail.Day9.Quantity = String(tableRows[i].Day9.Quantity);
+					oDetail.Day2 = tableRows[i].Day2;
+					oDetail.Day2.Quantity = String(tableRows[i].Day2.Quantity);
 					}
 					if (this.globalData.noOfDay >= 4) {
-					oDetail.Day10 = tableRows[i].Day10;
-					oDetail.Day10.Quantity = String(tableRows[i].Day10.Quantity);
+					oDetail.Day3 = tableRows[i].Day10;
+					oDetail.Day3.Quantity = String(tableRows[i].Day3.Quantity);
 					}
 					if (this.globalData.noOfDay >= 5) {
-					oDetail.Day11 = tableRows[i].Day11;
-					oDetail.Day11.Quantity = String(tableRows[i].Day11.Quantity);
+					oDetail.Day4 = tableRows[i].Day11;
+					oDetail.Day4.Quantity = String(tableRows[i].Day4.Quantity);
 					}
 					if (this.globalData.noOfDay >= 6) {
-					oDetail.Day12 = tableRows[i].Day12;
-					oDetail.Day12.Quantity = String(tableRows[i].Day12.Quantity);
+					oDetail.Day5 = tableRows[i].Day12;
+					oDetail.Day5.Quantity = String(tableRows[i].Day5.Quantity);
 					}
 					if (this.globalData.noOfDay >= 7) {
-					oDetail.Day13 = tableRows[i].Day13;
-					oDetail.Day13.Quantity = String(tableRows[i].Day13.Quantity);
+					oDetail.Day6 = tableRows[i].Day6;
+					oDetail.Day6.Quantity = String(tableRows[i].Day6.Quantity);
 					}
 					oHeader.MarketListDetailSet.results.push(oDetail);
 				}
 				console.log(oHeader);
 				
-				oModel.create("/MarketListHeaderSet", oHeader, {
+				/*oModel.create("/MarketListHeaderSet", oHeader, {
 			    	method: "POST",
 				    success: function(data) {
 				     alert("success");
@@ -314,7 +297,7 @@ sap.ui.define([
 				     alert("error");
 				    }
 			   });
-				
+			   */	
 				
 			},
 			closeSaveDialog: function() {
@@ -510,8 +493,6 @@ sap.ui.define([
 				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 				var oLocalData = oStorage.get("localStorage");
 				
-				
-				
 				if (oLocalData) {
 					
 					oViewModel.setProperty("/PlantID",oLocalData.PlantID);
@@ -553,14 +534,12 @@ sap.ui.define([
 				    	oThis.getView().setModel(oModelHeader,"TableH");
 				    	
 				    	var oDetail = oHeader.NavDetail.results;
-				    	console.log(rData);
 				    	oModelJson.setData({ rows : oDetail } );
 					    oView.setModel(oModelJson,"mktlist");
 					    oTable.bindRows("mktlist>/rows");
 				    	sap.ui.core.BusyIndicator.hide();
 				    },
 				    error: function(oError) {
-			            console.log(oError);
 			            sap.ui.core.BusyIndicator.hide();
 			        }
 				});
@@ -721,6 +700,7 @@ sap.ui.define([
 				if (oData ) {
 					
 					
+					var oTableH = this.getView().getModel("TableH").getData();
 					var tableRows = this._oJsonModel.getData().rows;
 
 					var bNew = true,bAdded = false;
@@ -741,35 +721,21 @@ sap.ui.define([
 						if (bNew) {
 				
 							
-							oData.data[i].Day0.Date = this.globalData.Dates[0];
-							oData.data[i].Day1.Date = this.globalData.Dates[1];
-							oData.data[i].Day2.Date = this.globalData.Dates[2];
-							oData.data[i].Day3.Date = this.globalData.Dates[3];
-							oData.data[i].Day4.Date = this.globalData.Dates[4];
-							oData.data[i].Day5.Date = this.globalData.Dates[5];
-							oData.data[i].Day6.Date = this.globalData.Dates[6];
-							oData.data[i].Day7.Date = this.globalData.Dates[7];
-							oData.data[i].Day8.Date = this.globalData.Dates[8];
-							oData.data[i].Day9.Date = this.globalData.Dates[9];
-							oData.data[i].Day10.Date = this.globalData.Dates[10];
-							oData.data[i].Day11.Date = this.globalData.Dates[11];
-							oData.data[i].Day12.Date = this.globalData.Dates[12];
-							oData.data[i].Day13.Date = this.globalData.Dates[13];
+							oData.data[i].Day0.Date = oTableH.Date0;
+							oData.data[i].Day1.Date = oTableH.Date1;
+							oData.data[i].Day2.Date = oTableH.Date2;
+							oData.data[i].Day3.Date = oTableH.Date3;
+							oData.data[i].Day4.Date = oTableH.Date4;
+							oData.data[i].Day5.Date = oTableH.Date5;
+							oData.data[i].Day6.Date = oTableH.Date6;
 							
-							oData.data[i].Day0.PRID = this.globalData.PRID[0];
-							oData.data[i].Day1.PRID = this.globalData.PRID[1];
-							oData.data[i].Day2.PRID = this.globalData.PRID[2];
-							oData.data[i].Day3.PRID = this.globalData.PRID[3];
-							oData.data[i].Day4.PRID = this.globalData.PRID[4];
-							oData.data[i].Day5.PRID = this.globalData.PRID[5];
-							oData.data[i].Day6.PRID = this.globalData.PRID[6];
-							oData.data[i].Day7.PRID = this.globalData.PRID[7];
-							oData.data[i].Day8.PRID = this.globalData.PRID[8];
-							oData.data[i].Day9.PRID = this.globalData.PRID[9];
-							oData.data[i].Day10.PRID = this.globalData.PRID[10];
-							oData.data[i].Day11.PRID = this.globalData.PRID[11];
-							oData.data[i].Day12.PRID = this.globalData.PRID[12];
-							oData.data[i].Day13.PRID = this.globalData.PRID[13];
+							oData.data[i].Day0.PRID = oTableH.PRID0;
+							oData.data[i].Day1.PRID = oTableH.PRID1;
+							oData.data[i].Day2.PRID = oTableH.PRID2;
+							oData.data[i].Day3.PRID = oTableH.PRID3;
+							oData.data[i].Day4.PRID = oTableH.PRID4;
+							oData.data[i].Day5.PRID = oTableH.PRID5;
+							oData.data[i].Day6.PRID = oTableH.PRID6;
 							
 							oData.data[i].MarketListHeaderID =  this.globalData.MarketListID;
 							oData.data[i].MarketListDetailID = null;
