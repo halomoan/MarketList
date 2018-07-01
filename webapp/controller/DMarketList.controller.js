@@ -20,7 +20,9 @@ sap.ui.define([
 			    this.globalData = {
 			    	iRefresh : 0,
 			    	tableChanged : false,
-			    	MarketListID : "MKT0001",
+			    	MarketListHeaderID : "MKT0001",
+			    	PurchasingGroup : "037",
+			    	MarketListDetailID : "MKD0001",
 			    	noOfDay : 1
 			    	
 			    };
@@ -83,7 +85,7 @@ sap.ui.define([
 			_onMasterMatched :  function(oEvent) {
 				if (this.globalData.iRefresh === 0) {
 					//console.log(oEvent.getParameter("arguments"));
-					//this.globalData.MarketListID = oEvent.getParameter("arguments").marketlistID;
+					//this.globalData.MarketListHeaderID = oEvent.getParameter("arguments").marketlistID;
 					this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
 				}
 			},
@@ -190,11 +192,10 @@ sap.ui.define([
 				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 				var oLocalData = oStorage.get("localStorage");
 				
-				//TODO
 				oLocalData.Recipient = oViewModel.getProperty("/Recipient");
 				oLocalData.TrackingNo = oViewModel.getProperty("/TrackingNo");
 				oLocalData.MarketListHeaderID = this.globalData.MarketListID;
-				//oStorage.put("localStorage",oLocalData);
+				oStorage.put("localStorage",oLocalData);
                             	
 				var oHeader = {};
 				oHeader.PlantID = oLocalData.PlantID;
@@ -206,6 +207,8 @@ sap.ui.define([
 				oHeader.Requisitioner = oLocalData.UserId;
 				oHeader.Recipient = oLocalData.Recipient;
 				oHeader.TrackingNo = oLocalData.TrackingNo;
+				oHeader.PurchGroup = this.globalData.PurchasingGroup;
+				oHeader.Date = "";
 				oHeader.TableH = [];
 				
 				var oHeaderD = {};
@@ -237,58 +240,44 @@ sap.ui.define([
 				oHeaderD.Date6 =  oTableH.Date6;
 				oHeaderD.PRID6 = oTableH.PRID6;
 				oHeader.TableH = oHeaderD;
-				
-				oHeader.MarketListDetailSet = {};
-				oHeader.MarketListDetailSet.results = [];
-				
-				
+			
+				oHeader.NavDetail = {};
+				oHeader.NavDetail.results = [];
 			
 			
 				for(var i in tableRows){
 					var oDetail = {};
-					oDetail.MarketListDetailID = oLocalData.MarketListDetailID ?  oLocalData.MarketListDetailID : "MKD0001" ;
-					oDetail.MarketListHeaderID = oLocalData.MarketListHeaderID ? oLocalData.MarketListHeaderID : "MKT0001" ;
+					oDetail.MarketListDetailID = oLocalData.MarketListDetailID ?  oLocalData.MarketListDetailID : this.globalData.MarketListDetailID ;
+					oDetail.MarketListHeaderID = oLocalData.MarketListHeaderID ? oLocalData.MarketListHeaderID : this.globalData.MarketListHeaderID ;
 					oDetail.MaterialGroupID = tableRows[i].MaterialGroupID;
 					oDetail.MaterialID = tableRows[i].MaterialID;
 					oDetail.MaterialText = "";
-					oDetail.UnitPrice = String(tableRows[i].UnitPrice);
+					oDetail.UnitPrice = tableRows[i].UnitPrice;
 					oDetail.Currency = tableRows[i].Currency;
-					oDetail.PriceUnit = String(tableRows[i].PriceUnit);
+					oDetail.PriceUnit = tableRows[i].PriceUnit;
 					
 					
-					if (this.globalData.noOfDay >= 1) {
+					
 					oDetail.Day0 = tableRows[i].Day0;
-					oDetail.Day0.Quantity = String(tableRows[i].Day0.Quantity);
-					}
-					if (this.globalData.noOfDay >= 2) {
+					
 					oDetail.Day1 = tableRows[i].Day1;
-					oDetail.Day1.Quantity = String(tableRows[i].Day1.Quantity);
-					}
-					if (this.globalData.noOfDay >= 3) {
+					
 					oDetail.Day2 = tableRows[i].Day2;
-					oDetail.Day2.Quantity = String(tableRows[i].Day2.Quantity);
-					}
-					if (this.globalData.noOfDay >= 4) {
-					oDetail.Day3 = tableRows[i].Day10;
-					oDetail.Day3.Quantity = String(tableRows[i].Day3.Quantity);
-					}
-					if (this.globalData.noOfDay >= 5) {
-					oDetail.Day4 = tableRows[i].Day11;
-					oDetail.Day4.Quantity = String(tableRows[i].Day4.Quantity);
-					}
-					if (this.globalData.noOfDay >= 6) {
-					oDetail.Day5 = tableRows[i].Day12;
-					oDetail.Day5.Quantity = String(tableRows[i].Day5.Quantity);
-					}
-					if (this.globalData.noOfDay >= 7) {
+					
+					oDetail.Day3 = tableRows[i].Day3;
+					
+					oDetail.Day4 = tableRows[i].Day4;
+					
+					oDetail.Day5 = tableRows[i].Day5;
+					
 					oDetail.Day6 = tableRows[i].Day6;
-					oDetail.Day6.Quantity = String(tableRows[i].Day6.Quantity);
-					}
-					oHeader.MarketListDetailSet.results.push(oDetail);
+					
+					oHeader.NavDetail.results.push(oDetail);
 				}
+				
 				console.log(oHeader);
 				
-				/*oModel.create("/MarketListHeaderSet", oHeader, {
+				oModel.create("/MarketListHeaderSet", oHeader, {
 			    	method: "POST",
 				    success: function(data) {
 				     alert("success");
@@ -297,7 +286,7 @@ sap.ui.define([
 				     alert("error");
 				    }
 			   });
-			   */	
+			   	
 				
 			},
 			closeSaveDialog: function() {
@@ -493,7 +482,6 @@ sap.ui.define([
 				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 				var oLocalData = oStorage.get("localStorage");
 				
-				console.log(oLocalData);
 				if (oLocalData) {
 					
 					oViewModel.setProperty("/PlantID",oLocalData.PlantID);
@@ -730,16 +718,16 @@ sap.ui.define([
 							oData.data[i].Day5.Date = oTableH.Date5;
 							oData.data[i].Day6.Date = oTableH.Date6;
 							
-							oData.data[i].Day0.PRID = oTableH.PRID0;
-							oData.data[i].Day1.PRID = oTableH.PRID1;
-							oData.data[i].Day2.PRID = oTableH.PRID2;
-							oData.data[i].Day3.PRID = oTableH.PRID3;
-							oData.data[i].Day4.PRID = oTableH.PRID4;
-							oData.data[i].Day5.PRID = oTableH.PRID5;
-							oData.data[i].Day6.PRID = oTableH.PRID6;
+							oData.data[i].Day0.PRID = "00000";
+							oData.data[i].Day1.PRID = "00000";
+							oData.data[i].Day2.PRID = "00000";
+							oData.data[i].Day3.PRID = "00000";
+							oData.data[i].Day4.PRID = "00000";
+							oData.data[i].Day5.PRID = "00000";
+							oData.data[i].Day6.PRID = "00000";
 							
 							oData.data[i].MarketListHeaderID =  this.globalData.MarketListID;
-							oData.data[i].MarketListDetailID = null;
+							oData.data[i].MarketListDetailID = "MKD0001";
 							
 							tableRows.push(oData.data[i]);
 							
