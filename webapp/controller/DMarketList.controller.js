@@ -493,6 +493,7 @@ sap.ui.define([
 				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 				var oLocalData = oStorage.get("localStorage");
 				
+				console.log(oLocalData);
 				if (oLocalData) {
 					
 					oViewModel.setProperty("/PlantID",oLocalData.PlantID);

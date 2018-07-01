@@ -286,13 +286,6 @@ sap.ui.define([
 				}
 			},
 
-			/**
-			 * Shows the selected item on the detail page
-			 * On phones a additional history entry is created
-			 * @param {sap.m.ObjectListItem} oItem selected Item
-			 * @private
-			 */
-			
 			_showSubMaster : function(oItem) {
 				var sObjectId = oItem.getBindingContext().getProperty("MaterialGroupID");
 				this.getRouter().navTo("submaster", {plantId: this.PlantID, groupId : sObjectId}, false);

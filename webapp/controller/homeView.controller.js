@@ -9,9 +9,8 @@ sap.ui.define([
 
 			var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 			var oLocal = oStorage.get("localStorage");
-			//if (!oLocal) { oLocal = {}; }
+			if (!oLocal) { oLocal = {}; }
 			
-			oLocal = {};
 			
 			var oPlant = this.getView().byId("plant").getSelectedItem();
 			if(oPlant){
@@ -92,11 +91,12 @@ sap.ui.define([
 							var oData = rData.getParameter("data");
 							if(oData){
 							
+								console.log(oData);
 								var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-								var oLocal = oStorage.get("localStorage"); 
-								if(!oLocal) {
-									oLocal = {};
-								}
+							//var oLocal = oStorage.get("localStorage"); 
+								
+								var oLocal = {};
+								
 								oLocal.UserId = oData.UserId;
 								oLocal.Name = oData.Name;
 			
