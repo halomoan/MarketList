@@ -13,7 +13,6 @@ sap.ui.define([
 			    
 			    sap.ui.getCore().getEventBus().subscribe("marketlist","addMaterial",this._addMaterial,this);
 			    
-			    //var oDate = new Date();
 			    var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "YYYY-MM-dd" });   
 			    
 			     
@@ -187,6 +186,7 @@ sap.ui.define([
 				var oModel = this.getView().getModel();
 				var oViewModel = this.getModel("detailView");
 				var oTableH = this.getView().getModel("TableH").getData();
+				var oThis = this;
 				
 				
 				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
@@ -280,10 +280,20 @@ sap.ui.define([
 				oModel.create("/MarketListHeaderSet", oHeader, {
 			    	method: "POST",
 				    success: function(data) {
-				     alert("success");
+				     
+				    	sap.m.MessageBox.success("Successfully Saved", {
+				            title: "Success",                                      
+				            initialFocus: null                                   
+				        });
+				    	if (oThis._oViewFormSubmit) {
+							oThis._oViewFormSubmit.close();
+						}
 				    },
 				    error: function(e) {
-				     alert("error");
+				    	sap.m.MessageBox.success("There is error. Please contact SAPCC.", {
+				            title: "Failed",                                      
+				            initialFocus: null                                   
+				        });
 				    }
 			   });
 			   	
@@ -495,19 +505,12 @@ sap.ui.define([
 				
 				var oModel = this.getOwnerComponent().getModel();
 				
-				
-				//var sPath = "/" + oModel.createKey("MarketListHeaderSet",{MarketListHeaderID:  this.globalData.MarketListID});
-				//var sPath = "/" + oModel.createKey("MarketListHeaderSet");
-				
-				//var sPath = "/MarketListHeaderSet"; 
-				
-				
 				var oFilters = [];
 				oFilters.push( new sap.ui.model.Filter("PlantID", sap.ui.model.FilterOperator.EQ, oLocalData.PlantID) );
 				oFilters.push( new sap.ui.model.Filter("CostCenterID", sap.ui.model.FilterOperator.EQ, oLocalData.CostCenterID) );
 				oFilters.push( new sap.ui.model.Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, oLocalData.UnloadingPoint) );
-				//oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, dateFormat.format(new Date())));
-				oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, "20180622"));
+				oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, dateFormat.format(new Date( (new Date()).getTime() + (24 * 60 * 60 * 1000)))));
+				//oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, "20180622"));
 				
 				sap.ui.core.BusyIndicator.show();
 				oModel.read("/MarketListHeaderSet", {
@@ -517,8 +520,17 @@ sap.ui.define([
 				    filters: oFilters,
 				    success: function(rData) {
 				    	
+				    	
 				    	var oHeader = rData.results[0];
 				    	
+				    	oLocalData = oStorage.get("localStorage");
+				    	oLocalData.Recipient = oHeader.Recipient;
+				    	oLocalData.TrackingNo = oHeader.TrackingNo;
+				    	oViewModel.setProperty("/Recipient",oLocalData.Recipient);
+						oViewModel.setProperty("/TrackingNo",oLocalData.TrackingNo);
+				    	oStorage.put("localStorage",oLocalData);
+				    	
+				    	console.log(oHeader);
 				    	oModelHeader.setData(oHeader.TableH);
 				    	oThis.getView().setModel(oModelHeader,"TableH");
 				    	
@@ -533,137 +545,7 @@ sap.ui.define([
 			        }
 				});
 
-			/*	this.getView().bindElement({
-					path: "/MarketListHeaderSet",
-					parameters: {
-						expand: "NavDetail"
-					},
-					events: {
-                        dataReceived: function(rData){
-                            sap.ui.core.BusyIndicator.hide();
-                            
-                            var oData = rData.getParameter("data");
-                            if(oData){
-                            	
-                            	console.log(oData);
-                            	
-                            	oThis.globalData.MarketListID = oData.MarketListHeaderID;
-                            	oThis.globalData.Dates[0] = oData.TableH.Date0;
-						      	oThis.globalData.Dates[1] = oData.TableH.Date1;
-						      	oThis.globalData.Dates[2] = oData.TableH.Date2;
-						      	oThis.globalData.Dates[3] = oData.TableH.Date3;
-						      	oThis.globalData.Dates[4] = oData.TableH.Date4;
-						      	oThis.globalData.Dates[5] = oData.TableH.Date5;
-						      	oThis.globalData.Dates[6] = oData.TableH.Date6;
-						      	oThis.globalData.Dates[7] = oData.TableH.Date7;
-						      	oThis.globalData.Dates[8] = oData.TableH.Date8;
-						      	oThis.globalData.Dates[9] = oData.TableH.Date9;
-						      	oThis.globalData.Dates[10] = oData.TableH.Date10;
-						      	oThis.globalData.Dates[11] = oData.TableH.Date11;
-						      	oThis.globalData.Dates[12] = oData.TableH.Date12;
-						      	oThis.globalData.Dates[13] = oData.TableH.Date13;
-						      	
-						      	oThis.globalData.PRID[0] = oData.TableH.PRID0;
-						      	oThis.globalData.PRID[1] = oData.TableH.PRID1;
-						      	oThis.globalData.PRID[2] = oData.TableH.PRID2;
-						      	oThis.globalData.PRID[3] = oData.TableH.PRID3;
-						      	oThis.globalData.PRID[4] = oData.TableH.PRID4;
-						      	oThis.globalData.PRID[5] = oData.TableH.PRID5;
-						      	oThis.globalData.PRID[6] = oData.TableH.PRID6;
-						      	oThis.globalData.PRID[7] = oData.TableH.PRID7;
-						      	oThis.globalData.PRID[8] = oData.TableH.PRID8;
-						      	oThis.globalData.PRID[9] = oData.TableH.PRID9;
-						      	oThis.globalData.PRID[10] = oData.TableH.PRID10;
-						      	oThis.globalData.PRID[11] = oData.TableH.PRID11;
-						      	oThis.globalData.PRID[12] = oData.TableH.PRID12;
-						      	oThis.globalData.PRID[13] = oData.TableH.PRID13;
-						      	
-					      	
-                            }
-                        },
-                      dataRequested: function(){
-                      	sap.ui.core.BusyIndicator.show();
-                      }
-					}    
-				});
-				
-				/*
-				sap.ui.core.BusyIndicator.show();
-				oModel.read(sPath + "/MarketListDetailSet", {
-				    method: "GET",
-				    success: function(oData) {
-				    	
-				    	if (oData.results) {
-					    	oModelJson.setData({ rows : oData.results } );
-					    	oView.setModel(oModelJson,"mktlist");
-					      	oTable.bindRows("mktlist>/rows");	
-					      	var oItem = oData.results[0];
-					      	
-					      	
-					      	
-					      	oThis.globalData.Dates[0] = oItem.Day0.Date;
-					      	oThis.globalData.Dates[1] = oItem.Day1.Date;
-					      	oThis.globalData.Dates[2] = oItem.Day2.Date;
-					      	oThis.globalData.Dates[3] = oItem.Day3.Date;
-					      	oThis.globalData.Dates[4] = oItem.Day4.Date;
-					      	oThis.globalData.Dates[5] = oItem.Day5.Date;
-					      	oThis.globalData.Dates[6] = oItem.Day6.Date;
-					      	oThis.globalData.Dates[7] = oItem.Day7.Date;
-					      	oThis.globalData.Dates[8] = oItem.Day8.Date;
-					      	oThis.globalData.Dates[9] = oItem.Day9.Date;
-					      	oThis.globalData.Dates[10] = oItem.Day10.Date;
-					      	oThis.globalData.Dates[11] = oItem.Day11.Date;
-					      	oThis.globalData.Dates[12] = oItem.Day12.Date;
-					      	oThis.globalData.Dates[13] = oItem.Day13.Date;
-					      	
-					      	
-					      	oThis.globalData.PRID[0] =  oItem.Day0.PRID;
-					      	oThis.globalData.PRID[1] =  oItem.Day1.PRID;
-					      	oThis.globalData.PRID[2] =  oItem.Day2.PRID;
-					      	oThis.globalData.PRID[3] =  oItem.Day3.PRID;
-					      	oThis.globalData.PRID[4] =  oItem.Day4.PRID;
-					      	oThis.globalData.PRID[5] =  oItem.Day5.PRID;
-					      	oThis.globalData.PRID[6] =  oItem.Day6.PRID;
-					      	oThis.globalData.PRID[7] =  oItem.Day7.PRID;
-					      	oThis.globalData.PRID[8] =  oItem.Day8.PRID;
-					      	oThis.globalData.PRID[9] =  oItem.Day9.PRID;
-					      	oThis.globalData.PRID[10] =  oItem.Day10.PRID;
-					      	oThis.globalData.PRID[11] =  oItem.Day11.PRID;
-					      	oThis.globalData.PRID[12] =  oItem.Day12.PRID;
-					      	oThis.globalData.PRID[13] =  oItem.Day13.PRID;
-					      	
-					      	
-					      	
-					      	oViewModel.setProperty("/columns/0/date",oThis.globalData.Dates[0]);
-					      	oViewModel.setProperty("/columns/1/date",oThis.globalData.Dates[1]);
-					      	oViewModel.setProperty("/columns/2/date",oThis.globalData.Dates[2]);
-					      	oViewModel.setProperty("/columns/3/date",oThis.globalData.Dates[3]);
-					      	oViewModel.setProperty("/columns/4/date",oThis.globalData.Dates[4]);
-					      	oViewModel.setProperty("/columns/5/date",oThis.globalData.Dates[5]);
-					      	oViewModel.setProperty("/columns/6/date",oThis.globalData.Dates[6]);
-					      	oViewModel.setProperty("/columns/7/date",oThis.globalData.Dates[7]);
-					      	oViewModel.setProperty("/columns/8/date",oThis.globalData.Dates[8]);
-					      	oViewModel.setProperty("/columns/9/date",oThis.globalData.Dates[9]);
-					      	oViewModel.setProperty("/columns/10/date",oThis.globalData.Dates[10]);
-					      	oViewModel.setProperty("/columns/11/date",oThis.globalData.Dates[11]);
-					      	oViewModel.setProperty("/columns/12/date",oThis.globalData.Dates[12]);
-					      	oViewModel.setProperty("/columns/13/date",oThis.globalData.Dates[13]);
-					      	
-					      	
-					      	
-				    	}
-				    
-				      
-						
-						sap.ui.core.BusyIndicator.hide();	
-				    },
-				    error: function() {
-						sap.ui.core.BusyIndicator.hide();
-				    }
-				});
-				
-				*/
-				
+		
 			
 				if (!oModelJson.getData().rows) {
 					oModelJson.setData({ rows : [] } );
@@ -744,10 +626,7 @@ sap.ui.define([
 						this._oJsonModel.refresh();
 						//sap.ui.getCore().byId("__component0---app--idAppControl").hideMaster();
 					}
-					
-					
-					
-					
+
 				}
 			}
 			
