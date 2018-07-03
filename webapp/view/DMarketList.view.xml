@@ -113,7 +113,7 @@
 											<m:customData>
     											<core:CustomData key="myId" value="{mktlist>MaterialID}_01" writeToDom="false"/>
     											<core:CustomData key="myText" value="{mktlist>MaterialText}" writeToDom="false"/>
-    											<core:CustomData key="myComment" value="{mktlist>Day8/Comment}" writeToDom="false"/>
+    											<core:CustomData key="myComment" value="{mktlist>Day1/Comment}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
 										<m:Input placeholder="Zero To Remove" value="{path: 'mktlist>Day1/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day1/UOM}" fieldWidth="70%"/>
@@ -173,7 +173,7 @@
 											<m:customData>
     											<core:CustomData key="myId" value="{mktlist>MaterialID}_04" writeToDom="false"/>
     											<core:CustomData key="myText" value="{mktlist>MaterialText}" writeToDom="false"/>
-    											<core:CustomData key="myComment" value="{mktlist>Day11/Comment}" writeToDom="false"/>
+    											<core:CustomData key="myComment" value="{mktlist>Day4/Comment}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
 										<m:Input placeholder="Zero To Remove" value="{path: 'mktlist>Day4/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day4/UOM}" fieldWidth="70%"/>

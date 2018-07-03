@@ -185,7 +185,7 @@ sap.ui.define([
 				var tableRows = this._oJsonModel.getData().rows;
 				var oModel = this.getView().getModel();
 				var oViewModel = this.getModel("detailView");
-				var oTableH = this.getView().getModel("TableH").getData();
+				var oTableH = this.getView().getModel("TableH");
 				var oThis = this;
 				
 				
@@ -213,32 +213,32 @@ sap.ui.define([
 				
 				var oHeaderD = {};
 
-				oHeaderD.Date0 = oTableH.Date0;
-				oHeaderD.PRID0 = oTableH.PRID0;
+				oHeaderD.Date0 = oTableH.getProperty("/Date0");
+				oHeaderD.PRID0 = oTableH.getProperty("/PRID0");
 				oHeader.TableH = oHeaderD;
 				
-				oHeaderD.Date1 =  oTableH.Date1;
-				oHeaderD.PRID1 = oTableH.PRID1;
+				oHeaderD.Date1 = oTableH.getProperty("/Date1");
+				oHeaderD.PRID1 = oTableH.getProperty("/PRID1");
 				oHeader.TableH = oHeaderD;
 			                                               
-				oHeaderD.Date2 =  oTableH.Date2;
-				oHeaderD.PRID2 = oTableH.PRID2;
+				oHeaderD.Date2 = oTableH.getProperty("/Date2");
+				oHeaderD.PRID2 = oTableH.getProperty("/PRID2");
 				oHeader.TableH = oHeaderD;
 			
-				oHeaderD.Date3 =  oTableH.Date3;
-				oHeaderD.PRID3 = oTableH.PRID3;
+				oHeaderD.Date3 = oTableH.getProperty("/Date3");
+				oHeaderD.PRID3 = oTableH.getProperty("/PRID3");
 				oHeader.TableH = oHeaderD;
 
-				oHeaderD.Date4 =  oTableH.Date4;
-				oHeaderD.PRID4 = oTableH.PRID4;
+				oHeaderD.Date4 = oTableH.getProperty("/Date4");
+				oHeaderD.PRID4 = oTableH.getProperty("/PRID4");
 				oHeader.TableH = oHeaderD;
 			
-				oHeaderD.Date5 =  oTableH.Date5;
-				oHeaderD.PRID5 = oTableH.PRID5;
+				oHeaderD.Date5 = oTableH.getProperty("/Date5");
+				oHeaderD.PRID5 = oTableH.getProperty("/PRID5");
 				oHeader.TableH = oHeaderD;
 			
-				oHeaderD.Date6 =  oTableH.Date6;
-				oHeaderD.PRID6 = oTableH.PRID6;
+				oHeaderD.Date6 = oTableH.getProperty("/Date6");
+				oHeaderD.PRID6 = oTableH.getProperty("/PRID6");
 				oHeader.TableH = oHeaderD;
 			
 				oHeader.NavDetail = {};
@@ -251,7 +251,7 @@ sap.ui.define([
 					oDetail.MarketListHeaderID = oLocalData.MarketListHeaderID ? oLocalData.MarketListHeaderID : this.globalData.MarketListHeaderID ;
 					oDetail.MaterialGroupID = tableRows[i].MaterialGroupID;
 					oDetail.MaterialID = tableRows[i].MaterialID;
-					oDetail.MaterialText = "";
+					oDetail.MaterialText = tableRows[i].MaterialText;
 					oDetail.UnitPrice = tableRows[i].UnitPrice;
 					oDetail.Currency = tableRows[i].Currency;
 					oDetail.PriceUnit = tableRows[i].PriceUnit;
@@ -282,19 +282,25 @@ sap.ui.define([
 				    	//console.log(data.TableH);
 				    	
 				    	
-				    	oTableH = oThis.getView().getModel("TableH").getData();
-				    	oTableH.PRID0 = data.TableH.PRID0;
-				    	oTableH.PRID1 = data.TableH.PRID1;
-				    	oTableH.PRID2 = data.TableH.PRID2;
-				    	oTableH.PRID3 = data.TableH.PRID3;
-				    	oTableH.PRID4 = data.TableH.PRID4;
-				    	oTableH.PRID5 = data.TableH.PRID5;
-				    	oTableH.PRID6 = data.TableH.PRID6;
-				    	var oModelHeader = new JSONModel();
-				    	oModelHeader.setData(oTableH);
-				    	oThis.getView().setModel(oModelHeader,"TableH");
+				    	oTableH.setProperty("/PRID0",data.TableH.PRID0);
+				    	oTableH.setProperty("/PRID1",data.TableH.PRID1);
+				    	oTableH.setProperty("/PRID2",data.TableH.PRID2);
+				    	oTableH.setProperty("/PRID3",data.TableH.PRID3);
+				    	oTableH.setProperty("/PRID4",data.TableH.PRID4);
+				    	oTableH.setProperty("/PRID5",data.TableH.PRID5);
+				    	oTableH.setProperty("/PRID6",data.TableH.PRID6);
 				    	
-				    	console.log(oTableH);
+				    	for(i in data.NavDetail.results) {
+							tableRows[i].Day0 = data.NavDetail.results[i].Day0;
+							tableRows[i].Day1 = data.NavDetail.results[i].Day1;
+							tableRows[i].Day2 = data.NavDetail.results[i].Day2;
+							tableRows[i].Day3 = data.NavDetail.results[i].Day3;
+							tableRows[i].Day4 = data.NavDetail.results[i].Day4;
+							tableRows[i].Day5 = data.NavDetail.results[i].Day5;
+							tableRows[i].Day6 = data.NavDetail.results[i].Day6;
+						}
+						
+				    	
 				    	
 				    	sap.m.MessageBox.success("Successfully Saved", {
 				            title: "Success",                                      
