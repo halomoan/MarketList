@@ -275,12 +275,27 @@ sap.ui.define([
 					oHeader.NavDetail.results.push(oDetail);
 				}
 				
-				console.log(oHeader);
-				
 				oModel.create("/MarketListHeaderSet", oHeader, {
 			    	method: "POST",
 				    success: function(data) {
-				     
+				    	
+				    	//console.log(data.TableH);
+				    	
+				    	
+				    	oTableH = oThis.getView().getModel("TableH").getData();
+				    	oTableH.PRID0 = data.TableH.PRID0;
+				    	oTableH.PRID1 = data.TableH.PRID1;
+				    	oTableH.PRID2 = data.TableH.PRID2;
+				    	oTableH.PRID3 = data.TableH.PRID3;
+				    	oTableH.PRID4 = data.TableH.PRID4;
+				    	oTableH.PRID5 = data.TableH.PRID5;
+				    	oTableH.PRID6 = data.TableH.PRID6;
+				    	var oModelHeader = new JSONModel();
+				    	oModelHeader.setData(oTableH);
+				    	oThis.getView().setModel(oModelHeader,"TableH");
+				    	
+				    	console.log(oTableH);
+				    	
 				    	sap.m.MessageBox.success("Successfully Saved", {
 				            title: "Success",                                      
 				            initialFocus: null                                   
@@ -323,6 +338,7 @@ sap.ui.define([
 						});
 				} else{
 					this.globalData.tableChanged = false;
+					this.globalData.iRefresh = 0;
 					sap.ui.getCore().byId("__component0---app--idAppControl").hideMaster();
 					this.getRouter().navTo("home", null, false);
 					
@@ -481,6 +497,8 @@ sap.ui.define([
 			},
 			_onMetadataLoaded: function(){
 			
+			
+				
 				var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "YYYYMMdd" }); 
 				var oTable = this.byId("mktlistTable");
 				var oViewModel = this.getModel("detailView");
@@ -500,6 +518,11 @@ sap.ui.define([
 					oViewModel.setProperty("/CostCenterText",oLocalData.CostCenter);
 					oViewModel.setProperty("/UnloadingPoint",oLocalData.UnloadingPoint);
 					oViewModel.setProperty("/UserId",oLocalData.UserId);
+					
+					for (var i = 0; i < 14; i++){
+							oViewModel.setProperty("/columns/" + i + "/noItem",0);
+							oViewModel.setProperty("/columns/" + i + "/total",0);
+					}
 				}
 			    
 				

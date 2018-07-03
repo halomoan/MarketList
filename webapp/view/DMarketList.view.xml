@@ -19,7 +19,7 @@
 		</uxap:content>	
 	</uxap:ObjectPageHeaderContent>	
 	
-				<Table id="mktlistTable" selectionMode="MultiToggle" enableBusyIndicator="true"  class="sapUiResponsiveMargin" visibleRowCount="10"  height = "100%">
+				<Table id="mktlistTable" selectionMode="MultiToggle" enableBusyIndicator="true"  class="sapUiResponsiveMargin" visibleRowCount="15"  height = "100%">
 					<!--<Table id="mktlistTable" selectionMode="MultiToggle" enableBusyIndicator="true"  class="sapUiResponsiveMargin" visibleRowCount="{= ${device>/system/phone} ? 7 : 10 }"  height = "100%">-->
 			
 					 <toolbar>
@@ -122,7 +122,7 @@
 							</Column>
 							<Column width="12rem" visible="{detailView>/columns/2/visible}">
 								<multiLabels>
-									<m:Label text="{path: 'TableH>/Date2', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor3"/>
+									<m:Label text="{path: 'TableH>/Date2', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor3" tooltip="PReq: {TableH>/PRID2}"/>
 									<m:Label text="{detailView>/columns/2/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/2/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date2', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor3"/>
@@ -142,7 +142,7 @@
 							</Column>
 							<Column width="12rem" visible="{detailView>/columns/3/visible}">
 								<multiLabels>
-									<m:Label text="{path: 'TableH>/Date3', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor4"/>
+									<m:Label text="{path: 'TableH>/Date3', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor4" tooltip="PReq: {TableH>/PRID3}"/>
 									<m:Label text="{detailView>/columns/3/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/3/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date3', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor4"/>
@@ -162,7 +162,7 @@
 							</Column>
 							<Column width="12rem" visible="{detailView>/columns/4/visible}">
 								<multiLabels>
-									<m:Label text="{path: 'TableH>/Date4', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor5"/>
+									<m:Label text="{path: 'TableH>/Date4', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor5" tooltip="PReq: {TableH>/PRID4}"/>
 									<m:Label text="{detailView>/columns/4/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/4/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date4', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor5"/>
@@ -182,7 +182,7 @@
 							</Column>
 							<Column width="12rem" visible="{detailView>/columns/5/visible}">
 								<multiLabels>
-									<m:Label text="{path: 'TableH>/Date5', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor6"/>
+									<m:Label text="{path: 'TableH>/Date5', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor6" tooltip="PReq: {TableH>/PRID5}"/>
 									<m:Label text="{detailView>/columns/5/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/5/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date5', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor6"/>
@@ -202,7 +202,7 @@
 							</Column>
 							<Column width="12rem" visible="{detailView>/columns/6/visible}">
 								<multiLabels>
-									<m:Label text="{path: 'TableH>/Date6', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor7"/>
+									<m:Label text="{path: 'TableH>/Date6', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor7" tooltip="PReq: {TableH>/PRID6}"/>
 									<m:Label text="{detailView>/columns/6/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/6/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date6', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor7"/>
