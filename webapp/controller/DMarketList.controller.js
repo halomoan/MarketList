@@ -657,7 +657,16 @@ sap.ui.define([
 					}
 
 				}
+			},
+			inputChange: function(oEvent){
+				var qty = oEvent.getParameters().value;
+				var sPath = oEvent.getSource().getBindingContext("mktlist").getPath();
+				var oData = this.getView().getModel("mktlist").getProperty(sPath);
+				console.log(qty,sPath,oData);
+				console.log(oEvent.getSource().getBindingContext("mktlist"));
+				console.log(oEvent.getParameters());
 			}
+			
 			
 	});
 });
