@@ -49,12 +49,12 @@ sap.ui.define([
 		group: function (sKey) {
 			var aSorters = [];
 
-			if (sKey === "UnitNumber") {
+			if (sKey === "MaterialGroupName") {
 				// Grouping means sorting so we set the select to the same Entity used for grouping
-				this._oViewModel.setProperty("/sortBy", "UnitNumber");
+				this._oViewModel.setProperty("/sortBy", "MaterialGroupName");
 
 				aSorters.push(
-					new Sorter("UnitNumber", false,
+					new Sorter("MaterialGroupName", false,
 						this._fnGroupFunction.bind(this))
 				);
 			} else if (sKey === "None") {

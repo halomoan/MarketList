@@ -117,7 +117,7 @@
 					]
 				},
 				{
-					"pattern": "master/{plantID}",
+					"pattern": "master/plantId/:plantId:/ccId/:ccId:",
 					"name": "master",
 					"target": [
 						"object",
@@ -133,6 +133,14 @@
 				},
 				{
 					"pattern": "submaster/plantId/:plantId:/groupId/:groupId:",
+					"name": "submaster",
+					"target": [
+						"object",
+						"submaster"
+					]
+				},
+				{
+					"pattern": "submaster/plantId/:plantId:/groupId/:groupId:/ccId/:ccId:",
 					"name": "submaster",
 					"target": [
 						"object",

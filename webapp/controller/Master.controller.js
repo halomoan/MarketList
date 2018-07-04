@@ -43,6 +43,7 @@ sap.ui.define([
 				};
 				
 				this.PlantID = "";
+				this.CostCenterID = "";
 
 				this.setModel(oViewModel, "masterView");
 				// Make sure, busy indication is showing immediately so there is no
@@ -101,13 +102,13 @@ sap.ui.define([
 				}
 
 				var sQuery = oEvent.getParameter("query");
-
+				
 				if (sQuery) {
 					this._oListFilterState.aSearch = [
-						new Filter("PlantID", FilterOperator.EQ, this.PlantID), 
-						new Filter("MaterialGroupName", FilterOperator.Contains, sQuery)];
+						new Filter("MaterialGroupName", FilterOperator.Contains, sQuery)
+					];
 				} else {
-					this._oListFilterState.aSearch = [	new Filter("PlantID", FilterOperator.EQ, this.PlantID) ];
+					this._oListFilterState.aSearch = [	new Filter("MaterialGroupName", FilterOperator.Contains, sQuery) ];
 				}
 				this._applyFilterSearch();
 
@@ -269,26 +270,39 @@ sap.ui.define([
 			 * @private
 			 */
 			_onMasterMatched :  function(oEvent) {
-				var sFilterValue =  oEvent.getParameter("arguments").plantID;
+				var plantId =  oEvent.getParameter("arguments").plantId;
+				var costcenterId =  oEvent.getParameter("arguments").ccId;
 				
-				
-				if (this.PlantID !== sFilterValue ) {
+			
+				if (this.PlantID !== plantId ) {
 					var oList = this.getView().byId("matgrouplist");
 					var oBinding = oList.getBinding("items");
 					
-					this.PlantID =  oEvent.getParameter("arguments").plantID;
-					var aFilters = [];
+					this.PlantID =  plantId;
+					this.CostCenterID = costcenterId;
+					var andFilters = [];
 					
-					if (sFilterValue){
-					    aFilters.push( new Filter("PlantID", FilterOperator.EQ, sFilterValue) );
+					
+					if (plantId){
+					    andFilters.push( new Filter({path: "PlantID",  operator: sap.ui.model.FilterOperator.EQ, value1: plantId}) );
+					    if (costcenterId){
+							andFilters.push( new Filter({path: "CostCenterID", operator: sap.ui.model.FilterOperator.EQ, value1: "'" + costcenterId + "'"}) );
+						}	
 					}
-					oBinding.filter(aFilters, sap.ui.model.FilterType.Application);  
+					
+					oBinding.filter(new Filter( andFilters, true ));
+					
 				}
 			},
 
 			_showSubMaster : function(oItem) {
 				var sObjectId = oItem.getBindingContext().getProperty("MaterialGroupID");
-				this.getRouter().navTo("submaster", {plantId: this.PlantID, groupId : sObjectId}, false);
+				
+				if (sObjectId === "TEMPLATE") {
+					this.getRouter().navTo("submaster", {plantId: this.PlantID, groupId : sObjectId,ccId: this.CostCenterID }, false);
+				} else {
+					this.getRouter().navTo("submaster", {plantId: this.PlantID, groupId : sObjectId}, false);
+				}
 			
 			},
 
@@ -314,6 +328,7 @@ sap.ui.define([
 				var aFilters = this._oListFilterState.aSearch.concat(this._oListFilterState.aFilter),
 					oViewModel = this.getModel("masterView");
 				this._oList.getBinding("items").filter(aFilters, "Application");
+				
 				// changes the noDataText of the list in case there are no filter results
 				if (aFilters.length !== 0) {
 					oViewModel.setProperty("/noDataText", this.getResourceBundle().getText("masterListNoDataWithFilterOrSearchText"));

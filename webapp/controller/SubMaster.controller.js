@@ -44,6 +44,7 @@ sap.ui.define([
 				};
 	
 				this.PlantID = "";
+				this.CostCenterID = "";
 				this.setModel(oViewModel, "masterView");
 				// Make sure, busy indication is showing immediately so there is no
 				// break after the busy indication for loading the view's meta data is
@@ -107,6 +108,7 @@ sap.ui.define([
 				var sQuery = oEvent.getParameter("query");
 				var regNumeric = /^\d+$/;
 				
+				
 				if (sQuery) {
 					
 					if (regNumeric.test(sQuery)) {
@@ -123,6 +125,7 @@ sap.ui.define([
 				} else {
 					this._oListFilterState.aSearch = [new Filter("PlantID", FilterOperator.EQ, this.PlantID)];
 				}
+				
 				this._applyFilterSearch();
 
 			},
@@ -350,6 +353,7 @@ sap.ui.define([
 			_onMasterMatched :  function(oEvent) {
 				var objectId =  oEvent.getParameter("arguments").groupId;
 				var plantId =  oEvent.getParameter("arguments").plantId;
+				var costcenterId = oEvent.getParameter("arguments").ccId ;
 				
 				
 				/*this.getModel().metadataLoaded().then( function() {
@@ -367,13 +371,18 @@ sap.ui.define([
 				
 				var oList = this.getView().byId("materiallist");
 				
-				var sFilterValue = plantId;
 				this.PlantID = plantId;
+				this.CostCenterID = costcenterId;
+				
+				
 				var oFilters = [];
 
 				
-				if (sFilterValue){
-				    oFilters.push( new Filter("PlantID", FilterOperator.EQ, sFilterValue) );
+				if (plantId){
+				    oFilters.push( new Filter("PlantID", sap.ui.model.FilterOperator.EQ, plantId) );
+				    if (costcenterId) {
+				    	oFilters.push( new Filter("CostCenterID", sap.ui.model.FilterOperator.EQ, "'" + costcenterId + "'") );
+				    }
 				}
 				
 				var oItems = new sap.m.ObjectListItem({
@@ -397,7 +406,7 @@ sap.ui.define([
 				oList.bindItems({
 					path : sObjectPath + "/Materials",
 					template: oItems,
-    				filters: oFilters
+    				filters: new Filter(oFilters,true)
 				});
 				
 			},
@@ -491,9 +500,10 @@ sap.ui.define([
 			 */
 			_applyFilterSearch : function () {
 				var aFilters = this._oListFilterState.aSearch.concat(this._oListFilterState.aFilter),
-					oViewModel = this.getModel("masterView");
+				oViewModel = this.getModel("masterView");
 				
 				this._oList.getBinding("items").filter(aFilters, "Application");
+				
 				// changes the noDataText of the list in case there are no filter results
 				if (aFilters.length !== 0) {
 					oViewModel.setProperty("/noDataText", this.getResourceBundle().getText("masterListNoDataWithFilterOrSearchText"));

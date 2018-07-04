@@ -38,7 +38,7 @@ sap.ui.define([
 			}
 			oStorage.put("localStorage",oLocal);
 			
-			this.getRouter().navTo("master", {plantID : oPlant.getProperty("key")}, false);
+			this.getRouter().navTo("master", {plantId : oPlant.getProperty("key"), ccId : oCostCenter.getProperty("key")}, false);
 				
 		
 			
