@@ -559,7 +559,6 @@ sap.ui.define([
 						oViewModel.setProperty("/TrackingNo",oLocalData.TrackingNo);
 				    	oStorage.put("localStorage",oLocalData);
 				    	
-				    	console.log(oHeader);
 				    	oModelHeader.setData(oHeader.TableH);
 				    	oThis.getView().setModel(oModelHeader,"TableH");
 				    	
