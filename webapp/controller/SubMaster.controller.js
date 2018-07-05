@@ -309,7 +309,10 @@ sap.ui.define([
 					
 					oItem.UnitPrice = parseFloat(oCtx.getProperty("NetPrice"));
 					oItem.PriceUnit = parseFloat(oCtx.getProperty("PriceUnit"));
-	
+					oItem.MinOrder = parseFloat(oCtx.getProperty("MinOrder"));
+					oItem.OrderUnit = oCtx.getProperty("OrderUnit");
+					oItem.FactorToUOM = oCtx.getProperty("FactorToUOM");
+					oItem.AllowDec = oCtx.getProperty("AllowDec");
 					
 					oItem.MaterialText = oCtx.getProperty("MaterialText");
 					oItem.Currency = oCtx.getProperty("Currency");
