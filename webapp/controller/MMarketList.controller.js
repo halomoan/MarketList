@@ -17,8 +17,11 @@ sap.ui.define([
 				var oViewData = {
 				};
 				this.globalData = {
-			    	iRefresh : 0
+			    	iRefresh : 0,
+			    	tableChanged : false
 				};
+				this._oJsonModel = null;
+				
 				var oViewModel = new JSONModel(oViewData);
 				this.setModel(oViewModel, "detailView");
 				
@@ -35,6 +38,7 @@ sap.ui.define([
 				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 				var oLocalData = oStorage.get("localStorage");
 				var oModelJson = new JSONModel();
+				this._oJsonModel = oModelJson;
 				var oModelHeader = new JSONModel();
 				var oView = this.getView();
 
@@ -76,12 +80,17 @@ sap.ui.define([
 				    	oView.setModel(oModelHeader,"TableH");
 				    	
 				    	var oDetail = oHeader.NavDetail.results;
-				    	oModelJson.setData({ rows : oDetail } );
+				    	
+				    	if (!oDetail) {
+							oModelJson.setData({ rows : [] } );
+						} else{
+				    		oModelJson.setData({ rows : oDetail } );
+						}
 				    	
 				    	console.log(oModelJson);
 					    oView.setModel(oModelJson,"mktlist");
-					    //oTable.bindRows("mktlist>/rows");
 				    	sap.ui.core.BusyIndicator.hide();
+				    	
 				    	
 				    	//console.log(oHeader,oDetail);
 				    },
@@ -89,11 +98,136 @@ sap.ui.define([
 			            sap.ui.core.BusyIndicator.hide();
 			        }
 				});
+				
+				var binding =  new sap.ui.model.Binding(oModelJson, "/rows", oModelJson.getContext("/rows"));
+				binding.attachChange(function() {
+						this._onTableChanged(oModelJson);
+						
+				}.bind(this));
 			},
-			sectionPress: function(oEvent){
-				alert("yes");
-			}
+			
+			_onTableChanged : function(oModelJson) {
+				
+					var data = oModelJson.getProperty("/rows");
+					
+					
+					//if (data && this.globalData.tableChanged) {
+					if(data) {
+					
+						
+						
+						var noItems = [], totals = [];
+						
+						for (var key in data) {
+							for (var prop in data[key]){
+								if(prop.substring(0,3) === "Day") {
+									
+									var oDay = data[key][prop];
+									
+									if (oDay.Quantity > 0) {
+										noItems[oDay.Date] = isNaN(noItems[oDay.Date]) ? 1 : (noItems[oDay.Date] + 1);
+										if (isNaN(totals[oDay.Date])) {
+											totals[oDay.Date] = (oDay.Quantity / data[key].PriceUnit * data[key].UnitPrice);
+										}else{
+											totals[oDay.Date] = totals[oDay.Date] + (oDay.Quantity / data[key].PriceUnit * data[key].UnitPrice);
+										}
+									} else{
+										if (isNaN(noItems[oDay.Date])) {
+											noItems[oDay.Date] = 0;
+										}
+										if (isNaN(totals[oDay.Date])) {
+											totals[oDay.Date] = 0.00;
+										}
+									}
+								} 
+							}
+							
+						}
+						
+						var oViewModel = this.getModel("detailView");
+						
+						
+						var i = 0;
+						for (key in noItems) {
+							oViewModel.setProperty("/columns/" + (i++) + "/noItem",noItems[key]);
+							
+						}
+						
+						i = 0;	
+						for (key in totals) {
+							oViewModel.setProperty("/columns/" + (i++) + "/total",formatter.currencyValue(totals[key]));
+						}
+					}
+					
+					if(this.globalData.iRefresh++ > 0) {
+						this.globalData.tableChanged = true;
+					}
+			
+			},
 
+			_addMaterial: function(sChannel,sEvent,oData){
+				
+				
+				if (oData ) {
+					
+					var oTableH = this.getView().getModel("TableH").getData();
+					var tableRows = this._oJsonModel.getData().rows;
+
+					var bNew = true,bAdded = false;
+					for (var i = 0; i < oData.data.length; i++ ){
+						
+						bNew = true;
+						
+						if (tableRows){
+							for (var j = 0; j < tableRows.length; j++){
+								if (tableRows[j].MaterialID === oData.data[i].MaterialID ){
+									bNew = false;
+									j = tableRows.length + 1;
+								} 
+								
+							}
+						}
+						
+						if (bNew) {
+				
+							
+							oData.data[i].Day0.Date = oTableH.Date0;
+							oData.data[i].Day1.Date = oTableH.Date1;
+							oData.data[i].Day2.Date = oTableH.Date2;
+							oData.data[i].Day3.Date = oTableH.Date3;
+							oData.data[i].Day4.Date = oTableH.Date4;
+							oData.data[i].Day5.Date = oTableH.Date5;
+							oData.data[i].Day6.Date = oTableH.Date6;
+							
+							oData.data[i].Day0.PRID = "00000";
+							oData.data[i].Day1.PRID = "00000";
+							oData.data[i].Day2.PRID = "00000";
+							oData.data[i].Day3.PRID = "00000";
+							oData.data[i].Day4.PRID = "00000";
+							oData.data[i].Day5.PRID = "00000";
+							oData.data[i].Day6.PRID = "00000";
+							
+							oData.data[i].MarketListHeaderID =  this.globalData.MarketListID;
+							oData.data[i].MarketListDetailID = "MKD0001";
+							
+							tableRows.push(oData.data[i]);
+							
+						
+							
+							bAdded = true;
+						} else {
+							sap.m.MessageToast.show(oData.data[i].MaterialID + " - " + oData.data[i].MaterialText + " is already in the table.",{});	
+						}
+					}
+					
+					if (bAdded) {
+						this.globalData.tableChanged = true;
+						this._oJsonModel.refresh();
+						//sap.ui.getCore().byId("__component0---app--idAppControl").hideMaster();
+					}
+
+				}
+			},
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
 		 * (NOT before the first rendering! onInit() is used for that one!).
@@ -116,9 +250,9 @@ sap.ui.define([
 		 * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
 		 * @memberOf sap.ui.demo.masterdetail.view.MMarketListView
 		 */
-		//	onExit: function() {
-		//
-		//	}
+			onExit: function() {
+				sap.ui.getCore().getEventBus().unsubscribe("marketlist","addMaterial",this._addMaterial,this);
+			}
 
 	});
 

@@ -8,6 +8,8 @@
 	<semantic:DetailPage title="M A R K E T L I S T" showHeader="true" enableScrolling="true">
 		<semantic:content>
 			<uxap:ObjectPageLayout
+					enableLazyLoading="true"
+					useIconTabBar="true"
 					showTitleInHeaderContent="true">
 				<uxap:headerTitle>
 					<uxap:ObjectPageHeader objectImageURI="images/PPHGLogo.png"
@@ -87,7 +89,69 @@
 						</uxap:blocks>
 						</uxap:ObjectPageSubSection>
 					</uxap:subSections>
-				</uxap:ObjectPageSection>		
+				</uxap:ObjectPageSection>	
+					<uxap:ObjectPageSection id="Day2" title="Delivery Date:  {path: 'TableH>/Date2', formatter: '.formatter.dayFormat'}, {TableH>/Date2}">
+					<uxap:subSections>
+						<uxap:ObjectPageSubSection title=" ">
+						<uxap:blocks>
+							<List mode="Delete"  items="{path: 'mktlist>/rows'}">
+									<CustomListItem>
+										<HBox>
+											<core:Icon size="2rem" src="sap-icon://database" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" />
+											<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
+													<Label class="bigLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]" design="{= parseFloat(${mktlist>Day2/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
+													<Label class="midLabel" text="Price Unit: =  {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
+													<Label class="midLabel" text="Unit Price: =  {= parseFloat(${mktlist>PriceUnit})}  {= ${mktlist>Day2/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day2/UOM} : ${mktlist>Day2/UOM} + ' *' }"/>
+													<HBox>
+													<Button icon="sap-icon://request"  press="addCommentPress">
+														<customData>
+			    											<core:CustomData key="myId" value="{mktlist>MaterialID}_01" writeToDom="false"/>
+			    											<core:CustomData key="myText" value="{mktlist>MaterialText}" writeToDom="false"/>
+			    											<core:CustomData key="myComment" value="{mktlist>Day2/Comment}" writeToDom="false"/>
+														</customData>
+													</Button>	
+													<Input valueState="{= ${mktlist>Day2/Error} ? 'Error': 'None'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day2/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" textAlign="End" description="{mktlist>Day2/UOM}" fieldWidth="70%" change="inputChange"/>
+													</HBox>
+											</VBox>
+										</HBox>
+									</CustomListItem>
+								</List>
+						</uxap:blocks>
+						</uxap:ObjectPageSubSection>
+					</uxap:subSections>
+				</uxap:ObjectPageSection>	
+				
+					<uxap:ObjectPageSection id="Day3" title="Delivery Date:  {path: 'TableH>/Date3', formatter: '.formatter.dayFormat'}, {TableH>/Date3}">
+					<uxap:subSections>
+						<uxap:ObjectPageSubSection title=" ">
+						<uxap:blocks>
+							<List mode="Delete"  items="{path: 'mktlist>/rows'}">
+									<CustomListItem>
+										<HBox>
+											<core:Icon size="2rem" src="sap-icon://database" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" />
+											<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
+													<Label class="bigLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]" design="{= parseFloat(${mktlist>Day3/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
+													<Label class="midLabel" text="Price Unit: =  {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
+													<Label class="midLabel" text="Unit Price: =  {= parseFloat(${mktlist>PriceUnit})}  {= ${mktlist>Day3/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day3/UOM} : ${mktlist>Day3/UOM} + ' *' }"/>
+													<HBox>
+													<Button icon="sap-icon://request"  press="addCommentPress">
+														<customData>
+			    											<core:CustomData key="myId" value="{mktlist>MaterialID}_01" writeToDom="false"/>
+			    											<core:CustomData key="myText" value="{mktlist>MaterialText}" writeToDom="false"/>
+			    											<core:CustomData key="myComment" value="{mktlist>Day3/Comment}" writeToDom="false"/>
+														</customData>
+													</Button>	
+													<Input valueState="{= ${mktlist>Day3/Error} ? 'Error': 'None'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day3/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" textAlign="End" description="{mktlist>Day3/UOM}" fieldWidth="70%" change="inputChange"/>
+													</HBox>
+											</VBox>
+										</HBox>
+									</CustomListItem>
+								</List>
+						</uxap:blocks>
+						</uxap:ObjectPageSubSection>
+					</uxap:subSections>
+				</uxap:ObjectPageSection>	
+				
 				</uxap:sections>
 			</uxap:ObjectPageLayout>	
 		</semantic:content>	
