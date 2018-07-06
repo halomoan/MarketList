@@ -62,8 +62,11 @@ sap.ui.define([
 				*/
 				
 				//oList.attachUpdateFinished(null,this._listUpdated,this);
-				
-				this.getRouter().getRoute("submaster").attachPatternMatched(this._onMasterMatched, this);
+				if (sap.ui.Device.system.phone) {
+					this.getRouter().getRoute("submaster").attachPatternMatched(this._onMasterMatched, this);
+				} else{
+					this.getRouter().getRoute("submobile").attachPatternMatched(this._onMasterMatched, this);
+				}
 				this.getRouter().attachBypassed(this.onBypassed, this);
 			},
 

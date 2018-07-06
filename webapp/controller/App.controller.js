@@ -23,6 +23,17 @@ sap.ui.define([
 					oViewModel.setProperty("/delay", iOriginalBusyDelay);
 				};
 
+				var deviceModel = new sap.ui.model.json.JSONModel({
+				            isTouch : sap.ui.Device.support.touch,
+				            isNoTouch : !sap.ui.Device.support.touch,
+				            isPhone : sap.ui.Device.system.phone,
+				            isNoPhone : !sap.ui.Device.system.phone,
+				            listMode : sap.ui.Device.system.phone ? "None" : "SingleSelectMaster",
+				            listItemType : sap.ui.Device.system.phone ? "Active" : "Inactive"
+				        });
+				deviceModel.setDefaultBindingMode("OneWay");
+				this.setModel(deviceModel, "device");
+				        
 				this.getOwnerComponent().getModel().metadataLoaded()
 						.then(fnSetAppNotBusy);
 

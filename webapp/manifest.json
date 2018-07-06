@@ -125,6 +125,14 @@
 					]
 				},
 				{
+					"pattern": "mastermobile/plantId/:plantId:/ccId/:ccId:",
+					"name": "mastermobile",
+					"target": [
+						"mobile",
+						"master"
+					]
+				},
+				{
 					"pattern": "home",
 					"name": "home",
 					"target": [
@@ -148,11 +156,11 @@
 					]
 				},
 				{
-					"pattern": "Objects/{objectId}",
-					"name": "object",
+					"pattern": "submobile/plantId/:plantId:/groupId/:groupId:/ccId/:ccId:",
+					"name": "submobile",
 					"target": [
 						"submaster",
-						"object"
+						"mobile"
 					]
 				}
 			],
@@ -178,6 +186,11 @@
 					"viewName": "DMarketList",
 					"viewId": "detail",
 					"viewLevel": 2
+				},
+				"mobile" : {
+					"viewName": "MMarketList",
+					"viewId": "detail",
+					"viewLevel": 2					
 				},
 				"detailObjectNotFound": {
 					"viewName": "DetailObjectNotFound",

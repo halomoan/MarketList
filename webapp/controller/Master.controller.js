@@ -61,7 +61,11 @@ sap.ui.define([
 				});
 				*/
 
-				this.getRouter().getRoute("master").attachPatternMatched(this._onMasterMatched, this);
+				if (sap.ui.Device.system.phone) {
+					this.getRouter().getRoute("master").attachPatternMatched(this._onMasterMatched, this);
+				} else {
+					this.getRouter().getRoute("mastermobile").attachPatternMatched(this._onMasterMatched, this);
+				}
 				this.getRouter().attachBypassed(this.onBypassed, this);
 			},
 
@@ -299,9 +303,17 @@ sap.ui.define([
 				var sObjectId = oItem.getBindingContext().getProperty("MaterialGroupID");
 				
 				if (sObjectId === "TEMPLATE") {
-					this.getRouter().navTo("submaster", {plantId: this.PlantID, groupId : sObjectId,ccId: this.CostCenterID }, false);
+					if (sap.ui.Device.system.phone) {
+						this.getRouter().navTo("submaster", {plantId: this.PlantID, groupId : sObjectId,ccId: this.CostCenterID }, false);
+					} else {
+						this.getRouter().navTo("submobile", {plantId: this.PlantID, groupId : sObjectId,ccId: this.CostCenterID }, false);
+					}
 				} else {
-					this.getRouter().navTo("submaster", {plantId: this.PlantID, groupId : sObjectId}, false);
+					if (sap.ui.Device.system.phone) {
+						this.getRouter().navTo("submaster", {plantId: this.PlantID, groupId : sObjectId}, false);
+					}else{
+						this.getRouter().navTo("submobile", {plantId: this.PlantID, groupId : sObjectId}, false);
+					}
 				}
 			
 			},

@@ -15,7 +15,7 @@
 				<contentMiddle>
 					<SearchField
 							id="searchField"
-							showRefreshButton="{= !${device>/support/touch} }"
+							showRefreshButton="{= !${device>/isTouch} }"
 							tooltip="{i18n>masterSearchTooltip}"
 							width="100%"
 							search="onSearch">
@@ -27,7 +27,7 @@
 		<semantic:content>
 			<PullToRefresh
 					id="pullToRefresh"
-					visible="{device>/support/touch}"
+					visible="{device>/isTouch}"
 					refresh="onRefresh" />
 			<!-- For client side filtering add this to the items attribute:  parameters: {operationMode: 'Client'}}" -->
 			<List

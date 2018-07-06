@@ -38,7 +38,11 @@ sap.ui.define([
 			}
 			oStorage.put("localStorage",oLocal);
 			
-			this.getRouter().navTo("master", {plantId : oPlant.getProperty("key"), ccId : oCostCenter.getProperty("key")}, false);
+			if (sap.ui.Device.system.phone) {
+				this.getRouter().navTo("master", {plantId : oPlant.getProperty("key"), ccId : oCostCenter.getProperty("key")}, false);
+			} else {
+				this.getRouter().navTo("mastermobile", {plantId : oPlant.getProperty("key"), ccId : oCostCenter.getProperty("key")}, false);
+			}
 				
 		
 			
