@@ -42,7 +42,7 @@
 					growing="true"
 					growingScrollToLoad="true"
 					updateFinished="onUpdateFinished"
-					selectionChange="onSelectionChange">
+					>
 				<infoToolbar>
 					<Toolbar
 							active="true"

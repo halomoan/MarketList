@@ -13,7 +13,7 @@ sap.ui.define([
 			 */
 			currencyValue : function (sValue) {
 				if (!sValue) {
-					return "";
+					return "0.00";
 				}
 
 				return parseFloat(sValue).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');

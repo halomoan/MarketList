@@ -224,8 +224,8 @@ sap.ui.define([
 			 * @public
 			 */
 			onSelectionChange : function (oEvent) {
-				// get the list item, either from the listItem parameter or from the event's source itself (will depend on the device-dependent mode).
-				this._showDetail(oEvent.getParameter("listItem") || oEvent.getSource());
+				
+				//this._showDetail(oEvent.getParameter("listItem") || oEvent.getSource());
 			},
 
 			/**
@@ -469,23 +469,7 @@ sap.ui.define([
 					this.getRouter().getTargets().display("detailNoObjectsAvailable");
 				}*/
 			},
-			/**
-			 * Shows the selected item on the detail page
-			 * On phones a additional history entry is created
-			 * @param {sap.m.ObjectListItem} oItem selected Item
-			 * @private
-			 */
-			_showDetail : function (oItem) {
-				
-				var bReplace = !Device.system.phone;
-				this.getRouter().navTo("object", {
-					groupId : oItem.getBindingContext().getProperty("MaterialGroupID"),
-					objectId : oItem.getBindingContext().getProperty("MaterialID")
-					
-				}, bReplace);
-			},
 			
-
 			/**
 			 * Sets the item count on the master list header
 			 * @param {int} iTotalItems the total number of items in the list

@@ -256,21 +256,26 @@ sap.ui.define([
 					oDetail.Currency = tableRows[i].Currency;
 					oDetail.PriceUnit = tableRows[i].PriceUnit;
 					
-					
-					
 					oDetail.Day0 = tableRows[i].Day0;
+					delete oDetail.Day0.Error;
 					
 					oDetail.Day1 = tableRows[i].Day1;
+					delete oDetail.Day1.Error;
 					
 					oDetail.Day2 = tableRows[i].Day2;
+					delete oDetail.Day2.Error;
 					
 					oDetail.Day3 = tableRows[i].Day3;
+					delete oDetail.Day3.Error;
 					
 					oDetail.Day4 = tableRows[i].Day4;
+					delete oDetail.Day4.Error;
 					
 					oDetail.Day5 = tableRows[i].Day5;
+					delete oDetail.Day5.Error;
 					
 					oDetail.Day6 = tableRows[i].Day6;
+					delete oDetail.Day6.Error;
 					
 					oHeader.NavDetail.results.push(oDetail);
 				}
@@ -336,6 +341,7 @@ sap.ui.define([
 							onClose: function(oAction){
 								if (oAction === sap.m.MessageBox.Action.YES) {
 									oThis.globalData.tableChanged = false;
+									oThis.globalData.iRefresh = 0;
 									sap.ui.getCore().byId("__component0---app--idAppControl").hideMaster();
 									oThis.getRouter().navTo("home", null, false);
 									
@@ -509,6 +515,7 @@ sap.ui.define([
 				var oTable = this.byId("mktlistTable");
 				var oViewModel = this.getModel("detailView");
 				var oModelJson = new JSONModel();
+				this._oJsonModel = oModelJson;
 				var oModelHeader = new JSONModel();
 				var oView = this.getView();
 				var oThis = this;
@@ -589,7 +596,7 @@ sap.ui.define([
 						
 				}.bind(this));
 				
-				this._oJsonModel = oModelJson;
+			
 			
 			
 			},
@@ -666,24 +673,23 @@ sap.ui.define([
 				  decimalSeparator: "."
 				});
 				
-				var qty = oEvent.getParameters().value;
+				var qty = oEvent.getParameters().value.replace(/[\,|\.]/g,"");
 				var sPath = oEvent.getSource().getBindingContext("mktlist").getPath();
 				var material = this.getView().getModel("mktlist").getProperty(sPath);
 				var id = oEvent.getParameters().id.substring(7, 8);
 				var sMsg = "";
 				var oThis = this;
 				var matDay = material["Day" + id];
-				material.hasError = false;  
 				matDay.Error = false;
 				
-				if (isNaN(Number(qty))) {
+				if (isNaN(qty)) {
 					sMsg = this.getResourceBundle().getText("msgErrNumber");
 					sap.m.MessageBox.success(sMsg, {
 				            title: "Error",                                      
 				            initialFocus: null                                   
 				        });
 				    matDay.Error = true;
-				    material.hasError = true;    
+				    
 				    
 				}else if( matDay.Quantity > 0 ) {
 					
@@ -694,7 +700,6 @@ sap.ui.define([
 						if (!material.AllowDec) {
 							if (orderqty % 1 !== 0) {
 								
-								material.hasError = true;
 								matDay.Error = true;
 								sMsg = sMsg + "\n\r" + 	this.getResourceBundle().getText("msgOrderAsWhole",[oNumberFormat.format(orderqty)]);
 							}
@@ -702,7 +707,7 @@ sap.ui.define([
 					
 						if (orderqty < material.MinOrder) {
 							sMsg = sMsg + "\n\r" + this.getResourceBundle().getText("msgMinOrder",[oNumberFormat.format(orderqty),oNumberFormat.format(material.MinOrder)]);
-							material.hasError = true;
+						
 							matDay.Error = true;
 							
 						
@@ -724,7 +729,7 @@ sap.ui.define([
 					} else{
 						if (!material.AllowDec) {
 							if ((matDay.Quantity % 1) !== 0) {
-								material.hasError = true; 
+							
 								matDay.Error = true;
 								sMsg = sMsg + "\n\r" + 	this.getResourceBundle().getText("msgOrderAsWhole",[oNumberFormat.format(matDay.Quantity)]);
 								sap.m.MessageBox.success(sMsg, {
