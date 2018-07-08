@@ -21,7 +21,8 @@ sap.ui.define([
 				this.globalData = {
 			    	iRefresh : 0,
 			    	tableChanged : false,
-			    	tabId : '0000-00-00'
+			    	tabId : '0000-00-00',
+			    	dayId : 0
 				};
 				this._oJsonModel = null;
 				
@@ -92,6 +93,8 @@ sap.ui.define([
 				    	oView.setModel(oModelHeader,"TableH");
 				    	
 				    	var oDetail = oHeader.NavDetail.results;
+				    	
+				    	console.log(oDetail);
 				    	
 				    	if (!oDetail) {
 							oModelJson.setData({ rows : [] } );
@@ -225,9 +228,13 @@ sap.ui.define([
 				}
 			},
 			tabChanged : function(oEvent){
-				
-				//console.log(oEvent.getParameters().section.getTitle());
-				var id = oEvent.getParameters().section.getTitle(); 
+				var mode = this.byId("LDay" + this.globalData.dayId).getMode();
+				if (mode !== sap.m.ListMode.None) {
+					this.byId("LDay" + this.globalData.dayId).setMode(sap.m.ListMode.None);
+				}
+				var id = oEvent.getParameters().section.getId();
+				this.globalData.dayId = id.substr(id.length - 1);
+				id = oEvent.getParameters().section.getTitle(); 
 				this.globalData.tabId = id.substr(id.length - 10);
 				this._onTableChanged(this._oJsonModel);
 				
@@ -440,6 +447,7 @@ sap.ui.define([
 				var oThis = this;
 				var matDay = material["Day" + id];
 				
+				console.log(oEvent.getParameters(), oEvent.getParameter("previousValue"));
 				matDay.Error = false;
 				
 				if (isNaN(qty)) {
@@ -452,6 +460,7 @@ sap.ui.define([
 				    
 				    
 				}else if( matDay.Quantity > 0 ) {
+					matDay.Deleted = false;
 					
 					if (matDay.UOM !== material.OrderUnit) {
 						var orderqty = (material.FactorToUOM > 0) ? matDay.Quantity / material.FactorToUOM : 0;
@@ -473,6 +482,15 @@ sap.ui.define([
 							
 						
 						}
+						
+						if (!material.AllowDec) {
+							if ((matDay.Quantity % 1) !== 0) {
+					
+								matDay.Error = true;
+								sMsg = sMsg + "\n\r" + 	this.getResourceBundle().getText("msgOrderAsWhole",[oNumberFormat.format(matDay.Quantity)]);
+							}
+						}
+						
 						sMsg = sMsg + "\n\r\n\r" + this.getResourceBundle().getText("msgUnitConversion",[oNumberFormat.format(material.FactorToUOM),matDay.UOM,material.OrderUnit]);
 						sap.m.MessageBox.success(sMsg, {
 				            title: "Information",                                      
@@ -487,30 +505,77 @@ sap.ui.define([
 								}
 				            }
 				        });
-					} else{
-						if (!material.AllowDec) {
-							if ((matDay.Quantity % 1) !== 0) {
-					
-								matDay.Error = true;
-								sMsg = sMsg + "\n\r" + 	this.getResourceBundle().getText("msgOrderAsWhole",[oNumberFormat.format(matDay.Quantity)]);
-								sap.m.MessageBox.success(sMsg, {
-						            title: "Information",                                      
-						            initialFocus: null,
-						            onClose: function(oAction){
-						            	if (matDay.Quantity > 500) {
-											sap.m.MessageToast.show(oThis.getResourceBundle().getText("msgMoreThen",[500]));
-										}
-										var price = matDay.Quantity * material.UnitPrice / material.PriceUnit;
-										if (price > 1000){
-											sap.m.MessageToast.show(oThis.getResourceBundle().getText("msgCostMore",[1000]));
-										}
-						            }
-						        });
-							}
-						}
+					} else {
+						matDay.Deleted = true;
 					}
 				}
 				this.globalData.tableChanged = true;
+			},
+			addCommentPress: function(oEvent){
+				var text = oEvent.getSource().data("myText");
+				var sId = oEvent.getSource().data("myId");
+				var sComment = oEvent.getSource().data("myComment");
+				var oModel = this._oJsonModel;
+				var oThis = this;
+			
+				
+				var itemId = sId.substr(0,sId.length - 3);
+				var itemIdx = parseInt(sId.slice(-2));
+				
+				var dialog = new sap.m.Dialog({
+					title: this.getResourceBundle().getText("addComment") + " " + text + " (" + itemId + ")" ,
+					type: 'Message',
+					content: [
+							new sap.m.TextArea('commentTextArea', {
+								width: '100%',
+								placeholder: 'Add comment (optional)',
+								value : sComment
+							})
+						],
+						beginButton: new sap.m.Button({
+							text:  this.getResourceBundle().getText("submit"),
+							press: function () {
+									
+								var sText = sap.ui.getCore().byId('commentTextArea').getValue();
+								sap.m.MessageToast.show('Add Comment : ' + sText);
+								var rows = oModel.getData().rows;
+
+								for(var key in rows) {
+									if (rows[key].MaterialID === itemId){
+										rows[key]["Day" + itemIdx].Comment = sText;
+										oModel.refresh();
+										oThis.globalData.tableChanged = true;
+										break;
+									}
+								}
+								dialog.close();
+								
+							}
+						}),
+						endButton: new sap.m.Button({
+							text: this.getResourceBundle().getText("cancel"),
+							press: function () {
+								dialog.close();
+							}
+						}),
+						afterClose: function() {
+							dialog.destroy();
+						}
+				});
+
+				dialog.open();
+			},
+			toggleTemplate: function(){
+				var oList = this.byId("LDay" + this.globalData.dayId);
+				var mode = oList.getMode();
+				if (mode === sap.m.ListMode.None) {
+					this.byId("toggleTemplate").setText("Hide Template");
+					this.byId("LDay" + this.globalData.dayId).setMode(sap.m.ListMode.MultiSelect);
+				} else {
+					this.byId("toggleTemplate").setText("Show Template");
+					this.byId("LDay" + this.globalData.dayId).setMode(sap.m.ListMode.None);
+				}
+				oList.getBinding("items").refresh(true);
 			},
 			onExit: function() {
 				sap.ui.getCore().getEventBus().unsubscribe("marketlist","addMaterial",this._addMaterial,this);
