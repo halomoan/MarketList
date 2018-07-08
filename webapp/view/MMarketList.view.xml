@@ -28,7 +28,7 @@
 						<Text text="{detailView>/CostCenterID} - {detailView>/CostCenterText}"/>
 					</uxap:snappedContent>
 					<uxap:actions>
-						<uxap:ObjectPageHeaderActionButton type="Transparent" id="toggleTemplate" text="Show Template" hideText="false" hideIcon="true" press="toggleTemplate"/>
+						<uxap:ObjectPageHeaderActionButton type="Transparent" id="toggleTemplate" text="Delivery Date: {path: 'detailView>/deliveryDate', formatter: '.formatter.dayFormat'}, {detailView>/deliveryDate}" hideText="false" hideIcon="true" press="toggleTemplate"/>
 					</uxap:actions>	
 				</uxap:ObjectPageDynamicHeaderTitle>	
 				</uxap:headerTitle>	
@@ -45,15 +45,15 @@
 						<uxap:ObjectPageSubSection title="">
 						<uxap:blocks>
 							<List id="LDay0" mode="None" items="{path: 'mktlist>/rows'}">
-									<CustomListItem selected="{mktlist>InTemplate}">
+									<CustomListItem>
 										<HBox>
-											<core:Icon size="2rem" src="sap-icon://database" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" />
+											<core:Icon size="2rem" src="sap-icon://add-favorite" color="{=${mktlist>InTemplate} ? 'Critical' : 'Neutral'}" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" press="toggleTemplate" tooltip="{=${mktlist>InTemplate} ? 'Part Of Template' : ''}"/>
 											<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
 													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]" design="{= parseFloat(${mktlist>Day0/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<Label text="Price Unit: =  {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 													<Label text="Unit Price: =  {= parseFloat(${mktlist>PriceUnit})}  {= ${mktlist>Day0/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day0/UOM} : ${mktlist>Day0/UOM} + ' *' }"/>
 													<HBox>
-													<Input valueState="{= ${mktlist>Day0/Error} ? 'Error': 'None'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day0/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" textAlign="End" description="{mktlist>Day0/UOM}" fieldWidth="70%" change="inputChange"/>
+													
 													<Button icon="sap-icon://request"  press="addCommentPress">
 														<customData>
 			    											<core:CustomData key="myId" value="{mktlist>MaterialID}_00" writeToDom="false"/>
@@ -61,6 +61,7 @@
 			    											<core:CustomData key="myComment" value="{mktlist>Day0/Comment}" writeToDom="false"/>
 														</customData>
 													</Button>
+													<Input valueState="{= ${mktlist>Day0/Error} ? 'Error': 'None'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day0/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" textAlign="End" description="{mktlist>Day0/UOM}" fieldWidth="70%" change="inputChange"/>
 													</HBox>
 											</VBox>
 										</HBox>
@@ -77,7 +78,7 @@
 							<List id="LDay1" mode="None"  items="{path: 'mktlist>/rows'}">
 									<CustomListItem>
 										<HBox>
-											<core:Icon size="2rem" src="sap-icon://database" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" />
+											<core:Icon size="2rem" src="sap-icon://add-favorite" color="{=${mktlist>InTemplate} ? 'Critical' : 'Neutral'}" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" press="toggleTemplate" tooltip="{=${mktlist>InTemplate} ? 'Part Of Template' : ''}"/>
 											<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
 													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]" design="{= parseFloat(${mktlist>Day1/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<Label text="Price Unit: =  {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
@@ -107,7 +108,7 @@
 							<List id="LDay2" mode="None"  items="{path: 'mktlist>/rows'}">
 									<CustomListItem>
 										<HBox>
-											<core:Icon size="2rem" src="sap-icon://database" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" />
+											<core:Icon size="2rem" src="sap-icon://add-favorite" color="{=${mktlist>InTemplate} ? 'Critical' : 'Neutral'}" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" press="toggleTemplate" tooltip="{=${mktlist>InTemplate} ? 'Part Of Template' : ''}"/>
 											<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
 													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]" design="{= parseFloat(${mktlist>Day2/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<Label text="Price Unit: =  {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
@@ -138,7 +139,7 @@
 							<List id="LDay3" mode="None"  items="{path: 'mktlist>/rows'}">
 									<CustomListItem>
 										<HBox>
-											<core:Icon size="2rem" src="sap-icon://database" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" />
+											<core:Icon size="2rem" src="sap-icon://add-favorite" color="{=${mktlist>InTemplate} ? 'Critical' : 'Neutral'}" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" press="toggleTemplate" tooltip="{=${mktlist>InTemplate} ? 'Part Of Template' : ''}"/>
 											<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
 													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]" design="{= parseFloat(${mktlist>Day3/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<Label text="Price Unit: =  {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
@@ -169,7 +170,7 @@
 							<List id="LDay4" mode="None"  items="{path: 'mktlist>/rows'}">
 									<CustomListItem>
 										<HBox>
-											<core:Icon size="2rem" src="sap-icon://database" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" />
+											<core:Icon size="2rem" src="sap-icon://add-favorite" color="{=${mktlist>InTemplate} ? 'Critical' : 'Neutral'}" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" press="toggleTemplate" tooltip="{=${mktlist>InTemplate} ? 'Part Of Template' : ''}"/>
 											<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
 													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]" design="{= parseFloat(${mktlist>Day4/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<Label text="Price Unit: =  {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
@@ -200,7 +201,7 @@
 							<List id="LDay5" mode="None"  items="{path: 'mktlist>/rows'}">
 									<CustomListItem>
 										<HBox>
-											<core:Icon size="2rem" src="sap-icon://database" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" />
+											<core:Icon size="2rem" src="sap-icon://add-favorite" color="{=${mktlist>InTemplate} ? 'Critical' : 'Neutral'}" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" press="toggleTemplate" tooltip="{=${mktlist>InTemplate} ? 'Part Of Template' : ''}"/>
 											<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
 													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]" design="{= parseFloat(${mktlist>Day5/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<Label text="Price Unit: =  {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
@@ -231,7 +232,7 @@
 							<List id="LDay6" mode="None"  items="{path: 'mktlist>/rows'}">
 									<CustomListItem>
 										<HBox>
-											<core:Icon size="2rem" src="sap-icon://database" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" />
+											<core:Icon size="2rem" src="sap-icon://add-favorite" color="{=${mktlist>InTemplate} ? 'Critical' : 'Neutral'}" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" press="toggleTemplate" tooltip="{=${mktlist>InTemplate} ? 'Part Of Template' : ''}"/>
 											<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
 													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]" design="{= parseFloat(${mktlist>Day6/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<Label text="Price Unit: =  {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>

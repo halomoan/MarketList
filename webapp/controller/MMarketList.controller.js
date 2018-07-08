@@ -16,13 +16,15 @@ sap.ui.define([
 				sap.ui.getCore().getEventBus().subscribe("marketlist","addMaterial",this._addMaterial,this);
 				var oViewData = {
 					totalMaterials: 0,
-					totalPrice: 0.00
+					totalPrice: 0.00,
+					deliveryDate : "9999-12-31"
 				};
 				this.globalData = {
 			    	iRefresh : 0,
 			    	tableChanged : false,
-			    	tabId : '0000-00-00',
-			    	dayId : 0
+			    	deliveryDate : '0000-00-00',
+			    	dayId : 0,
+			    	templtChanged : false
 				};
 				this._oJsonModel = null;
 				
@@ -87,14 +89,13 @@ sap.ui.define([
 						oViewModel.setProperty("/TrackingNo",oLocalData.TrackingNo);
 				    	oStorage.put("localStorage",oLocalData);
 				    	
-				    	oThis.globalData.tabId = oHeader.TableH.Date0;
+				    	oThis.globalData.deliveryDate = oHeader.TableH.Date0;
+				    	oViewModel.setProperty("/deliveryDate",oThis.globalData.deliveryDate);
 				    	
 				    	oModelHeader.setData(oHeader.TableH);
 				    	oView.setModel(oModelHeader,"TableH");
 				    	
 				    	var oDetail = oHeader.NavDetail.results;
-				    	
-				    	console.log(oDetail);
 				    	
 				    	if (!oDetail) {
 							oModelJson.setData({ rows : [] } );
@@ -155,8 +156,8 @@ sap.ui.define([
 						
 						var oViewModel = this.getModel("detailView");
 						
-						oViewModel.setProperty("/totalMaterials", noItems[this.globalData.tabId]);
-						oViewModel.setProperty("/totalPrices",formatter.currencyValue(totals[this.globalData.tabId] ));
+						oViewModel.setProperty("/totalMaterials", noItems[this.globalData.deliveryDate]);
+						oViewModel.setProperty("/totalPrices",formatter.currencyValue(totals[this.globalData.deliveryDate] ));
 						
 					}
 					this.globalData.iRefresh++;
@@ -189,7 +190,7 @@ sap.ui.define([
 						if (bNew) {
 				
 							var oTableH = this.getView().getModel("TableH").getData();
-							this.globalData.tabId = oTableH.Date0;
+							this.globalData.deliveryDate = oTableH.Date0;
 							oData.data[i].Day0.Date = oTableH.Date0;
 							oData.data[i].Day1.Date = oTableH.Date1;
 							oData.data[i].Day2.Date = oTableH.Date2;
@@ -228,14 +229,22 @@ sap.ui.define([
 				}
 			},
 			tabChanged : function(oEvent){
-				var mode = this.byId("LDay" + this.globalData.dayId).getMode();
+				/*var mode = this.byId("LDay" + this.globalData.dayId).getMode();
 				if (mode !== sap.m.ListMode.None) {
 					this.byId("LDay" + this.globalData.dayId).setMode(sap.m.ListMode.None);
+					this.byId("toggleTemplate").setText("Show Template");
+				}
+				*/
+				var oViewModel = this.getModel("detailView");
+				if (this.globalData.templtChanged) {
+					this.globalData.templtChanged = false;
+					this._oJsonModel.refresh();
 				}
 				var id = oEvent.getParameters().section.getId();
 				this.globalData.dayId = id.substr(id.length - 1);
 				id = oEvent.getParameters().section.getTitle(); 
-				this.globalData.tabId = id.substr(id.length - 10);
+				this.globalData.deliveryDate = id.substr(id.length - 10);
+				oViewModel.setProperty("/deliveryDate",this.globalData.deliveryDate);
 				this._onTableChanged(this._oJsonModel);
 				
 				
@@ -447,7 +456,6 @@ sap.ui.define([
 				var oThis = this;
 				var matDay = material["Day" + id];
 				
-				console.log(oEvent.getParameters(), oEvent.getParameter("previousValue"));
 				matDay.Error = false;
 				
 				if (isNaN(qty)) {
@@ -565,8 +573,10 @@ sap.ui.define([
 
 				dialog.open();
 			},
-			toggleTemplate: function(){
+			/*toggleTemplate: function(){
 				var oList = this.byId("LDay" + this.globalData.dayId);
+				var oItems = oList.getSelectedItems();
+
 				var mode = oList.getMode();
 				if (mode === sap.m.ListMode.None) {
 					this.byId("toggleTemplate").setText("Hide Template");
@@ -575,7 +585,22 @@ sap.ui.define([
 					this.byId("toggleTemplate").setText("Show Template");
 					this.byId("LDay" + this.globalData.dayId).setMode(sap.m.ListMode.None);
 				}
-				oList.getBinding("items").refresh(true);
+				oList.setSelectedItem(oItems,false);
+			},*/
+			toggleTemplate: function(oEvent){
+				var oSource = oEvent.getSource();
+				var Id = oSource.getId();
+				var Idx = Id.match(/[^-]*$/g)[0];
+				
+				var color = oSource.getColor();
+				if (color === "Neutral") {
+					oSource.setColor("Critical");
+				}else{
+					oSource.setColor("Neutral");
+				}
+				var oData = this._oJsonModel.getData();
+				oData.rows[Idx].InTemplate = !oData.rows[Idx].InTemplate;
+				this.globalData.templtChanged = true;
 			},
 			onExit: function() {
 				sap.ui.getCore().getEventBus().unsubscribe("marketlist","addMaterial",this._addMaterial,this);
