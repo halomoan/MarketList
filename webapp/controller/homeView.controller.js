@@ -6,7 +6,11 @@ sap.ui.define([
 
 	return BaseController.extend("sap.ui.demo.masterdetail.controller.homeView", {
 		gotoForm: function(){
-
+			
+			var oViewModel = this.getModel("viewModel");
+			var oItemSelectTemplate;
+			var path;
+			
 			var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 			var oLocal = oStorage.get("localStorage");
 			if (!oLocal) { oLocal = {}; }
@@ -25,7 +29,29 @@ sap.ui.define([
 				oLocal.CostCenterID = oCostCenter.getProperty("key");
 				oLocal.CostCenter = oCostCenter.getProperty("text");
 			} else {
-				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectCC"));	
+				//sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectCC"));	
+				
+				path = oPlant.getBindingContext().getPath();
+				oItemSelectTemplate = new sap.ui.core.Item({
+	            key : "{CostCenterID}",
+	            text : "{CostCenterText}"
+	    		});
+	        
+	        	oCostCenter	=  this.getView().byId("costcenter");	
+				oCostCenter.bindAggregation("items", { 
+					"path" : path + "/PlantToCC",
+					"template" : oItemSelectTemplate,
+					"events" : {
+							dataReceived: function () {
+								oViewModel.setProperty("/busy", false);
+								
+						},
+							dataRequested : function () {
+								oViewModel.setProperty("/busy", true);
+							}
+						}
+					
+				});
 				return;
 			}
 			var oUnloadingPoint = this.getView().byId("unloadingpoint").getSelectedItem();
@@ -33,7 +59,27 @@ sap.ui.define([
 				oLocal.UnloadingPointID = oUnloadingPoint.getProperty("key");
 				oLocal.UnloadingPoint = oUnloadingPoint.getProperty("text");
 			} else {
-				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectUnloadingPoint"));	
+				//sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectUnloadingPoint"));	
+				path = oCostCenter.getBindingContext().getPath();
+				oItemSelectTemplate = new sap.ui.core.Item({
+		            key : "{UnLoadingPointID}",
+		            text : "{UnLoadingPoint}"
+    			});
+			
+				oUnloadingPoint	=  this.getView().byId("unloadingpoint");	
+				oUnloadingPoint.bindAggregation("items", { 
+						"path" : path + "/CCUnloadingPoint",
+						"template" : oItemSelectTemplate,
+						"events" : {
+								dataReceived: function () {
+									oViewModel.setProperty("/busy", false);
+							},
+								dataRequested : function () {
+									oViewModel.setProperty("/busy", true);
+								}
+							}
+						
+					});
 				return;
 			}
 			oStorage.put("localStorage",oLocal);

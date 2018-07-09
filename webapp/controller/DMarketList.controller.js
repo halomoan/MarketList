@@ -48,7 +48,7 @@ sap.ui.define([
 							{"noItem": 0 , "total" : 0, "visible": true},
 							{"noItem": 0 , "total" : 0, "visible": true}
 						],
-					Date: dateFormat.format(new Date()),
+					Today: dateFormat.format(new Date()),
 					PlantID: "",
 					Plant: "",
 					CostCenterID : "",
@@ -56,7 +56,9 @@ sap.ui.define([
 					UnloadingPoint: "",
 					UserId : "",
 					Recipient: "",
-					TrackingNo : ""
+					TrackingNo : "",
+					deliveryDate : "9999-12-31",
+					PurReqID: ""
 				};
 				
 				var aSelectionItems = [];
@@ -194,6 +196,7 @@ sap.ui.define([
 				
 				oLocalData.Recipient = oViewModel.getProperty("/Recipient");
 				oLocalData.TrackingNo = oViewModel.getProperty("/TrackingNo");
+				oLocalData.UnloadingPoint = oViewModel.getProperty("/UnloadingPoint");
 				oLocalData.MarketListHeaderID = this.globalData.MarketListID;
 				oStorage.put("localStorage",oLocalData);
                             	
@@ -287,7 +290,7 @@ sap.ui.define([
 			    	method: "POST",
 				    success: function(data) {
 				    	
-				    	//console.log(data.TableH);
+				    	
 				    	
 				    	
 				    	oTableH.setProperty("/PRID0",data.TableH.PRID0);
@@ -309,7 +312,7 @@ sap.ui.define([
 						}
 						
 				    	
-				    	
+				    	oThis.globalData.tableChanged = false;
 				    	sap.m.MessageBox.success(oThis.getResourceBundle().getText("msgSuccessSave"), {
 				            title: "Success",                                      
 				            initialFocus: null                                   
@@ -688,10 +691,17 @@ sap.ui.define([
 			},
 			headerInfoPopover: function(oEvent){
 				
-				 alert("data was: " + oEvent.getSource().data("Day"));
+				
+				var id = oEvent.getSource().getId();
+				var idx = id.substr(id.length - 1);
+				var oViewModel = this.getModel("detailView");
+				var oTableH = this.getView().getModel("TableH").getData();
+				
+				oViewModel.setProperty("/deliveryDate",oTableH["Date" + idx]);
+				oViewModel.setProperty("/PurReqID",oTableH["PRID" + idx]);
+				
 				if (!this._oHPopover) {
 					this._oHPopover = sap.ui.xmlfragment("sap.ui.demo.masterdetail.view.headerPopOver", this);
-				
 					this.getView().addDependent(this._oHPopover);
 				}
 	

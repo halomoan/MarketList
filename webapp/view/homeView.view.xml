@@ -23,7 +23,7 @@
 			editable="true"
 			layout="ResponsiveGridLayout"
 			labelSpanXL="4"
-			labelSpanL="3"
+			labelSpanL="4"
 			labelSpanM="4"
 			labelSpanS="12"
 			adjustLabelSpan="false"
@@ -31,7 +31,7 @@
 			emptySpanL="4"
 			emptySpanM="0"
 			emptySpanS="0"
-			columnsXL="2"
+			columnsXL="3"
 			columnsL="1"
 			columnsM="1"
 			singleContainerFullSize="false" >
@@ -50,8 +50,12 @@
 				
 				<Label text="{i18n>costCenter}" />
 					
+				
+					
 				<Select id="costcenter" change="onCostCenterChange">
 				</Select>
+				
+				<!--<core:Icon size="1.5rem" src="sap-icon://add-favorite"/>-->
 				
 				<Label text="{i18n>unloadingPoint}" />
 					

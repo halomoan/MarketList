@@ -265,9 +265,9 @@ sap.ui.define([
 			
 			onMultiSelectPress: function(oEvent){
 				if (oEvent.getSource().getPressed()) {
-					this.getView().byId("list").setMode('MultiSelect');
+					this.getView().byId("materiallist").setMode('MultiSelect');
 				} else {
-					this.getView().byId("list").setMode('SingleSelectMaster');
+					this.getView().byId("materiallist").setMode('SingleSelectMaster');
 				}
 			},
 			

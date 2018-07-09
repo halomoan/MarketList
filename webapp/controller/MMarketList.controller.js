@@ -307,6 +307,7 @@ sap.ui.define([
 				
 				oLocalData.Recipient = oViewModel.getProperty("/Recipient");
 				oLocalData.TrackingNo = oViewModel.getProperty("/TrackingNo");
+				oLocalData.UnloadingPoint = oViewModel.getProperty("/UnloadingPoint");
 				oLocalData.MarketListHeaderID = this.globalData.MarketListID;
 				oStorage.put("localStorage",oLocalData);
                             	
@@ -422,7 +423,7 @@ sap.ui.define([
 						}
 						
 				    	
-				    	
+				    	oThis.globalData.tableChanged = false;
 				    	sap.m.MessageBox.success(oThis.getResourceBundle().getText("msgSuccessSave"), {
 				            title: "Success",                                      
 				            initialFocus: null                                   
