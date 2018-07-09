@@ -316,6 +316,8 @@ sap.ui.define([
 					oItem.OrderUnit = oCtx.getProperty("OrderUnit");
 					oItem.FactorToUOM = oCtx.getProperty("FactorToUOM");
 					oItem.AllowDec = oCtx.getProperty("AllowDec");
+					oItem.InTemplate = oCtx.getProperty("InTemplate");
+					oItem.TemplatePRID = oCtx.getProperty("TemplatePRID");
 					
 					oItem.MaterialText = oCtx.getProperty("MaterialText");
 					oItem.Currency = oCtx.getProperty("Currency");

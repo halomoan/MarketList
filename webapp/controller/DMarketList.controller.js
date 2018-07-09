@@ -255,6 +255,8 @@ sap.ui.define([
 					oDetail.UnitPrice = tableRows[i].UnitPrice;
 					oDetail.Currency = tableRows[i].Currency;
 					oDetail.PriceUnit = tableRows[i].PriceUnit;
+					oDetail.InTemplate = tableRows[i].InTemplate;
+					oDetail.TemplatePRID = tableRows[i].TemplatePRID;
 					
 					oDetail.Day0 = tableRows[i].Day0;
 					delete oDetail.Day0.Error;
@@ -280,6 +282,7 @@ sap.ui.define([
 					oHeader.NavDetail.results.push(oDetail);
 				}
 				
+			
 				oModel.create("/MarketListHeaderSet", oHeader, {
 			    	method: "POST",
 				    success: function(data) {

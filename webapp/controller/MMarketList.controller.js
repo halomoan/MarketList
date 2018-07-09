@@ -104,7 +104,6 @@ sap.ui.define([
 				    		oThis._onTableChanged(oModelJson);
 						}
 				    	
-				    	
 					    oView.setModel(oModelJson,"mktlist");
 					    
 				    	sap.ui.core.BusyIndicator.hide();
@@ -213,7 +212,7 @@ sap.ui.define([
 							tableRows.push(oData.data[i]);
 							
 						
-							
+							console.log(oData);
 							bAdded = true;
 						} else {
 							sap.m.MessageToast.show(oData.data[i].MaterialID + " - " + oData.data[i].MaterialText + " is already in the table.",{});	
@@ -362,8 +361,9 @@ sap.ui.define([
 					oDetail.UnitPrice = tableRows[i].UnitPrice;
 					oDetail.Currency = tableRows[i].Currency;
 					oDetail.PriceUnit = tableRows[i].PriceUnit;
-					
-					
+					oDetail.InTemplate = tableRows[i].InTemplate;
+					oDetail.TemplatePRID = tableRows[i].TemplatePRID;
+
 					
 					oDetail.Day0 = tableRows[i].Day0;
 					delete oDetail.Day0.Error;
