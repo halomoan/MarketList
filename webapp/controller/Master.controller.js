@@ -61,7 +61,7 @@ sap.ui.define([
 				});
 				*/
 
-				if (sap.ui.Device.system.phone) {
+				if (!sap.ui.Device.system.phone) {
 					this.getRouter().getRoute("master").attachPatternMatched(this._onMasterMatched, this);
 				} else {
 					this.getRouter().getRoute("mastermobile").attachPatternMatched(this._onMasterMatched, this);
@@ -276,7 +276,6 @@ sap.ui.define([
 			_onMasterMatched :  function(oEvent) {
 				var plantId =  oEvent.getParameter("arguments").plantId;
 				var costcenterId =  oEvent.getParameter("arguments").ccId;
-				
 			
 				if (this.PlantID !== plantId ) {
 					var oList = this.getView().byId("matgrouplist");
@@ -285,6 +284,8 @@ sap.ui.define([
 					this.PlantID =  plantId;
 					this.CostCenterID = costcenterId;
 					var andFilters = [];
+					
+					
 					
 					
 					if (plantId){
@@ -303,13 +304,13 @@ sap.ui.define([
 				var sObjectId = oItem.getBindingContext().getProperty("MaterialGroupID");
 				
 				if (sObjectId === "TEMPLATE") {
-					if (sap.ui.Device.system.phone) {
+					if (!sap.ui.Device.system.phone) {
 						this.getRouter().navTo("submaster", {plantId: this.PlantID, groupId : sObjectId,ccId: this.CostCenterID }, false);
 					} else {
 						this.getRouter().navTo("submobile", {plantId: this.PlantID, groupId : sObjectId,ccId: this.CostCenterID }, false);
 					}
 				} else {
-					if (sap.ui.Device.system.phone) {
+					if (!sap.ui.Device.system.phone) {
 						this.getRouter().navTo("submaster", {plantId: this.PlantID, groupId : sObjectId}, false);
 					}else{
 						this.getRouter().navTo("submobile", {plantId: this.PlantID, groupId : sObjectId}, false);

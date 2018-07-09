@@ -99,7 +99,7 @@ sap.ui.define([
 				    toogleFreeze = oViewModel.getProperty("/toogleFreeze");
 				var freezeCol;
 				 
-				if(!sap.ui.Device.system.phone) {   
+				if(sap.ui.Device.system.phone) {   
 				    freezeCol =  oViewModel.getProperty("/freezeColm");
 				} else {
 				 	freezeCol =  oViewModel.getProperty("/freezeCold");
@@ -331,6 +331,11 @@ sap.ui.define([
 			closeSaveDialog: function() {
 				if (this._oViewFormSubmit) {
 					this._oViewFormSubmit.close();
+				}
+			},
+			closeInfoDialog: function(){
+					if (this._oHPopover) {
+					this._oHPopover.close();
 				}
 			},
 			onClose: function(){
@@ -666,6 +671,31 @@ sap.ui.define([
 					}
 
 				}
+			},
+			toggleTemplate: function(oEvent){
+				var oSource = oEvent.getSource();
+				var sPath = oSource.getBindingContext("mktlist").getPath();
+				var material = this.getView().getModel("mktlist").getProperty(sPath);
+				var color = oSource.getColor();
+				if (color === "Neutral") {
+					oSource.setColor("Critical");
+					material.InTemplate = true;
+				}else{
+					oSource.setColor("Neutral");
+					material.InTemplate = false;
+				}
+
+			},
+			headerInfoPopover: function(oEvent){
+				
+				 alert("data was: " + oEvent.getSource().data("Day"));
+				if (!this._oHPopover) {
+					this._oHPopover = sap.ui.xmlfragment("sap.ui.demo.masterdetail.view.headerPopOver", this);
+				
+					this.getView().addDependent(this._oHPopover);
+				}
+	
+				this._oHPopover.openBy(oEvent.getSource());
 			},
 			inputChange: function(oEvent){
 				

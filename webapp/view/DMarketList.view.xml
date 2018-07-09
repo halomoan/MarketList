@@ -19,7 +19,7 @@
 		</uxap:content>	
 	</uxap:ObjectPageHeaderContent>	
 	
-				<Table id="mktlistTable" selectionMode="MultiToggle" enableBusyIndicator="true"  class="sapUiResponsiveMargin" visibleRowCount="{= ${device>/isPhone} ? 7 : 14 }"  height = "100%">
+				<Table id="mktlistTable" selected ="{mktlist>Intemplate}" selectionMode="None" enableBusyIndicator="true"  class="sapUiResponsiveMargin" visibleRowCount="{= ${device>/isPhone} ? 7 : 14 }"  height = "100%">
 					 <toolbar>
 					    	<m:Toolbar>
 							
@@ -32,7 +32,19 @@
 							
 							</m:Toolbar>
 					    </toolbar>
+					    
 						<columns>
+							<Column width="3rem" hAlign="Center" sortProperty="InTemplate">
+								<multiLabels>
+								<m:Label text=""/>
+								<m:Label text=""/>
+								<m:Label text=""/>
+								<m:Label text=""/>
+								</multiLabels>
+								<template>
+								<core:Icon src="sap-icon://add-favorite" color="{=${mktlist>InTemplate} ? 'Critical' : 'Neutral'}" press="toggleTemplate" tooltip="{=${mktlist>InTemplate} ? 'Part Of Template' : ''}"/>
+								</template>
+							</Column>
 							<Column width="15rem" sortProperty="MaterialText" filterProperty="MaterialText">
 								<multiLabels>
 								<m:Label text=""/>
@@ -80,7 +92,8 @@
 							</Column>
 							<Column width="12rem" visible="{detailView>/columns/0/visible}">
 								<multiLabels>
-									<m:Label text="{path: 'TableH>/Date0', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor1" tooltip="PReq: {TableH>/PRID0}"/>
+									<!--<m:Label text="{path: 'TableH>/Date0', formatter: '.formatter.dateFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor1" press="headerInfoPopover"/>-->
+									<m:Button text="{path: 'TableH>/Date0', formatter: '.formatter.dateFormat'}" type="Transparent"  textAlign="Center" class="hcolor1"  width="100%" app:Day="0" press="headerInfoPopover"/>
 									<m:Label text="{detailView>/columns/0/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/0/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date0', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor1"/>
@@ -94,13 +107,14 @@
     											<core:CustomData key="myComment" value="{mktlist>Day0/Comment}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input valueState="{= ${mktlist>Day0/Error} ? 'Error': 'Success'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day0/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" textAlign="End" description="{mktlist>Day0/UOM}" fieldWidth="70%" change="inputChange"/>
+										<m:Input valueState="{= ${mktlist>Day0/Error} ? 'Error': 'None'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day0/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" textAlign="End" description="{mktlist>Day0/UOM}" fieldWidth="70%" change="inputChange"/>
 									</m:HBox>	
 								</template>
 							</Column>
 							<Column width="12rem" visible="{detailView>/columns/1/visible}">
 								<multiLabels>
-									<m:Label text="{path: 'TableH>/Date1', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor2" tooltip="PReq: {TableH>/PRID1}"/>
+									<!--<m:Label text="{path: 'TableH>/Date1', formatter: '.formatter.dateFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor2" tooltip="PReq: {TableH>/PRID1}"/>-->
+									<m:Button text="{path: 'TableH>/Date1', formatter: '.formatter.dateFormat'}" type="Transparent"  textAlign="Center" class="hcolor2"  width="100%" press="headerInfoPopover"/>
 									<m:Label text="{detailView>/columns/1/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/1/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date1', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor2"/>
@@ -114,13 +128,14 @@
     											<core:CustomData key="myComment" value="{mktlist>Day1/Comment}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input valueState="{= ${mktlist>Day1/Error} ? 'Error': 'Success'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day1/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day1/UOM}" fieldWidth="70%" change="inputChange"/>
+										<m:Input valueState="{= ${mktlist>Day1/Error} ? 'Error': 'None'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day1/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day1/UOM}" fieldWidth="70%" change="inputChange"/>
 									</m:HBox>
 								</template>
 							</Column>
 							<Column width="12rem" visible="{detailView>/columns/2/visible}">
 								<multiLabels>
-									<m:Label text="{path: 'TableH>/Date2', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor3" tooltip="PReq: {TableH>/PRID2}"/>
+									<!--<m:Label text="{path: 'TableH>/Date2', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor3" tooltip="PReq: {TableH>/PRID2}"/>-->
+									<m:Button text="{path: 'TableH>/Date2', formatter: '.formatter.dateFormat'}" type="Transparent"  textAlign="Center" class="hcolor2"  width="100%" press="headerInfoPopover"/>
 									<m:Label text="{detailView>/columns/2/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/2/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date2', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor3"/>
@@ -134,13 +149,14 @@
     											<core:CustomData key="myComment" value="{mktlist>Day2/Comment}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input valueState="{= ${mktlist>Day2/Error} ? 'Error': 'Success'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day2/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day2/UOM}" fieldWidth="70%" change="inputChange"/>
+										<m:Input valueState="{= ${mktlist>Day2/Error} ? 'Error': 'None'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day2/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day2/UOM}" fieldWidth="70%" change="inputChange"/>
 									</m:HBox>									
 								</template>
 							</Column>
 							<Column width="12rem" visible="{detailView>/columns/3/visible}">
 								<multiLabels>
-									<m:Label text="{path: 'TableH>/Date3', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor4" tooltip="PReq: {TableH>/PRID3}"/>
+									<!--<m:Label text="{path: 'TableH>/Date3', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor4" tooltip="PReq: {TableH>/PRID3}"/>-->
+									<m:Button text="{path: 'TableH>/Date3', formatter: '.formatter.dateFormat'}" type="Transparent"  textAlign="Center" class="hcolor2"  width="100%" press="headerInfoPopover"/>
 									<m:Label text="{detailView>/columns/3/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/3/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date3', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor4"/>
@@ -154,13 +170,14 @@
     											<core:CustomData key="myComment" value="{mktlist>Day3/Comment}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input valueState="{= ${mktlist>Day3/Error} ? 'Error': 'Success'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day3/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day3/UOM}" fieldWidth="70%" change="inputChange"/>
+										<m:Input valueState="{= ${mktlist>Day3/Error} ? 'Error': 'None'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day3/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day3/UOM}" fieldWidth="70%" change="inputChange"/>
 									</m:HBox>
 								</template>
 							</Column>
 							<Column width="12rem" visible="{detailView>/columns/4/visible}">
 								<multiLabels>
-									<m:Label text="{path: 'TableH>/Date4', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor5" tooltip="PReq: {TableH>/PRID4}"/>
+									<!--<m:Label text="{path: 'TableH>/Date4', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor5" tooltip="PReq: {TableH>/PRID4}"/>-->
+									<m:Button text="{path: 'TableH>/Date4', formatter: '.formatter.dateFormat'}" type="Transparent"  textAlign="Center" class="hcolor2"  width="100%" press="headerInfoPopover"/>
 									<m:Label text="{detailView>/columns/4/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/4/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date4', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor5"/>
@@ -174,13 +191,14 @@
     											<core:CustomData key="myComment" value="{mktlist>Day4/Comment}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input valueState="{= ${mktlist>Day4/Error} ? 'Error': 'Success'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day4/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day4/UOM}" fieldWidth="70%" change="inputChange"/>
+										<m:Input valueState="{= ${mktlist>Day4/Error} ? 'Error': 'None'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day4/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day4/UOM}" fieldWidth="70%" change="inputChange"/>
 									</m:HBox>
 								</template>
 							</Column>
 							<Column width="12rem" visible="{detailView>/columns/5/visible}">
 								<multiLabels>
-									<m:Label text="{path: 'TableH>/Date5', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor6" tooltip="PReq: {TableH>/PRID5}"/>
+									<!--<m:Label text="{path: 'TableH>/Date5', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor6" tooltip="PReq: {TableH>/PRID5}"/>-->
+									<m:Button text="{path: 'TableH>/Date5', formatter: '.formatter.dateFormat'}" type="Transparent"  textAlign="Center" class="hcolor2"  width="100%" press="headerInfoPopover"/>
 									<m:Label text="{detailView>/columns/5/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/5/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date5', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor6"/>
@@ -194,13 +212,14 @@
     											<core:CustomData key="myComment" value="{mktlist>Day5/Comment}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input valueState="{= ${mktlist>Day5/Error} ? 'Error': 'Success'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day5/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day5/UOM}" fieldWidth="70%" change="inputChange"/>
+										<m:Input valueState="{= ${mktlist>Day5/Error} ? 'Error': 'None'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day5/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day5/UOM}" fieldWidth="70%" change="inputChange"/>
 									</m:HBox>
 								</template>
 							</Column>
 							<Column width="12rem" visible="{detailView>/columns/6/visible}">
 								<multiLabels>
-									<m:Label text="{path: 'TableH>/Date6', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor7" tooltip="PReq: {TableH>/PRID6}"/>
+									<!--<m:Label text="{path: 'TableH>/Date6', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor7" tooltip="PReq: {TableH>/PRID6}"/>-->
+									<m:Button text="{path: 'TableH>/Date6', formatter: '.formatter.dateFormat'}" type="Transparent"  textAlign="Center" class="hcolor2"  width="100%" press="headerInfoPopover"/>
 									<m:Label text="{detailView>/columns/6/noItem}" textAlign="End" width="100%"/>
 									<m:Label text="{detailView>/columns/6/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date6', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor7"/>
@@ -214,7 +233,7 @@
     											<core:CustomData key="myComment" value="{mktlist>Day6/Comment}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input valueState="{= ${mktlist>Day6/Error} ? 'Error': 'Success'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day6/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day6/UOM}" fieldWidth="70%" change="inputChange"/>
+										<m:Input valueState="{= ${mktlist>Day6/Error} ? 'Error': 'None'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day6/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" textAlign="End" description="{mktlist>Day6/UOM}" fieldWidth="70%" change="inputChange"/>
 									</m:HBox>
 								</template>
 							</Column>

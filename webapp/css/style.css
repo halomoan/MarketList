@@ -19,10 +19,12 @@
 
 .hcolor1 {
  color: black !important;
+ font-weight: bold;
 }
 
 .hcolor2 {
  color: #9133FF !important;
+ font-weight: bold;
 }
 
 .hcolor3 {

@@ -16,7 +16,6 @@
 				<uxap:ObjectPageDynamicHeaderTitle primaryArea="Left">
 					<uxap:expandedHeading>
 						<Title text="{detailView>/Plant}" wrapping="true" class="sapUiTinyMarginTop"/>
-							
 					</uxap:expandedHeading>
 					<uxap:snappedHeading>
 						<Title text="{detailView>/Plant}" wrapping="true" class="sapUiTinyMarginTop"/>
@@ -28,7 +27,7 @@
 						<Text text="{detailView>/CostCenterID} - {detailView>/CostCenterText}"/>
 					</uxap:snappedContent>
 					<uxap:actions>
-						<uxap:ObjectPageHeaderActionButton type="Transparent" id="toggleTemplate" text="Delivery Date: {path: 'detailView>/deliveryDate', formatter: '.formatter.dayFormat'}, {detailView>/deliveryDate}" hideText="false" hideIcon="true" press="toggleTemplate"/>
+						<uxap:ObjectPageHeaderActionButton type="Transparent" id="toggleTemplate" text="Delivery Date: {path: 'detailView>/deliveryDate', formatter: '.formatter.dayFormat'}, {detailView>/deliveryDate}" hideText="false" hideIcon="true" press="headerInfoPopover"/>
 					</uxap:actions>	
 				</uxap:ObjectPageDynamicHeaderTitle>	
 				</uxap:headerTitle>	

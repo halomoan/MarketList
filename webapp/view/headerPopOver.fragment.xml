@@ -1,0 +1,16 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ResponsivePopover
+		title="{i18n>information}"
+		class="sapUiPopupWithPadding"
+		placement="Bottom" >
+		<beginButton>
+			<Button text="{i18n>close}" press="closeInfoDialog" />
+		</beginButton>
+		<content>
+			<Label text="Purch. Requisition No: {= ${detailView>/PurReqID} ? ${detailView>/PurReqID}: 'None'}"></Label>
+			<Image src="{ProductPicUrl}" width="15em" densityAware="false" />
+		</content>
+	</ResponsivePopover>
+</core:FragmentDefinition>	

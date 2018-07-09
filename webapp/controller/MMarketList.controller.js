@@ -17,7 +17,8 @@ sap.ui.define([
 				var oViewData = {
 					totalMaterials: 0,
 					totalPrice: 0.00,
-					deliveryDate : "9999-12-31"
+					deliveryDate : "9999-12-31",
+					PurReqID: ""
 				};
 				this.globalData = {
 			    	iRefresh : 0,
@@ -90,7 +91,8 @@ sap.ui.define([
 				    	oStorage.put("localStorage",oLocalData);
 				    	
 				    	oThis.globalData.deliveryDate = oHeader.TableH.Date0;
-				    	oViewModel.setProperty("/deliveryDate",oThis.globalData.deliveryDate);
+				    	oViewModel.setProperty("/deliveryDate",oHeader.TableH.Date0);
+					    oViewModel.setProperty("/PurReqID",oHeader.TableH.PRID0);
 				    	
 				    	oModelHeader.setData(oHeader.TableH);
 				    	oView.setModel(oModelHeader,"TableH");
@@ -189,7 +191,8 @@ sap.ui.define([
 						if (bNew) {
 				
 							var oTableH = this.getView().getModel("TableH").getData();
-							this.globalData.deliveryDate = oTableH.Date0;
+							//this.globalData.deliveryDate = oTableH.Date0;
+							
 							oData.data[i].Day0.Date = oTableH.Date0;
 							oData.data[i].Day1.Date = oTableH.Date1;
 							oData.data[i].Day2.Date = oTableH.Date2;
@@ -212,7 +215,6 @@ sap.ui.define([
 							tableRows.push(oData.data[i]);
 							
 						
-							console.log(oData);
 							bAdded = true;
 						} else {
 							sap.m.MessageToast.show(oData.data[i].MaterialID + " - " + oData.data[i].MaterialText + " is already in the table.",{});	
@@ -243,7 +245,12 @@ sap.ui.define([
 				this.globalData.dayId = id.substr(id.length - 1);
 				id = oEvent.getParameters().section.getTitle(); 
 				this.globalData.deliveryDate = id.substr(id.length - 10);
-				oViewModel.setProperty("/deliveryDate",this.globalData.deliveryDate);
+				
+				
+				var oTableH = this.getView().getModel("TableH").getData();
+				oViewModel.setProperty("/deliveryDate",oTableH["Date"+ this.globalData.dayId]);
+				oViewModel.setProperty("/PurReqID",oTableH["PRID"+ this.globalData.dayId]);
+				
 				this._onTableChanged(this._oJsonModel);
 				
 				
@@ -439,6 +446,11 @@ sap.ui.define([
 					this._oViewFormSubmit.close();
 				}
 			},
+			closeInfoDialog: function(){
+					if (this._oHPopover) {
+					this._oHPopover.close();
+				}
+			},
 			inputChange: function(oEvent){
 				
 				var oNumberFormat = sap.ui.core.format.NumberFormat.getFloatInstance({
@@ -589,18 +601,29 @@ sap.ui.define([
 			},*/
 			toggleTemplate: function(oEvent){
 				var oSource = oEvent.getSource();
-				var Id = oSource.getId();
-				var Idx = Id.match(/[^-]*$/g)[0];
+				var sPath = oSource.getBindingContext("mktlist").getPath();
+				var material = this.getView().getModel("mktlist").getProperty(sPath);
 				
 				var color = oSource.getColor();
 				if (color === "Neutral") {
 					oSource.setColor("Critical");
+					material.InTemplate = true;
 				}else{
 					oSource.setColor("Neutral");
+					material.InTemplate = false;
 				}
-				var oData = this._oJsonModel.getData();
-				oData.rows[Idx].InTemplate = !oData.rows[Idx].InTemplate;
+				
 				this.globalData.templtChanged = true;
+			},
+			headerInfoPopover: function(oEvent){
+				
+				if (!this._oHPopover) {
+					this._oHPopover = sap.ui.xmlfragment("sap.ui.demo.masterdetail.view.headerPopOver", this);
+				
+					this.getView().addDependent(this._oHPopover);
+				}
+	
+				this._oHPopover.openBy(oEvent.getSource());
 			},
 			onExit: function() {
 				sap.ui.getCore().getEventBus().unsubscribe("marketlist","addMaterial",this._addMaterial,this);
