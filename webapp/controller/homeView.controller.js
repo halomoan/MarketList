@@ -7,9 +7,7 @@ sap.ui.define([
 	return BaseController.extend("sap.ui.demo.masterdetail.controller.homeView", {
 		gotoForm: function(){
 			
-			var oViewModel = this.getModel("viewModel");
-			var oItemSelectTemplate;
-			var path;
+			
 			
 			var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 			var oLocal = oStorage.get("localStorage");
@@ -29,29 +27,7 @@ sap.ui.define([
 				oLocal.CostCenterID = oCostCenter.getProperty("key");
 				oLocal.CostCenter = oCostCenter.getProperty("text");
 			} else {
-				//sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectCC"));	
-				
-				path = oPlant.getBindingContext().getPath();
-				oItemSelectTemplate = new sap.ui.core.Item({
-	            key : "{CostCenterID}",
-	            text : "{CostCenterText}"
-	    		});
-	        
-	        	oCostCenter	=  this.getView().byId("costcenter");	
-				oCostCenter.bindAggregation("items", { 
-					"path" : path + "/PlantToCC",
-					"template" : oItemSelectTemplate,
-					"events" : {
-							dataReceived: function () {
-								oViewModel.setProperty("/busy", false);
-								
-						},
-							dataRequested : function () {
-								oViewModel.setProperty("/busy", true);
-							}
-						}
-					
-				});
+				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectCC"));	
 				return;
 			}
 			var oUnloadingPoint = this.getView().byId("unloadingpoint").getSelectedItem();
@@ -59,27 +35,7 @@ sap.ui.define([
 				oLocal.UnloadingPointID = oUnloadingPoint.getProperty("key");
 				oLocal.UnloadingPoint = oUnloadingPoint.getProperty("text");
 			} else {
-				//sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectUnloadingPoint"));	
-				path = oCostCenter.getBindingContext().getPath();
-				oItemSelectTemplate = new sap.ui.core.Item({
-		            key : "{UnLoadingPointID}",
-		            text : "{UnLoadingPoint}"
-    			});
-			
-				oUnloadingPoint	=  this.getView().byId("unloadingpoint");	
-				oUnloadingPoint.bindAggregation("items", { 
-						"path" : path + "/CCUnloadingPoint",
-						"template" : oItemSelectTemplate,
-						"events" : {
-								dataReceived: function () {
-									oViewModel.setProperty("/busy", false);
-							},
-								dataRequested : function () {
-									oViewModel.setProperty("/busy", true);
-								}
-							}
-						
-					});
+				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectUnloadingPoint"));	
 				return;
 			}
 			oStorage.put("localStorage",oLocal);
@@ -105,7 +61,7 @@ sap.ui.define([
 				};
 				
 			
-				
+				var oThis = this;
 				var oViewModel = new JSONModel(oViewData);
 				this.setModel(oViewModel, "viewModel");
 				var oPlant = this.getView().byId("plant");
@@ -119,6 +75,7 @@ sap.ui.define([
 					"events" : {
 						dataReceived: function () {
 							oViewModel.setProperty("/busy", false);
+							oPlant.fireChange(oPlant.getFirstItem());
 							
 					},
 						dataRequested : function () {
@@ -180,11 +137,17 @@ sap.ui.define([
 		//
 		//	}
 		_onMasterMatched : function() {
-		
+			
 		},
 		
 		onPlantChange: function(oEvent){
-			var path = oEvent.oSource.getSelectedItem().getBindingContext().getPath();
+			//console.log(oEvent.getSource().getFirstItem());
+			var path;
+			if (oEvent.getSource().getSelectedItem()) {
+				path = oEvent.getSource().getSelectedItem().getBindingContext().getPath();
+			} else {	
+				path = oEvent.getSource().getFirstItem().getBindingContext().getPath();
+			}
 			var oCostCenter = this.getView().byId("costcenter");
 			var oViewModel = this.getModel("viewModel");
 			
@@ -200,6 +163,7 @@ sap.ui.define([
 				"events" : {
 						dataReceived: function () {
 							oViewModel.setProperty("/busy", false);
+							oCostCenter.fireChange(oCostCenter.getFirstItem());
 							
 					},
 						dataRequested : function () {
@@ -210,10 +174,16 @@ sap.ui.define([
 			});
 		},
 		onCostCenterChange: function(oEvent){
-			var path = oEvent.oSource.getSelectedItem().getBindingContext().getPath();
+			var path;
+			if (oEvent.getSource().getSelectedItem()) {
+				path = oEvent.getSource().getSelectedItem().getBindingContext().getPath();
+			} else {	
+				path = oEvent.getSource().getFirstItem().getBindingContext().getPath();
+			}
 			var oUnloadingPoint = this.getView().byId("unloadingpoint");
 			var oViewModel = this.getModel("viewModel");
 			
+			console.log("jalan");
 			var oItemSelectTemplate = new sap.ui.core.Item({
 	            key : "{UnLoadingPointID}",
 	            text : "{UnLoadingPoint}"

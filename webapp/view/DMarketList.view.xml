@@ -19,7 +19,7 @@
 		</uxap:content>	
 	</uxap:ObjectPageHeaderContent>	
 	
-				<Table id="mktlistTable" selected ="{mktlist>Intemplate}" selectionMode="None" enableBusyIndicator="true"  class="sapUiResponsiveMargin" visibleRowCount="{= ${device>/isPhone} ? 7 : 10 }"  height = "100%">
+				<Table id="mktlistTable" selected ="{mktlist>Intemplate}" selectionMode="None" enableBusyIndicator="true"  class="sapUiResponsiveMargin" visibleRowCount="{= ${device>/isPhone} ? 7 : 14 }"  height = "100%">
 					 <toolbar>
 					    	<m:Toolbar>
 							

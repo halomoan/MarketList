@@ -24,14 +24,14 @@
 			layout="ResponsiveGridLayout"
 			labelSpanXL="4"
 			labelSpanL="4"
-			labelSpanM="4"
+			labelSpanM="3"
 			labelSpanS="12"
 			adjustLabelSpan="false"
-			emptySpanXL="0"
+			emptySpanXL="4"
 			emptySpanL="4"
 			emptySpanM="0"
 			emptySpanS="0"
-			columnsXL="3"
+			columnsXL="1"
 			columnsL="1"
 			columnsM="1"
 			singleContainerFullSize="false" >
@@ -42,22 +42,19 @@
 			</f:toolbar>
 			<f:content>
 
-				<Label text="{i18n>plant}" />
+				<Label text="{i18n>plant}" labelFor="plant"/>
 					
 				<Select id="plant" change="onPlantChange">
 					<core:Item text="{PlantText}" key="{PlantID}"/>
 				</Select>
 				
-				<Label text="{i18n>costCenter}" />
-					
-				
-					
+				<Label text="{i18n>costCenter}" labelFor="costcenter" />
+		
 				<Select id="costcenter" change="onCostCenterChange">
 				</Select>
+	
 				
-				<!--<core:Icon size="1.5rem" src="sap-icon://add-favorite"/>-->
-				
-				<Label text="{i18n>unloadingPoint}" />
+				<Label text="{i18n>unloadingPoint}" labelFor="unloadingpoint"/>
 					
 				<Select id="unloadingpoint">
 				</Select>
