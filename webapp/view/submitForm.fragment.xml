@@ -23,11 +23,11 @@
 							<Label text="{i18n>costCenter}"/>
 							<Text text="{detailView>/CostCenterID} - {detailView>/CostCenterText}"/>
 							<Label text="{i18n>unloadingPoint}"/>
-							<Input value="{detailView>/UnloadingPoint}"/>
+							<Input value="{detailView>/UnloadingPoint}" enabled="false"/>
 							<Label text="{i18n>recipient}"/>
 							<Input value="{detailView>/Recipient}"/>
 							<Label text="{i18n>trackingNo}"/>
-							<Input value="{detailView>/TrackingNo}"/>
+							<Input value="{detailView>/TrackingNo}" enabled="false"/>
 						</f:content>
 					</f:SimpleForm>
 				</items>

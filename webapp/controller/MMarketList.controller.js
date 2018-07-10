@@ -18,7 +18,8 @@ sap.ui.define([
 					totalMaterials: 0,
 					totalPrice: 0.00,
 					deliveryDate : "9999-12-31",
-					PurReqID: ""
+					PurReqID: "",
+					TrackingNo : "HELD"
 				};
 				this.globalData = {
 			    	iRefresh : 0,
@@ -34,7 +35,7 @@ sap.ui.define([
 				
 				this.getRouter().getRoute("mastermobile").attachPatternMatched(this._onMasterMatched, this);
 			},
-			_onMasterMatched :  function(oEvent) {
+			_onMasterMatched :  function() {
 				if (this.globalData.iRefresh === 0) {
 					this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
 				}
@@ -85,7 +86,8 @@ sap.ui.define([
 				    	
 				    	oLocalData = oStorage.get("localStorage");
 				    	oLocalData.Recipient = oHeader.Recipient;
-				    	oLocalData.TrackingNo = oHeader.TrackingNo;
+				    	//oLocalData.TrackingNo = oHeader.TrackingNo;
+				    	oLocalData.TrackingNo = "HELD";
 				    	oViewModel.setProperty("/Recipient",oLocalData.Recipient);
 						oViewModel.setProperty("/TrackingNo",oLocalData.TrackingNo);
 				    	oStorage.put("localStorage",oLocalData);
@@ -113,7 +115,7 @@ sap.ui.define([
 				    	
 				    	//console.log(oHeader,oDetail);
 				    },
-				    error: function(oError) {
+				    error: function() {
 			            sap.ui.core.BusyIndicator.hide();
 			        }
 				});
@@ -135,7 +137,7 @@ sap.ui.define([
 									
 									var oDay = data[key][prop];
 										
-									if (oDay.Quantity > 0) {
+									if (oDay.Enabled && oDay.Quantity > 0) {
 										noItems[oDay.Date] = isNaN(noItems[oDay.Date]) ? 1 : (noItems[oDay.Date] + 1);
 										if (isNaN(totals[oDay.Date])) {
 											totals[oDay.Date] = (oDay.Quantity / data[key].PriceUnit * data[key].UnitPrice);
@@ -209,9 +211,18 @@ sap.ui.define([
 							oData.data[i].Day5.PRID = "00000";
 							oData.data[i].Day6.PRID = "00000";
 							
+							oData.data[i].Day0.Enabled = true;
+							oData.data[i].Day1.Enabled = true;
+							oData.data[i].Day2.Enabled = true;
+							oData.data[i].Day3.Enabled = true;
+							oData.data[i].Day4.Enabled = true;
+							oData.data[i].Day5.Enabled = true;
+							oData.data[i].Day6.Enabled = true;
+							
 							oData.data[i].MarketListHeaderID =  this.globalData.MarketListID;
 							oData.data[i].MarketListDetailID = "MKD0001";
 							oData.data[i].New = true;
+						
 							
 							tableRows.push(oData.data[i]);
 							
@@ -398,8 +409,8 @@ sap.ui.define([
 					oHeader.NavDetail.results.push(oDetail);
 				}
 				
-				console.log(oHeader);
-				return;
+				//console.log(oHeader);
+				//return;
 				oModel.create("/MarketListHeaderSet", oHeader, {
 			    	method: "POST",
 				    success: function(data) {
@@ -414,6 +425,8 @@ sap.ui.define([
 				    	oTableH.setProperty("/PRID4",data.TableH.PRID4);
 				    	oTableH.setProperty("/PRID5",data.TableH.PRID5);
 				    	oTableH.setProperty("/PRID6",data.TableH.PRID6);
+				    	
+				    	oViewModel.setProperty("/PurReqID",oTableH.getProperty("/PRID" + oThis.globalData.dayId));
 				    	
 				    	for(i in data.NavDetail.results) {
 							tableRows[i].Day0 = data.NavDetail.results[i].Day0;

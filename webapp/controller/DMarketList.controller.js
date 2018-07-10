@@ -57,7 +57,7 @@ sap.ui.define([
 					UnloadingPoint: "",
 					UserId : "",
 					Recipient: "",
-					TrackingNo : "",
+					TrackingNo : "HELD",
 					deliveryDate : "9999-12-31",
 					PurReqID: ""
 				};
@@ -501,7 +501,7 @@ sap.ui.define([
 									
 									var oDay = data[key][prop];
 									
-									if (oDay.Quantity > 0) {
+									if (oDay.Enabled && oDay.Quantity > 0) {
 										noItems[oDay.Date] = isNaN(noItems[oDay.Date]) ? 1 : (noItems[oDay.Date] + 1);
 										if (isNaN(totals[oDay.Date])) {
 											totals[oDay.Date] = (oDay.Quantity / data[key].PriceUnit * data[key].UnitPrice);
@@ -594,7 +594,8 @@ sap.ui.define([
 				    	
 				    	oLocalData = oStorage.get("localStorage");
 				    	oLocalData.Recipient = oHeader.Recipient;
-				    	oLocalData.TrackingNo = oHeader.TrackingNo;
+				    	//oLocalData.TrackingNo = oHeader.TrackingNo;
+				    	oLocalData.TrackingNo = "HELD";
 				    	oViewModel.setProperty("/Recipient",oLocalData.Recipient);
 						oViewModel.setProperty("/TrackingNo",oLocalData.TrackingNo);
 				    	oStorage.put("localStorage",oLocalData);
@@ -676,9 +677,18 @@ sap.ui.define([
 							oData.data[i].Day5.PRID = "00000";
 							oData.data[i].Day6.PRID = "00000";
 							
+							oData.data[i].Day0.Enabled = true;
+							oData.data[i].Day1.Enabled = true;
+							oData.data[i].Day2.Enabled = true;
+							oData.data[i].Day3.Enabled = true;
+							oData.data[i].Day4.Enabled = true;
+							oData.data[i].Day5.Enabled = true;
+							oData.data[i].Day6.Enabled = true;
+							
 							oData.data[i].MarketListHeaderID =  this.globalData.MarketListID;
 							oData.data[i].MarketListDetailID = "MKD0001";
 							oData.data[i].New = true;
+							
 							
 							tableRows.push(oData.data[i]);
 							
