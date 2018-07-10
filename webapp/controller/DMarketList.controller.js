@@ -608,7 +608,6 @@ sap.ui.define([
 					    oTable.bindRows("mktlist>/rows");
 				    	sap.ui.core.BusyIndicator.hide();
 				    	
-				    	console.log(oHeader,oDetail);
 				    },
 				    error: function(oError) {
 			            sap.ui.core.BusyIndicator.hide();
@@ -765,7 +764,7 @@ sap.ui.define([
 				
 				
 				if (!allDeleted) {
-					sap.m.MessageBox.warning(this.getResourceBundle().getText("msgFailDelete"), {
+					sap.m.MessageBox.warning(this.getResourceBundle().getText("msgFailDelete2"), {
 				            title: "Warning",                                      
 				            initialFocus: null                                   
 				        });
@@ -830,7 +829,7 @@ sap.ui.define([
 						sap.m.MessageBox.success(sMsg, {
 				            title: "Information",                                      
 				            initialFocus: null,
-				            onClose: function(oAction){
+				            onClose: function(){
 				            	if (matDay.Quantity > 500) {
 									sap.m.MessageToast.show(oThis.getResourceBundle().getText("msgMoreThen",[500]));
 								}
@@ -849,7 +848,7 @@ sap.ui.define([
 								sap.m.MessageBox.success(sMsg, {
 						            title: "Information",                                      
 						            initialFocus: null,
-						            onClose: function(oAction){
+						            onClose: function(){
 						            	if (matDay.Quantity > 500) {
 											sap.m.MessageToast.show(oThis.getResourceBundle().getText("msgMoreThen",[500]));
 										}

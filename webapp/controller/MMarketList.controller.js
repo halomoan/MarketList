@@ -398,6 +398,8 @@ sap.ui.define([
 					oHeader.NavDetail.results.push(oDetail);
 				}
 				
+				console.log(oHeader);
+				return;
 				oModel.create("/MarketListHeaderSet", oHeader, {
 			    	method: "POST",
 				    success: function(data) {
@@ -482,7 +484,6 @@ sap.ui.define([
 				    
 				    
 				}else if( matDay.Quantity > 0 ) {
-					matDay.Deleted = false;
 					
 					if (matDay.UOM !== material.OrderUnit) {
 						var orderqty = (material.FactorToUOM > 0) ? matDay.Quantity / material.FactorToUOM : 0;
@@ -517,7 +518,7 @@ sap.ui.define([
 						sap.m.MessageBox.success(sMsg, {
 				            title: "Information",                                      
 				            initialFocus: null,
-				            onClose: function(oAction){
+				            onClose: function(){
 				            	if (matDay.Quantity > 500) {
 									sap.m.MessageToast.show(oThis.getResourceBundle().getText("msgMoreThen",[500]));
 								}
@@ -527,16 +528,16 @@ sap.ui.define([
 								}
 				            }
 				        });
-					} else {
-						matDay.Deleted = true;
-					}
+					} 
 				}
 				this.globalData.tableChanged = true;
 			},
 			addCommentPress: function(oEvent){
-				var text = oEvent.getSource().data("myText");
-				var sId = oEvent.getSource().data("myId");
-				var sComment = oEvent.getSource().data("myComment");
+				var oSource = oEvent.getSource();
+				var text = oSource.data("myText");
+				var sId = oSource.data("myId");
+				var enabled = oSource.data("Enabled");
+				var sComment = oSource.data("myComment");
 				var oModel = this._oJsonModel;
 				var oThis = this;
 			
@@ -554,7 +555,26 @@ sap.ui.define([
 								value : sComment
 							})
 						],
-						beginButton: new sap.m.Button({
+							buttons : [
+				        new sap.m.Button({
+				            text: (enabled ? this.getResourceBundle().getText("delete") : this.getResourceBundle().getText("undelete")),
+				            press: function(){
+				            	
+				            	//console.log(oParentEvent.getSource().getModel("mktlist"));
+				            	var rows = oModel.getData().rows;
+
+								for(var key in rows) {
+									if (rows[key].MaterialID === itemId){
+										rows[key]["Day" + itemIdx].Enabled = !(rows[key]["Day" + itemIdx].Enabled);
+										oModel.refresh();
+										oThis.globalData.tableChanged = true;
+										break;
+									}
+								}
+				            	dialog.close();
+				            }
+				        }),
+				        new sap.m.Button({
 							text:  this.getResourceBundle().getText("saveComment"),
 							press: function () {
 									
@@ -574,12 +594,13 @@ sap.ui.define([
 								
 							}
 						}),
-						endButton: new sap.m.Button({
+						new sap.m.Button({
 							text: this.getResourceBundle().getText("cancel"),
 							press: function () {
 								dialog.close();
 							}
-						}),
+						})
+				        ],
 						afterClose: function() {
 							dialog.destroy();
 						}
@@ -616,6 +637,30 @@ sap.ui.define([
 				}
 				
 				this.globalData.templtChanged = true;
+			},
+			
+			deleteRow: function(oEvent){
+				var oItem = oEvent.getParameter("listItem");
+				var sPath = oItem.getBindingContext("mktlist").getPath();
+				var material = oItem.getModel("mktlist").getProperty(sPath);
+				
+				
+				if (material.hasOwnProperty("New")){
+					var tableRows = this._oJsonModel.getData().rows;
+					for (var i in tableRows){
+						if (tableRows[i].MaterialID === material.MaterialID) {
+							tableRows.splice(i,1);
+							break;
+						}
+					}
+					this._oJsonModel.refresh();
+				} else {
+						sap.m.MessageBox.warning(this.getResourceBundle().getText("msgFailDelete1"), {
+				            title: "Warning",                                      
+				            initialFocus: null                                   
+				        });	
+				}
+				
 			},
 			headerInfoPopover: function(oEvent){
 				
