@@ -7,8 +7,6 @@ sap.ui.define([
 	return BaseController.extend("sap.ui.demo.masterdetail.controller.homeView", {
 		gotoForm: function(){
 			
-			
-			
 			var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 			var oLocal = oStorage.get("localStorage");
 			if (!oLocal) { oLocal = {}; }
@@ -141,7 +139,7 @@ sap.ui.define([
 		},
 		
 		onPlantChange: function(oEvent){
-			//console.log(oEvent.getSource().getFirstItem());
+			
 			var path;
 			if (oEvent.getSource().getSelectedItem()) {
 				path = oEvent.getSource().getSelectedItem().getBindingContext().getPath();
@@ -156,7 +154,6 @@ sap.ui.define([
 	            text : "{CostCenterText}"
     		});
         
-        //	oViewModel.setProperty("/busy", true);
 			oCostCenter.bindAggregation("items", { 
 				"path" : path + "/PlantToCC",
 				"template" : oItemSelectTemplate,
@@ -183,7 +180,6 @@ sap.ui.define([
 			var oUnloadingPoint = this.getView().byId("unloadingpoint");
 			var oViewModel = this.getModel("viewModel");
 			
-			console.log("jalan");
 			var oItemSelectTemplate = new sap.ui.core.Item({
 	            key : "{UnLoadingPointID}",
 	            text : "{UnLoadingPoint}"

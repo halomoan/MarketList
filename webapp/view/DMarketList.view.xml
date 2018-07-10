@@ -22,8 +22,20 @@
 				<Table id="mktlistTable" selected ="{mktlist>Intemplate}" selectionMode="None" enableBusyIndicator="true"  class="sapUiResponsiveMargin" visibleRowCount="{= ${device>/isPhone} ? 7 : 14 }"  height = "100%">
 					 <toolbar>
 					    	<m:Toolbar>
+								
 							
 						    	<m:ToolbarSpacer/>
+						    	<m:ToggleButton
+									icon="sap-icon://activities"
+									tooltip="Show/Hide Selection"
+									press="toogleTableSelect"
+									pressed="{detailView>/toogleDelete}"/>
+									<m:Button
+									icon="sap-icon://decline"
+									tooltip="clear selection"
+									visible="{detailView>/toogleDelete}"
+									press="deleteRows"/>
+						    	<m:ToolbarSeparator/>
 						    	<m:ToggleButton icon="sap-icon://resize-horizontal" tooltip="Enable / Disable Freezing Menu Entries" pressed="{detailView>/toogleFreeze}" press="toggleFreeze"/>
 						
 							   	<m:Select id="selectDays" width="8rem" items="{detailView>/noOfDays}" selectedKey="MultiToggle" change="onNoOfDaysChange">

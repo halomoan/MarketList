@@ -30,6 +30,7 @@ sap.ui.define([
 			    
 				var oViewData = {
 					toogleFreeze : false,
+					toogleDelete : false,
 					freezeCold : 4,
 					freezeColm : 1,
 					columns : [
@@ -689,6 +690,17 @@ sap.ui.define([
 				}
 
 			},
+			toogleTableSelect: function(){
+				
+				var oTable = this.byId("mktlistTable");
+				if (oTable.getSelectionMode() === sap.ui.table.SelectionMode.MultiToggle) {
+					oTable.setSelectionMode(sap.ui.table.SelectionMode.None);
+				
+				} else {
+					oTable.setSelectionMode(sap.ui.table.SelectionMode.MultiToggle);
+				
+				}
+			},
 			headerInfoPopover: function(oEvent){
 				
 				
@@ -707,6 +719,39 @@ sap.ui.define([
 	
 				this._oHPopover.openBy(oEvent.getSource());
 			},
+			deleteRows : function(){
+				var oViewModel = this.getModel("detailView");
+				var oTable = this.byId("mktlistTable");
+				var oItem;
+				var indices = oTable.getSelectedIndices();
+				var allDeleted = true;
+				
+				var tableRows = this._oJsonModel.getData().rows;
+				for(var i in indices){
+					oItem = tableRows[indices[i]];
+					
+					if (oItem.hasOwnProperty("New")) {
+						tableRows.splice(indices[i],1);
+					} else {
+						allDeleted = false;
+					}
+				}
+				this._oJsonModel.refresh();
+				
+				
+				if (!allDeleted) {
+					sap.m.MessageBox.warning("Some items cannot be deleted because they were saved in a PR.", {
+				            title: "Error",                                      
+				            initialFocus: null                                   
+				        });
+				} else{
+					oTable.clearSelection();
+					oTable.setSelectionMode(sap.ui.table.SelectionMode.None);
+					oViewModel.setProperty("/toogleDelete",false);	
+				}
+				
+				
+			},
 			inputChange: function(oEvent){
 				
 				var oNumberFormat = sap.ui.core.format.NumberFormat.getFloatInstance({
@@ -716,10 +761,11 @@ sap.ui.define([
 				  decimalSeparator: "."
 				});
 				
-				var qty = oEvent.getParameters().value.replace(/[\,|\.]/g,"");
+				var oParam = oEvent.getParameters();
+				var qty = oParam.value.replace(/[\,|\.]/g,"");
 				var sPath = oEvent.getSource().getBindingContext("mktlist").getPath();
 				var material = this.getView().getModel("mktlist").getProperty(sPath);
-				var id = oEvent.getParameters().id.substring(7, 8);
+				var id = oParam.id.substring(7, 8);
 				var sMsg = "";
 				var oThis = this;
 				var matDay = material["Day" + id];
