@@ -264,7 +264,9 @@ sap.ui.define([
 			
 			
 			onMultiSelectPress: function(oEvent){
+				this.getView().byId("materiallist").removeSelections();
 				if (oEvent.getSource().getPressed()) {
+					
 					this.getView().byId("materiallist").setMode('MultiSelect');
 				} else {
 					this.getView().byId("materiallist").setMode('SingleSelectMaster');

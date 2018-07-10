@@ -211,6 +211,7 @@ sap.ui.define([
 							
 							oData.data[i].MarketListHeaderID =  this.globalData.MarketListID;
 							oData.data[i].MarketListDetailID = "MKD0001";
+							oData.data[i].New = true;
 							
 							tableRows.push(oData.data[i]);
 							
@@ -554,7 +555,7 @@ sap.ui.define([
 							})
 						],
 						beginButton: new sap.m.Button({
-							text:  this.getResourceBundle().getText("submit"),
+							text:  this.getResourceBundle().getText("saveComment"),
 							press: function () {
 									
 								var sText = sap.ui.getCore().byId('commentTextArea').getValue();

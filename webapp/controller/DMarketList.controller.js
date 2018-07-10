@@ -117,11 +117,14 @@ sap.ui.define([
 			},
 			
 			addCommentPress: function(oEvent){
-				var text = oEvent.getSource().data("myText");
-				var sId = oEvent.getSource().data("myId");
-				var sComment = oEvent.getSource().data("myComment");
+				var oSource = oEvent.getSource();
+				var text = oSource.data("myText");
+				var sId = oSource.data("myId");
+				var enabled = oSource.data("Enabled");
+				var sComment = oSource.data("myComment");
 				var oModel = this._oJsonModel;
 				var oThis = this;
+				
 			
 				
 				var itemId = sId.substr(0,sId.length - 3);
@@ -137,8 +140,27 @@ sap.ui.define([
 								value : sComment
 							})
 						],
-						beginButton: new sap.m.Button({
-							text:  this.getResourceBundle().getText("submit"),
+						buttons : [
+				        new sap.m.Button({
+				            text: (enabled ? this.getResourceBundle().getText("delete") : this.getResourceBundle().getText("undelete")),
+				            press: function(){
+				            	
+				            	//console.log(oParentEvent.getSource().getModel("mktlist"));
+				            	var rows = oModel.getData().rows;
+
+								for(var key in rows) {
+									if (rows[key].MaterialID === itemId){
+										rows[key]["Day" + itemIdx].Enabled = !(rows[key]["Day" + itemIdx].Enabled);
+										oModel.refresh();
+										oThis.globalData.tableChanged = true;
+										break;
+									}
+								}
+				            	dialog.close();
+				            }
+				        }),
+				        new sap.m.Button({
+							text:  this.getResourceBundle().getText("saveComment"),
 							press: function () {
 									
 								var sText = sap.ui.getCore().byId('commentTextArea').getValue();
@@ -157,17 +179,18 @@ sap.ui.define([
 								
 							}
 						}),
-						endButton: new sap.m.Button({
+						new sap.m.Button({
 							text: this.getResourceBundle().getText("cancel"),
 							press: function () {
 								dialog.close();
 							}
-						}),
+						})
+				        ],
 						afterClose: function() {
 							dialog.destroy();
 						}
 				});
-
+				
 				dialog.open();
 			},
 			
@@ -286,7 +309,6 @@ sap.ui.define([
 					oHeader.NavDetail.results.push(oDetail);
 				}
 				
-			
 				oModel.create("/MarketListHeaderSet", oHeader, {
 			    	method: "POST",
 				    success: function(data) {
@@ -369,7 +391,7 @@ sap.ui.define([
 				}
 			
 			},
-			onRowsDelete: function() {
+			/*onRowsDelete: function() {
 					var oThis = this;
 					
 					
@@ -415,7 +437,7 @@ sap.ui.define([
 				this.globalData.tableChanged = true;
 				
 				
-			},
+			},*/
 			
 			onNoOfDaysChange : function(oEvent) {
 				
@@ -586,7 +608,7 @@ sap.ui.define([
 					    oTable.bindRows("mktlist>/rows");
 				    	sap.ui.core.BusyIndicator.hide();
 				    	
-				    	//console.log(oHeader,oDetail);
+				    	console.log(oHeader,oDetail);
 				    },
 				    error: function(oError) {
 			            sap.ui.core.BusyIndicator.hide();
@@ -657,6 +679,7 @@ sap.ui.define([
 							
 							oData.data[i].MarketListHeaderID =  this.globalData.MarketListID;
 							oData.data[i].MarketListDetailID = "MKD0001";
+							oData.data[i].New = true;
 							
 							tableRows.push(oData.data[i]);
 							
@@ -727,6 +750,7 @@ sap.ui.define([
 				var allDeleted = true;
 				
 				var tableRows = this._oJsonModel.getData().rows;
+				
 				for(var i in indices){
 					oItem = tableRows[indices[i]];
 					
@@ -736,16 +760,17 @@ sap.ui.define([
 						allDeleted = false;
 					}
 				}
+				oTable.clearSelection();
 				this._oJsonModel.refresh();
 				
 				
 				if (!allDeleted) {
-					sap.m.MessageBox.warning("Some items cannot be deleted because they were saved in a PR.", {
-				            title: "Error",                                      
+					sap.m.MessageBox.warning(this.getResourceBundle().getText("msgFailDelete"), {
+				            title: "Warning",                                      
 				            initialFocus: null                                   
 				        });
 				} else{
-					oTable.clearSelection();
+					
 					oTable.setSelectionMode(sap.ui.table.SelectionMode.None);
 					oViewModel.setProperty("/toogleDelete",false);	
 				}
