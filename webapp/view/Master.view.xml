@@ -9,7 +9,7 @@
 			id="page"
 			title="{masterView>/title}"
 			navButtonPress="onNavBack"
-			showNavButton="false">
+			showNavButton="{device>/isPhone}">
 		<semantic:subHeader>
 			<Bar id="headerBar">
 				<contentMiddle>
@@ -42,7 +42,7 @@
 					}"
 					busyIndicatorDelay="{masterView>/delay}"
 					noDataText="{masterView>/noDataText}"
-					mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}"
+					mode="{device>/listMode}"
 					growing="true"
 					growingScrollToLoad="true"
 					updateFinished="onUpdateFinished"

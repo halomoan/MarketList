@@ -5,5 +5,5 @@
 		busy="{appView>/busy}"
 		busyIndicatorDelay="{appView>/delay}"
 		xmlns="sap.m">
-	<SplitApp id="idAppControl" mode="HideMode"/>
+	<SplitApp id="idAppControl" mode="{device>/splitMode}"/>
 </mvc:View>

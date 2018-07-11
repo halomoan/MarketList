@@ -29,7 +29,8 @@ sap.ui.define([
 				            isPhone : sap.ui.Device.system.phone,
 				            isNoPhone : !sap.ui.Device.system.phone,
 				            listMode : sap.ui.Device.system.phone ? "None" : "SingleSelectMaster",
-				            listItemType : sap.ui.Device.system.phone ? "Active" : "Inactive"
+				            listItemType : sap.ui.Device.system.phone ? "Active" : "Inactive",
+				            splitMode : sap.ui.Device.system.phone ? "ShowHideMode" : "HideMode"
 				        });
 				deviceModel.setDefaultBindingMode("OneWay");
 				this.setModel(deviceModel, "device");

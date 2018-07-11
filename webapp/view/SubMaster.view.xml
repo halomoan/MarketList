@@ -38,7 +38,7 @@
 					busyIndicatorDelay="{masterView>/delay}"
 					busy="{masterView>/busy}"
 					noDataText="{masterView>/noDataText}"
-					mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}"
+					mode="{device>/listMode}"
 					growing="true"
 					growingScrollToLoad="true"
 					updateFinished="onUpdateFinished"
