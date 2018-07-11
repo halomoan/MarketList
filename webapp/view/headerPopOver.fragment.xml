@@ -10,7 +10,12 @@
 		</beginButton>
 		<content>
 			<Label text="Purch. Requisition No: {= ${detailView>/PurReqID} ? ${detailView>/PurReqID}: 'None'}"></Label>
-			<Image src="{ProductPicUrl}" width="15em" densityAware="false" />
+			
+			<Button id="generatePO"
+						class="sapUiSmallMarginBottom"
+						text="Generate PO"
+						width="100%"
+						press="generatePO" />
 		</content>
 	</ResponsivePopover>
-</core:FragmentDefinition>	
+</core:FragmentDefinition>

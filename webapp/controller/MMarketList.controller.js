@@ -675,6 +675,61 @@ sap.ui.define([
 				}
 				
 			},
+			generatePO: function() {
+				var oViewModel = this.getModel("detailView");
+				var plantID = oViewModel.getProperty("/PlantID");
+				var PRID = oViewModel.getProperty("/PurReqID");
+				var oThis = this;
+	
+				
+				if (PRID) {
+					var dialog = new sap.m.Dialog({
+						title: this.getResourceBundle().getText("confirm"),
+						type: "Message",
+						content: new sap.m.Text({ text: this.getResourceBundle().getText("msgConfirmCreatePO",[PRID]) }),
+						beginButton: new sap.m.Button({
+							text: this.getResourceBundle().getText("submit"),
+							press: function () {
+								
+								
+								sap.m.MessageToast.show(plantID + " - " + PRID);
+								var oModel = oThis.getView().getModel();
+								oModel.callFunction("/RunAutoPO", {
+							               method: "POST",
+							               urlParameters:  {"PlantID" : plantID, "PRID" : PRID  }, 
+											success: function(oData, oResponse) {
+												sap.m.MessageBox.success(oData.Message, {
+										            title: "Response",                                      
+										            initialFocus: null
+										        });
+											},
+											error: function(error) {
+											},
+											async: false
+											
+							    });
+								dialog.close();
+							}
+						}),
+						endButton: new sap.m.Button({
+							text: this.getResourceBundle().getText("cancel"),
+							press: function () {
+								dialog.close();
+							}
+						}),
+						afterClose: function() {
+							dialog.destroy();
+						}
+					});
+		
+					dialog.open();
+				} else {
+					sap.m.MessageBox.warning(this.getResourceBundle().getText("msgNoPR"), {
+				        title: "Warning",                                      
+				        initialFocus: null                                   
+				    });	
+				}
+			},
 			headerInfoPopover: function(oEvent){
 				
 				if (!this._oHPopover) {
