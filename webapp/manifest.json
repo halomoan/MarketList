@@ -23,7 +23,7 @@
 					"odataVersion": "2.0",
 					"localUri": "localService/metadata.xml"
 				},
-				"uri": "localService/metadata.xml"
+				"uri": "/sap/opu/odata/sap/ZMARKETLIST_SRV/"
 			},
 			"ZMARKETLIST_SRV": {
 				"uri": "/sm1/sap/opu/odata/sap/ZMARKETLIST_SRV/",
@@ -83,7 +83,7 @@
 				}
 			},
 			"": {
-				"dataSource": "ZMARKETLIST_SRV"
+				"dataSource": "mainService"
 			}
 		},
 		"resources": {
@@ -187,10 +187,10 @@
 					"viewId": "detail",
 					"viewLevel": 2
 				},
-				"mobile" : {
+				"mobile": {
 					"viewName": "MMarketList",
 					"viewId": "detail",
-					"viewLevel": 2					
+					"viewLevel": 2
 				},
 				"detailObjectNotFound": {
 					"viewName": "DetailObjectNotFound",
@@ -206,5 +206,9 @@
 				}
 			}
 		}
+	},
+	"sap.platform.abap": {
+		"uri": "/sap/bc/ui5_ui5/sap/zmarketlist/webapp",
+		"_version": "1.1.0"
 	}
 }

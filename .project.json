@@ -39,5 +39,9 @@
     "loadJSONFiles": true,
     "loadCustomRequests": false,
     "mockRequestsFilePath": ""
+  },
+  "deploy": {
+    "destination": "sm1",
+    "name": "ZMARKETLIST"
   }
 }
