@@ -313,9 +313,6 @@ sap.ui.define([
 			    	method: "POST",
 				    success: function(data) {
 				    	
-				    	
-				    	
-				    	
 				    	oTableH.setProperty("/PRID0",data.TableH.PRID0);
 				    	oTableH.setProperty("/PRID1",data.TableH.PRID1);
 				    	oTableH.setProperty("/PRID2",data.TableH.PRID2);
@@ -792,11 +789,12 @@ sap.ui.define([
 				
 				var id = oEvent.getSource().getId();
 				var idx = id.substr(id.length - 1);
-				var oViewModel = this.getModel("detailView");
-				var oTableH = this.getView().getModel("TableH").getData();
 				
-				oViewModel.setProperty("/deliveryDate",oTableH["Date" + idx]);
-				oViewModel.setProperty("/PurReqID",oTableH["PRID" + idx]);
+				var oViewModel = this.getModel("detailView");
+				var oTableH = this.getView().getModel("TableH");
+
+				oViewModel.setProperty("/deliveryDate",oTableH.getProperty("/Date" + idx));
+				oViewModel.setProperty("/PurReqID",oTableH.getProperty("/PRID" + idx));
 				
 				if (!this._oHPopover) {
 					this._oHPopover = sap.ui.xmlfragment("sap.ui.demo.masterdetail.view.headerPopOver", this);
