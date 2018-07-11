@@ -395,6 +395,7 @@ sap.ui.define([
 				    }
 				}
 				
+				
 				var oItems = new sap.m.ObjectListItem({
 					title : "{MaterialText}",
 				    /*number: {	path: "PriceUnit",
@@ -413,6 +414,7 @@ sap.ui.define([
 			        //secondStatus: new sap.m.ObjectStatus({text: "Second status info"})
 				    
 				});
+				
 				oList.bindItems({
 					path : sObjectPath + "/Materials",
 					template: oItems,

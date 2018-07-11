@@ -6,7 +6,7 @@ sap.ui.define([
 
 	return BaseController.extend("sap.ui.demo.masterdetail.controller.homeView", {
 		gotoForm: function(){
-			
+			var oViewModel = this.getModel("detailView"); 
 			var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 			var oLocal = oStorage.get("localStorage");
 			if (!oLocal) { oLocal = {}; }
@@ -36,6 +36,14 @@ sap.ui.define([
 				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectUnloadingPoint"));	
 				return;
 			}
+			
+			var oDate = this.getView().byId("DP1");
+			if(oDate.getValueState() === sap.ui.core.ValueState.Error ) {
+				sap.m.MessageToast.show(this.getResourceBundle().getText("msgWrongDateFuture"));	
+				return;
+			} else{
+				oLocal.Date = oViewModel.getProperty("/Date").replace(/-/g,"");
+			}
 			oStorage.put("localStorage",oLocal);
 			
 			if (!sap.ui.Device.system.phone) {
@@ -53,15 +61,16 @@ sap.ui.define([
 		 * @memberOf sap.ui.demo.masterdetail.view.homeView
 		 */
 		onInit: function() {
+				var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "YYYY-MM-dd" });   
 				var oViewData = {
 					busy: false,
-					busyIndicatorDelay : 10
+					busyIndicatorDelay : 10,
+					Date: dateFormat.format(new Date( (new Date()).getTime() + (24 * 60 * 60 * 1000)))
 				};
 				
-			
-				var oThis = this;
-				var oViewModel = new JSONModel(oViewData);
-				this.setModel(oViewModel, "viewModel");
+				
+				var odetailView = new JSONModel(oViewData);
+				this.setModel(odetailView, "detailView");
 				var oPlant = this.getView().byId("plant");
 				var oItemSelectTemplate = new sap.ui.core.Item({
 		            key : "{PlantID}",
@@ -72,12 +81,12 @@ sap.ui.define([
 					"template" : oItemSelectTemplate,
 					"events" : {
 						dataReceived: function () {
-							oViewModel.setProperty("/busy", false);
+							odetailView.setProperty("/busy", false);
 							oPlant.fireChange(oPlant.getFirstItem());
 							
 					},
 						dataRequested : function () {
-							oViewModel.setProperty("/busy", true);
+							odetailView.setProperty("/busy", true);
 						}
 					}
 					
@@ -147,7 +156,7 @@ sap.ui.define([
 				path = oEvent.getSource().getFirstItem().getBindingContext().getPath();
 			}
 			var oCostCenter = this.getView().byId("costcenter");
-			var oViewModel = this.getModel("viewModel");
+			var odetailView = this.getModel("detailView");
 			
 			var oItemSelectTemplate = new sap.ui.core.Item({
 	            key : "{CostCenterID}",
@@ -159,12 +168,12 @@ sap.ui.define([
 				"template" : oItemSelectTemplate,
 				"events" : {
 						dataReceived: function () {
-							oViewModel.setProperty("/busy", false);
+							odetailView.setProperty("/busy", false);
 							oCostCenter.fireChange(oCostCenter.getFirstItem());
 							
 					},
 						dataRequested : function () {
-							oViewModel.setProperty("/busy", true);
+							odetailView.setProperty("/busy", true);
 						}
 					}
 				
@@ -178,27 +187,40 @@ sap.ui.define([
 				path = oEvent.getSource().getFirstItem().getBindingContext().getPath();
 			}
 			var oUnloadingPoint = this.getView().byId("unloadingpoint");
-			var oViewModel = this.getModel("viewModel");
+			var odetailView = this.getModel("detailView");
 			
 			var oItemSelectTemplate = new sap.ui.core.Item({
 	            key : "{UnLoadingPointID}",
 	            text : "{UnLoadingPoint}"
     		});
         
-        //	oViewModel.setProperty("/busy", true);
+        //	odetailView.setProperty("/busy", true);
 			oUnloadingPoint.bindAggregation("items", { 
 				"path" : path + "/CCUnloadingPoint",
 				"template" : oItemSelectTemplate,
 				"events" : {
 						dataReceived: function () {
-							oViewModel.setProperty("/busy", false);
+							odetailView.setProperty("/busy", false);
 					},
 						dataRequested : function () {
-							oViewModel.setProperty("/busy", true);
+							odetailView.setProperty("/busy", true);
 						}
 					}
 				
 			});
+		},
+		onDateChange: function(oEvent) {
+			var oDP = oEvent.oSource;
+			var bValid = oEvent.getParameter("valid");
+			var dValue = new Date(oEvent.getParameter("value"));
+			var today = new Date();
+			
+			if (bValid && today.getDate() < dValue.getDate()) {
+				oDP.setValueState(sap.ui.core.ValueState.None);
+			} else {
+				oDP.setValueState(sap.ui.core.ValueState.Error);
+			}
+			
 		}
 	});
 

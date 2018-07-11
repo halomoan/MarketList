@@ -305,12 +305,14 @@ sap.ui.define([
 				
 				if (sObjectId === "TEMPLATE") {
 					if (!sap.ui.Device.system.phone) {
+					
 						this.getRouter().navTo("submaster", {plantId: this.PlantID, groupId : sObjectId,ccId: this.CostCenterID }, false);
 					} else {
 						this.getRouter().navTo("submobile", {plantId: this.PlantID, groupId : sObjectId,ccId: this.CostCenterID }, false);
 					}
 				} else {
 					if (!sap.ui.Device.system.phone) {
+						
 						this.getRouter().navTo("submaster", {plantId: this.PlantID, groupId : sObjectId}, false);
 					}else{
 						this.getRouter().navTo("submobile", {plantId: this.PlantID, groupId : sObjectId}, false);

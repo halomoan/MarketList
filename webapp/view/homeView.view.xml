@@ -58,8 +58,13 @@
 					
 				<Select id="unloadingpoint">
 				</Select>
-				
-				
+				<Label text="{i18n>selectDate}" labelFor="DP1"/>
+				<DatePicker
+					id="DP1"
+					value="{detailView>/Date}" valueFormat="yyyy-MM-dd" displayFormat="long"
+					change="onDateChange"
+					class="sapUiSmallMarginBottom" tooltip="{i18n>futureDate}"/>		
+						
 				<Button text="OK" press="gotoForm"/>
 			</f:content>
 			</f:SimpleForm>

@@ -598,9 +598,7 @@ sap.ui.define([
 			},
 			_onMetadataLoaded: function(){
 			
-			
-				
-				var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "YYYYMMdd" }); 
+				//var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "YYYYMMdd" }); 
 				var oTable = this.byId("mktlistTable");
 				var oViewModel = this.getModel("detailView");
 				var oModelJson = new JSONModel();
@@ -622,8 +620,8 @@ sap.ui.define([
 					oViewModel.setProperty("/UserId",oLocalData.UserId);
 					
 					for (var i = 0; i < 14; i++){
-							oViewModel.setProperty("/columns/" + i + "/noItem",0);
-							oViewModel.setProperty("/columns/" + i + "/total",0);
+						oViewModel.setProperty("/columns/" + i + "/noItem",0);
+						oViewModel.setProperty("/columns/" + i + "/total",0);
 					}
 				}
 			    
@@ -634,7 +632,8 @@ sap.ui.define([
 				oFilters.push( new sap.ui.model.Filter("PlantID", sap.ui.model.FilterOperator.EQ, oLocalData.PlantID) );
 				oFilters.push( new sap.ui.model.Filter("CostCenterID", sap.ui.model.FilterOperator.EQ, oLocalData.CostCenterID) );
 				oFilters.push( new sap.ui.model.Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, oLocalData.UnloadingPoint) );
-				oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, dateFormat.format(new Date( (new Date()).getTime() + (24 * 60 * 60 * 1000)))));
+				//oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, dateFormat.format(new Date( (new Date()).getTime() + (24 * 60 * 60 * 1000)))));
+				oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, oLocalData.Date));
 				
 				sap.ui.core.BusyIndicator.show();
 				oModel.read("/MarketListHeaderSet", {
