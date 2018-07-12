@@ -1,0 +1,8 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	
+	<Page id="master" title="Master 1" icon="sap-icon://action" class="sapUiStdPage">
+	
+	</Page>
+</core:FragmentDefinition>

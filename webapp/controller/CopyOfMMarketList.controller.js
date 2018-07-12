@@ -170,7 +170,7 @@ sap.ui.define([
 
 			_addMaterial: function(sChannel,sEvent,oData){
 				
-				console.log(oData);
+				
 				if (oData ) {
 					
 				
@@ -746,19 +746,8 @@ sap.ui.define([
 	
 				this._oHPopover.openBy(oEvent.getSource());
 			},
-			onAddMaterial : function(){
-				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-				var oLocalData = oStorage.get("localStorage");
-				if (oLocalData) {
-					this.getRouter().navTo("masterpage", {plantId : oLocalData.PlantID, ccId : oLocalData.CostCenterID}, false);
-				}
-			
-			},
 			onExit: function() {
 				sap.ui.getCore().getEventBus().unsubscribe("marketlist","addMaterial",this._addMaterial,this);
-				if (this._oMaterialDialog) {
-					this._oMaterialDialog.destroy();
-				}
 			}
 
 	});

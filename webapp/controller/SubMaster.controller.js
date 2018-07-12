@@ -62,10 +62,11 @@ sap.ui.define([
 				*/
 				
 				//oList.attachUpdateFinished(null,this._listUpdated,this);
-				if (sap.ui.Device.system.phone) {
+				if (!sap.ui.Device.system.phone) {
 					this.getRouter().getRoute("submaster").attachPatternMatched(this._onMasterMatched, this);
 				} else{
-					this.getRouter().getRoute("submobile").attachPatternMatched(this._onMasterMatched, this);
+					//this.getRouter().getRoute("submobile").attachPatternMatched(this._onMasterMatched, this);
+					this.getRouter().getRoute("submasterpage").attachPatternMatched(this._onMasterMatched, this);
 				}
 				this.getRouter().attachBypassed(this.onBypassed, this);
 			},
@@ -330,10 +331,11 @@ sap.ui.define([
 					
 				});
 				
-				sap.ui.getCore().getEventBus().publish("marketlist", "addMaterial", {data : jsonData}); 	
 				
-				
-				//console.log(this.getView('App'));
+				sap.ui.getCore().getEventBus().publish("marketlist", "addMaterial", {data : jsonData}); 
+				if (sap.ui.Device.system.phone) {
+					history.go(-2);
+				}
 			},
 
 			/* =========================================================== */
@@ -364,7 +366,6 @@ sap.ui.define([
 				var objectId =  oEvent.getParameter("arguments").groupId;
 				var plantId =  oEvent.getParameter("arguments").plantId;
 				var costcenterId = oEvent.getParameter("arguments").ccId ;
-				
 				
 				/*this.getModel().metadataLoaded().then( function() {
 					var sObjectPath = this.getModel().createKey("MaterialGroups", {

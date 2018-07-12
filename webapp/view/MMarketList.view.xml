@@ -265,12 +265,13 @@
 				
 				</uxap:sections>
 			</uxap:ObjectPageLayout>	
-				<footer>
+			<footer>
 			<Toolbar>
 				<content>
-					<Button text="Toggle" type="Accept" press="handleToggleClick" id="toggleButton"></Button>
-					<Slider id='DSCWidthSlider' value="100" liveChange="handleSliderChange" />
-					<Text id='DSCWidthHintText' text="Best view in full screen mode" visible="getVisible()"></Text>
+					<Button icon="sap-icon://add-product" type="Transparent" press="onAddMaterial"></Button>
+					<ToolbarSpacer/>
+					<Button type="Accept" text="{i18n>submit}" press="onSubmit"/>
+					<Button type="Reject" text="{i18n>close}" press="onClose"/>
 				</content>
 			</Toolbar>
 		</footer>

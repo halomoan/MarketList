@@ -129,7 +129,20 @@
 					"name": "mastermobile",
 					"target": [
 						"mobile"
-					
+					]
+				},
+				{
+					"pattern": "masterpage/plantId/:plantId:/ccId/:ccId:",
+					"name": "masterpage",
+					"target": [
+						"masterpage"
+					]
+				},
+				{
+					"pattern": "submasterpage/plantId/:plantId:/groupId/:groupId:/ccId/:ccId:",
+					"name": "submasterpage",
+					"target": [
+						"submasterpage"
 					]
 				},
 				{
@@ -170,32 +183,44 @@
 					"viewLevel": 1,
 					"viewId": "home"
 				},
-				"splitapp" : {
+				"splitapp": {
 					"viewName": "SplitApp",
 					"viewLevel": 1,
-					"controlId" : "idApp",
+					"controlId": "idApp",
 					"controlAggregation": "pages",
-					"viewId": "splitapp"	
+					"viewId": "splitapp"
 				},
 				"master": {
-					"parent" : "splitapp",
+					"parent": "splitapp",
 					"viewName": "Master",
 					"viewLevel": 1,
-					"controlId" : "idAppControl",
+					"controlId": "idAppControl",
 					"viewId": "master",
 					"controlAggregation": "masterPages"
 				},
 				"submaster": {
+					"parent": "splitapp",
 					"viewName": "SubMaster",
 					"viewLevel": 1,
 					"viewId": "submaster",
+					"controlId": "idAppControl",
 					"controlAggregation": "masterPages"
 				},
+				"masterpage": {
+					"viewName": "Master",
+					"viewLevel": 1,
+					"viewId": "masterpage"
+				},
+				"submasterpage": {
+					"viewName": "SubMaster",
+					"viewLevel": 1,
+					"viewId": "submasterpage"
+				},
 				"object": {
-					"parent" : "splitapp",
+					"parent": "splitapp",
 					"viewName": "DMarketList",
 					"viewId": "detail",
-					"controlId" : "idAppControl",
+					"controlId": "idAppControl",
 					"controlAggregation": "detailPages",
 					"viewLevel": 2
 				},
