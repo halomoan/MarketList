@@ -373,7 +373,7 @@ sap.ui.define([
 								if (oAction === sap.m.MessageBox.Action.YES) {
 									oThis.globalData.tableChanged = false;
 									oThis.globalData.iRefresh = 0;
-									sap.ui.getCore().byId("__component0---app--idAppControl").hideMaster();
+									sap.ui.getCore().byId("__component0---splitapp--idAppControl").hideMaster();
 									oThis.getRouter().navTo("home", null, false);
 									
 								}
@@ -382,7 +382,7 @@ sap.ui.define([
 				} else{
 					this.globalData.tableChanged = false;
 					this.globalData.iRefresh = 0;
-					sap.ui.getCore().byId("__component0---app--idAppControl").hideMaster();
+					sap.ui.getCore().byId("__component0---splitapp--idAppControl").hideMaster();
 					this.getRouter().navTo("home", null, false);
 					
 				}

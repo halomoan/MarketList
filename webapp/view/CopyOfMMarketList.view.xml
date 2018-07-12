@@ -5,7 +5,8 @@
 	xmlns:semantic="sap.m.semantic"
 	xmlns:layout="sap.ui.layout" 
 	controllerName="sap.ui.demo.masterdetail.controller.MMarketList" xmlns:html="http://www.w3.org/1999/xhtml">
-	<Page showHeader="false">
+	<semantic:DetailPage title="M A R K E T L I S T" showHeader="true" enableScrolling="true">
+		<semantic:content>
 			<uxap:ObjectPageLayout
 					enableLazyLoading="true"
 					useIconTabBar="true"
@@ -265,14 +266,16 @@
 				
 				</uxap:sections>
 			</uxap:ObjectPageLayout>	
-				<footer>
-			<Toolbar>
-				<content>
-					<Button text="Toggle" type="Accept" press="handleToggleClick" id="toggleButton"></Button>
-					<Slider id='DSCWidthSlider' value="100" liveChange="handleSliderChange" />
-					<Text id='DSCWidthHintText' text="Best view in full screen mode" visible="getVisible()"></Text>
-				</content>
-			</Toolbar>
-		</footer>
-		</Page>
+		</semantic:content>	
+		
+		
+		<semantic:negativeAction>
+	    <semantic:NegativeAction text="{i18n>close}" press="onClose"/>
+	    </semantic:negativeAction>
+		
+		<semantic:positiveAction>
+			<semantic:PositiveAction text="{i18n>submit}" press="onSubmit"/>
+		</semantic:positiveAction>
+		
+	</semantic:DetailPage>	
 </core:View>

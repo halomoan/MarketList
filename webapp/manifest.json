@@ -59,7 +59,7 @@
 	"sap.ui5": {
 		"_version": "1.1.0",
 		"rootView": {
-			"viewName": "sap.ui.demo.masterdetail.view.App",
+			"viewName": "sap.ui.demo.masterdetail.view.FullApp",
 			"type": "XML",
 			"id": "app"
 		},
@@ -83,7 +83,7 @@
 				}
 			},
 			"": {
-				"dataSource": "mainService"
+				"dataSource": "ZMARKETLIST_SRV"
 			}
 		},
 		"resources": {
@@ -98,8 +98,8 @@
 				"routerClass": "sap.m.routing.Router",
 				"viewType": "XML",
 				"viewPath": "sap.ui.demo.masterdetail.view",
-				"controlId": "idAppControl",
-				"controlAggregation": "detailPages",
+				"controlId": "idApp",
+				"controlAggregation": "pages",
 				"bypassed": {
 					"target": [
 						"master",
@@ -128,8 +128,8 @@
 					"pattern": "mastermobile/plantId/:plantId:/ccId/:ccId:",
 					"name": "mastermobile",
 					"target": [
-						"mobile",
-						"master"
+						"mobile"
+					
 					]
 				},
 				{
@@ -170,9 +170,18 @@
 					"viewLevel": 1,
 					"viewId": "home"
 				},
+				"splitapp" : {
+					"viewName": "SplitApp",
+					"viewLevel": 1,
+					"controlId" : "idApp",
+					"controlAggregation": "pages",
+					"viewId": "splitapp"	
+				},
 				"master": {
+					"parent" : "splitapp",
 					"viewName": "Master",
 					"viewLevel": 1,
+					"controlId" : "idAppControl",
 					"viewId": "master",
 					"controlAggregation": "masterPages"
 				},
@@ -183,8 +192,11 @@
 					"controlAggregation": "masterPages"
 				},
 				"object": {
+					"parent" : "splitapp",
 					"viewName": "DMarketList",
 					"viewId": "detail",
+					"controlId" : "idAppControl",
+					"controlAggregation": "detailPages",
 					"viewLevel": 2
 				},
 				"mobile": {

@@ -4,7 +4,7 @@ sap.ui.define([
 	], function (BaseController, JSONModel) {
 		"use strict";
 
-		return BaseController.extend("sap.ui.demo.masterdetail.controller.App", {
+		return BaseController.extend("sap.ui.demo.masterdetail.controller.SplitApp", {
 
 			onInit : function () {
 				var oViewModel,
@@ -30,7 +30,7 @@ sap.ui.define([
 				            isNoPhone : !sap.ui.Device.system.phone,
 				            listMode : sap.ui.Device.system.phone ? "None" : "SingleSelectMaster",
 				            listItemType : sap.ui.Device.system.phone ? "Active" : "Inactive",
-				            splitMode : sap.ui.Device.system.phone ? "ShowHideMode" : "HideMode"
+				            splitMode : sap.ui.Device.system.phone ? "HideMode" : "HideMode"
 				        });
 				deviceModel.setDefaultBindingMode("OneWay");
 				this.setModel(deviceModel, "device");
