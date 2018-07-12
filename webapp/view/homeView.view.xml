@@ -64,8 +64,11 @@
 					value="{detailView>/Date}" valueFormat="yyyy-MM-dd" displayFormat="long"
 					change="onDateChange"
 					class="sapUiSmallMarginBottom" tooltip="{i18n>futureDate}"/>		
-						
-				<Button text="OK" press="gotoForm"/>
+
+<Button text="OK" press="gotoForm"/>
+<Label text=""></Label> 
+<CheckBox id="chkMobile" text="Show Mobile Version"></CheckBox>	
+			
 			</f:content>
 			</f:SimpleForm>
     </VBox>	

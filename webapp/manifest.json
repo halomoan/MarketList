@@ -120,7 +120,7 @@
 					"pattern": "master/plantId/:plantId:/ccId/:ccId:",
 					"name": "master",
 					"target": [
-						"object",
+						"desktop",
 						"master"
 					]
 				},
@@ -156,7 +156,7 @@
 					"pattern": "submaster/plantId/:plantId:/groupId/:groupId:",
 					"name": "submaster",
 					"target": [
-						"object",
+						"desktop",
 						"submaster"
 					]
 				},
@@ -164,7 +164,7 @@
 					"pattern": "submaster/plantId/:plantId:/groupId/:groupId:/ccId/:ccId:",
 					"name": "submaster",
 					"target": [
-						"object",
+						"desktop",
 						"submaster"
 					]
 				},
@@ -216,7 +216,7 @@
 					"viewLevel": 1,
 					"viewId": "submasterpage"
 				},
-				"object": {
+				"desktop": {
 					"parent": "splitapp",
 					"viewName": "DMarketList",
 					"viewId": "detail",
@@ -229,13 +229,13 @@
 					"viewId": "detail",
 					"viewLevel": 2
 				},
-				"detailObjectNotFound": {
-					"viewName": "DetailObjectNotFound",
-					"viewId": "detailObjectNotFound"
+				"detailNotFound": {
+					"viewName": "DetailNotFound",
+					"viewId": "detailNotFound"
 				},
-				"detailNoObjectsAvailable": {
-					"viewName": "DetailNoObjectsAvailable",
-					"viewId": "detailNoObjectsAvailable"
+				"detailNotAvailable": {
+					"viewName": "DetailNotAvailable",
+					"viewId": "detailNotAvailable"
 				},
 				"notFound": {
 					"viewName": "NotFound",

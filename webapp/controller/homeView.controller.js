@@ -76,6 +76,8 @@ sap.ui.define([
 		            key : "{PlantID}",
 		            text : "{PlantText}"
     			});
+    			
+    			odetailView.setProperty("/busy", true);
 				oPlant.bindItems({ 
 					"path": "/PlantSet",
 					"template" : oItemSelectTemplate,
@@ -94,10 +96,10 @@ sap.ui.define([
 				
 				this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
 				
-				this.getRouter().getRoute("home").attachPatternMatched(this._onMasterMatched, this);
+				//this.getRouter().getRoute("home").attachPatternMatched(this._onMasterMatched, this);
 		},
 
-		_onMetadataLoaded: function(oEvent) {
+		_onMetadataLoaded: function() {
 			this.getView().bindElement({
 					path: "/UserProfileSet('USP001')",
 					events: {
@@ -149,6 +151,8 @@ sap.ui.define([
 		
 		onPlantChange: function(oEvent){
 			
+		
+				
 			var path;
 			if (oEvent.getSource().getSelectedItem()) {
 				path = oEvent.getSource().getSelectedItem().getBindingContext().getPath();
@@ -163,6 +167,7 @@ sap.ui.define([
 	            text : "{CostCenterText}"
     		});
         
+        	odetailView.setProperty("/busy", true);
 			oCostCenter.bindAggregation("items", { 
 				"path" : path + "/PlantToCC",
 				"template" : oItemSelectTemplate,
@@ -194,7 +199,7 @@ sap.ui.define([
 	            text : "{UnLoadingPoint}"
     		});
         
-        //	odetailView.setProperty("/busy", true);
+        	odetailView.setProperty("/busy", true);
 			oUnloadingPoint.bindAggregation("items", { 
 				"path" : path + "/CCUnloadingPoint",
 				"template" : oItemSelectTemplate,
