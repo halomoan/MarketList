@@ -40,9 +40,9 @@
 				<uxap:sections>
 					<uxap:ObjectPageSection id="Day0" title="Delivery Date: {path: 'TableH>/Date0', formatter: '.formatter.dayFormat'}, {TableH>/Date0}">
 					<uxap:subSections>
-						<uxap:ObjectPageSubSection title="" class="sapUiNoMargin">
-						<uxap:blocks class="sapUiNoMargin">
-							<List id="LDay0" mode="Delete" items="{path: 'mktlist>/rows'}" delete="deleteRow" class="sapUiNoMargin">
+						<uxap:ObjectPageSubSection title="">
+						<uxap:blocks>
+							<List id="LDay0" mode="Delete" items="{path: 'mktlist>/rows'}" delete="deleteRow">
 									<CustomListItem>
 										<HBox>
 											<core:Icon size="2rem" src="sap-icon://add-favorite" color="{=${mktlist>InTemplate} ? 'Critical' : 'Neutral'}" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" press="toggleTemplate" tooltip="{=${mktlist>InTemplate} ? 'Part Of Template' : ''}"/>

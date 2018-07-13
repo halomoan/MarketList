@@ -52,3 +52,11 @@
 	padding:0 !important; 
 	margin:0 !important;
 }
+.sapUiSizeCompact .sapUxAPBlockContainerDesktop {
+	padding:0 !important; 
+	margin:0 !important;
+}
+.sapUxAPBlockContainerDesktop , .sapUiRespGrid.sapUiRespGridHSpace1 {
+	padding:0 !important; 
+	margin:0 !important;
+}
