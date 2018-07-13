@@ -4,7 +4,7 @@
 	xmlns:l="sap.ui.layout" 
 	xmlns:f="sap.ui.layout.form" controllerName="sap.ui.demo.masterdetail.controller.homeView">
     
-   
+   <Page showHeader="false" >
 	<uxap:ObjectPageHeaderContent>
 		<uxap:content>
 			<l:VerticalLayout  class="sapUiSmallMargin">
@@ -19,6 +19,7 @@
 	</uxap:ObjectPageHeaderContent>	
 	
     <VBox class="sapUiSmallMargin" busy="{viewModel>/busy}" busyIndicatorDelay="{viewModel>/busyIndicatorDelay}">
+    
     	<f:SimpleForm id="SimpleFormToolbar"
 			editable="true"
 			layout="ResponsiveGridLayout"
@@ -58,19 +59,17 @@
 					
 				<Select id="unloadingpoint">
 				</Select>
-				<Label text="{i18n>selectDate}" labelFor="DP1"/>
+				<Label text="{i18n>deliveryDate}" labelFor="DP1"/>
 				<DatePicker
 					id="DP1"
 					value="{detailView>/Date}" valueFormat="yyyy-MM-dd" displayFormat="long"
 					change="onDateChange"
 					class="sapUiSmallMarginBottom" tooltip="{i18n>futureDate}"/>		
-
-<Button text="OK" press="gotoForm"/>
-<Label text=""></Label> 
-<CheckBox id="chkMobile" text="Show Mobile Version"></CheckBox>	
-			
+					<Button text="OK" press="gotoForm"/>
+				<Label text=""></Label>
+				<CheckBox id="chkMobile" text="Mobile Version" visible="{device>/isNoPhone}"></CheckBox>
 			</f:content>
 			</f:SimpleForm>
     </VBox>	
-
+	</Page>
 </core:View>

@@ -46,6 +46,7 @@ sap.ui.define([
 				this.CostCenterID = "";
 
 				this.setModel(oViewModel, "masterView");
+				this.setDeviceModel();
 				// Make sure, busy indication is showing immediately so there is no
 				// break after the busy indication for loading the view's meta data is
 				// ended (see promise 'oWhenMetadataIsLoaded' in AppController)
@@ -61,8 +62,16 @@ sap.ui.define([
 				});
 				*/
 
+				
+				
 				if (!sap.ui.Device.system.phone) {
-					this.getRouter().getRoute("master").attachPatternMatched(this._onMasterMatched, this);
+					var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+					var oLocalData = oStorage.get("localStorage");	
+					if(oLocalData.UseMobile) {
+						this.getRouter().getRoute("dmaster").attachPatternMatched(this._onMasterMatched, this);
+					} else {
+						this.getRouter().getRoute("master").attachPatternMatched(this._onMasterMatched, this);
+					}
 				} else {
 					//this.getRouter().getRoute("mastermobile").attachPatternMatched(this._onMasterMatched, this);
 					this.getRouter().getRoute("masterpage").attachPatternMatched(this._onMasterMatched, this);
@@ -304,19 +313,28 @@ sap.ui.define([
 
 			_showSubMaster : function(oItem) {
 				var sObjectId = oItem.getBindingContext().getProperty("MaterialGroupID");
-				
+				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+				var oLocalData = oStorage.get("localStorage");
+			
 				if (sObjectId === "TEMPLATE") {
 					if (!sap.ui.Device.system.phone) {
-					
-						this.getRouter().navTo("submaster", {plantId: this.PlantID, groupId : sObjectId,ccId: this.CostCenterID }, false);
+						if(oLocalData.UseMobile) {
+							this.getRouter().navTo("subdmaster", {plantId: this.PlantID, groupId : sObjectId,ccId: this.CostCenterID }, false);
+						} else{
+							this.getRouter().navTo("submaster", {plantId: this.PlantID, groupId : sObjectId,ccId: this.CostCenterID }, false);
+						}
 					} else {
 						//this.getRouter().navTo("submobile", {plantId: this.PlantID, groupId : sObjectId,ccId: this.CostCenterID }, false);
 						this.getRouter().navTo("submasterpage", {plantId: this.PlantID, groupId : sObjectId,ccId: this.CostCenterID }, false);
 					}
 				} else {
 					if (!sap.ui.Device.system.phone) {
+						if(oLocalData.UseMobile) {
+							this.getRouter().navTo("subdmaster", {plantId: this.PlantID, groupId : sObjectId }, false);
+						} else{
+							this.getRouter().navTo("submaster", {plantId: this.PlantID, groupId : sObjectId}, false);
+						}	
 						
-						this.getRouter().navTo("submaster", {plantId: this.PlantID, groupId : sObjectId}, false);
 					}else{
 						//this.getRouter().navTo("submobile", {plantId: this.PlantID, groupId : sObjectId}, false);
 						this.getRouter().navTo("submasterpage", {plantId: this.PlantID, groupId : sObjectId}, false);

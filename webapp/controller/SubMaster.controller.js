@@ -46,6 +46,7 @@ sap.ui.define([
 				this.PlantID = "";
 				this.CostCenterID = "";
 				this.setModel(oViewModel, "masterView");
+				this.setDeviceModel();
 				// Make sure, busy indication is showing immediately so there is no
 				// break after the busy indication for loading the view's meta data is
 				// ended (see promise 'oWhenMetadataIsLoaded' in AppController)
@@ -63,7 +64,14 @@ sap.ui.define([
 				
 				//oList.attachUpdateFinished(null,this._listUpdated,this);
 				if (!sap.ui.Device.system.phone) {
-					this.getRouter().getRoute("submaster").attachPatternMatched(this._onMasterMatched, this);
+					var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+					var oLocalData = oStorage.get("localStorage");
+					
+					if(oLocalData.UseMobile) {
+						this.getRouter().getRoute("subdmaster").attachPatternMatched(this._onMasterMatched, this);
+					} else {
+						this.getRouter().getRoute("submaster").attachPatternMatched(this._onMasterMatched, this);
+					}
 				} else{
 					//this.getRouter().getRoute("submobile").attachPatternMatched(this._onMasterMatched, this);
 					this.getRouter().getRoute("submasterpage").attachPatternMatched(this._onMasterMatched, this);

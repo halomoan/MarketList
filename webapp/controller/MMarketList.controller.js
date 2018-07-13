@@ -32,8 +32,16 @@ sap.ui.define([
 				
 				var oViewModel = new JSONModel(oViewData);
 				this.setModel(oViewModel, "detailView");
+				this.setDeviceModel();
 				
-				this.getRouter().getRoute("mastermobile").attachPatternMatched(this._onMasterMatched, this);
+				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+				var oLocalData = oStorage.get("localStorage");
+				if(oLocalData.UseMobile) {
+					this.getRouter().getRoute("dmaster").attachPatternMatched(this._onMasterMatched, this);
+				}else{
+					this.getRouter().getRoute("mastermobile").attachPatternMatched(this._onMasterMatched, this);
+				}
+				
 			},
 			_onMasterMatched :  function() {
 				if (this.globalData.iRefresh === 0) {
@@ -113,8 +121,6 @@ sap.ui.define([
 					    
 				    	sap.ui.core.BusyIndicator.hide();
 				    	
-				    	
-				    	//console.log(oHeader,oDetail);
 				    },
 				    error: function() {
 			            sap.ui.core.BusyIndicator.hide();
@@ -170,12 +176,11 @@ sap.ui.define([
 
 			_addMaterial: function(sChannel,sEvent,oData){
 				
-				console.log(oData);
 				if (oData ) {
 					
 				
 					var tableRows = this._oJsonModel.getData().rows;
-
+					
 					var bNew = true,bAdded = false;
 					for (var i = 0; i < oData.data.length; i++ ){
 						
@@ -282,7 +287,7 @@ sap.ui.define([
 									oThis.globalData.iRefresh = 0;
 									
 									if (oSplit) {
-										sap.ui.getCore().byId("__component0---splitapp--idAppControl").hideMaster();
+										oSplit.hideMaster();
 									}
 									oThis.getRouter().navTo("home", null, false);
 									
@@ -293,7 +298,7 @@ sap.ui.define([
 					this.globalData.tableChanged = false;
 					this.globalData.iRefresh = 0;
 					if (oSplit) {
-						sap.ui.getCore().byId("__component0---splitapp--idAppControl").hideMaster();
+						oSplit.hideMaster();
 					}
 					this.getRouter().navTo("home", null, false);
 					

@@ -83,7 +83,7 @@
 				}
 			},
 			"": {
-				"dataSource": "ZMARKETLIST_SRV"
+				"dataSource": "mainService"
 			}
 		},
 		"resources": {
@@ -125,6 +125,14 @@
 					]
 				},
 				{
+					"pattern": "dmaster/plantId/:plantId:/ccId/:ccId:",
+					"name": "dmaster",
+					"target": [
+						"dmobile",
+						"master"
+					]
+				},
+				{
 					"pattern": "mastermobile/plantId/:plantId:/ccId/:ccId:",
 					"name": "mastermobile",
 					"target": [
@@ -161,10 +169,26 @@
 					]
 				},
 				{
+					"pattern": "subdmaster/plantId/:plantId:/groupId/:groupId:",
+					"name": "subdmaster",
+					"target": [
+						"dmobile",
+						"submaster"
+					]
+				},
+				{
 					"pattern": "submaster/plantId/:plantId:/groupId/:groupId:/ccId/:ccId:",
 					"name": "submaster",
 					"target": [
 						"desktop",
+						"submaster"
+					]
+				},
+				{
+					"pattern": "subdmaster/plantId/:plantId:/groupId/:groupId:/ccId/:ccId:",
+					"name": "subdmaster",
+					"target": [
+						"dmobile",
 						"submaster"
 					]
 				},
@@ -206,6 +230,14 @@
 					"controlId": "idAppControl",
 					"controlAggregation": "masterPages"
 				},
+				"dmobile": {
+					"parent": "splitapp",
+					"viewName": "MDMarketList",
+					"viewLevel": 1,
+					"viewId": "dmobile",
+					"controlId": "idAppControl",
+					"controlAggregation": "detailPages"
+				},
 				"masterpage": {
 					"viewName": "Master",
 					"viewLevel": 1,
@@ -219,7 +251,7 @@
 				"desktop": {
 					"parent": "splitapp",
 					"viewName": "DMarketList",
-					"viewId": "detail",
+					"viewId": "desktop",
 					"controlId": "idAppControl",
 					"controlAggregation": "detailPages",
 					"viewLevel": 2

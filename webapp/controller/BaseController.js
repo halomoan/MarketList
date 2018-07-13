@@ -44,6 +44,20 @@ sap.ui.define([
 			getResourceBundle : function () {
 				return this.getOwnerComponent().getModel("i18n").getResourceBundle();
 			},
+			
+			setDeviceModel: function(){
+				var deviceModel = new sap.ui.model.json.JSONModel({
+				            isTouch : sap.ui.Device.support.touch,
+				            isNoTouch : !sap.ui.Device.support.touch,
+				            isPhone : sap.ui.Device.system.phone,
+				            isNoPhone : !sap.ui.Device.system.phone,
+				            listMode : sap.ui.Device.system.phone ? "SingleSelectMaster" : "SingleSelectMaster",
+				            listItemType : sap.ui.Device.system.phone ? "Active" : "Inactive",
+				            splitMode : sap.ui.Device.system.phone ? "HideMode" : "HideMode"
+				        });
+				deviceModel.setDefaultBindingMode("OneWay");
+				this.getView().setModel(deviceModel, "device");
+			},
 
 			/**
 			 * Event handler for navigating back.

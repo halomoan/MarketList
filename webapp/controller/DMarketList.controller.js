@@ -50,6 +50,7 @@ sap.ui.define([
 							{"noItem": 0 , "total" : 0, "visible": true}
 						],
 					Today: dateFormat.format(new Date()),
+					noOfDays: [],
 					PlantID: "",
 					Plant: "",
 					CostCenterID : "",
@@ -63,13 +64,14 @@ sap.ui.define([
 				};
 				
 				var aSelectionItems = [];
-				var sCurrentLocale = sap.ui.getCore().getConfiguration().getLanguage();
+				//var sCurrentLocale = sap.ui.getCore().getConfiguration().getLanguage();
+				
 				var sDay = this.getResourceBundle().getText("day");
 				
 				for(var i = 1; i <= 7; i++) {
-					if (sCurrentLocale.startsWith("en")){
+					//if (sCurrentLocale.startsWith("en")){
 						var sShowDay = (i > 1) ? sDay + "s": sDay;
-					}
+					//}
 					aSelectionItems.push({key: (i + "Day"), text: this.getResourceBundle().getText(i) + " " +  sShowDay});
 				}
 				
@@ -84,7 +86,7 @@ sap.ui.define([
 				
 				
 			},
-			_onMasterMatched :  function(oEvent) {
+			_onMasterMatched :  function() {
 				if (this.globalData.iRefresh === 0) {
 					//console.log(oEvent.getParameter("arguments"));
 					//this.globalData.MarketListHeaderID = oEvent.getParameter("arguments").marketlistID;

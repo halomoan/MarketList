@@ -3,8 +3,9 @@
 	xmlns="sap.m"  
 	xmlns:uxap="sap.uxap" 
 	xmlns:semantic="sap.m.semantic"
-	xmlns:layout="sap.ui.layout" 
-	controllerName="sap.ui.demo.masterdetail.controller.MMarketList" xmlns:html="http://www.w3.org/1999/xhtml">
+	xmlns:layout="sap.ui.layout"
+	controllerName="sap.ui.demo.masterdetail.controller.MMarketList" 
+	xmlns:html="http://www.w3.org/1999/xhtml">
 	<semantic:DetailPage title="M A R K E T L I S T" showHeader="true" enableScrolling="true">
 		<semantic:content>
 			<uxap:ObjectPageLayout

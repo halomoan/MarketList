@@ -1,10 +1,11 @@
 <core:View 
-	xmlns:core="sap.ui.core" 
+	xmlns:core="sap.ui.core"
 	xmlns="sap.m"  
 	xmlns:uxap="sap.uxap" 
 	xmlns:semantic="sap.m.semantic"
 	xmlns:layout="sap.ui.layout" 
-	controllerName="sap.ui.demo.masterdetail.controller.MMarketList" xmlns:html="http://www.w3.org/1999/xhtml">
+	controllerName="sap.ui.demo.masterdetail.controller.MMarketList" 
+    xmlns:html="http://www.w3.org/1999/xhtml">
 	<Page showHeader="false">
 			<uxap:ObjectPageLayout
 					enableLazyLoading="true"

@@ -6,8 +6,18 @@ sap.ui.define([
 
 	return BaseController.extend("sap.ui.demo.masterdetail.controller.homeView", {
 		gotoForm: function(){
+			if (!jQuery.sap.storage.isSupported()){
+				sap.m.MessageBox.error(this.getResourceBundle().getText("msgErrLocalStorage"), {
+				         title: "Error",                                      
+				         initialFocus: null                                   
+				     });	
+				return;
+			}
+			
 			var oViewModel = this.getModel("detailView"); 
 			var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+			
+			
 			var oLocal = oStorage.get("localStorage");
 			if (!oLocal) { oLocal = {}; }
 			
@@ -44,10 +54,21 @@ sap.ui.define([
 			} else{
 				oLocal.Date = oViewModel.getProperty("/Date").replace(/-/g,"");
 			}
+			
+			var oUseMobile = this.getView().byId("chkMobile");
+			if(oUseMobile.getSelected() ) {
+				oLocal.UseMobile = true;
+			}else{
+				oLocal.UseMobile = false;
+			}
 			oStorage.put("localStorage",oLocal);
 			
 			if (!sap.ui.Device.system.phone) {
-				this.getRouter().navTo("master", {plantId : oPlant.getProperty("key"), ccId : oCostCenter.getProperty("key")}, false);
+				if(oLocal.UseMobile) {
+					this.getRouter().navTo("dmaster", {plantId : oPlant.getProperty("key"), ccId : oCostCenter.getProperty("key")}, false);
+				}else{
+					this.getRouter().navTo("master", {plantId : oPlant.getProperty("key"), ccId : oCostCenter.getProperty("key")}, false);
+				}
 			} else {
 				this.getRouter().navTo("mastermobile", {plantId : oPlant.getProperty("key"), ccId : oCostCenter.getProperty("key")}, false);
 			}
@@ -64,13 +85,15 @@ sap.ui.define([
 				var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "YYYY-MM-dd" });   
 				var oViewData = {
 					busy: false,
-					busyIndicatorDelay : 10,
+					busyIndicatorDelay : 0,
 					Date: dateFormat.format(new Date( (new Date()).getTime() + (24 * 60 * 60 * 1000)))
 				};
 				
 				
 				var odetailView = new JSONModel(oViewData);
 				this.setModel(odetailView, "detailView");
+				this.setDeviceModel();
+				
 				var oPlant = this.getView().byId("plant");
 				var oItemSelectTemplate = new sap.ui.core.Item({
 		            key : "{PlantID}",
@@ -150,9 +173,7 @@ sap.ui.define([
 		},
 		
 		onPlantChange: function(oEvent){
-			
-		
-				
+
 			var path;
 			if (oEvent.getSource().getSelectedItem()) {
 				path = oEvent.getSource().getSelectedItem().getBindingContext().getPath();
