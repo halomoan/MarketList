@@ -60,3 +60,7 @@
 	padding:0 !important; 
 	margin:0 !important;
 }
+
+.sapMSplitContainerHideMode>.sapMSplitContainerDetail .sapUiResponsiveMargin, .sapUiResponsiveMargin {
+	margin:1rem !important;
+}

@@ -6,10 +6,10 @@
 		<semantic:content>
 	<uxap:ObjectPageHeaderContent>
 		<uxap:content>
-			<l:VerticalLayout  class="sapUiSmallMargin">
+			<l:VerticalLayout  class="sapUiNoMargin">
 			<m:Image src="images/PPHGLogo.png" height="50%"></m:Image>
 			</l:VerticalLayout>
-			<l:VerticalLayout class="sapUiSmallMargin">
+			<l:VerticalLayout class="sapUiNoMargin">
 				<m:ObjectStatus title="{i18n>date}" text="{detailView>/Today}"/>	
 				<m:ObjectStatus title="{i18n>plant}" text="{detailView>/PlantID} - {detailView>/Plant}"/>
 				<m:ObjectStatus title="{i18n>costCenter}" text="{detailView>/CostCenterID} - {detailView>/CostCenterText}"/>
@@ -19,7 +19,7 @@
 		</uxap:content>	
 	</uxap:ObjectPageHeaderContent>	
 	
-				<Table id="mktlistTable" selected ="{mktlist>Intemplate}" selectionMode="None" enableBusyIndicator="true"  class="sapUiResponsiveMargin" visibleRowCount="{= ${device>/isPhone} ? 7 : 14 }"  height = "100%">
+				<Table id="mktlistTable" selected ="{mktlist>Intemplate}" selectionMode="None" enableBusyIndicator="true"  class="sapUiResponsiveMargin" visibleRowCount="{= ${device>/isPhone} ? 7 : 12 }"  height = "100%">
 					 <toolbar>
 					    	<m:Toolbar>
 								
