@@ -2,7 +2,6 @@
 	xmlns:core="sap.ui.core"
 	xmlns="sap.m"  
 	xmlns:uxap="sap.uxap" 
-	xmlns:semantic="sap.m.semantic"
 	xmlns:layout="sap.ui.layout" 
 	controllerName="sap.ui.demo.masterdetail.controller.MMarketList" 
     xmlns:html="http://www.w3.org/1999/xhtml">
@@ -41,9 +40,9 @@
 				<uxap:sections>
 					<uxap:ObjectPageSection id="Day0" title="Delivery Date: {path: 'TableH>/Date0', formatter: '.formatter.dayFormat'}, {TableH>/Date0}">
 					<uxap:subSections>
-						<uxap:ObjectPageSubSection title="">
-						<uxap:blocks>
-							<List id="LDay0" mode="Delete" items="{path: 'mktlist>/rows'}" delete="deleteRow">
+						<uxap:ObjectPageSubSection title="" class="sapUiNoMargin">
+						<uxap:blocks class="sapUiNoMargin">
+							<List id="LDay0" mode="Delete" items="{path: 'mktlist>/rows'}" delete="deleteRow" class="sapUiNoMargin">
 									<CustomListItem>
 										<HBox>
 											<core:Icon size="2rem" src="sap-icon://add-favorite" color="{=${mktlist>InTemplate} ? 'Critical' : 'Neutral'}" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" press="toggleTemplate" tooltip="{=${mktlist>InTemplate} ? 'Part Of Template' : ''}"/>
@@ -52,7 +51,7 @@
 													<Label text="Price Unit: =  {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 													<Label text="Unit Price: =  {= parseFloat(${mktlist>PriceUnit})}  {= ${mktlist>Day0/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day0/UOM} : ${mktlist>Day0/UOM} + ' *' }"/>
 													<HBox>
-													<Input valueState="{= ${mktlist>Day0/Error} ? 'Error': 'None'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day0/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" enabled="{mktlist>Day0/Enabled}" textAlign="End" description="{mktlist>Day0/UOM}" fieldWidth="70%" change="inputChange"/>
+													<Input valueState="{= ${mktlist>Day0/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day0/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" enabled="{mktlist>Day0/Enabled}" textAlign="End" description="{mktlist>Day0/UOM}" fieldWidth="70%" change="inputChange"/>
 													<Button icon="sap-icon://request"  press="addCommentPress">
 														<customData>
 			    											<core:CustomData key="myId" value="{mktlist>MaterialID}_00" writeToDom="false"/>
@@ -84,7 +83,7 @@
 													<Label text="Price Unit: =  {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 													<Label text="Unit Price: =  {= parseFloat(${mktlist>PriceUnit})}  {= ${mktlist>Day1/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day1/UOM} : ${mktlist>Day1/UOM} + ' *' }"/>
 													<HBox>
-													<Input valueState="{= ${mktlist>Day1/Error} ? 'Error': 'None'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day1/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" enabled="{mktlist>Day1/Enabled}" textAlign="End" description="{mktlist>Day1/UOM}" fieldWidth="70%" change="inputChange"/>
+													<Input valueState="{= ${mktlist>Day1/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day1/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" enabled="{mktlist>Day1/Enabled}" textAlign="End" description="{mktlist>Day1/UOM}" fieldWidth="70%" change="inputChange"/>
 													<Button icon="sap-icon://request"  press="addCommentPress">
 														<customData>
 			    											<core:CustomData key="myId" value="{mktlist>MaterialID}_01" writeToDom="false"/>
@@ -116,7 +115,7 @@
 													<Label text="Price Unit: =  {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 													<Label text="Unit Price: =  {= parseFloat(${mktlist>PriceUnit})}  {= ${mktlist>Day2/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day2/UOM} : ${mktlist>Day2/UOM} + ' *' }"/>
 													<HBox>
-													<Input valueState="{= ${mktlist>Day2/Error} ? 'Error': 'None'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day2/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" enabled="{mktlist>Day2/Enabled}" textAlign="End" description="{mktlist>Day2/UOM}" fieldWidth="70%" change="inputChange"/>
+													<Input valueState="{= ${mktlist>Day2/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day2/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" enabled="{mktlist>Day2/Enabled}" textAlign="End" description="{mktlist>Day2/UOM}" fieldWidth="70%" change="inputChange"/>
 													<Button icon="sap-icon://request"  press="addCommentPress">
 														<customData>
 			    											<core:CustomData key="myId" value="{mktlist>MaterialID}_02" writeToDom="false"/>
@@ -149,7 +148,7 @@
 													<Label text="Price Unit: =  {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 													<Label text="Unit Price: =  {= parseFloat(${mktlist>PriceUnit})}  {= ${mktlist>Day3/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day3/UOM} : ${mktlist>Day3/UOM} + ' *' }"/>
 													<HBox>
-													<Input valueState="{= ${mktlist>Day3/Error} ? 'Error': 'None'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day3/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" enabled="{mktlist>Day3/Enabled}" textAlign="End" description="{mktlist>Day3/UOM}" fieldWidth="70%" change="inputChange"/>
+													<Input valueState="{= ${mktlist>Day3/Error} ? 'Error': 'None'}"  value="{path: 'mktlist>Day3/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" enabled="{mktlist>Day3/Enabled}" textAlign="End" description="{mktlist>Day3/UOM}" fieldWidth="70%" change="inputChange"/>
 													<Button icon="sap-icon://request"  press="addCommentPress">
 														<customData>
 			    											<core:CustomData key="myId" value="{mktlist>MaterialID}_03" writeToDom="false"/>
@@ -181,7 +180,7 @@
 													<Label text="Price Unit: =  {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 													<Label text="Unit Price: =  {= parseFloat(${mktlist>PriceUnit})}  {= ${mktlist>Day4/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day4/UOM} : ${mktlist>Day4/UOM} + ' *' }"/>
 													<HBox>
-													<Input valueState="{= ${mktlist>Day4/Error} ? 'Error': 'None'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day4/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" enabled="{mktlist>Day4/Enabled}" textAlign="End" description="{mktlist>Day4/UOM}" fieldWidth="70%" change="inputChange"/>
+													<Input valueState="{= ${mktlist>Day4/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day4/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" enabled="{mktlist>Day4/Enabled}" textAlign="End" description="{mktlist>Day4/UOM}" fieldWidth="70%" change="inputChange"/>
 													<Button icon="sap-icon://request"  press="addCommentPress">
 														<customData>
 			    											<core:CustomData key="myId" value="{mktlist>MaterialID}_04" writeToDom="false"/>
@@ -213,7 +212,7 @@
 													<Label text="Price Unit: =  {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 													<Label text="Unit Price: =  {= parseFloat(${mktlist>PriceUnit})}  {= ${mktlist>Day5/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day5/UOM} : ${mktlist>Day5/UOM} + ' *' }"/>
 													<HBox>
-													<Input valueState="{= ${mktlist>Day5/Error} ? 'Error': 'None'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day5/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" enabled="{mktlist>Day5/Enabled}" textAlign="End" description="{mktlist>Day5/UOM}" fieldWidth="70%" change="inputChange"/>
+													<Input valueState="{= ${mktlist>Day5/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day5/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" enabled="{mktlist>Day5/Enabled}" textAlign="End" description="{mktlist>Day5/UOM}" fieldWidth="70%" change="inputChange"/>
 													<Button icon="sap-icon://request"  press="addCommentPress">
 														<customData>
 			    											<core:CustomData key="myId" value="{mktlist>MaterialID}_05" writeToDom="false"/>
@@ -245,7 +244,7 @@
 													<Label text="Price Unit: =  {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 													<Label text="Unit Price: =  {= parseFloat(${mktlist>PriceUnit})}  {= ${mktlist>Day6/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day6/UOM} : ${mktlist>Day6/UOM} + ' *' }"/>
 													<HBox>
-													<Input valueState="{= ${mktlist>Day6/Error} ? 'Error': 'None'}" placeholder="Zero To Remove" value="{path: 'mktlist>Day6/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" enabled="{mktlist>Day6/Enabled}" textAlign="End" description="{mktlist>Day6/UOM}" fieldWidth="70%" change="inputChange"/>
+													<Input valueState="{= ${mktlist>Day6/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day6/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" enabled="{mktlist>Day6/Enabled}" textAlign="End" description="{mktlist>Day6/UOM}" fieldWidth="70%" change="inputChange"/>
 													<Button icon="sap-icon://request"  press="addCommentPress">
 														<customData>
 			    											<core:CustomData key="myId" value="{mktlist>MaterialID}_06" writeToDom="false"/>

@@ -47,3 +47,8 @@
 .hcolor7 {
  color: #FFC233 !important;
 }
+
+.sapUiSizeCompact .sapUxAPBlockContainerTablet, .sapUiSizeCompact .sapUxAPBlockContainerPhone {
+	padding:0 !important; 
+	margin:0 !important;
+}
