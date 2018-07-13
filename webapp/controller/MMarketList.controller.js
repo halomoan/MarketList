@@ -507,7 +507,7 @@ sap.ui.define([
 				    matDay.Error = true;
 				    
 				    
-				}else if( matDay.Quantity > 0 ) {
+				} else if( matDay.Quantity > 0 ) {
 					
 					if (matDay.UOM !== material.OrderUnit) {
 						var orderqty = (material.FactorToUOM > 0) ? matDay.Quantity / material.FactorToUOM : 0;
@@ -552,7 +552,16 @@ sap.ui.define([
 								}
 				            }
 				        });
+					} else {
+						if (matDay.Quantity > 500) {
+							sap.m.MessageToast.show(oThis.getResourceBundle().getText("msgMoreThen",[500]));
+						}
+						var price = matDay.Quantity * material.UnitPrice / material.PriceUnit;
+						if (price > 1000){
+						sap.m.MessageToast.show(oThis.getResourceBundle().getText("msgCostMore",[1000]));
+						}
 					} 
+					
 				}
 				this.globalData.tableChanged = true;
 			},

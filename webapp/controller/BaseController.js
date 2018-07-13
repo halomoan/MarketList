@@ -51,6 +51,7 @@ sap.ui.define([
 				            isNoTouch : !sap.ui.Device.support.touch,
 				            isPhone : sap.ui.Device.system.phone,
 				            isNoPhone : !sap.ui.Device.system.phone,
+				            isTablet : sap.ui.Device.system.tablet,
 				            listMode : sap.ui.Device.system.phone ? "SingleSelectMaster" : "SingleSelectMaster",
 				            listItemType : sap.ui.Device.system.phone ? "Active" : "Inactive",
 				            splitMode : sap.ui.Device.system.phone ? "HideMode" : "HideMode"
