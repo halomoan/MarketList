@@ -13,15 +13,16 @@
 		<PlanningCalendar
 			id="PC1"
 			startDate="{path: '/startDate'}"
-			rows="{path: '/people'}"
+			rows="{path: '/scheduleheader'}"
 			viewKey="Week"
 			appointmentsVisualization="Filled"
 			appointmentSelect="handleAppointmentSelect"
 			showEmptyIntervalHeaders="false"
 			stickyHeader="true"
+			startDateChange = "onStartDateChange"
 			showWeekNumbers="true">
 			<toolbarContent>
-				<Title text="{i18n>prbyunloading}" titleStyle="H4"/>
+				<Title text="{i18n>pr} {i18n>byUnloading}" titleStyle="H4"/>
 				<ToolbarSpacer></ToolbarSpacer>
 				<Button text="{i18n>showDetail}" press="onShowDetail"></Button>
 			</toolbarContent>
@@ -30,7 +31,7 @@
 					icon="{pic}"
 					title="{name}"
 					text="{role}"
-					appointments="{path : 'appointments', templateShareable: 'true'}"
+					appointments="{path : 'schedules', templateShareable: 'true'}"
 					intervalHeaders="{path: 'headers', templateShareable: 'true'}">
 					<customData>
 						<core:CustomData key="emp-name" value="{name}" writeToDom="true"/>
@@ -57,12 +58,91 @@
 					</intervalHeaders>
 				</PlanningCalendarRow>
 			</rows>
-				<layoutData><l:SplitterLayoutData id="topLayout" size="auto" /></layoutData>
+				<layoutData><l:SplitterLayoutData id="topLayout" size="100%" /></layoutData>
 		</PlanningCalendar>
 		
 	<!--</VBox>-->
 		<VBox class="sapUiNoMargin">
-			<layoutData><l:SplitterLayoutData id="bottomLayout" size="auto"  /></layoutData>
+			<Table id="idProductsTable"
+		inset="false"
+		items="{
+			path: '/ProductCollection',
+			sorter: {
+				path: 'Name'
+			}
+		}">
+		<headerToolbar>
+			<Toolbar>
+				<content>
+					<Title text="{i18n>products}" level="H2"/>
+					<ToolbarSpacer />
+					<ToggleButton id="stickyColHdr"
+						text="Sticky Column Headers"
+						press="onToggleStickyColHdr" />
+				</content>
+			</Toolbar>
+		</headerToolbar>
+		<columns>
+			<Column
+			>
+				<Text text="{i18n>product}" />
+			</Column>
+			<Column
+				width="12em"
+				minScreenWidth="Tablet"
+				demandPopin="true">
+				<Text text="{i18n>priceUnit}" />
+			</Column>
+			<Column
+				width="12em"
+				minScreenWidth="Tablet"
+				demandPopin="true"
+				hAlign="End">
+				<Text text="{i18n>unitPrice}" />
+			</Column>
+			<Column
+				minScreenWidth="Tablet"
+				demandPopin="true"
+				hAlign="End">
+				<Text text="{i18n>orderQty}" />
+			</Column>
+			<Column
+				hAlign="End">
+				<Text text="{i18n>estimated} {i18n>price}" />
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<ObjectIdentifier
+						title="{Name}"
+						text="{ProductId}"/>
+					<Text
+						text="{SupplierName}" />
+					<Text
+						text="{Width} x {Depth} x {Height} {DimUnit}" />
+					<ObjectNumber
+						number="{WeightMeasure}"
+						unit="{WeightUnit}"
+						state="{
+							parts: [
+								{path: 'WeightMeasure'},
+								{path: 'WeightUnit'}
+							],
+							formatter: 'sap.m.sample.Table.Formatter.weightState'
+						}" />
+					<ObjectNumber
+							number="{
+								parts:[{path:'Price'},{path:'CurrencyCode'}],
+								type: 'sap.ui.model.type.Currency',
+								formatOptions: {showMeasure: false}
+							}"
+							unit="{CurrencyCode}" />
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+			<layoutData><l:SplitterLayoutData id="bottomLayout" size="100%"  /></layoutData>
 		</VBox>
 		</l:Splitter>	
 	</Page>

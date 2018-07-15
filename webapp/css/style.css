@@ -64,7 +64,3 @@
 .sapMSplitContainerHideMode>.sapMSplitContainerDetail .sapUiResponsiveMargin, .sapUiResponsiveMargin {
 	margin:1rem !important;
 }
-
-.sapMListTblCell {
-	vertical-align: middle !important;
-}

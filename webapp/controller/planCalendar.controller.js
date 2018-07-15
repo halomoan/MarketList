@@ -15,11 +15,11 @@ sap.ui.define([
 			var oModel = new JSONModel();
 				oModel.setData({
 					startDate: new Date("2018", "6", "15", "8", "0"),
-					people: [{
-						pic: "images/UOL150x60.png",
+					scheduleheader: [{
+						pic: "sap-icon://cart",
 						name: "Kitchen Unloading",
 						role: "unloading point",
-						appointments: [
+						schedules: [
 							{
 								start: new Date("2018", "6", "16", "00", "01"),
 								end: new Date("2018", "6", "16", "23", "59"),
@@ -67,10 +67,10 @@ sap.ui.define([
 						]
 					},
 					{
-							pic: "images/PPHGLogo.png",
+							pic: "sap-icon://cart",
 							name: "<NO UNLOADINGPOINT>",
 							role: "team member",
-							appointments: [
+							schedules: [
 								{
 								start: new Date("2018", "6", "18", "00", "01"),
 								end: new Date("2018", "6", "18", "23", "59"),
@@ -222,6 +222,10 @@ sap.ui.define([
 					oBottomLayout.setSize("50%");
 					oButton.setText(this.getResourceBundle().getText("hideDetail"));
 				}
+			},
+			onStartDateChange: function(oEvent){
+				var oStartDate = oEvent.getSource().getStartDate();
+				
 			}
 
 		/**
