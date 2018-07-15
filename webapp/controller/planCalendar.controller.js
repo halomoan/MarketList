@@ -99,109 +99,109 @@ sap.ui.define([
 								tentative: false
 							}
 							]
-						},
-						{
-							pic: "images/PPHGLogo.png",
-							name: "<NO UNLOADINGPOINT>",
-							role: "team member",
-							appointments: [
-								{
-								start: new Date("2018", "6", "18", "00", "01"),
-								end: new Date("2018", "6", "18", "23", "59"),
-								title: "PRID: 1234567890",
-								info: "PO created",
-								type: "Type03",
-								pic: "sap-icon://add-product",
-								tentative: true
-							},
-							{
-								start: new Date("2018", "6", "19", "00", "01"),
-								end: new Date("2018", "6", "19", "23", "59"),
-								title: "PRID: 1234567890",
-								info: "PO created",
-								type: "Type02",
-								pic: "sap-icon://add-product",
-								tentative: false
-							},
-							{
-								start: new Date("2018", "6", "20", "00", "01"),
-								end: new Date("2018", "6", "20", "23", "59"),
-								title: "PRID: 1234567890",
-								info: "room 1",
-								type: "Type01",
-								pic: "sap-icon://add-product",
-								tentative: false
-							}
-							]
-						},
-						{
-							pic: "images/PPHGLogo.png",
-							name: "<NO UNLOADINGPOINT>",
-							role: "team member",
-							appointments: [
-								{
-								start: new Date("2018", "6", "18", "00", "01"),
-								end: new Date("2018", "6", "18", "23", "59"),
-								title: "PRID: 1234567890",
-								info: "PO created",
-								type: "Type03",
-								pic: "sap-icon://add-product",
-								tentative: true
-							},
-							{
-								start: new Date("2018", "6", "19", "00", "01"),
-								end: new Date("2018", "6", "19", "23", "59"),
-								title: "PRID: 1234567890",
-								info: "PO created",
-								type: "Type02",
-								pic: "sap-icon://add-product",
-								tentative: false
-							},
-							{
-								start: new Date("2018", "6", "20", "00", "01"),
-								end: new Date("2018", "6", "20", "23", "59"),
-								title: "PRID: 1234567890",
-								info: "room 1",
-								type: "Type01",
-								pic: "sap-icon://add-product",
-								tentative: false
-							}
-							]
-						},
-						{
-							pic: "images/PPHGLogo.png",
-							name: "<NO UNLOADINGPOINT>",
-							role: "team member",
-							appointments: [
-								{
-								start: new Date("2018", "6", "18", "00", "01"),
-								end: new Date("2018", "6", "18", "23", "59"),
-								title: "PRID: 1234567890",
-								info: "PO created",
-								type: "Type03",
-								pic: "sap-icon://add-product",
-								tentative: true
-							},
-							{
-								start: new Date("2018", "6", "19", "00", "01"),
-								end: new Date("2018", "6", "19", "23", "59"),
-								title: "PRID: 1234567890",
-								info: "PO created",
-								type: "Type02",
-								pic: "sap-icon://add-product",
-								tentative: false
-							},
-							{
-								start: new Date("2018", "6", "20", "00", "01"),
-								end: new Date("2018", "6", "20", "23", "59"),
-								title: "PRID: 1234567890",
-								info: "room 1",
-								type: "Type01",
-								pic: "sap-icon://add-product",
-								tentative: false
-							}
-							]
 						}
+					/*	,{
+							pic: "images/PPHGLogo.png",
+							name: "<NO UNLOADINGPOINT>",
+							role: "team member",
+							appointments: [
+								{
+								start: new Date("2018", "6", "18", "00", "01"),
+								end: new Date("2018", "6", "18", "23", "59"),
+								title: "PRID: 1234567890",
+								info: "PO created",
+								type: "Type03",
+								pic: "sap-icon://add-product",
+								tentative: true
+							},
+							{
+								start: new Date("2018", "6", "19", "00", "01"),
+								end: new Date("2018", "6", "19", "23", "59"),
+								title: "PRID: 1234567890",
+								info: "PO created",
+								type: "Type02",
+								pic: "sap-icon://add-product",
+								tentative: false
+							},
+							{
+								start: new Date("2018", "6", "20", "00", "01"),
+								end: new Date("2018", "6", "20", "23", "59"),
+								title: "PRID: 1234567890",
+								info: "room 1",
+								type: "Type01",
+								pic: "sap-icon://add-product",
+								tentative: false
+							}
+							]
+						},
+						{
+							pic: "images/PPHGLogo.png",
+							name: "<NO UNLOADINGPOINT>",
+							role: "team member",
+							appointments: [
+								{
+								start: new Date("2018", "6", "18", "00", "01"),
+								end: new Date("2018", "6", "18", "23", "59"),
+								title: "PRID: 1234567890",
+								info: "PO created",
+								type: "Type03",
+								pic: "sap-icon://add-product",
+								tentative: true
+							},
+							{
+								start: new Date("2018", "6", "19", "00", "01"),
+								end: new Date("2018", "6", "19", "23", "59"),
+								title: "PRID: 1234567890",
+								info: "PO created",
+								type: "Type02",
+								pic: "sap-icon://add-product",
+								tentative: false
+							},
+							{
+								start: new Date("2018", "6", "20", "00", "01"),
+								end: new Date("2018", "6", "20", "23", "59"),
+								title: "PRID: 1234567890",
+								info: "room 1",
+								type: "Type01",
+								pic: "sap-icon://add-product",
+								tentative: false
+							}
+							]
+						},
+						{
+							pic: "images/PPHGLogo.png",
+							name: "<NO UNLOADINGPOINT>",
+							role: "team member",
+							appointments: [
+								{
+								start: new Date("2018", "6", "18", "00", "01"),
+								end: new Date("2018", "6", "18", "23", "59"),
+								title: "PRID: 1234567890",
+								info: "PO created",
+								type: "Type03",
+								pic: "sap-icon://add-product",
+								tentative: true
+							},
+							{
+								start: new Date("2018", "6", "19", "00", "01"),
+								end: new Date("2018", "6", "19", "23", "59"),
+								title: "PRID: 1234567890",
+								info: "PO created",
+								type: "Type02",
+								pic: "sap-icon://add-product",
+								tentative: false
+							},
+							{
+								start: new Date("2018", "6", "20", "00", "01"),
+								end: new Date("2018", "6", "20", "23", "59"),
+								title: "PRID: 1234567890",
+								info: "room 1",
+								type: "Type01",
+								pic: "sap-icon://add-product",
+								tentative: false
+							}
+							]
+						}*/
 					]
 				});
 				this.getView().setModel(oModel);

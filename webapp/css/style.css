@@ -52,11 +52,11 @@
 	padding:0 !important; 
 	margin:0 !important;
 }
-.sapUiSizeCompact .sapUxAPBlockContainerDesktop {
+.sapUiSizeCompact .sapUxAPBlockContainerPhone {
 	padding:0 !important; 
 	margin:0 !important;
 }
-.sapUxAPBlockContainerDesktop , .sapUiRespGrid.sapUiRespGridHSpace1 {
+.sapUxAPBlockContainerPhone , .sapUiRespGrid.sapUiRespGridHSpace1 {
 	padding:0 !important; 
 	margin:0 !important;
 }
@@ -66,5 +66,5 @@
 }
 
 .sapMListTblCell {
-	vertical-align: center !important;
+	vertical-align: middle !important;
 }
