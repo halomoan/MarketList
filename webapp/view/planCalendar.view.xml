@@ -1,0 +1,70 @@
+<core:View
+	xmlns:core="sap.ui.core"
+	
+	xmlns="sap.m"
+	xmlns:unified="sap.ui.unified"
+	xmlns:l="sap.ui.layout"
+	
+	controllerName="sap.ui.demo.masterdetail.controller.planCalendar" xmlns:html="http://www.w3.org/1999/xhtml">
+	
+	<Page>
+		<l:Splitter id="mainSplitter" height="100%" width="100%" orientation="Vertical">
+		<!--<VBox class="sapUiNoMargin">-->
+		<PlanningCalendar
+			id="PC1"
+			startDate="{path: '/startDate'}"
+			rows="{path: '/people'}"
+			viewKey="Week"
+			appointmentsVisualization="Filled"
+			appointmentSelect="handleAppointmentSelect"
+			showEmptyIntervalHeaders="false"
+			stickyHeader="true"
+			showWeekNumbers="true">
+			<toolbarContent>
+				<Title text="{i18n>prbyunloading}" titleStyle="H4"/>
+				<ToolbarSpacer></ToolbarSpacer>
+				<Button text="{i18n>showDetail}" press="onShowDetail"></Button>
+			</toolbarContent>
+			<rows>
+				<PlanningCalendarRow            
+					icon="{pic}"
+					title="{name}"
+					text="{role}"
+					appointments="{path : 'appointments', templateShareable: 'true'}"
+					intervalHeaders="{path: 'headers', templateShareable: 'true'}">
+					<customData>
+						<core:CustomData key="emp-name" value="{name}" writeToDom="true"/>
+					</customData>
+					<appointments>
+						<unified:CalendarAppointment
+							startDate="{start}"
+							endDate="{end}"
+							icon="{pic}"
+							title="{title}"
+							text="{info}"
+							type="{type}"
+							tentative="{tentative}">
+						</unified:CalendarAppointment>
+					</appointments>
+					<intervalHeaders>
+						<unified:CalendarAppointment
+							startDate="{start}"
+							endDate="{end}"
+							icon="{pic}"
+							title="{title}"
+							type="{type}">
+						</unified:CalendarAppointment>
+					</intervalHeaders>
+				</PlanningCalendarRow>
+			</rows>
+				<layoutData><l:SplitterLayoutData id="topLayout" size="auto" /></layoutData>
+		</PlanningCalendar>
+		
+	<!--</VBox>-->
+		<VBox class="sapUiNoMargin">
+			<layoutData><l:SplitterLayoutData id="bottomLayout" size="auto"  /></layoutData>
+		</VBox>
+		</l:Splitter>	
+	</Page>
+	
+</core:View>

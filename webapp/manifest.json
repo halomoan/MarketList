@@ -64,7 +64,7 @@
 			"id": "app"
 		},
 		"dependencies": {
-			"minUI5Version": "1.30.0",
+			"minUI5Version": "1.54.7",
 			"libs": {
 				"sap.ui.core": {},
 				"sap.m": {},
@@ -83,7 +83,7 @@
 				}
 			},
 			"": {
-				"dataSource": "mainService"
+				"dataSource": "ZMARKETLIST_SRV"
 			}
 		},
 		"resources": {
@@ -158,6 +158,13 @@
 					"name": "home",
 					"target": [
 						"home"
+					]
+				},
+				{
+					"pattern": "plancalendar/plantId/:plantId:/ccId/:ccId:/unloadId/:unloadId:",
+					"name": "plancalendar",
+					"target": [
+						"plancalendar"
 					]
 				},
 				{
@@ -259,6 +266,11 @@
 				"mobile": {
 					"viewName": "MMarketList",
 					"viewId": "detail",
+					"viewLevel": 2
+				},
+				"plancalendar" : {
+					"viewName": "planCalendar",
+					"viewId": "plancalendar",
 					"viewLevel": 2
 				},
 				"detailNotFound": {

@@ -1,29 +1,29 @@
 sap.ui.define([
 	"sap/ui/demo/masterdetail/controller/BaseController",
 	"sap/ui/model/json/JSONModel"
-], function(BaseController,JSONModel) {
+], function(BaseController, JSONModel) {
 	"use strict";
 
 	return BaseController.extend("sap.ui.demo.masterdetail.controller.homeView", {
-		gotoForm: function(){
-			if (!jQuery.sap.storage.isSupported()){
+		gotoForm: function() {
+			if (!jQuery.sap.storage.isSupported()) {
 				sap.m.MessageBox.error(this.getResourceBundle().getText("msgErrLocalStorage"), {
-				         title: "Error",                                      
-				         initialFocus: null                                   
-				     });	
+					title: "Error",
+					initialFocus: null
+				});
 				return;
 			}
-			
-			var oViewModel = this.getModel("detailView"); 
+
+			var oViewModel = this.getModel("detailView");
 			var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-			
-			
+
 			var oLocal = oStorage.get("localStorage");
-			if (!oLocal) { oLocal = {}; }
-			
-			
+			if (!oLocal) {
+				oLocal = {};
+			}
+
 			var oPlant = this.getView().byId("plant").getSelectedItem();
-			if(oPlant){
+			if (oPlant) {
 				oLocal.PlantID = oPlant.getProperty("key");
 				oLocal.Plant = oPlant.getProperty("text");
 			} else {
@@ -31,50 +31,57 @@ sap.ui.define([
 				return;
 			}
 			var oCostCenter = this.getView().byId("costcenter").getSelectedItem();
-			if(oCostCenter){
+			if (oCostCenter) {
 				oLocal.CostCenterID = oCostCenter.getProperty("key");
 				oLocal.CostCenter = oCostCenter.getProperty("text");
 			} else {
-				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectCC"));	
+				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectCC"));
 				return;
 			}
 			var oUnloadingPoint = this.getView().byId("unloadingpoint").getSelectedItem();
-			if(oUnloadingPoint){
+			if (oUnloadingPoint) {
 				oLocal.UnloadingPointID = oUnloadingPoint.getProperty("key");
 				oLocal.UnloadingPoint = oUnloadingPoint.getProperty("text");
 			} else {
-				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectUnloadingPoint"));	
+				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectUnloadingPoint"));
 				return;
 			}
-			
+
 			var oDate = this.getView().byId("DP1");
-			if(oDate.getValueState() === sap.ui.core.ValueState.Error ) {
-				sap.m.MessageToast.show(this.getResourceBundle().getText("msgWrongDateFuture"));	
+			if (oDate.getValueState() === sap.ui.core.ValueState.Error) {
+				sap.m.MessageToast.show(this.getResourceBundle().getText("msgWrongDateFuture"));
 				return;
-			} else{
-				oLocal.Date = oViewModel.getProperty("/Date").replace(/-/g,"");
+			} else {
+				oLocal.Date = oViewModel.getProperty("/Date").replace(/-/g, "");
 			}
-			
+
 			var oUseMobile = this.getView().byId("chkMobile");
-			if(oUseMobile.getSelected() ) {
+			if (oUseMobile.getSelected()) {
 				oLocal.UseMobile = true;
-			}else{
+			} else {
 				oLocal.UseMobile = false;
 			}
-			oStorage.put("localStorage",oLocal);
-			
+			oStorage.put("localStorage", oLocal);
+
 			if (!sap.ui.Device.system.phone) {
-				if(oLocal.UseMobile) {
-					this.getRouter().navTo("dmaster", {plantId : oPlant.getProperty("key"), ccId : oCostCenter.getProperty("key")}, false);
-				}else{
-					this.getRouter().navTo("master", {plantId : oPlant.getProperty("key"), ccId : oCostCenter.getProperty("key")}, false);
+				if (oLocal.UseMobile) {
+					this.getRouter().navTo("dmaster", {
+						plantId: oPlant.getProperty("key"),
+						ccId: oCostCenter.getProperty("key")
+					}, false);
+				} else {
+					this.getRouter().navTo("master", {
+						plantId: oPlant.getProperty("key"),
+						ccId: oCostCenter.getProperty("key")
+					}, false);
 				}
 			} else {
-				this.getRouter().navTo("mastermobile", {plantId : oPlant.getProperty("key"), ccId : oCostCenter.getProperty("key")}, false);
+				this.getRouter().navTo("mastermobile", {
+					plantId: oPlant.getProperty("key"),
+					ccId: oCostCenter.getProperty("key")
+				}, false);
 			}
-				
-		
-			
+
 		},
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
@@ -82,66 +89,67 @@ sap.ui.define([
 		 * @memberOf sap.ui.demo.masterdetail.view.homeView
 		 */
 		onInit: function() {
-				var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "YYYY-MM-dd" });   
-				var oViewData = {
-					busy: false,
-					busyIndicatorDelay : 0,
-					Date: dateFormat.format(new Date( (new Date()).getTime() + (24 * 60 * 60 * 1000)))
-				};
-				
-				
-				var odetailView = new JSONModel(oViewData);
-				this.setModel(odetailView, "detailView");
-				this.setDeviceModel();
-				
-				var oPlant = this.getView().byId("plant");
-				var oItemSelectTemplate = new sap.ui.core.Item({
-		            key : "{PlantID}",
-		            text : "{PlantText}"
-    			});
-    			
-    			odetailView.setProperty("/busy", true);
-				oPlant.bindItems({ 
-					"path": "/PlantSet",
-					"template" : oItemSelectTemplate,
-					"events" : {
-						dataReceived: function () {
-							odetailView.setProperty("/busy", false);
-							oPlant.fireChange(oPlant.getFirstItem());
-							
+			var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({
+				pattern: "YYYY-MM-dd"
+			});
+			var oViewData = {
+				busy: false,
+				busyIndicatorDelay: 0,
+				Date: dateFormat.format(new Date((new Date()).getTime() + (24 * 60 * 60 * 1000)))
+			};
+
+			var odetailView = new JSONModel(oViewData);
+			this.setModel(odetailView, "detailView");
+			this.setDeviceModel();
+
+			var oPlant = this.getView().byId("plant");
+			var oItemSelectTemplate = new sap.ui.core.Item({
+				key: "{PlantID}",
+				text: "{PlantText}"
+			});
+
+			odetailView.setProperty("/busy", true);
+			oPlant.bindItems({
+				"path": "/PlantSet",
+				"template": oItemSelectTemplate,
+				"events": {
+					dataReceived: function() {
+						odetailView.setProperty("/busy", false);
+						oPlant.fireChange(oPlant.getFirstItem());
+
 					},
-						dataRequested : function () {
-							odetailView.setProperty("/busy", true);
-						}
+					dataRequested: function() {
+						odetailView.setProperty("/busy", true);
 					}
-					
-				});
-				
-				this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
-				
-				//this.getRouter().getRoute("home").attachPatternMatched(this._onMasterMatched, this);
+				}
+
+			});
+
+			this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
+
+			//this.getRouter().getRoute("home").attachPatternMatched(this._onMasterMatched, this);
 		},
 
 		_onMetadataLoaded: function() {
 			this.getView().bindElement({
-					path: "/UserProfileSet('USP001')",
-					events: {
-						dataReceived: function(rData){
-							var oData = rData.getParameter("data");
-							if(oData){
-							
-								var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-								var oLocal = {};
-								
-								oLocal.UserId = oData.UserId;
-								oLocal.Name = oData.Name;
-			
-								oStorage.put("localStorage",oLocal);
-							}
+				path: "/UserProfileSet('USP001')",
+				events: {
+					dataReceived: function(rData) {
+						var oData = rData.getParameter("data");
+						if (oData) {
+
+							var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+							var oLocal = {};
+
+							oLocal.UserId = oData.UserId;
+							oLocal.Name = oData.Name;
+
+							oStorage.put("localStorage", oLocal);
 						}
 					}
+				}
 			});
-			
+
 		},
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
@@ -168,71 +176,71 @@ sap.ui.define([
 		//	onExit: function() {
 		//
 		//	}
-		_onMasterMatched : function() {
-			
+		_onMasterMatched: function() {
+
 		},
-		
-		onPlantChange: function(oEvent){
+
+		onPlantChange: function(oEvent) {
 
 			var path;
 			if (oEvent.getSource().getSelectedItem()) {
 				path = oEvent.getSource().getSelectedItem().getBindingContext().getPath();
-			} else {	
+			} else {
 				path = oEvent.getSource().getFirstItem().getBindingContext().getPath();
 			}
 			var oCostCenter = this.getView().byId("costcenter");
 			var odetailView = this.getModel("detailView");
-			
+
 			var oItemSelectTemplate = new sap.ui.core.Item({
-	            key : "{CostCenterID}",
-	            text : "{CostCenterText}"
-    		});
-        
-        	odetailView.setProperty("/busy", true);
-			oCostCenter.bindAggregation("items", { 
-				"path" : path + "/PlantToCC",
-				"template" : oItemSelectTemplate,
-				"events" : {
-						dataReceived: function () {
-							odetailView.setProperty("/busy", false);
-							oCostCenter.fireChange(oCostCenter.getFirstItem());
-							
+				key: "{CostCenterID}",
+				text: "{CostCenterText}"
+			});
+
+			odetailView.setProperty("/busy", true);
+			oCostCenter.bindAggregation("items", {
+				"path": path + "/PlantToCC",
+				"template": oItemSelectTemplate,
+				"events": {
+					dataReceived: function() {
+						odetailView.setProperty("/busy", false);
+						oCostCenter.fireChange(oCostCenter.getFirstItem());
+
 					},
-						dataRequested : function () {
-							odetailView.setProperty("/busy", true);
-						}
+					dataRequested: function() {
+						odetailView.setProperty("/busy", true);
 					}
-				
+				}
+
 			});
 		},
-		onCostCenterChange: function(oEvent){
+		onCostCenterChange: function(oEvent) {
 			var path;
 			if (oEvent.getSource().getSelectedItem()) {
 				path = oEvent.getSource().getSelectedItem().getBindingContext().getPath();
-			} else {	
+			} else {
 				path = oEvent.getSource().getFirstItem().getBindingContext().getPath();
 			}
 			var oUnloadingPoint = this.getView().byId("unloadingpoint");
 			var odetailView = this.getModel("detailView");
-			
+
 			var oItemSelectTemplate = new sap.ui.core.Item({
-	            key : "{UnLoadingPointID}",
-	            text : "{UnLoadingPoint}"
-    		});
-        
-        	odetailView.setProperty("/busy", true);
-			oUnloadingPoint.bindAggregation("items", { 
-				"path" : path + "/CCUnloadingPoint",
-				"template" : oItemSelectTemplate,
-				"events" : {
-						dataReceived: function () {
-							odetailView.setProperty("/busy", false);
+				key: "{UnLoadingPointID}",
+				text: "{UnLoadingPoint}"
+			});
+
+			odetailView.setProperty("/busy", true);
+			oUnloadingPoint.bindAggregation("items", {
+				"path": path + "/CCUnloadingPoint",
+				"template": oItemSelectTemplate,
+				"events": {
+					dataReceived: function() {
+						odetailView.setProperty("/busy", false);
 					},
-						dataRequested : function () {
-							odetailView.setProperty("/busy", true);
-						}
+					dataRequested: function() {
+						odetailView.setProperty("/busy", true);
 					}
-				
+				}
+
 			});
 		},
 		onDateChange: function(oEvent) {
@@ -240,13 +248,42 @@ sap.ui.define([
 			var bValid = oEvent.getParameter("valid");
 			var dValue = new Date(oEvent.getParameter("value"));
 			var today = new Date();
-			
+
 			if (bValid && today.getDate() < dValue.getDate()) {
 				oDP.setValueState(sap.ui.core.ValueState.None);
 			} else {
 				oDP.setValueState(sap.ui.core.ValueState.Error);
 			}
+
+		},
+		onPlanCalendar: function() {
+			var oPlant = this.getView().byId("plant").getSelectedItem();
+			if (oPlant) {
+				var PlantID = oPlant.getProperty("key");
+			} else {
+				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectPlant"));
+				return;
+			}
 			
+			var oCostCenter = this.getView().byId("costcenter").getSelectedItem();
+			if (oCostCenter) {
+				var CostCenterID = oCostCenter.getProperty("key");
+			} else {
+				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectCC"));
+				return;
+			}
+			var oUnloadingPoint = this.getView().byId("unloadingpoint").getSelectedItem();
+			if (oUnloadingPoint) {
+				var UnloadingPoint = oUnloadingPoint.getProperty("key");
+			} else {
+				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectUnloadingPoint"));
+				return;
+			}
+			this.getRouter().navTo("plancalendar", {
+				plantId: PlantID,
+				ccId: CostCenterID,
+				unloadId : UnloadingPoint
+			}, false);
 		}
 	});
 
