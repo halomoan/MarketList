@@ -85,6 +85,45 @@ sap.ui.define([
 			onStartDateChange: function(oEvent){
 				var oStartDate = oEvent.getSource().getStartDate();
 				
+			},
+			handleAppointmentSelect: function (oEvent) {
+				var oAppointment = oEvent.getParameter("appointment");
+					
+				if (oAppointment) {
+					//var sSelected = oAppointment.getSelected() ? "selected" : "deselected";
+					var sPRID = oAppointment.getTitle();
+					sPRID = sPRID.replace( /^\D+/g, ""); 
+					var oList = this.getView().byId("PRItemList");
+					
+					var sObjectPath = this.getModel().createKey("/MarketListHeaderSet", {
+						MarketListHeaderID :  sPRID
+					});
+				
+					var oItems = new sap.m.ColumnListItem({
+						cells: [
+							new sap.m.ObjectIdentifier({
+								title: "Title example"
+							}),
+							new sap.m.Text({
+								text: "TExt"
+							}),
+							new sap.m.Text({
+								text: "Text2"
+							})
+						]
+						
+					});
+					oList.bindItems({
+						path : sObjectPath,
+						template: oItems
+					});
+				
+					//onsole.log("'" + sPRID + "' " + sSelected + ". \n Selected appointments: " + this.byId("PC1").getSelectedAppointments().length);
+				} else {
+					var aAppointments = oEvent.getParameter("appointments");
+					var sValue = aAppointments.length + " Appointments selected";
+					console.log(sValue);
+				}
 			}
 
 		/**

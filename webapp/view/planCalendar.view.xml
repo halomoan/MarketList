@@ -56,14 +56,9 @@
 		</PlanningCalendar>
 		
 		<VBox class="sapUiNoMargin">
-			<Table id="idProductsTable"
-		inset="false"
-		items="{
-			path: '/ProductCollection',
-			sorter: {
-				path: 'Name'
-			}
-		}">
+			<Table id="PRItemList"
+					inset="false"
+					>
 		<headerToolbar>
 			<Toolbar>
 				<content>
@@ -105,7 +100,7 @@
 			</Column>
 		</columns>
 		<items>
-			<ColumnListItem>
+		<!--	<ColumnListItem>
 				<cells>
 					<ObjectIdentifier
 						title="{Name}"
@@ -132,7 +127,7 @@
 							}"
 							unit="{CurrencyCode}" />
 				</cells>
-			</ColumnListItem>
+			</ColumnListItem>-->
 		</items>
 	</Table>
 			<layoutData><l:SplitterLayoutData id="bottomLayout" size="100%"  /></layoutData>
