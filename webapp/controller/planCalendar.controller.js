@@ -12,202 +12,6 @@ sap.ui.define([
 		 * @memberOf sap.ui.demo.masterdetail.view.planCalendar
 		 */
 			onInit: function() {
-			var oModel = new JSONModel();
-				oModel.setData({
-					startDate: new Date("2018", "6", "15", "8", "0"),
-					scheduleheader: [{
-						Pic: "sap-icon://cart",
-						Name: "Kitchen Unloading",
-						Role: "unloading point",
-						NavHeaderToItem: [
-							{
-								StartDate: new Date("2018", "6", "16", "00", "01"),
-								EndDate: new Date("2018", "6", "16", "23", "59"),
-								Title: "PRID: 1234567890",
-								info: "PO created",
-								Type: "Type01",
-								Pic: "sap-icon://add-product",
-								Tentative: false
-							},
-							{
-								StartDate: new Date("2018", "6", "17", "00", "01"),
-								EndDate: new Date("2018", "6", "17", "23", "59"),
-								Title: "PRID: 1234567890",
-								Type: "Type02",
-								Pic: "sap-icon://add-product",
-								Tentative: false
-							},
-							{
-								StartDate: new Date("2018", "6", "18", "00", "01"),
-								EndDate: new Date("2018", "6", "18", "23", "59"),
-								Title: "PRID: 1234567890",
-								info: "PO created",
-								Type: "Type03",
-								Pic: "sap-icon://add-product",
-								Tentative: true
-							},
-							{
-								StartDate: new Date("2018", "6", "19", "00", "01"),
-								EndDate: new Date("2018", "6", "19", "23", "59"),
-								Title: "PRID: 1234567890",
-								info: "PO created",
-								Type: "Type02",
-								Pic: "sap-icon://add-product",
-								Tentative: false
-							},
-							{
-								StartDate: new Date("2018", "6", "20", "00", "01"),
-								EndDate: new Date("2018", "6", "20", "23", "59"),
-								Title: "PRID: 1234567890",
-								info: "room 1",
-								Type: "Type01",
-								Pic: "sap-icon://add-product",
-								Tentative: false
-							}
-						]
-					},
-					{
-							Pic: "sap-icon://cart",
-							Name: "<NO UNLOADINGPOINT>",
-							Role: "team member",
-							NavHeaderToItem: [
-								{
-								StartDate: new Date("2018", "6", "18", "00", "01"),
-								EndDate: new Date("2018", "6", "18", "23", "59"),
-								Title: "PRID: 1234567890",
-								info: "PO created",
-								Type: "Type03",
-								Pic: "sap-icon://add-product",
-								Tentative: true
-							},
-							{
-								StartDate: new Date("2018", "6", "19", "00", "01"),
-								EndDate: new Date("2018", "6", "19", "23", "59"),
-								Title: "PRID: 1234567890",
-								info: "PO created",
-								Type: "Type02",
-								Pic: "sap-icon://add-product",
-								Tentative: false
-							},
-							{
-								StartDate: new Date("2018", "6", "20", "00", "01"),
-								EndDate: new Date("2018", "6", "20", "23", "59"),
-								Title: "PRID: 1234567890",
-								info: "room 1",
-								Type: "Type01",
-								Pic: "sap-icon://add-product",
-								Tentative: false
-							}
-							]
-						}
-					/*	,{
-							Pic: "images/PPHGLogo.png",
-							Name: "<NO UNLOADINGPOINT>",
-							Role: "team member",
-							appointments: [
-								{
-								StartDate: new Date("2018", "6", "18", "00", "01"),
-								EndDate: new Date("2018", "6", "18", "23", "59"),
-								Title: "PRID: 1234567890",
-								info: "PO created",
-								Type: "Type03",
-								Pic: "sap-icon://add-product",
-								Tentative: true
-							},
-							{
-								StartDate: new Date("2018", "6", "19", "00", "01"),
-								EndDate: new Date("2018", "6", "19", "23", "59"),
-								Title: "PRID: 1234567890",
-								info: "PO created",
-								Type: "Type02",
-								Pic: "sap-icon://add-product",
-								Tentative: false
-							},
-							{
-								StartDate: new Date("2018", "6", "20", "00", "01"),
-								EndDate: new Date("2018", "6", "20", "23", "59"),
-								Title: "PRID: 1234567890",
-								info: "room 1",
-								Type: "Type01",
-								Pic: "sap-icon://add-product",
-								Tentative: false
-							}
-							]
-						},
-						{
-							Pic: "images/PPHGLogo.png",
-							Name: "<NO UNLOADINGPOINT>",
-							Role: "team member",
-							appointments: [
-								{
-								StartDate: new Date("2018", "6", "18", "00", "01"),
-								EndDate: new Date("2018", "6", "18", "23", "59"),
-								Title: "PRID: 1234567890",
-								info: "PO created",
-								Type: "Type03",
-								Pic: "sap-icon://add-product",
-								Tentative: true
-							},
-							{
-								StartDate: new Date("2018", "6", "19", "00", "01"),
-								EndDate: new Date("2018", "6", "19", "23", "59"),
-								Title: "PRID: 1234567890",
-								info: "PO created",
-								Type: "Type02",
-								Pic: "sap-icon://add-product",
-								Tentative: false
-							},
-							{
-								StartDate: new Date("2018", "6", "20", "00", "01"),
-								EndDate: new Date("2018", "6", "20", "23", "59"),
-								Title: "PRID: 1234567890",
-								info: "room 1",
-								Type: "Type01",
-								Pic: "sap-icon://add-product",
-								Tentative: false
-							}
-							]
-						},
-						{
-							Pic: "images/PPHGLogo.png",
-							Name: "<NO UNLOADINGPOINT>",
-							Role: "team member",
-							appointments: [
-								{
-								StartDate: new Date("2018", "6", "18", "00", "01"),
-								EndDate: new Date("2018", "6", "18", "23", "59"),
-								Title: "PRID: 1234567890",
-								info: "PO created",
-								Type: "Type03",
-								Pic: "sap-icon://add-product",
-								Tentative: true
-							},
-							{
-								StartDate: new Date("2018", "6", "19", "00", "01"),
-								EndDate: new Date("2018", "6", "19", "23", "59"),
-								Title: "PRID: 1234567890",
-								info: "PO created",
-								Type: "Type02",
-								Pic: "sap-icon://add-product",
-								Tentative: false
-							},
-							{
-								StartDate: new Date("2018", "6", "20", "00", "01"),
-								EndDate: new Date("2018", "6", "20", "23", "59"),
-								Title: "PRID: 1234567890",
-								info: "room 1",
-								Type: "Type01",
-								Pic: "sap-icon://add-product",
-								Tentative: false
-							}
-							]
-						}*/
-					]
-				});
-				
-				console.log(JSON.stringify(oModel.getData()));
-				this.getView().setModel(oModel,"calModel");
-				
 				var oViewData = {
 					calbusy : false,
 					calbusyindicator: 0
@@ -218,23 +22,24 @@ sap.ui.define([
 				this.getRouter().getRoute("plancalendar").attachPatternMatched(this._onMasterMatched, this);
 			},
 			_onMasterMatched: function(oEvent){
+				
 				var plantID = oEvent.getParameter("arguments").plantId;
 				var CostCenterID = oEvent.getParameter("arguments").ccId;
-				var sDate = oEvent.getParameter("arguments").date;
-				this.refreshSchedule(plantID, CostCenterID, sDate);
+				//var sDate = oEvent.getParameter("arguments").date;
+				var oDate = new Date(oEvent.getParameter("arguments").date);
+				this.refreshSchedule(plantID, CostCenterID, oDate);
 				
 				
 			},
-			refreshSchedule: function(plantID,CostCenterID,sDate) {
+			refreshSchedule: function(plantID,CostCenterID,oDate) {
 				var oModelSchedule = this.getOwnerComponent().getModel();
 				var oViewModel = this.getModel("detailView");
 				var oThis = this;
 				
 				var oFilters = [];
-				oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, sDate));
+				oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, oDate.getTime()));
 				oFilters.push( new sap.ui.model.Filter("PlantID", sap.ui.model.FilterOperator.EQ, plantID) );
 				oFilters.push( new sap.ui.model.Filter("CostCenterID", sap.ui.model.FilterOperator.EQ, CostCenterID) );
-				
 				
 				oViewModel.setProperty("/calbusy",true);
 				oModelSchedule.read("/ScheduleSet", {
@@ -245,18 +50,17 @@ sap.ui.define([
 					success: function(rData) {
 						var oSchedule = rData.results[0]; 
 						var oJsonData = {};
-						oJsonData.startDate = new Date();
 						oJsonData.scheduleheader = oSchedule.NavScheduleToHeader.results;
 						for (var idx in oJsonData.scheduleheader){
 							 oJsonData.scheduleheader[idx].NavHeaderToItem = oJsonData.scheduleheader[idx].NavHeaderToItem.results;
 						}
-						console.log(JSON.stringify(oJsonData));
+						var oJson = new JSONModel();
+						oJson.setData(oJsonData);
 						
-					oThis.getView().setModel(oJsonData,"calModel");
+						oThis.getView().setModel(oJson,"calModel");
 						oViewModel.setProperty("/calbusy",false);
 					},
 					error: function(oError){
-						//sap.ui.core.BusyIndicator.hide();
 						oViewModel.setProperty("/calbusy",false);
 					}
 				});		
@@ -273,8 +77,8 @@ sap.ui.define([
 					oButton.setText(this.getResourceBundle().getText("showDetail"));
 					
 				}else{
-					oTopLayout.setSize("50%");
-					oBottomLayout.setSize("50%");
+					oTopLayout.setSize("auto");
+					oBottomLayout.setSize("auto");
 					oButton.setText(this.getResourceBundle().getText("hideDetail"));
 				}
 			},

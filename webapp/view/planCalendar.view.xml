@@ -7,12 +7,12 @@
 	
 	controllerName="sap.ui.demo.masterdetail.controller.planCalendar" xmlns:html="http://www.w3.org/1999/xhtml">
 	
-	<Page>
+	<Page showHeader="false">
 		<l:Splitter id="mainSplitter" height="100%" width="100%" orientation="Vertical">
-		<!--<VBox class="sapUiNoMargin">-->
+
 		<PlanningCalendar
 			id="PC1"
-			startDate="{path: 'calModel>/startDate'}"
+			startDate="{path: 'calModel>/Date'}"
 			rows="{path: 'calModel>/scheduleheader'}"
 			viewKey="Week"
 			appointmentsVisualization="Filled"
@@ -24,6 +24,7 @@
 			busy="{detailView>/calbusy}"
 			busyIndicatorDelay="{detailView>/calbusyindicator}">
 			<toolbarContent>
+				<Button icon="sap-icon://nav-back" press="onNavBack"></Button>
 				<Title text="{i18n>pr} {i18n>byUnloading}" titleStyle="H4"/>
 				<ToolbarSpacer></ToolbarSpacer>
 				<Button text="{i18n>showDetail}" press="onShowDetail"></Button>
@@ -34,7 +35,7 @@
 					title="{calModel>Name}"
 					text="{calModel>Role}"
 					appointments="{path : 'calModel>NavHeaderToItem', templateShareable: 'true'}"
-					intervalHeaders="{path: 'calModel>headers', templateShareable: 'true'}">
+					>
 					<customData>
 						<core:CustomData key="emp-name" value="{calModel>name}" writeToDom="true"/>
 					</customData>
@@ -43,27 +44,17 @@
 							startDate="{calModel>StartDate}"
 							endDate="{calModel>EndDate}"
 							icon="{calModel>Pic}"
-							title="{calModel>Title}"
+							title="PRID: {calModel>Title}"
 							text="{calModel>Info}"
 							type="{calModel>Type}"
 							tentative="{calModel>Tentative}">
 						</unified:CalendarAppointment>
 					</appointments>
-					<intervalHeaders>
-						<unified:CalendarAppointment
-							startDate="{calModel>start}"
-							endDate="{calModel>end}"
-							icon="{calModel>pic}"
-							title="{calModel>title}"
-							type="{calModel>type}">
-						</unified:CalendarAppointment>
-					</intervalHeaders>
 				</PlanningCalendarRow>
 			</rows>
 				<layoutData><l:SplitterLayoutData id="topLayout" size="100%" /></layoutData>
 		</PlanningCalendar>
 		
-	<!--</VBox>-->
 		<VBox class="sapUiNoMargin">
 			<Table id="idProductsTable"
 		inset="false"

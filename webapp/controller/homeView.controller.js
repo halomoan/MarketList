@@ -249,7 +249,7 @@ sap.ui.define([
 			var dValue = new Date(oEvent.getParameter("value"));
 			var today = new Date();
 
-			if (bValid && today.getDate() < dValue.getDate()) {
+			if (bValid && today.getTime() < dValue.getTime()) {
 				oDP.setValueState(sap.ui.core.ValueState.None);
 			} else {
 				oDP.setValueState(sap.ui.core.ValueState.Error);
@@ -275,9 +275,11 @@ sap.ui.define([
 				return;
 			}
 			
-			var oDate = this.getView().byId("DP1");
-			if (oDate) {
-				var sDate = oViewModel.getProperty("/Date").replace(/-/g, "");
+			var oDatePick = this.getView().byId("DP1");
+			if (oDatePick) {
+				//var sDate = oViewModel.getProperty("/Date").replace(/-/g, "");
+				var sDate = oViewModel.getProperty("/Date");
+				//var oDate = new Date(oViewModel.getProperty("/Date"));
 			} else {
 				sap.m.MessageToast.show(this.getResourceBundle().getText("msgWrongDateFuture"));
 				return;
