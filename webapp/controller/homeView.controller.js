@@ -257,6 +257,8 @@ sap.ui.define([
 
 		},
 		onPlanCalendar: function() {
+			var oViewModel = this.getModel("detailView");
+			
 			var oPlant = this.getView().byId("plant").getSelectedItem();
 			if (oPlant) {
 				var PlantID = oPlant.getProperty("key");
@@ -272,17 +274,18 @@ sap.ui.define([
 				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectCC"));
 				return;
 			}
-			var oUnloadingPoint = this.getView().byId("unloadingpoint").getSelectedItem();
-			if (oUnloadingPoint) {
-				var UnloadingPoint = oUnloadingPoint.getProperty("key");
+			
+			var oDate = this.getView().byId("DP1");
+			if (oDate) {
+				var sDate = oViewModel.getProperty("/Date").replace(/-/g, "");
 			} else {
-				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectUnloadingPoint"));
+				sap.m.MessageToast.show(this.getResourceBundle().getText("msgWrongDateFuture"));
 				return;
 			}
 			this.getRouter().navTo("plancalendar", {
 				plantId: PlantID,
 				ccId: CostCenterID,
-				unloadId : UnloadingPoint
+				date : sDate
 			}, false);
 		}
 	});

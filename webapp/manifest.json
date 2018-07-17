@@ -161,7 +161,7 @@
 					]
 				},
 				{
-					"pattern": "plancalendar/plantId/:plantId:/ccId/:ccId:/unloadId/:unloadId:",
+					"pattern": "plancalendar/plantId/:plantId:/ccId/:ccId:/date/:date:",
 					"name": "plancalendar",
 					"target": [
 						"plancalendar"

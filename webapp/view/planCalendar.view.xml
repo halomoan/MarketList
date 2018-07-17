@@ -12,15 +12,17 @@
 		<!--<VBox class="sapUiNoMargin">-->
 		<PlanningCalendar
 			id="PC1"
-			startDate="{path: '/startDate'}"
-			rows="{path: '/scheduleheader'}"
+			startDate="{path: 'calModel>/startDate'}"
+			rows="{path: 'calModel>/scheduleheader'}"
 			viewKey="Week"
 			appointmentsVisualization="Filled"
 			appointmentSelect="handleAppointmentSelect"
 			showEmptyIntervalHeaders="false"
 			stickyHeader="true"
 			startDateChange = "onStartDateChange"
-			showWeekNumbers="true">
+			showWeekNumbers="true"
+			busy="{detailView>/calbusy}"
+			busyIndicatorDelay="{detailView>/calbusyindicator}">
 			<toolbarContent>
 				<Title text="{i18n>pr} {i18n>byUnloading}" titleStyle="H4"/>
 				<ToolbarSpacer></ToolbarSpacer>
@@ -28,32 +30,32 @@
 			</toolbarContent>
 			<rows>
 				<PlanningCalendarRow            
-					icon="{pic}"
-					title="{name}"
-					text="{role}"
-					appointments="{path : 'schedules', templateShareable: 'true'}"
-					intervalHeaders="{path: 'headers', templateShareable: 'true'}">
+					icon="{calModel>Pic}"
+					title="{calModel>Name}"
+					text="{calModel>Role}"
+					appointments="{path : 'calModel>NavHeaderToItem', templateShareable: 'true'}"
+					intervalHeaders="{path: 'calModel>headers', templateShareable: 'true'}">
 					<customData>
-						<core:CustomData key="emp-name" value="{name}" writeToDom="true"/>
+						<core:CustomData key="emp-name" value="{calModel>name}" writeToDom="true"/>
 					</customData>
 					<appointments>
 						<unified:CalendarAppointment
-							startDate="{start}"
-							endDate="{end}"
-							icon="{pic}"
-							title="{title}"
-							text="{info}"
-							type="{type}"
-							tentative="{tentative}">
+							startDate="{calModel>StartDate}"
+							endDate="{calModel>EndDate}"
+							icon="{calModel>Pic}"
+							title="{calModel>Title}"
+							text="{calModel>Info}"
+							type="{calModel>Type}"
+							tentative="{calModel>Tentative}">
 						</unified:CalendarAppointment>
 					</appointments>
 					<intervalHeaders>
 						<unified:CalendarAppointment
-							startDate="{start}"
-							endDate="{end}"
-							icon="{pic}"
-							title="{title}"
-							type="{type}">
+							startDate="{calModel>start}"
+							endDate="{calModel>end}"
+							icon="{calModel>pic}"
+							title="{calModel>title}"
+							type="{calModel>type}">
 						</unified:CalendarAppointment>
 					</intervalHeaders>
 				</PlanningCalendarRow>
