@@ -514,17 +514,6 @@ sap.ui.define([
 					default:  iCols = 0; this.globalData.noOfDay = 1; break; 
 				}
 				
-				//Current & Past Days
-				/*for (var i = 7; i <= 13; i++){
-					if (i > (iCols - 7)) {
-						oViewModel.setProperty("/columns/" + i + "/visible",false);	
-					} else{
-						oViewModel.setProperty("/columns/" + i + "/visible",true);	
-					}
-					
-				}*/
-				
-				
 				//Future Days
 				for (var i = 0; i <= 6; i++){
 					if (i > iCols ) {

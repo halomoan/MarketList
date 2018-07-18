@@ -27,7 +27,7 @@
 				<Button icon="sap-icon://nav-back" press="onNavBack"></Button>
 				<Title text="{i18n>pr} {i18n>byUnloading}" titleStyle="H4"/>
 				<ToolbarSpacer></ToolbarSpacer>
-				<Button text="{i18n>showDetail}" press="onShowDetail"></Button>
+				<Button id="showDetail" text="{i18n>hideDetail}" press="onShowDetail"></Button>
 			</toolbarContent>
 			<rows>
 				<PlanningCalendarRow            
@@ -52,37 +52,36 @@
 					</appointments>
 				</PlanningCalendarRow>
 			</rows>
-				<layoutData><l:SplitterLayoutData id="topLayout" size="100%" /></layoutData>
+				<layoutData><l:SplitterLayoutData id="topLayout" size="auto" /></layoutData>
 		</PlanningCalendar>
 		
 		<VBox class="sapUiNoMargin">
 			<Table id="PRItemList"
 					inset="false"
+					items="{mktitem>/results}"
+					busy="{detailView>/listbusy}"
+					busyIndicatorDelay="{detailView>/listbusyindicator}"
 					>
 		<headerToolbar>
 			<Toolbar>
 				<content>
 					<Title text="{i18n>products}" level="H2"/>
 					<ToolbarSpacer />
-					<ToggleButton id="stickyColHdr"
-						text="Sticky Column Headers"
-						press="onToggleStickyColHdr" />
 				</content>
 			</Toolbar>
 		</headerToolbar>
 		<columns>
-			<Column
-			>
+			<Column>
 				<Text text="{i18n>product}" />
 			</Column>
 			<Column
-				width="12em"
 				minScreenWidth="Tablet"
-				demandPopin="true">
+				demandPopin="true"
+				hAlign="End">
 				<Text text="{i18n>priceUnit}" />
 			</Column>
 			<Column
-				width="12em"
+				
 				minScreenWidth="Tablet"
 				demandPopin="true"
 				hAlign="End">
@@ -96,41 +95,49 @@
 			</Column>
 			<Column
 				hAlign="End">
-				<Text text="{i18n>estimated} {i18n>price}" />
+				<Text text="{i18n>estimated} {i18n>cost}" />
 			</Column>
 		</columns>
 		<items>
-		<!--	<ColumnListItem>
+			<ColumnListItem>
 				<cells>
-					<ObjectIdentifier
-						title="{Name}"
-						text="{ProductId}"/>
-					<Text
-						text="{SupplierName}" />
-					<Text
-						text="{Width} x {Depth} x {Height} {DimUnit}" />
-					<ObjectNumber
-						number="{WeightMeasure}"
-						unit="{WeightUnit}"
-						state="{
-							parts: [
-								{path: 'WeightMeasure'},
-								{path: 'WeightUnit'}
-							],
-							formatter: 'sap.m.sample.Table.Formatter.weightState'
-						}" />
+				<ObjectIdentifier
+						title="{mktitem>MaterialID}"
+						text=" {mktitem>MaterialText}"/>
 					<ObjectNumber
 							number="{
-								parts:[{path:'Price'},{path:'CurrencyCode'}],
+								parts:[{path:'mktitem>PriceUnit'},{path:'mktitem>Currency'}],
 								type: 'sap.ui.model.type.Currency',
 								formatOptions: {showMeasure: false}
 							}"
-							unit="{CurrencyCode}" />
+							unit="{mktitem>Currency}" />
+					<ObjectNumber
+							number="{
+								parts:[{path:'mktitem>UnitPrice'},{path:'mktitem>Day0/UOM'}],
+								type: 'sap.ui.model.type.Currency',
+								formatOptions: {showMeasure: false}
+							}"
+							unit="{mktitem>Day0/UOM}" />	
+					<ObjectNumber
+							number="{
+								parts:[{path:'mktitem>Day0/Quantity'},{path:'mktitem>Day0/UOM'}],
+								type: 'sap.ui.model.type.Currency',
+								formatOptions: {showMeasure: false}
+							}"
+							unit="{mktitem>Day0/UOM}" />
+						<ObjectNumber
+							number="{
+								parts:[{path:'mktitem>Day0/Cost'},{path:'mktitem>Currency'}],
+								type: 'sap.ui.model.type.Currency',
+								formatOptions: {showMeasure: false}
+							}"
+							unit="{mktitem>Currency}" />		
+				
 				</cells>
-			</ColumnListItem>-->
+			</ColumnListItem>
 		</items>
 	</Table>
-			<layoutData><l:SplitterLayoutData id="bottomLayout" size="100%"  /></layoutData>
+			<layoutData><l:SplitterLayoutData id="bottomLayout" size="auto"  /></layoutData>
 		</VBox>
 		</l:Splitter>	
 	</Page>

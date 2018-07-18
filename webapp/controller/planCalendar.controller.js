@@ -14,7 +14,9 @@ sap.ui.define([
 			onInit: function() {
 				var oViewData = {
 					calbusy : false,
-					calbusyindicator: 0
+					calbusyindicator: 0,
+					listbusy: false,
+					listbusyindicator: 0
 				};
 				var oViewModel = new JSONModel(oViewData);
 				this.setModel(oViewModel, "detailView");
@@ -23,23 +25,22 @@ sap.ui.define([
 			},
 			_onMasterMatched: function(oEvent){
 				
-				var plantID = oEvent.getParameter("arguments").plantId;
-				var CostCenterID = oEvent.getParameter("arguments").ccId;
-				//var sDate = oEvent.getParameter("arguments").date;
-				var oDate = new Date(oEvent.getParameter("arguments").date);
-				this.refreshSchedule(plantID, CostCenterID, oDate);
+				this.plantID = oEvent.getParameter("arguments").plantId;
+				this.CostCenterID = oEvent.getParameter("arguments").ccId;
+				this.oDate = new Date(oEvent.getParameter("arguments").date);
+				this.refreshSchedule();
 				
 				
 			},
-			refreshSchedule: function(plantID,CostCenterID,oDate) {
+			refreshSchedule: function() {
 				var oModelSchedule = this.getOwnerComponent().getModel();
 				var oViewModel = this.getModel("detailView");
 				var oThis = this;
 				
 				var oFilters = [];
-				oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, oDate.getTime()));
-				oFilters.push( new sap.ui.model.Filter("PlantID", sap.ui.model.FilterOperator.EQ, plantID) );
-				oFilters.push( new sap.ui.model.Filter("CostCenterID", sap.ui.model.FilterOperator.EQ, CostCenterID) );
+				oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, this.oDate.getTime()));
+				oFilters.push( new sap.ui.model.Filter("PlantID", sap.ui.model.FilterOperator.EQ, this.plantID) );
+				oFilters.push( new sap.ui.model.Filter("CostCenterID", sap.ui.model.FilterOperator.EQ, this.CostCenterID) );
 				
 				oViewModel.setProperty("/calbusy",true);
 				oModelSchedule.read("/ScheduleSet", {
@@ -56,6 +57,7 @@ sap.ui.define([
 						}
 						var oJson = new JSONModel();
 						oJson.setData(oJsonData);
+						oJson.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
 						
 						oThis.getView().setModel(oJson,"calModel");
 						oViewModel.setProperty("/calbusy",false);
@@ -84,73 +86,58 @@ sap.ui.define([
 			},
 			onStartDateChange: function(oEvent){
 				var oStartDate = oEvent.getSource().getStartDate();
+				if (oStartDate.getFullYear() !== this.oDate.getFullYear()){
+					this.oDate = oStartDate;
+					this.refreshSchedule();
+				}
 				
 			},
 			handleAppointmentSelect: function (oEvent) {
 				var oAppointment = oEvent.getParameter("appointment");
-					
-				if (oAppointment) {
-					//var sSelected = oAppointment.getSelected() ? "selected" : "deselected";
-					var sPRID = oAppointment.getTitle();
-					sPRID = sPRID.replace( /^\D+/g, ""); 
-					var oList = this.getView().byId("PRItemList");
-					
-					var sObjectPath = this.getModel().createKey("/MarketListHeaderSet", {
-						MarketListHeaderID :  sPRID
-					});
+				var oThis = this;
+				var oButton =  this.byId("showDetail");
+				var oViewModel = this.getModel("detailView");
 				
-					var oItems = new sap.m.ColumnListItem({
-						cells: [
-							new sap.m.ObjectIdentifier({
-								title: "Title example"
-							}),
-							new sap.m.Text({
-								text: "TExt"
-							}),
-							new sap.m.Text({
-								text: "Text2"
-							})
-						]
+				if (oButton.getText() === this.getResourceBundle().getText("hideDetail")){
+				
+					if (oAppointment) {
+						//var sSelected = oAppointment.getSelected() ? "selected" : "deselected";
+						var sPRID = oAppointment.getTitle();
+						sPRID = sPRID.replace( /^\D+/g, ""); 
 						
-					});
-					oList.bindItems({
-						path : sObjectPath,
-						template: oItems
-					});
-				
-					//onsole.log("'" + sPRID + "' " + sSelected + ". \n Selected appointments: " + this.byId("PC1").getSelectedAppointments().length);
-				} else {
-					var aAppointments = oEvent.getParameter("appointments");
-					var sValue = aAppointments.length + " Appointments selected";
-					console.log(sValue);
+						var sObjectPath = this.getModel().createKey("/MarketListHeaderSet", {
+							MarketListHeaderID :  sPRID
+						});
+						
+					
+						var oModel = this.getModel();
+						oViewModel.setProperty("/listbusy",true);
+						oModel.read(sObjectPath, {
+							urlParameters: {
+						      "$expand": "NavDetail"
+							},
+							success: function(rData) {
+								//console.log(rData.NavDetail);
+								var oJson = new JSONModel();
+								oJson.setData(rData.NavDetail);
+								oJson.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
+								oThis.setModel(oJson,"mktitem");
+								oViewModel.setProperty("/listbusy",false);
+							},
+							error: function(oError) {
+								oViewModel.setProperty("/listbusy",false);
+							}
+						});
+					
+						/*
+						//console.log("'" + sPRID + "' " + sSelected + ". \n Selected appointments: " + this.byId("PC1").getSelectedAppointments().length);
+						} else {
+						var aAppointments = oEvent.getParameter("appointments");
+						var sValue = aAppointments.length + " Appointments selected";
+						console.log(sValue);*/
+					}
 				}
 			}
-
-		/**
-		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-		 * (NOT before the first rendering! onInit() is used for that one!).
-		 * @memberOf sap.ui.demo.masterdetail.view.planCalendar
-		 */
-		//	onBeforeRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
-		 * This hook is the same one that SAPUI5 controls get after being rendered.
-		 * @memberOf sap.ui.demo.masterdetail.view.planCalendar
-		 */
-		//	onAfterRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
-		 * @memberOf sap.ui.demo.masterdetail.view.planCalendar
-		 */
-		//	onExit: function() {
-		//
-		//	}
 
 	});
 
