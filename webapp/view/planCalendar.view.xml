@@ -27,7 +27,7 @@
 				<Button icon="sap-icon://nav-back" press="onNavBack"></Button>
 				<Title text="{i18n>pr} {i18n>byUnloading}" titleStyle="H4"/>
 				<ToolbarSpacer></ToolbarSpacer>
-				<Button id="showDetail" text="{i18n>hideDetail}" press="onShowDetail"></Button>
+				<Button id="showDetail" text="{i18n>showDetail}" press="onShowDetail"></Button>
 			</toolbarContent>
 			<rows>
 				<PlanningCalendarRow            
@@ -52,7 +52,7 @@
 					</appointments>
 				</PlanningCalendarRow>
 			</rows>
-				<layoutData><l:SplitterLayoutData id="topLayout" size="auto" /></layoutData>
+				<layoutData><l:SplitterLayoutData id="topLayout" size="100%" /></layoutData>
 		</PlanningCalendar>
 		
 		<VBox class="sapUiNoMargin">
