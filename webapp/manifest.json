@@ -268,7 +268,7 @@
 					"viewId": "detail",
 					"viewLevel": 2
 				},
-				"plancalendar" : {
+				"plancalendar": {
 					"viewName": "planCalendar",
 					"viewId": "plancalendar",
 					"viewLevel": 2
