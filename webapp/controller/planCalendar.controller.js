@@ -21,6 +21,12 @@ sap.ui.define([
 				var oViewModel = new JSONModel(oViewData);
 				this.setModel(oViewModel, "detailView");
 				
+				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+				var oLocal = oStorage.get("localStorage");
+				
+				oViewModel.setProperty("/Plant",oLocal.Plant);
+				oViewModel.setProperty("/CostCenter",oLocal.CostCenter);
+				
 				this.getRouter().getRoute("plancalendar").attachPatternMatched(this._onMasterMatched, this);
 			},
 			_onMasterMatched: function(oEvent){
@@ -92,7 +98,7 @@ sap.ui.define([
 				}
 				
 			},
-			handleAppointmentSelect: function (oEvent) {
+			onAppointmentSelect: function (oEvent) {
 				var oAppointment = oEvent.getParameter("appointment");
 				var oThis = this;
 				var oButton =  this.byId("showDetail");
@@ -137,6 +143,77 @@ sap.ui.define([
 						console.log(sValue);*/
 					}
 				}
+			},
+			handleIntervalSelect: function (oEvent) {
+				var oPC = oEvent.oSource;
+				var oStartDate = oEvent.getParameter("startDate");
+				var oEndDate = oEvent.getParameter("endDate");
+				var oRow = oEvent.getParameter("row");
+				var oModel = this.getView().getModel("calModel");
+				var oData = oModel.getData();
+				var iIndex = -1;
+				var oAppointment = {
+					StartDate: oStartDate,
+					EndDate: oEndDate,
+					Title: "new appointment",
+					Type: "Type09",
+					Tentative: true
+				};
+
+			
+				if (oRow) {
+					iIndex = oPC.indexOfRow(oRow);
+					oData.scheduleheader[iIndex].NavHeaderToItem.push(oAppointment);
+				} else {
+					var aSelectedRows = oPC.getSelectedRows();
+					for (var i = 0; i < aSelectedRows.length; i++) {
+						iIndex = oPC.indexOfRow(aSelectedRows[i]);
+						oData.scheduleheader[iIndex].NavHeaderToItem.push(oAppointment);
+					}
+				}
+
+				oModel.setData(oData);
+
+			},
+			onAppointmentAddWithContext: function(oEvent){
+				var oFrag =  sap.ui.core.Fragment,
+					currentRow,
+					sUnloadingPoint,
+					oSelect,
+					oSelectedItem,
+					oSelectedIntervalStart,
+					oStartDate,
+					oSelectedIntervalEnd,
+					oEndDate,
+					oDateTimePickerStart,
+					oDateTimePickerEnd,
+					oBeginButton;
+
+				this._createDialog();
+
+				currentRow = oEvent.getParameter("row");
+				sUnloadingPoint = currentRow.getTitle();
+				oSelect = this.oNewAppointmentDialog.getContent()[0].getContent()[1];
+				oSelectedItem = oSelect.getItems().filter(function(oItem) { return oItem.getText() === sUnloadingPoint; })[0];
+				oSelect.setSelectedItem(oSelectedItem);
+
+				oSelectedIntervalStart = oEvent.getParameter("startDate");
+				oStartDate = oFrag.byId("myFrag", "startDate");
+				oStartDate.setDateValue(oSelectedIntervalStart);
+
+				oSelectedIntervalEnd = oEvent.getParameter("endDate");
+				oEndDate = oFrag.byId("myFrag", "endDate");
+				oEndDate.setDateValue(oSelectedIntervalEnd);
+
+				oDateTimePickerStart = oFrag.byId("myFrag", "startDate");
+				oDateTimePickerEnd =  oFrag.byId("myFrag", "endDate");
+				oBeginButton = this.oNewAppointmentDialog.getBeginButton();
+
+				oDateTimePickerStart.setValueState("None");
+				oDateTimePickerEnd.setValueState("None");
+
+				this.updateButtonEnabledState(oDateTimePickerStart, oDateTimePickerEnd, oBeginButton);
+				this.oNewAppointmentDialog.open();
 			}
 
 	});

@@ -16,7 +16,8 @@
 			rows="{path: 'calModel>/scheduleheader'}"
 			viewKey="Week"
 			appointmentsVisualization="Filled"
-			appointmentSelect="handleAppointmentSelect"
+			appointmentSelect="onAppointmentSelect"
+			intervalSelect="onAppointmentAddWithContext"
 			showEmptyIntervalHeaders="false"
 			stickyHeader="true"
 			startDateChange = "onStartDateChange"
@@ -25,8 +26,10 @@
 			busyIndicatorDelay="{detailView>/calbusyindicator}">
 			<toolbarContent>
 				<Button icon="sap-icon://nav-back" press="onNavBack"></Button>
-				<Title text="{i18n>pr} {i18n>byUnloading}" titleStyle="H4"/>
+				<Title text="{detailView>/Plant} / {detailView>/CostCenter}" titleStyle="H4"/>
+				
 				<ToolbarSpacer></ToolbarSpacer>
+				<Button id="addButton" icon="sap-icon://add" press="handleAppointmentCreate" tooltip="Add"/>
 				<Button id="showDetail" text="{i18n>showDetail}" press="onShowDetail"></Button>
 			</toolbarContent>
 			<rows>

@@ -5,16 +5,16 @@ sap.ui.define([
 	"use strict";
 
 	return BaseController.extend("sap.ui.demo.masterdetail.controller.homeView", {
-		gotoForm: function() {
+		storeSelection: function(){
+			var oViewModel = this.getModel("detailView");
 			if (!jQuery.sap.storage.isSupported()) {
 				sap.m.MessageBox.error(this.getResourceBundle().getText("msgErrLocalStorage"), {
 					title: "Error",
 					initialFocus: null
 				});
-				return;
+				return false;
 			}
-
-			var oViewModel = this.getModel("detailView");
+			
 			var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 
 			var oLocal = oStorage.get("localStorage");
@@ -28,7 +28,7 @@ sap.ui.define([
 				oLocal.Plant = oPlant.getProperty("text");
 			} else {
 				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectPlant"));
-				return;
+				return false;
 			}
 			var oCostCenter = this.getView().byId("costcenter").getSelectedItem();
 			if (oCostCenter) {
@@ -36,7 +36,7 @@ sap.ui.define([
 				oLocal.CostCenter = oCostCenter.getProperty("text");
 			} else {
 				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectCC"));
-				return;
+				return false;
 			}
 			var oUnloadingPoint = this.getView().byId("unloadingpoint").getSelectedItem();
 			if (oUnloadingPoint) {
@@ -44,15 +44,15 @@ sap.ui.define([
 				oLocal.UnloadingPoint = oUnloadingPoint.getProperty("text");
 			} else {
 				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectUnloadingPoint"));
-				return;
+				return false;
 			}
 
 			var oDate = this.getView().byId("DP1");
 			if (oDate.getValueState() === sap.ui.core.ValueState.Error) {
 				sap.m.MessageToast.show(this.getResourceBundle().getText("msgWrongDateFuture"));
-				return;
+				return false;
 			} else {
-				oLocal.Date = oViewModel.getProperty("/Date").replace(/-/g, "");
+				oLocal.Date = oViewModel.getProperty("/Date");
 			}
 
 			var oUseMobile = this.getView().byId("chkMobile");
@@ -62,26 +62,32 @@ sap.ui.define([
 				oLocal.UseMobile = false;
 			}
 			oStorage.put("localStorage", oLocal);
-
-			if (!sap.ui.Device.system.phone) {
-				if (oLocal.UseMobile) {
-					this.getRouter().navTo("dmaster", {
-						plantId: oPlant.getProperty("key"),
-						ccId: oCostCenter.getProperty("key")
-					}, false);
+			return true;
+		},
+		gotoForm: function() {
+			if (this.storeSelection()){ 
+				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+				var oLocal = oStorage.get("localStorage");
+				
+				if (!sap.ui.Device.system.phone) {
+					if (oLocal.UseMobile) {
+						this.getRouter().navTo("dmaster", {
+							plantId: oLocal.PlantID,
+							ccId: oLocal.CostCenterID 
+						}, false);
+					} else {
+						this.getRouter().navTo("master", {
+							plantId: oLocal.PlantID,
+							ccId: oLocal.CostCenterID 
+						}, false);
+					}
 				} else {
-					this.getRouter().navTo("master", {
-						plantId: oPlant.getProperty("key"),
-						ccId: oCostCenter.getProperty("key")
+					this.getRouter().navTo("mastermobile", {
+						plantId: oLocal.PlantID,
+						ccId: oLocal.CostCenterID 
 					}, false);
 				}
-			} else {
-				this.getRouter().navTo("mastermobile", {
-					plantId: oPlant.getProperty("key"),
-					ccId: oCostCenter.getProperty("key")
-				}, false);
 			}
-
 		},
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
@@ -257,38 +263,17 @@ sap.ui.define([
 
 		},
 		onPlanCalendar: function() {
-			var oViewModel = this.getModel("detailView");
-			
-			var oPlant = this.getView().byId("plant").getSelectedItem();
-			if (oPlant) {
-				var PlantID = oPlant.getProperty("key");
-			} else {
-				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectPlant"));
-				return;
-			}
-			
-			var oCostCenter = this.getView().byId("costcenter").getSelectedItem();
-			if (oCostCenter) {
-				var CostCenterID = oCostCenter.getProperty("key");
-			} else {
-				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectCC"));
-				return;
-			}
-			
-			var oDatePick = this.getView().byId("DP1");
-			if (oDatePick) {
-				//var sDate = oViewModel.getProperty("/Date").replace(/-/g, "");
-				var sDate = oViewModel.getProperty("/Date");
-				//var oDate = new Date(oViewModel.getProperty("/Date"));
-			} else {
-				sap.m.MessageToast.show(this.getResourceBundle().getText("msgWrongDateFuture"));
-				return;
-			}
-			this.getRouter().navTo("plancalendar", {
-				plantId: PlantID,
-				ccId: CostCenterID,
-				date : sDate
-			}, false);
+		
+			if (this.storeSelection()){ 
+				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+				var oLocal = oStorage.get("localStorage");
+				
+				this.getRouter().navTo("plancalendar", {
+					plantId: oLocal.PlantID,
+					ccId: oLocal.CostCenterID,
+					date : oLocal.Date
+				}, false);
+			}	
 		}
 	});
 
