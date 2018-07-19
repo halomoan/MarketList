@@ -424,10 +424,18 @@ sap.ui.define([
 				    
 				});
 				
+				var oSort = this.byId("sort");
+				var oSorter;
+				
+				if(oSort.getSelectedItem()){
+					oSorter = new sap.ui.model.Sorter(oSort.getSelectedItem().getKey(), true);
+				}
+				
 				oList.bindItems({
 					path : sObjectPath + "/Materials",
 					template: oItems,
-    				filters: new Filter(oFilters,true)
+    				filters: new Filter(oFilters,true),
+    				sorter: oSorter
 				});
 				
 			},
