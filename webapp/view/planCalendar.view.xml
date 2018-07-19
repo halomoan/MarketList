@@ -29,7 +29,7 @@
 				<Title text="{detailView>/Plant} / {detailView>/CostCenter}" titleStyle="H4"/>
 				
 				<ToolbarSpacer></ToolbarSpacer>
-				<Button id="addButton" icon="sap-icon://add" press="handleAppointmentCreate" tooltip="Add"/>
+				<Button id="addButton" icon="sap-icon://add" press="onAddPR" tooltip="Add"/>
 				<Button id="showDetail" text="{i18n>showDetail}" press="onShowDetail"></Button>
 			</toolbarContent>
 			<rows>

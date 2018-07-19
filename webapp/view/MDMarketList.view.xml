@@ -34,8 +34,28 @@
 				</uxap:headerTitle>	
 				<uxap:headerContent>
 					<layout:VerticalLayout>
-						<Label text="{i18n>totalMaterial} : {detailView>/totalMaterials}"/>
-						<Label text="{i18n>totalPrice} : {detailView>/totalPrices}"/>
+						<layout:HorizontalLayout class="sapUiNoMargin">
+						<Label text="{i18n>totalMaterial} :"/>
+							<ObjectNumber
+								class="sapUiSmallMarginBegin sapUiLargeMarginEnd"
+								number="{
+										parts:[{path:'detailView>/totalMaterials'},{path:'detailView>/UOM'}],
+										formatOptions: {showMeasure: false}
+									}"
+								unit="{detailView>/UOM}"
+								state="Success" />
+					
+						<Label text="{i18n>totalCost} :"/>
+							<ObjectNumber
+								class="sapUiSmallMarginBegin"
+								number="{
+										parts:[{path:'detailView>/totalPrices'},{path:'detailView>/Currency'}],
+									
+										formatOptions: {showMeasure: false}
+									}"
+								unit="{detailView>/Currency}"
+								state="Error" />
+						</layout:HorizontalLayout>
 					</layout:VerticalLayout>
 					
 				</uxap:headerContent>

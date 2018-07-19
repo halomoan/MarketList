@@ -1,0 +1,33 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<Dialog title="{i18n>create} {i18n>pr}" draggable="true">
+		<content>
+			<f:SimpleForm editable="false" layout="ResponsiveGridLayout">
+			<Label text="{i18n>select} {i18n>unloadingPoint}" labelFor="unloadingPoint"/>
+			<Select
+					id="selectUPoint"
+					forceSelection="false"
+					selectedKey="{calModel>/scheduleheader/0/Name}"
+					items="{
+						path: 'calModel>/scheduleheader',
+						sorter: { path: 'Name' }
+					}">
+					<core:Item key="{calModel>Name}" text="{calModel>Name}" />
+				</Select>
+			<Label text="{i18n>deliveryDate}" labelFor="startDate"/>
+			<DatePicker
+				id="startDate"
+				change="onDateChange"
+				value="{detailView>/DeliveryDate}" valueFormat="yyyy-MM-dd" displayFormat="long"
+				placeholder="Enter Date ..."
+				tooltip="{i18n>futureDate}"
+				class="sapUiSmallMarginBottom"/>
+			</f:SimpleForm>	
+		</content>	
+		<beginButton>
+			<Button text="{i18n>create}" press="onCreatePR" type="Accept"/>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>cancel}" press="onCloseCreate" type="Reject"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

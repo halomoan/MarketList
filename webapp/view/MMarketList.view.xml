@@ -33,7 +33,7 @@
 				<uxap:headerContent>
 					<layout:VerticalLayout>
 						<Label text="{i18n>totalMaterial} : {detailView>/totalMaterials}"/>
-						<Label text="{i18n>totalPrice} : {detailView>/totalPrices}"/>
+						<Label text="{i18n>totalCost} : {detailView>/totalPrices}"/>
 					</layout:VerticalLayout>
 					
 				</uxap:headerContent>

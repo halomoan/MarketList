@@ -12,11 +12,15 @@ sap.ui.define([
 		 * @memberOf sap.ui.demo.masterdetail.view.planCalendar
 		 */
 			onInit: function() {
+				var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({
+					pattern: "YYYY-MM-dd"
+				});
 				var oViewData = {
 					calbusy : false,
 					calbusyindicator: 0,
 					listbusy: false,
-					listbusyindicator: 0
+					listbusyindicator: 0,
+					Date: dateFormat.format(new Date((new Date()).getTime() + (24 * 60 * 60 * 1000)))
 				};
 				var oViewModel = new JSONModel(oViewData);
 				this.setModel(oViewModel, "detailView");
@@ -175,45 +179,52 @@ sap.ui.define([
 				oModel.setData(oData);
 
 			},
-			onAppointmentAddWithContext: function(oEvent){
-				var oFrag =  sap.ui.core.Fragment,
-					currentRow,
-					sUnloadingPoint,
-					oSelect,
-					oSelectedItem,
-					oSelectedIntervalStart,
-					oStartDate,
-					oSelectedIntervalEnd,
-					oEndDate,
-					oDateTimePickerStart,
-					oDateTimePickerEnd,
-					oBeginButton;
+			onAddPR: function(){
+				if (!this._oViewCreatePR) {
+					this._oViewCreatePR = sap.ui.xmlfragment("addPR","sap.ui.demo.masterdetail.view.calCreatePR", this);
+					this.getView().addDependent(this._oViewCreatePR);
+					// forward compact/cozy style into Dialog
+					this._oViewCreatePR.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+				}
+				this._oViewCreatePR.open();
+			},
+			onDateChange: function(oEvent) {
+				var oDP = oEvent.oSource;
+				var bValid = oEvent.getParameter("valid");
+				var dValue = new Date(oEvent.getParameter("value"));
+				var today = new Date();
+	
+				if (bValid && today.getTime() < dValue.getTime()) {
+					oDP.setValueState(sap.ui.core.ValueState.None);
+				} else {
+					oDP.setValueState(sap.ui.core.ValueState.Error);
+				}
+			},
+			onCreatePR: function(){
+				var oFrag =  sap.ui.core.Fragment;
+				var oThis = this;
+				if (oFrag.byId("addPR", "startDate").getValueState() !== sap.ui.core.ValueState.Error){
+						var oStartDate = oFrag.byId("addPR", "startDate").getDateValue();
+						var oNewPR = {
+							StartDate: new Date(oStartDate.setHours(0,0,0)),
+							EndDate: new Date(oStartDate.setHours(23,59,59)),
+							Title: "- None -",
+							Type: "Type05",
+							Info: "New PR"
+						};
+						var oModel = oThis.getView().getModel("calModel");
+						var sPath = "/scheduleheader/" + oFrag.byId("addPR", "selectUPoint").getSelectedIndex() + "/NavHeaderToItem";
+						
+						var oPRList = oModel.getProperty(sPath);
+						oPRList.push(oNewPR);
 
-				this._createDialog();
-
-				currentRow = oEvent.getParameter("row");
-				sUnloadingPoint = currentRow.getTitle();
-				oSelect = this.oNewAppointmentDialog.getContent()[0].getContent()[1];
-				oSelectedItem = oSelect.getItems().filter(function(oItem) { return oItem.getText() === sUnloadingPoint; })[0];
-				oSelect.setSelectedItem(oSelectedItem);
-
-				oSelectedIntervalStart = oEvent.getParameter("startDate");
-				oStartDate = oFrag.byId("myFrag", "startDate");
-				oStartDate.setDateValue(oSelectedIntervalStart);
-
-				oSelectedIntervalEnd = oEvent.getParameter("endDate");
-				oEndDate = oFrag.byId("myFrag", "endDate");
-				oEndDate.setDateValue(oSelectedIntervalEnd);
-
-				oDateTimePickerStart = oFrag.byId("myFrag", "startDate");
-				oDateTimePickerEnd =  oFrag.byId("myFrag", "endDate");
-				oBeginButton = this.oNewAppointmentDialog.getBeginButton();
-
-				oDateTimePickerStart.setValueState("None");
-				oDateTimePickerEnd.setValueState("None");
-
-				this.updateButtonEnabledState(oDateTimePickerStart, oDateTimePickerEnd, oBeginButton);
-				this.oNewAppointmentDialog.open();
+						oModel.setProperty(sPath, oPRList);
+						oThis._oViewCreatePR.close();
+				}
+				
+			},
+			onCloseCreate: function(){
+				this._oViewCreatePR.close();
 			}
 
 	});
