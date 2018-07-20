@@ -30,10 +30,10 @@ sap.ui.define([
 				this.setModel(oViewModel, "detailView");
 				this.setDeviceModel();
 				
-				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-				var oLocalData = oStorage.get("localStorage");
-				if(oLocalData.UseMobile) {
-					this.getRouter().getRoute("dmaster").attachPatternMatched(this._onMasterMatched, this);
+				//var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+				//var oLocalData = oStorage.get("localStorage");
+				if(!sap.ui.Device.system.phone) {
+					this.getRouter().getRoute("dsmaster").attachPatternMatched(this._onMasterMatched, this);
 				}else{
 					this.getRouter().getRoute("mastermobile").attachPatternMatched(this._onMasterMatched, this);
 				}
@@ -46,6 +46,8 @@ sap.ui.define([
 			},
 			_onMetadataLoaded: function(){
 				//var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "YYYYMMdd" }); 
+				
+			
 				var oViewModel = this.getModel("detailView");
 				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 				var oLocalData = oStorage.get("localStorage");
@@ -77,8 +79,8 @@ sap.ui.define([
 				oFilters.push( new sap.ui.model.Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, oLocalData.UnloadingPoint) );
 				//oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, dateFormat.format(new Date( (new Date()).getTime() + (24 * 60 * 60 * 1000)))));
 				oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, oLocalData.Date.replace(/-/g, "")));
+				/*
 				sap.ui.core.BusyIndicator.show();
-				
 				oModel.read("/MarketListHeaderSet", {
 				    urlParameters: {
 				        "$expand": "NavDetail"
@@ -122,7 +124,7 @@ sap.ui.define([
 			            sap.ui.core.BusyIndicator.hide();
 			        }
 				});
-				
+				*/
 			
 			},
 			
@@ -174,8 +176,13 @@ sap.ui.define([
 				
 				if (oData ) {
 					
-				
+					var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+					var oLocal = oStorage.get("localStorage");
+						
 					var tableRows = this._oJsonModel.getData().rows;
+					if (!tableRows){
+						tableRows = [];
+					}
 					
 					var bNew = true,bAdded = false;
 					for (var i = 0; i < oData.data.length; i++ ){
@@ -194,32 +201,32 @@ sap.ui.define([
 						
 						if (bNew) {
 				
-							var oTableH = this.getView().getModel("TableH").getData();
-							//this.globalData.deliveryDate = oTableH.Date0;
+							//var oTableH = this.getView().getModel("TableH").getData();
 							
-							oData.data[i].Day0.Date = oTableH.Date0;
-							oData.data[i].Day1.Date = oTableH.Date1;
+							console.log(oLocal.Create);
+							oData.data[i].Day0.Date = oLocal.Create.DeliveryDate.substring(0,10);
+							/*oData.data[i].Day1.Date = oTableH.Date1;
 							oData.data[i].Day2.Date = oTableH.Date2;
 							oData.data[i].Day3.Date = oTableH.Date3;
 							oData.data[i].Day4.Date = oTableH.Date4;
 							oData.data[i].Day5.Date = oTableH.Date5;
-							oData.data[i].Day6.Date = oTableH.Date6;
+							oData.data[i].Day6.Date = oTableH.Date6;*/
 							
 							oData.data[i].Day0.PRID = "00000";
-							oData.data[i].Day1.PRID = "00000";
+							/*oData.data[i].Day1.PRID = "00000";
 							oData.data[i].Day2.PRID = "00000";
 							oData.data[i].Day3.PRID = "00000";
 							oData.data[i].Day4.PRID = "00000";
 							oData.data[i].Day5.PRID = "00000";
-							oData.data[i].Day6.PRID = "00000";
+							oData.data[i].Day6.PRID = "00000";*/
 							
 							oData.data[i].Day0.Enabled = true;
-							oData.data[i].Day1.Enabled = true;
+							/*oData.data[i].Day1.Enabled = true;
 							oData.data[i].Day2.Enabled = true;
 							oData.data[i].Day3.Enabled = true;
 							oData.data[i].Day4.Enabled = true;
 							oData.data[i].Day5.Enabled = true;
-							oData.data[i].Day6.Enabled = true;
+							oData.data[i].Day6.Enabled = true;*/
 							
 							oData.data[i].MarketListHeaderID =  this.globalData.MarketListID;
 							oData.data[i].MarketListDetailID = "MKD0001";

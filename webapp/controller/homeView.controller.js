@@ -68,9 +68,12 @@ sap.ui.define([
 			if (this.storeSelection()){ 
 				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 				var oLocal = oStorage.get("localStorage");
+				oLocal.SourcePage = null;
+				oStorage.put("localStorage", oLocal);
 				
 				if (!sap.ui.Device.system.phone) {
 					if (oLocal.UseMobile) {
+						
 						this.getRouter().navTo("dmaster", {
 							plantId: oLocal.PlantID,
 							ccId: oLocal.CostCenterID 

@@ -202,8 +202,23 @@ sap.ui.define([
 			},
 			onCreatePR: function(){
 				var oFrag =  sap.ui.core.Fragment;
-				var oThis = this;
+				//var oThis = this;
 				if (oFrag.byId("addPR", "startDate").getValueState() !== sap.ui.core.ValueState.Error){
+					
+						this._oViewCreatePR.close();
+						var oStartDate = oFrag.byId("addPR", "startDate").getDateValue();
+						var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+						var oLocal = oStorage.get("localStorage");
+						oLocal.SourcePage = "planCal";
+						oLocal.mode = "Create";
+						oLocal.Create = {};
+						oLocal.Create.Single = true;
+						oLocal.Create.DeliveryDate = oStartDate;
+						oStorage.put("localStorage", oLocal);
+						
+						this.getRouter().navTo("dsmaster", null, false);
+						/*
+						
 						var oStartDate = oFrag.byId("addPR", "startDate").getDateValue();
 						var oNewPR = {
 							StartDate: new Date(oStartDate.setHours(0,0,0)),
@@ -212,14 +227,16 @@ sap.ui.define([
 							Type: "Type05",
 							Info: "New PR"
 						};
-						var oModel = oThis.getView().getModel("calModel");
+						var oModel = this.getView().getModel("calModel");
 						var sPath = "/scheduleheader/" + oFrag.byId("addPR", "selectUPoint").getSelectedIndex() + "/NavHeaderToItem";
 						
 						var oPRList = oModel.getProperty(sPath);
 						oPRList.push(oNewPR);
 
 						oModel.setProperty(sPath, oPRList);
-						oThis._oViewCreatePR.close();
+						
+						this._oViewCreatePR.close();
+						*/
 				}
 				
 			},

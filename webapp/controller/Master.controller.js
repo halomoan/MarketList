@@ -71,6 +71,7 @@ sap.ui.define([
 						this.getRouter().getRoute("dmaster").attachPatternMatched(this._onMasterMatched, this);
 					} else {
 						this.getRouter().getRoute("master").attachPatternMatched(this._onMasterMatched, this);
+						this.getRouter().getRoute("dsmaster").attachPatternMatched(this._onMasterMatched, this);
 					}
 				} else {
 					//this.getRouter().getRoute("mastermobile").attachPatternMatched(this._onMasterMatched, this);
@@ -284,10 +285,18 @@ sap.ui.define([
 			 * @private
 			 */
 			_onMasterMatched :  function(oEvent) {
-				var plantId =  oEvent.getParameter("arguments").plantId;
+				/*var plantId =  oEvent.getParameter("arguments").plantId;
 				var costcenterId =  oEvent.getParameter("arguments").ccId;
+				*/
+
 				
-			
+				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+				var oLocalData = oStorage.get("localStorage");
+				
+				var plantId = oLocalData.PlantID;
+				var costcenterId = oLocalData.CostCenterID;
+				
+				
 				if (this.PlantID !== plantId ) {
 					var oList = this.getView().byId("matgrouplist");
 					var oBinding = oList.getBinding("items");
@@ -315,25 +324,35 @@ sap.ui.define([
 				var sObjectId = oItem.getBindingContext().getProperty("MaterialGroupID");
 				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 				var oLocalData = oStorage.get("localStorage");
-			
+				
 				if (sObjectId === "TEMPLATE") {
 					if (!sap.ui.Device.system.phone) {
-						if(oLocalData.UseMobile) {
-							this.getRouter().navTo("subdmaster", {plantId: this.PlantID, groupId : sObjectId,ccId: this.CostCenterID }, false);
-						} else{
-							this.getRouter().navTo("submaster", {plantId: this.PlantID, groupId : sObjectId,ccId: this.CostCenterID }, false);
-						}
+							if(oLocalData.SourcePage === "planCal") {
+								this.getRouter().navTo("subdsmaster", {groupId : sObjectId,template: "X" }, false);
+							} else{
+								if(oLocalData.UseMobile) {
+									this.getRouter().navTo("subdmaster", {groupId : sObjectId,template: "X" }, false);
+								} else {
+								this.getRouter().navTo("submaster", {groupId : sObjectId,template: "X" }, false);
+								}
+							}
 					} else {
 						//this.getRouter().navTo("submobile", {plantId: this.PlantID, groupId : sObjectId,ccId: this.CostCenterID }, false);
 						this.getRouter().navTo("submasterpage", {plantId: this.PlantID, groupId : sObjectId,ccId: this.CostCenterID }, false);
 					}
 				} else {
 					if (!sap.ui.Device.system.phone) {
-						if(oLocalData.UseMobile) {
-							this.getRouter().navTo("subdmaster", {plantId: this.PlantID, groupId : sObjectId }, false);
-						} else{
-							this.getRouter().navTo("submaster", {plantId: this.PlantID, groupId : sObjectId}, false);
-						}	
+					
+							if(oLocalData.SourcePage === "planCal") {
+								this.getRouter().navTo("subdsmaster", {groupId : sObjectId}, false);
+							} else{
+									if(oLocalData.UseMobile) {
+										this.getRouter().navTo("subdmaster", {groupId : sObjectId }, false);
+									} else {
+										this.getRouter().navTo("submaster", {groupId : sObjectId}, false);
+									}
+								//this.getRouter().navTo("submaster", {plantId: this.PlantID, groupId : sObjectId}, false);
+							}
 						
 					}else{
 						//this.getRouter().navTo("submobile", {plantId: this.PlantID, groupId : sObjectId}, false);
@@ -343,11 +362,6 @@ sap.ui.define([
 			
 			},
 
-			/**
-			 * Sets the item count on the master list header
-			 * @param {int} iTotalItems the total number of items in the list
-			 * @private
-			 */
 			_updateListItemCount : function (iTotalItems) {
 				var sTitle;
 				// only update the counter if the length is final

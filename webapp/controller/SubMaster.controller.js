@@ -71,6 +71,7 @@ sap.ui.define([
 						this.getRouter().getRoute("subdmaster").attachPatternMatched(this._onMasterMatched, this);
 					} else {
 						this.getRouter().getRoute("submaster").attachPatternMatched(this._onMasterMatched, this);
+						this.getRouter().getRoute("subdsmaster").attachPatternMatched(this._onMasterMatched, this);
 					}
 				} else{
 					//this.getRouter().getRoute("submobile").attachPatternMatched(this._onMasterMatched, this);
@@ -109,10 +110,6 @@ sap.ui.define([
 			 */
 			onSearch : function (oEvent) {
 				if (oEvent.getParameters().refreshButtonPressed) {
-					// Search field's 'refresh' button has been pressed.
-					// This is visible if you select any master list item.
-					// In this case no new search is triggered, we only
-					// refresh the list binding.
 					this.onRefresh();
 					return;
 				}
@@ -142,13 +139,13 @@ sap.ui.define([
 
 			},
 
-			/**
-			 * Event handler for refresh event. Keeps filter, sort
-			 * and group settings and refreshes the list binding.
-			 * @public
-			 */
+	
 			onRefresh : function () {
-				this._oList.getBinding("items").refresh();
+				try {
+					this._oList.getBinding("items").refresh();
+				} catch(err){
+					return;
+				}
 			},
 
 			/**
@@ -175,13 +172,7 @@ sap.ui.define([
 				this._applyGroupSort(aSorters);
 			},
 
-			/**
-			 * Event handler for the filter button to open the ViewSettingsDialog.
-			 * which is used to add or remove filters to the master list. This
-			 * handler method is also called when the filter bar is pressed,
-			 * which is added to the beginning of the master list when a filter is applied.
-			 * @public
-			 */
+		
 			onOpenViewSettings : function () {
 				if (!this._oViewSettingsDialog) {
 					this._oViewSettingsDialog = sap.ui.xmlfragment("sap.ui.demo.masterdetail.view.ViewSettingsDialog", this);
@@ -192,15 +183,7 @@ sap.ui.define([
 				this._oViewSettingsDialog.open();
 			},
 
-			/**
-			 * Event handler called when ViewSettingsDialog has been confirmed, i.e.
-			 * has been closed with 'OK'. In the case, the currently chosen filters
-			 * are applied to the master list, which can also mean that the currently
-			 * applied filters are removed from the master list, in case the filter
-			 * settings are removed in the ViewSettingsDialog.
-			 * @param {sap.ui.base.Event} oEvent the confirm event
-			 * @public
-			 */
+		
 			onConfirmViewSettingsDialog : function (oEvent) {
 				var aFilterItems = oEvent.getParameters().filterItems,
 					aFilters = [],
@@ -227,33 +210,17 @@ sap.ui.define([
 				this._applyFilterSearch();
 			},
 
-			/**
-			 * Event handler for the list selection event
-			 * @param {sap.ui.base.Event} oEvent the list selectionChange event
-			 * @public
-			 */
+		
 			onSelectionChange : function (oEvent) {
 				
 				//this._showDetail(oEvent.getParameter("listItem") || oEvent.getSource());
 			},
 
-			/**
-			 * Event handler for the bypassed event, which is fired when no routing pattern matched.
-			 * If there was an object selected in the master list, that selection is removed.
-			 * @public
-			 */
+			
 			onBypassed : function () {
 				this._oList.removeSelections(true);
 			},
 
-			/**
-			 * Used to create GroupHeaders with non-capitalized caption.
-			 * These headers are inserted into the master list to
-			 * group the master list's items.
-			 * @param {Object} oGroup group whose text is to be displayed
-			 * @public
-			 * @returns {sap.m.GroupHeaderListItem} group header with non-capitalized caption.
-			 */
 			createGroupHeader : function (oGroup) {
 				return new GroupHeaderListItem({
 					title : oGroup.text,
@@ -261,11 +228,7 @@ sap.ui.define([
 				});
 			},
 
-			/**
-			 * Event handler for navigating back.
-			 * We navigate back in the browser historz
-			 * @public
-			 */
+		
 			onNavBack : function() {
 				history.go(-1);
 				//this.getRouter().navTo('master',false);
@@ -371,11 +334,12 @@ sap.ui.define([
 			 * @private
 			 */
 			_onMasterMatched :  function(oEvent) {
-				var objectId =  oEvent.getParameter("arguments").groupId;
+				/*var objectId =  oEvent.getParameter("arguments").groupId;
 				var plantId =  oEvent.getParameter("arguments").plantId;
 				var costcenterId = oEvent.getParameter("arguments").ccId ;
 				
-				/*this.getModel().metadataLoaded().then( function() {
+				
+				this.getModel().metadataLoaded().then( function() {
 					var sObjectPath = this.getModel().createKey("MaterialGroups", {
 						MaterialGroupID :  objectId
 					});
@@ -383,6 +347,15 @@ sap.ui.define([
 				
 				}.bind(this));
 				*/
+				
+				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+				var oLocalData = oStorage.get("localStorage");
+				
+				var objectId =  oEvent.getParameter("arguments").groupId;
+				var template =  oEvent.getParameter("arguments").template;
+				var plantId =  oLocalData.PlantID;
+				var costcenterId = oLocalData.CostCenterID;
+				
 				var sObjectPath = this.getModel().createKey("/MaterialGroups", {
 						MaterialGroupID :  objectId
 				});
@@ -393,17 +366,15 @@ sap.ui.define([
 				this.PlantID = plantId;
 				this.CostCenterID = costcenterId;
 				
-				
 				var oFilters = [];
 
 				
 				if (plantId){
 				    oFilters.push( new Filter("PlantID", sap.ui.model.FilterOperator.EQ, plantId) );
-				    if (costcenterId) {
+				    if (template === "X") {
 				    	oFilters.push( new Filter("CostCenterID", sap.ui.model.FilterOperator.EQ, "'" + costcenterId + "'") );
 				    }
 				}
-				
 				
 				var oItems = new sap.m.ObjectListItem({
 					title : "{MaterialText}",

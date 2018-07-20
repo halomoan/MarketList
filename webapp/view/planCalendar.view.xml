@@ -40,7 +40,7 @@
 					appointments="{path : 'calModel>NavHeaderToItem', templateShareable: 'true'}"
 					>
 					<customData>
-						<core:CustomData key="emp-name" value="{calModel>name}" writeToDom="true"/>
+						<core:CustomData key="emp-name" value="{calModel>Name}" writeToDom="false"/>
 					</customData>
 					<appointments>
 						<unified:CalendarAppointment

@@ -133,6 +133,14 @@
 					]
 				},
 				{
+					"pattern": "dsmaster",
+					"name": "dsmaster",
+					"target": [
+						"dsmobile",
+						"master"
+					]
+				},
+				{
 					"pattern": "mastermobile/plantId/:plantId:/ccId/:ccId:",
 					"name": "mastermobile",
 					"target": [
@@ -168,7 +176,7 @@
 					]
 				},
 				{
-					"pattern": "submaster/plantId/:plantId:/groupId/:groupId:",
+					"pattern": "submaster/groupId/{groupId}/template/:template:",
 					"name": "submaster",
 					"target": [
 						"desktop",
@@ -176,26 +184,26 @@
 					]
 				},
 				{
-					"pattern": "subdmaster/plantId/:plantId:/groupId/:groupId:",
+					"pattern": "subdmaster/groupId/{groupId}/template/:template:",
 					"name": "subdmaster",
 					"target": [
 						"dmobile",
 						"submaster"
 					]
 				},
+					{
+					"pattern": "subdsmaster/groupId/{groupId}/template/:template:",
+					"name": "subdsmaster",
+					"target": [
+						"dsmobile",
+						"submaster"
+					]
+				},
 				{
-					"pattern": "submaster/plantId/:plantId:/groupId/:groupId:/ccId/:ccId:",
+					"pattern": "submaster/groupId/{groupId}/template/:template:",
 					"name": "submaster",
 					"target": [
 						"desktop",
-						"submaster"
-					]
-				},
-				{
-					"pattern": "subdmaster/plantId/:plantId:/groupId/:groupId:/ccId/:ccId:",
-					"name": "subdmaster",
-					"target": [
-						"dmobile",
 						"submaster"
 					]
 				},
@@ -242,6 +250,14 @@
 					"viewName": "MDMarketList",
 					"viewLevel": 1,
 					"viewId": "dmobile",
+					"controlId": "idAppControl",
+					"controlAggregation": "detailPages"
+				},
+				"dsmobile": {
+					"parent": "splitapp",
+					"viewName": "MDSMarketList",
+					"viewLevel": 1,
+					"viewId": "dsmobile",
 					"controlId": "idAppControl",
 					"controlAggregation": "detailPages"
 				},

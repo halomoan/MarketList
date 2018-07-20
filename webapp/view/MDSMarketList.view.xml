@@ -1,0 +1,110 @@
+<core:View 
+	xmlns:core="sap.ui.core" 
+	xmlns="sap.m"  
+	xmlns:uxap="sap.uxap" 
+	xmlns:semantic="sap.m.semantic"
+	xmlns:layout="sap.ui.layout"
+	controllerName="sap.ui.demo.masterdetail.controller.MDSMarketList" 
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<semantic:DetailPage title="M A R K E T L I S T" showHeader="true" enableScrolling="true">
+		<semantic:content>
+			<uxap:ObjectPageLayout
+					enableLazyLoading="true"
+					useIconTabBar="true"
+					showTitleInHeaderContent="true"
+					navigate="tabChanged">
+				<uxap:headerTitle>
+				<uxap:ObjectPageDynamicHeaderTitle primaryArea="Left">
+					<uxap:expandedHeading>
+						<Title text="{detailView>/Plant}" wrapping="true" class="sapUiTinyMarginTop"/>
+					</uxap:expandedHeading>
+					<uxap:snappedHeading>
+						<Title text="{detailView>/Plant}" wrapping="true" class="sapUiTinyMarginTop"/>
+					</uxap:snappedHeading>
+					<uxap:expandedContent>
+						<Text text="{detailView>/CostCenterID} - {detailView>/CostCenterText}"/>
+					</uxap:expandedContent>
+					<uxap:snappedContent>
+						<Text text="{detailView>/CostCenterID} - {detailView>/CostCenterText}"/>
+					</uxap:snappedContent>
+					<uxap:actions>
+						<uxap:ObjectPageHeaderActionButton type="Transparent" id="toggleTemplate" text="Delivery Date: {path: 'detailView>/deliveryDate', formatter: '.formatter.dayFormat'}, {detailView>/deliveryDate}" hideText="false" hideIcon="true" press="headerInfoPopover"/>
+					</uxap:actions>	
+				</uxap:ObjectPageDynamicHeaderTitle>	
+				</uxap:headerTitle>	
+				<uxap:headerContent>
+					<layout:VerticalLayout>
+						<layout:HorizontalLayout class="sapUiNoMargin">
+						<Label text="{i18n>totalMaterial} :"/>
+							<ObjectNumber
+								class="sapUiSmallMarginBegin sapUiLargeMarginEnd"
+								number="{
+										parts:[{path:'detailView>/totalMaterials'},{path:'detailView>/UOM'}],
+										formatOptions: {showMeasure: false}
+									}"
+								unit="{detailView>/UOM}"
+								state="Success" />
+					
+						<Label text="{i18n>totalCost} :"/>
+							<ObjectNumber
+								class="sapUiSmallMarginBegin"
+								number="{
+										parts:[{path:'detailView>/totalPrices'},{path:'detailView>/Currency'}],
+									
+										formatOptions: {showMeasure: false}
+									}"
+								unit="{detailView>/Currency}"
+								state="Error" />
+						</layout:HorizontalLayout>
+					</layout:VerticalLayout>
+					
+				</uxap:headerContent>
+				<uxap:sections>
+					<uxap:ObjectPageSection id="Day0" title="Delivery Date: {path: 'TableH>/Date0', formatter: '.formatter.dayFormat'}, {TableH>/Date0}">
+					<uxap:subSections>
+						<uxap:ObjectPageSubSection title="">
+						<uxap:blocks>
+							<List id="LDay0" mode="Delete" items="{path: 'mktlist>/rows'}" delete="deleteRow">
+									<CustomListItem>
+										<HBox>
+											<core:Icon size="2rem" src="sap-icon://add-favorite" color="{=${mktlist>InTemplate} ? 'Critical' : 'Neutral'}" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" press="toggleTemplate" tooltip="{=${mktlist>InTemplate} ? 'Part Of Template' : ''}"/>
+											<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
+													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]" design="{= parseFloat(${mktlist>Day0/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
+													<Label text="Price Unit: =  {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
+													<Label text="Unit Price: =  {= parseFloat(${mktlist>PriceUnit})}  {= ${mktlist>Day0/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day0/UOM} : ${mktlist>Day0/UOM} + ' *' }"/>
+													<HBox>
+													<Input valueState="{= ${mktlist>Day0/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day0/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" enabled="{mktlist>Day0/Enabled}" textAlign="End" description="{mktlist>Day0/UOM}" fieldWidth="70%" change="inputChange"/>
+													<Button icon="sap-icon://request"  press="addCommentPress">
+														<customData>
+			    											<core:CustomData key="myId" value="{mktlist>MaterialID}_00" writeToDom="false"/>
+			    											<core:CustomData key="myText" value="{mktlist>MaterialText}" writeToDom="false"/>
+			    											<core:CustomData key="myComment" value="{mktlist>Day0/Comment}" writeToDom="false"/>
+			    											<core:CustomData key="Enabled" value="{mktlist>Day0/Enabled}" writeToDom="false"/>
+														</customData>
+													</Button>
+													
+													</HBox>
+											</VBox>
+										</HBox>
+									</CustomListItem>
+								</List>
+						</uxap:blocks>
+						</uxap:ObjectPageSubSection>
+					</uxap:subSections>
+				</uxap:ObjectPageSection>		
+			
+				</uxap:sections>
+			</uxap:ObjectPageLayout>	
+		</semantic:content>	
+		
+		
+		<semantic:negativeAction>
+	    <semantic:NegativeAction text="{i18n>close}" press="onClose"/>
+	    </semantic:negativeAction>
+		
+		<semantic:positiveAction>
+			<semantic:PositiveAction text="{i18n>submit}" press="onSubmit"/>
+		</semantic:positiveAction>
+		
+	</semantic:DetailPage>	
+</core:View>
