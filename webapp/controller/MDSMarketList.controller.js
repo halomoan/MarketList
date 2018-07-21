@@ -8,6 +8,7 @@ sap.ui.define([
 	return BaseController.extend("sap.ui.demo.masterdetail.controller.MMarketList", {
 			formatter: formatter,
 	
+			_oJsonModel : new JSONModel(),
 			onInit: function() {
 				sap.ui.getCore().getEventBus().subscribe("marketlist","addMaterial",this._addMaterial,this);
 				var oViewData = {
@@ -24,19 +25,23 @@ sap.ui.define([
 			    	dayId : 0,
 			    	templtChanged : false
 				};
-				this._oJsonModel = null;
-				
+			
 				var oViewModel = new JSONModel(oViewData);
 				this.setModel(oViewModel, "detailView");
 				this.setDeviceModel();
 				
-				//var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-				//var oLocalData = oStorage.get("localStorage");
 				if(!sap.ui.Device.system.phone) {
 					this.getRouter().getRoute("dsmaster").attachPatternMatched(this._onMasterMatched, this);
 				}else{
 					this.getRouter().getRoute("mastermobile").attachPatternMatched(this._onMasterMatched, this);
 				}
+				
+				var binding =  new sap.ui.model.Binding(this._oJsonModel, "/rows", this._oJsonModel.getContext("/rows"));
+							binding.attachChange(function() {
+									this._onTableChanged(this._oJsonModel);
+									
+							}.bind(this));
+					    
 				
 			},
 			_onMasterMatched :  function() {
@@ -45,23 +50,23 @@ sap.ui.define([
 				}
 			},
 			_onMetadataLoaded: function(){
-				//var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "YYYYMMdd" }); 
-				
-			
+		
 				var oViewModel = this.getModel("detailView");
 				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 				var oLocalData = oStorage.get("localStorage");
-				var oModelJson = new JSONModel();
-				this._oJsonModel = oModelJson;
+				
 				var oModelHeader = new JSONModel();
 				var oView = this.getView();
 				var oThis = this;
 
-				var binding =  new sap.ui.model.Binding(oModelJson, "/rows", oModelJson.getContext("/rows"));
+				//var oModelJson = new JSONModel();
+				//this._oJsonModel = oModelJson;
+				/*var binding =  new sap.ui.model.Binding(oModelJson, "/rows", oModelJson.getContext("/rows"));
 				binding.attachChange(function() {
 						this._onTableChanged(oModelJson);
 						
 				}.bind(this));
+				*/
 				
 				if (oLocalData) {
 					
@@ -78,8 +83,15 @@ sap.ui.define([
 				oFilters.push( new sap.ui.model.Filter("CostCenterID", sap.ui.model.FilterOperator.EQ, oLocalData.CostCenterID) );
 				oFilters.push( new sap.ui.model.Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, oLocalData.UnloadingPoint) );
 				//oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, dateFormat.format(new Date( (new Date()).getTime() + (24 * 60 * 60 * 1000)))));
-				oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, oLocalData.Date.replace(/-/g, "")));
-				/*
+				
+				if (oLocalData.mode === "Create") {				
+					oFilters.push( new sap.ui.model.Filter("MarketListHeaderID", sap.ui.model.FilterOperator.EQ, "CREATE"));
+					oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, oLocalData.Create.DeliveryDate.replace(/-/g, "")));
+				} else {
+					oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, oLocalData.Date.replace(/-/g, "")));
+				}
+				
+				
 				sap.ui.core.BusyIndicator.show();
 				oModel.read("/MarketListHeaderSet", {
 				    urlParameters: {
@@ -109,13 +121,15 @@ sap.ui.define([
 				    	var oDetail = oHeader.NavDetail.results;
 				    	
 				    	if (!oDetail) {
-							oModelJson.setData({ rows : [] } );
+							oThis._oJsonModel.setData({ rows : [] } );
 						} else{
-				    		oModelJson.setData({ rows : oDetail } );
-				    		oThis._onTableChanged(oModelJson);
+				    		oThis._oJsonModel.setData({ rows : oDetail } );
+				    		oThis._onTableChanged(oThis._oJsonModel);
 						}
 				    	
-					    oView.setModel(oModelJson,"mktlist");
+					    oView.setModel(oThis._oJsonModel,"mktlist");
+					    
+					    console.log(oHeader);
 					    
 				    	sap.ui.core.BusyIndicator.hide();
 				    	
@@ -124,13 +138,14 @@ sap.ui.define([
 			            sap.ui.core.BusyIndicator.hide();
 			        }
 				});
-				*/
+				
 			
 			},
 			
 			_onTableChanged : function(oModelJson) {
 				
 					var data = oModelJson.getProperty("/rows");
+			
 					
 					if(data) {
 					
@@ -138,12 +153,15 @@ sap.ui.define([
 						
 						for (var key in data) {
 							for (var prop in data[key]){
-								if(prop.substring(0,3) === "Day") {
+								
+								
+								if(prop.substring(0,4) === "Day0") {
 									
 									var oDay = data[key][prop];
-										
+
 									if (oDay.Enabled && oDay.Quantity > 0) {
 										noItems[oDay.Date] = isNaN(noItems[oDay.Date]) ? 1 : (noItems[oDay.Date] + 1);
+										
 										if (isNaN(totals[oDay.Date])) {
 											totals[oDay.Date] = (oDay.Quantity / data[key].PriceUnit * data[key].UnitPrice);
 										}else{
@@ -181,7 +199,19 @@ sap.ui.define([
 						
 					var tableRows = this._oJsonModel.getData().rows;
 					if (!tableRows){
-						tableRows = [];
+						
+						this._oJsonModel.setData({ rows : [] } );
+						
+					/*	var binding =  new sap.ui.model.Binding(oModelJson, "/rows", oModelJson.getContext("/rows"));
+						binding.attachChange(function() {
+								this._onTableChanged(oModelJson);
+								
+						}.bind(this));*/
+						
+						this.getView().setModel(this._oJsonModel,"mktlist");
+					
+						tableRows = this._oJsonModel.getData().rows;
+						
 					}
 					
 					var bNew = true,bAdded = false;
@@ -203,8 +233,8 @@ sap.ui.define([
 				
 							//var oTableH = this.getView().getModel("TableH").getData();
 							
-							console.log(oLocal.Create);
-							oData.data[i].Day0.Date = oLocal.Create.DeliveryDate.substring(0,10);
+							oData.data[i].Day0.Date = oLocal.Create.DeliveryDate;
+							this.globalData.deliveryDate = oData.data[i].Day0.Date;
 							/*oData.data[i].Day1.Date = oTableH.Date1;
 							oData.data[i].Day2.Date = oTableH.Date2;
 							oData.data[i].Day3.Date = oTableH.Date3;
@@ -232,10 +262,7 @@ sap.ui.define([
 							oData.data[i].MarketListDetailID = "MKD0001";
 							oData.data[i].New = true;
 						
-							
 							tableRows.push(oData.data[i]);
-							
-						
 							bAdded = true;
 						} else {
 							sap.m.MessageToast.show(oData.data[i].MaterialID + " - " + oData.data[i].MaterialText + " is already in the table.",{});	
@@ -681,7 +708,7 @@ sap.ui.define([
 				var material = oItem.getModel("mktlist").getProperty(sPath);
 				
 				
-				if (material.hasOwnProperty("New")){
+				if (material.hasOwnProperty("New") || material.MarketListHeaderID === "CREATE" ){
 					var tableRows = this._oJsonModel.getData().rows;
 					for (var i in tableRows){
 						if (tableRows[i].MaterialID === material.MaterialID) {

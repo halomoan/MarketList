@@ -206,6 +206,8 @@ sap.ui.define([
 				if (oFrag.byId("addPR", "startDate").getValueState() !== sap.ui.core.ValueState.Error){
 					
 						this._oViewCreatePR.close();
+						
+					
 						var oStartDate = oFrag.byId("addPR", "startDate").getDateValue();
 						var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 						var oLocal = oStorage.get("localStorage");
@@ -213,7 +215,7 @@ sap.ui.define([
 						oLocal.mode = "Create";
 						oLocal.Create = {};
 						oLocal.Create.Single = true;
-						oLocal.Create.DeliveryDate = oStartDate;
+						oLocal.Create.DeliveryDate = this.getStringDate(oStartDate);
 						oStorage.put("localStorage", oLocal);
 						
 						this.getRouter().navTo("dsmaster", null, false);

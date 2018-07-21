@@ -74,7 +74,14 @@ sap.ui.define([
 				} else {
 					this.getRouter().navTo("home", {}, true);
 				}
+			},
+			getStringDate : function(oDate){
+				var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({
+					pattern: "YYYY-MM-dd"
+				});
+				return dateFormat.format(oDate); 
 			}
+			
 
 		});
 

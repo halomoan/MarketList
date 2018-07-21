@@ -204,7 +204,6 @@ sap.ui.define([
 					this._oViewFormSubmit.addStyleClass(this.getOwnerComponent().getContentDensityClass());
 				}
 				
-				
 				this._oViewFormSubmit.open();
 			},
 			
@@ -586,7 +585,6 @@ sap.ui.define([
 			},
 			_onMetadataLoaded: function(){
 			
-				//var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "YYYYMMdd" }); 
 				var oTable = this.byId("mktlistTable");
 				var oViewModel = this.getModel("detailView");
 				var oModelJson = new JSONModel();
