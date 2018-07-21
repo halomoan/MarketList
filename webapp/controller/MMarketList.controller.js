@@ -8,6 +8,7 @@ sap.ui.define([
 	return BaseController.extend("sap.ui.demo.masterdetail.controller.MMarketList", {
 			formatter: formatter,
 	
+			_oJsonModel : new JSONModel(),
 			onInit: function() {
 				sap.ui.getCore().getEventBus().subscribe("marketlist","addMaterial",this._addMaterial,this);
 				var oViewData = {
@@ -24,11 +25,15 @@ sap.ui.define([
 			    	dayId : 0,
 			    	templtChanged : false
 				};
-				this._oJsonModel = null;
 				
 				var oViewModel = new JSONModel(oViewData);
 				this.setModel(oViewModel, "detailView");
 				this.setDeviceModel();
+				
+				var binding =  new sap.ui.model.Binding(this._oJsonModel, "/rows", this._oJsonModel.getContext("/rows"));
+				binding.attachChange(function() {
+					this._onTableChanged(this._oJsonModel);
+				}.bind(this));
 				
 				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 				var oLocalData = oStorage.get("localStorage");
@@ -49,17 +54,14 @@ sap.ui.define([
 				var oViewModel = this.getModel("detailView");
 				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 				var oLocalData = oStorage.get("localStorage");
-				var oModelJson = new JSONModel();
+				/*var oModelJson = new JSONModel();
 				this._oJsonModel = oModelJson;
+				*/
 				var oModelHeader = new JSONModel();
 				var oView = this.getView();
 				var oThis = this;
 
-				var binding =  new sap.ui.model.Binding(oModelJson, "/rows", oModelJson.getContext("/rows"));
-				binding.attachChange(function() {
-						this._onTableChanged(oModelJson);
-						
-				}.bind(this));
+			
 				
 				if (oLocalData) {
 					
@@ -77,7 +79,9 @@ sap.ui.define([
 				oFilters.push( new sap.ui.model.Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, oLocalData.UnloadingPoint) );
 				//oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, dateFormat.format(new Date( (new Date()).getTime() + (24 * 60 * 60 * 1000)))));
 				oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, oLocalData.Date.replace(/-/g, "")));
+				
 				sap.ui.core.BusyIndicator.show();
+				
 				
 				oModel.read("/MarketListHeaderSet", {
 				    urlParameters: {
@@ -107,13 +111,13 @@ sap.ui.define([
 				    	var oDetail = oHeader.NavDetail.results;
 				    	
 				    	if (!oDetail) {
-							oModelJson.setData({ rows : [] } );
+								oThis._oJsonModel.setData({ rows : [] } );
 						} else{
-				    		oModelJson.setData({ rows : oDetail } );
-				    		oThis._onTableChanged(oModelJson);
+				    		oThis._oJsonModel.setData({ rows : oDetail } );
+				    		oThis._onTableChanged(oThis._oJsonModel);
 						}
 				    	
-					    oView.setModel(oModelJson,"mktlist");
+					    oView.setModel(oThis._oJsonModel,"mktlist");
 					    
 				    	sap.ui.core.BusyIndicator.hide();
 				    	

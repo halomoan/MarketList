@@ -129,7 +129,6 @@ sap.ui.define([
 				    	
 					    oView.setModel(oThis._oJsonModel,"mktlist");
 					    
-					    console.log(oHeader);
 					    
 				    	sap.ui.core.BusyIndicator.hide();
 				    	
