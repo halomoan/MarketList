@@ -7,7 +7,8 @@
 	
 	controllerName="sap.ui.demo.masterdetail.controller.planCalendar" xmlns:html="http://www.w3.org/1999/xhtml">
 	
-	<Page showHeader="false">
+	<Page showHeader="false" 	busy="{detailView>/calbusy}"
+			busyIndicatorDelay="{detailView>/calbusyindicator}">
 		<l:Splitter id="mainSplitter" height="100%" width="100%" orientation="Vertical">
 
 		<PlanningCalendar
@@ -22,8 +23,7 @@
 			stickyHeader="true"
 			startDateChange = "onStartDateChange"
 			showWeekNumbers="true"
-			busy="{detailView>/calbusy}"
-			busyIndicatorDelay="{detailView>/calbusyindicator}">
+		>
 			<toolbarContent>
 				<Button icon="sap-icon://nav-back" press="onNavHome"></Button>
 				<Title text="{detailView>/Plant} / {detailView>/CostCenter}" titleStyle="H4"/>

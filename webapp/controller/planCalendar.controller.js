@@ -108,45 +108,57 @@ sap.ui.define([
 				var oButton =  this.byId("showDetail");
 				var oViewModel = this.getModel("detailView");
 				
-				if (oButton.getText() === this.getResourceBundle().getText("hideDetail")){
+				if(oAppointment.getType() === "Type06") {
+					this._handlePRChange(oAppointment);
+				} else {
 				
-					if (oAppointment) {
-						//var sSelected = oAppointment.getSelected() ? "selected" : "deselected";
-						var sPRID = oAppointment.getTitle();
-						sPRID = sPRID.replace( /^\D+/g, ""); 
-						
-						var sObjectPath = this.getModel().createKey("/MarketListHeaderSet", {
-							MarketListHeaderID :  sPRID
-						});
-						
+					if (oButton.getText() === this.getResourceBundle().getText("hideDetail")){
 					
-						var oModel = this.getModel();
-						oViewModel.setProperty("/listbusy",true);
-						oModel.read(sObjectPath, {
-							urlParameters: {
-						      "$expand": "NavDetail"
-							},
-							success: function(rData) {
-								//console.log(rData.NavDetail);
-								var oJson = new JSONModel();
-								oJson.setData(rData.NavDetail);
-								oJson.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
-								oThis.setModel(oJson,"mktitem");
-								oViewModel.setProperty("/listbusy",false);
-							},
-							error: function(oError) {
-								oViewModel.setProperty("/listbusy",false);
-							}
-						});
-					
-						/*
-						//console.log("'" + sPRID + "' " + sSelected + ". \n Selected appointments: " + this.byId("PC1").getSelectedAppointments().length);
-						} else {
-						var aAppointments = oEvent.getParameter("appointments");
-						var sValue = aAppointments.length + " Appointments selected";
-						console.log(sValue);*/
-					}
+						if (oAppointment) {
+							//var sSelected = oAppointment.getSelected() ? "selected" : "deselected";
+							var sPRID = oAppointment.getTitle();
+							sPRID = sPRID.replace( /^\D+/g, ""); 
+							
+							var sObjectPath = this.getModel().createKey("/MarketListHeaderSet", {
+								MarketListHeaderID :  sPRID
+							});
+							
+						
+							var oModel = this.getModel();
+							oViewModel.setProperty("/listbusy",true);
+							oModel.read(sObjectPath, {
+								urlParameters: {
+							      "$expand": "NavDetail"
+								},
+								success: function(rData) {
+									//console.log(rData.NavDetail);
+									var oJson = new JSONModel();
+									oJson.setData(rData.NavDetail);
+									oJson.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
+									oThis.setModel(oJson,"mktitem");
+									oViewModel.setProperty("/listbusy",false);
+								},
+								error: function(oError) {
+									oViewModel.setProperty("/listbusy",false);
+								}
+							});
+						
+							/*
+							//console.log("'" + sPRID + "' " + sSelected + ". \n Selected appointments: " + this.byId("PC1").getSelectedAppointments().length);
+							} else {
+							var aAppointments = oEvent.getParameter("appointments");
+							var sValue = aAppointments.length + " Appointments selected";
+							console.log(sValue);*/
+						}
+					}	
 				}
+			},
+			_handlePRChange: function(oAppointment){
+				if (!this._oViewChangePR) {
+					this._oViewChangePR = sap.ui.xmlfragment("changePR", "sap.ui.demo.masterdetail.view.calChangePR", this);
+					this.getView().addDependent(this._oViewChangePR);
+				}
+				this._oViewChangePR.openBy(oAppointment);
 			},
 			handleIntervalSelect: function (oEvent) {
 			
