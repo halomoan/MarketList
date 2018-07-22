@@ -17,7 +17,7 @@
 						singleContainerFullSize="false">
 						<f:content>
 							<Label text="{i18n>requisitioner}" required="true"/>
-							<Text text="{detailView>/UserId}"/>
+							<Input value="{detailView>/UserId}"/>
 							<Label text="{i18n>plant}"/>
 							<Text text="{detailView>/Plant}"/>
 							<Label text="{i18n>costCenter}"/>

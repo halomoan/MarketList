@@ -150,7 +150,7 @@ sap.ui.define([
 			},
 			handleIntervalSelect: function (oEvent) {
 				var oPC = oEvent.oSource;
-				var oStartDate = oEvent.getParameter("startDate");
+				/*var oStartDate = oEvent.getParameter("startDate");
 				var oEndDate = oEvent.getParameter("endDate");
 				var oRow = oEvent.getParameter("row");
 				var oModel = this.getView().getModel("calModel");
@@ -176,8 +176,19 @@ sap.ui.define([
 					}
 				}
 
-				oModel.setData(oData);
-
+				oModel.setData(oData);*/
+				var iIndex = -1;
+				var oRow = oEvent.getParameter("row");
+				if (oRow) {
+					iIndex = oPC.indexOfRow(oRow);
+				
+				} else {
+					var aSelectedRows = oPC.getSelectedRows();
+					for (var i = 0; i < aSelectedRows.length; i++) {
+						iIndex = oPC.indexOfRow(aSelectedRows[i]);
+					}
+				}
+				this.UPoint = iIndex;
 			},
 			onAddPR: function(){
 				if (!this._oViewCreatePR) {

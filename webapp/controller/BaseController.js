@@ -75,11 +75,23 @@ sap.ui.define([
 					this.getRouter().navTo("home", {}, true);
 				}
 			},
+			onNavHome : function(){
+				this.getRouter().navTo("home", {}, true);
+			},
 			getStringDate : function(oDate){
 				var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({
 					pattern: "YYYY-MM-dd"
 				});
 				return dateFormat.format(oDate); 
+			},
+			getLocalData: function(){
+				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+				return oStorage.get("localStorage");
+				
+			},
+			putLocalData: function(oData){
+				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+				 oStorage.put("localStorage",oData);
 			}
 			
 

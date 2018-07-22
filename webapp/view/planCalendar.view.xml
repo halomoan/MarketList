@@ -17,7 +17,7 @@
 			viewKey="Week"
 			appointmentsVisualization="Filled"
 			appointmentSelect="onAppointmentSelect"
-			intervalSelect="onAppointmentAddWithContext"
+			intervalSelect="handleIntervalSelect"
 			showEmptyIntervalHeaders="false"
 			stickyHeader="true"
 			startDateChange = "onStartDateChange"
@@ -25,7 +25,7 @@
 			busy="{detailView>/calbusy}"
 			busyIndicatorDelay="{detailView>/calbusyindicator}">
 			<toolbarContent>
-				<Button icon="sap-icon://nav-back" press="onNavBack"></Button>
+				<Button icon="sap-icon://nav-back" press="onNavHome"></Button>
 				<Title text="{detailView>/Plant} / {detailView>/CostCenter}" titleStyle="H4"/>
 				
 				<ToolbarSpacer></ToolbarSpacer>

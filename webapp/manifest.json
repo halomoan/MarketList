@@ -256,7 +256,7 @@
 				"dsmobile": {
 					"parent": "splitapp",
 					"viewName": "MDSMarketList",
-					"viewLevel": 1,
+					"viewLevel": 2,
 					"viewId": "dsmobile",
 					"controlId": "idAppControl",
 					"controlAggregation": "detailPages"

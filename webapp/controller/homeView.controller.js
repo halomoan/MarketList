@@ -77,7 +77,7 @@ sap.ui.define([
 						this.getRouter().navTo("dmaster", {
 							plantId: oLocal.PlantID,
 							ccId: oLocal.CostCenterID 
-						}, false);
+						}, true);
 					} else {
 						this.getRouter().navTo("master", {
 							plantId: oLocal.PlantID,

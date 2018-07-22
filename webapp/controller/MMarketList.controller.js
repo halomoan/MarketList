@@ -35,8 +35,9 @@ sap.ui.define([
 					this._onTableChanged(this._oJsonModel);
 				}.bind(this));
 				
-				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-				var oLocalData = oStorage.get("localStorage");
+			
+				var oLocalData = this.getLocalData();
+			
 				if(oLocalData.UseMobile) {
 					this.getRouter().getRoute("dmaster").attachPatternMatched(this._onMasterMatched, this);
 				}else{
@@ -45,18 +46,16 @@ sap.ui.define([
 				
 			},
 			_onMasterMatched :  function() {
+
 				if (this.globalData.iRefresh === 0) {
 					this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
 				}
 			},
 			_onMetadataLoaded: function(){
-				//var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "YYYYMMdd" }); 
 				var oViewModel = this.getModel("detailView");
 				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 				var oLocalData = oStorage.get("localStorage");
-				/*var oModelJson = new JSONModel();
-				this._oJsonModel = oModelJson;
-				*/
+				
 				var oModelHeader = new JSONModel();
 				var oView = this.getView();
 				var oThis = this;
@@ -300,6 +299,7 @@ sap.ui.define([
 					if (oSplit) {
 						oSplit.hideMaster();
 					}
+				
 					this.getRouter().navTo("home", null, false);
 					
 				}
