@@ -159,6 +159,12 @@ sap.ui.define([
 					this.getView().addDependent(this._oViewChangePR);
 				}
 				this._oViewChangePR.openBy(oAppointment);
+				var oFrag =  sap.ui.core.Fragment;
+				var oDP = oFrag.byId("changePR", "prDate");
+				oDP.setValue(this.getStringDate(oAppointment.getStartDate()));
+				var oUP = oFrag.byId("changePR", "selectUPoint");
+				oUP.setSelectedKey(oAppointment.getParent().getTitle());
+				console.log(oAppointment.getParent().getTitle());
 			},
 			handleIntervalSelect: function (oEvent) {
 			
@@ -209,14 +215,15 @@ sap.ui.define([
 						
 					
 						var oStartDate = oFrag.byId("addPR", "startDate").getDateValue();
-						var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-						var oLocal = oStorage.get("localStorage");
+					
+						var oLocal = this.getLocalData();
 						oLocal.SourcePage = "planCal";
 						oLocal.mode = "Create";
 						oLocal.Create = {};
 						oLocal.Create.Single = true;
 						oLocal.Create.DeliveryDate = this.getStringDate(oStartDate);
-						oStorage.put("localStorage", oLocal);
+						this.putLocalData(oLocal); 
+						
 						
 						this.getRouter().navTo("dsmaster", null, false);
 						/*
@@ -242,8 +249,14 @@ sap.ui.define([
 				}
 				
 			},
+			onChangePR: function(){
+				this._oViewChangePR.close();
+			},
 			onCloseCreate: function(){
 				this._oViewCreatePR.close();
+			},
+			onCloseChange: function(){
+				this._oViewChangePR.close();
 			}
 
 	});
