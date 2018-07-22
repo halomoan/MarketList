@@ -5,7 +5,7 @@
 		 >
 		<content>
 			<f:SimpleForm editable="false" layout="ResponsiveGridLayout">
-				<Label text="{i18n>select} {i18n>unloadingPoint}" labelFor="unloadingPoint"/>
+				<Label text="{i18n>change} {i18n>unloadingPoint}" labelFor="unloadingPoint"/>
 				<Select
 					id="selectUPoint"
 					forceSelection="false"
@@ -24,15 +24,14 @@
 					placeholder="Enter Date ..."
 					tooltip="{i18n>futureDate}"
 					class="sapUiSmallMarginBottom"/>
-					<commons:HorizontalDivider/>
-				<Button text="{i18n>addRemove} {i18n>material}s"></Button>
+				<Label text=""></Label>
+				<Button text="{i18n>change}" press="onChangePR"></Button>
+				<commons:HorizontalDivider/>
+				<Button text="{i18n>addRemove} {i18n>material}s" press="onChangePRDetail"></Button>
 			</f:SimpleForm>
 			
 		</content>
 	
-		<beginButton>
-			<Button text="{i18n>change}" press="onChangePR" />
-		</beginButton>
 		
 		<endButton>
 			<Button text="{i18n>close}" press="onCloseChange" />

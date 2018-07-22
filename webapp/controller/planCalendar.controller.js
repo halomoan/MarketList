@@ -164,7 +164,6 @@ sap.ui.define([
 				oDP.setValue(this.getStringDate(oAppointment.getStartDate()));
 				var oUP = oFrag.byId("changePR", "selectUPoint");
 				oUP.setSelectedKey(oAppointment.getParent().getTitle());
-				console.log(oAppointment.getParent().getTitle());
 			},
 			handleIntervalSelect: function (oEvent) {
 			
@@ -184,7 +183,6 @@ sap.ui.define([
 				if (!this._oViewCreatePR) {
 					this._oViewCreatePR = sap.ui.xmlfragment("addPR","sap.ui.demo.masterdetail.view.calCreatePR", this);
 					this.getView().addDependent(this._oViewCreatePR);
-					// forward compact/cozy style into Dialog
 					this._oViewCreatePR.addStyleClass(this.getOwnerComponent().getContentDensityClass());
 				}
 				if(this.UPoint) {
