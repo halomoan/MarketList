@@ -9,13 +9,14 @@
 			<Button text="{i18n>close}" press="closeInfoDialog" />
 		</beginButton>
 		<content>
-			<Label text="Purch. Requisition No: {= ${detailView>/PurReqID} ? ${detailView>/PurReqID}: 'None'}"></Label>
+			<Label text="Purch. Requisition No: {= ${detailView>/PurReqID} !== 'CREATE' ? ${detailView>/PurReqID}: 'None'}"></Label>
 			
-			<Button id="generatePO"
+			<Button 
 						class="sapUiSmallMarginBottom"
 						text="Generate PO"
 						width="100%"
-						press="generatePO" />
+						press="generatePO"
+						visible="{= ${detailView>/PurReqID} !== 'CREATE'}"/>
 		</content>
 	</ResponsivePopover>
 </core:FragmentDefinition>

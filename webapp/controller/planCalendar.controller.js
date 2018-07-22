@@ -149,46 +149,18 @@ sap.ui.define([
 				}
 			},
 			handleIntervalSelect: function (oEvent) {
-				var oPC = oEvent.oSource;
-				/*var oStartDate = oEvent.getParameter("startDate");
-				var oEndDate = oEvent.getParameter("endDate");
-				var oRow = oEvent.getParameter("row");
-				var oModel = this.getView().getModel("calModel");
-				var oData = oModel.getData();
-				var iIndex = -1;
-				var oAppointment = {
-					StartDate: oStartDate,
-					EndDate: oEndDate,
-					Title: "new appointment",
-					Type: "Type09",
-					Tentative: true
-				};
-
 			
-				if (oRow) {
-					iIndex = oPC.indexOfRow(oRow);
-					oData.scheduleheader[iIndex].NavHeaderToItem.push(oAppointment);
-				} else {
-					var aSelectedRows = oPC.getSelectedRows();
-					for (var i = 0; i < aSelectedRows.length; i++) {
-						iIndex = oPC.indexOfRow(aSelectedRows[i]);
-						oData.scheduleheader[iIndex].NavHeaderToItem.push(oAppointment);
-					}
-				}
-
-				oModel.setData(oData);*/
-				var iIndex = -1;
 				var oRow = oEvent.getParameter("row");
-				if (oRow) {
-					iIndex = oPC.indexOfRow(oRow);
 				
+				if (oRow) {
+					this.UPoint = oRow.getTitle();
 				} else {
+					var oPC = oEvent.oSource;
 					var aSelectedRows = oPC.getSelectedRows();
 					for (var i = 0; i < aSelectedRows.length; i++) {
-						iIndex = oPC.indexOfRow(aSelectedRows[i]);
+						this.UPoint = aSelectedRows[i];
 					}
 				}
-				this.UPoint = iIndex;
 			},
 			onAddPR: function(){
 				if (!this._oViewCreatePR) {
@@ -196,6 +168,11 @@ sap.ui.define([
 					this.getView().addDependent(this._oViewCreatePR);
 					// forward compact/cozy style into Dialog
 					this._oViewCreatePR.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+				}
+				if(this.UPoint) {
+					var oFrag =  sap.ui.core.Fragment;
+					var oSelect = oFrag.byId("addPR", "selectUPoint");
+					oSelect.setSelectedKey(this.UPoint);
 				}
 				this._oViewCreatePR.open();
 			},
