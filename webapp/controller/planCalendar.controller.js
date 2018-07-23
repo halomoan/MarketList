@@ -172,6 +172,7 @@ sap.ui.define([
 				
 				
 				var sPRID = oAppointment.getTitle();
+				oLocalData.SourcePage = "planCal";
 				oLocalData.Change.PRID = sPRID.replace("PRID: ","");
 				oLocalData.Change.UnloadingPoint = oAppointment.getParent().getTitle();
 				oLocalData.Change.Date = this.getStringDate(oAppointment.getStartDate());
@@ -293,6 +294,10 @@ sap.ui.define([
 					
 					var msg = this.getResourceBundle().getText("msgConfirmChangePR",[PRID]);
 					
+					if (oDP.getValueState() === sap.ui.core.ValueState.Error) {
+						sap.m.MessageToast.show(this.getResourceBundle().getText("msgWrongDateFuture"));
+						return;
+					}
 					if (oLocalData.Change.Date !== newDate ) {
 						msg = msg + "\n\r\n\r" + this.getResourceBundle().getText("msgDateFromTo",[oLocalData.Change.Date,newDate]);
 						bChanged = true;
@@ -314,11 +319,11 @@ sap.ui.define([
 								press: function () {
 									
 									
-									sap.m.MessageToast.show(plantID + " - " + PRID);
+									
 									var oModel = oThis.getView().getModel();
-									oModel.callFunction("/RunAutoPO", {
+									oModel.callFunction("/ChangePR", {
 								               method: "POST",
-								               urlParameters:  {"PlantID" : plantID, "PRID" : PRID  }, 
+								               urlParameters:  {"PlantID" : plantID, "PRID" : PRID, "DeliveryDate" : newDate.replace(/-/g, ""), "UnloadingPoint" : newUP }, 
 												success: function(oData, oResponse) {
 													sap.m.MessageBox.success(oData.Message, {
 											            title: "Response",                                      
@@ -347,14 +352,28 @@ sap.ui.define([
 						dialog.open();
 					} else {
 						//Nothing Changed
-						sap.m.MessageBox.warning(this.getResourceBundle().getText("msgNoChanged"), {
+						sap.m.MessageBox.information(this.getResourceBundle().getText("msgNoChanged"), {
 										            title: this.getResourceBundle().getText("warning"),                                      
 										            initialFocus: null
 										        });
 					}
+					this._oViewChangePR.close();
 				}
 				
+				
+			},
+			onChangePRDetail : function(){
 				this._oViewChangePR.close();
+				
+				var oLocalData = this.getLocalData();
+				
+				if (oLocalData.mode === "Change") {
+					this.getRouter().navTo("dsmaster", null, false);	
+				}
+				
+				
+				
+				
 			},
 			onCloseCreate: function(){
 				this._oViewCreatePR.close();

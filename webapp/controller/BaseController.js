@@ -78,6 +78,12 @@ sap.ui.define([
 				});
 				return dateFormat.format(oDate); 
 			},
+			getSAPDate: function(oDate){
+					var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({
+					pattern: "YYYYMMdd"
+				});
+				return dateFormat.format(oDate); 
+			},
 			getLocalData: function(){
 				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 				return oStorage.get("localStorage");
