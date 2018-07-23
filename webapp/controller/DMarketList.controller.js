@@ -436,7 +436,7 @@ sap.ui.define([
 				
 				
 			},*/
-				generatePO: function() {
+			generatePO: function() {
 				var oViewModel = this.getModel("detailView");
 				var plantID = oViewModel.getProperty("/PlantID");
 				var PRID = oViewModel.getProperty("/PurReqID");

@@ -110,48 +110,48 @@ sap.ui.define([
 				
 				if(oAppointment.getType() === "Type06") {
 					this._handlePRChange(oAppointment);
-				} else {
+				} 
 				
-					if (oButton.getText() === this.getResourceBundle().getText("hideDetail")){
+				if (oButton.getText() === this.getResourceBundle().getText("hideDetail")){
+				
+					if (oAppointment) {
+						//var sSelected = oAppointment.getSelected() ? "selected" : "deselected";
+						var sPRID = oAppointment.getTitle();
+						sPRID = sPRID.replace( /^\D+/g, ""); 
+						
+						var sObjectPath = this.getModel().createKey("/MarketListHeaderSet", {
+							MarketListHeaderID :  sPRID
+						});
+						
 					
-						if (oAppointment) {
-							//var sSelected = oAppointment.getSelected() ? "selected" : "deselected";
-							var sPRID = oAppointment.getTitle();
-							sPRID = sPRID.replace( /^\D+/g, ""); 
-							
-							var sObjectPath = this.getModel().createKey("/MarketListHeaderSet", {
-								MarketListHeaderID :  sPRID
-							});
-							
-						
-							var oModel = this.getModel();
-							oViewModel.setProperty("/listbusy",true);
-							oModel.read(sObjectPath, {
-								urlParameters: {
-							      "$expand": "NavDetail"
-								},
-								success: function(rData) {
-									//console.log(rData.NavDetail);
-									var oJson = new JSONModel();
-									oJson.setData(rData.NavDetail);
-									oJson.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
-									oThis.setModel(oJson,"mktitem");
-									oViewModel.setProperty("/listbusy",false);
-								},
-								error: function(oError) {
-									oViewModel.setProperty("/listbusy",false);
-								}
-							});
-						
-							/*
-							//console.log("'" + sPRID + "' " + sSelected + ". \n Selected appointments: " + this.byId("PC1").getSelectedAppointments().length);
-							} else {
-							var aAppointments = oEvent.getParameter("appointments");
-							var sValue = aAppointments.length + " Appointments selected";
-							console.log(sValue);*/
-						}
-					}	
-				}
+						var oModel = this.getModel();
+						oViewModel.setProperty("/listbusy",true);
+						oModel.read(sObjectPath, {
+							urlParameters: {
+						      "$expand": "NavDetail"
+							},
+							success: function(rData) {
+								//console.log(rData.NavDetail);
+								var oJson = new JSONModel();
+								oJson.setData(rData.NavDetail);
+								oJson.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
+								oThis.setModel(oJson,"mktitem");
+								oViewModel.setProperty("/listbusy",false);
+							},
+							error: function(oError) {
+								oViewModel.setProperty("/listbusy",false);
+							}
+						});
+					
+						/*
+						//console.log("'" + sPRID + "' " + sSelected + ". \n Selected appointments: " + this.byId("PC1").getSelectedAppointments().length);
+						} else {
+						var aAppointments = oEvent.getParameter("appointments");
+						var sValue = aAppointments.length + " Appointments selected";
+						console.log(sValue);*/
+					}
+				}	
+				
 			},
 			_handlePRChange: function(oAppointment){
 				if (!this._oViewChangePR) {
@@ -164,20 +164,43 @@ sap.ui.define([
 				oDP.setValue(this.getStringDate(oAppointment.getStartDate()));
 				var oUP = oFrag.byId("changePR", "selectUPoint");
 				oUP.setSelectedKey(oAppointment.getParent().getTitle());
+				
+				var oLocalData = this.getLocalData();
+				oLocalData.mode = "Change";
+				oLocalData.Change = {};
+				oLocalData.Create = null;
+				
+				
+				var sPRID = oAppointment.getTitle();
+				oLocalData.Change.PRID = sPRID.replace("PRID: ","");
+				oLocalData.Change.UnloadingPoint = oAppointment.getParent().getTitle();
+				oLocalData.Change.Date = this.getStringDate(oAppointment.getStartDate());
+				this.putLocalData(oLocalData);                         
 			},
 			handleIntervalSelect: function (oEvent) {
 			
 				var oRow = oEvent.getParameter("row");
+				var oStartDate = oEvent.getParameter("startDate");
+				
+				var oLocalData = this.getLocalData();
 				
 				if (oRow) {
-					this.UPoint = oRow.getTitle();
+				
+					oLocalData.UnloadingPointID = oRow.getTitle();
+					oLocalData.UnloadingPoint = oRow.getTitle();
 				} else {
 					var oPC = oEvent.oSource;
 					var aSelectedRows = oPC.getSelectedRows();
 					for (var i = 0; i < aSelectedRows.length; i++) {
-						this.UPoint = aSelectedRows[i];
+					
+						oLocalData.UnloadingPointID = aSelectedRows[i];
+						oLocalData.UnloadingPoint = aSelectedRows[i];
 					}
 				}
+				
+				oLocalData.Date = this.getStringDate(oStartDate);                             
+			
+				this.putLocalData(oLocalData);          
 			},
 			onAddPR: function(){
 				if (!this._oViewCreatePR) {
@@ -185,11 +208,16 @@ sap.ui.define([
 					this.getView().addDependent(this._oViewCreatePR);
 					this._oViewCreatePR.addStyleClass(this.getOwnerComponent().getContentDensityClass());
 				}
-				if(this.UPoint) {
+			
+					var oLocalData = this.getLocalData();
+					
 					var oFrag =  sap.ui.core.Fragment;
 					var oSelect = oFrag.byId("addPR", "selectUPoint");
-					oSelect.setSelectedKey(this.UPoint);
-				}
+					oSelect.setSelectedKey(oLocalData.UnloadingPointID);
+					var oDP = oFrag.byId("addPR","startDate");
+			
+					oDP.setValue(oLocalData.Date);  
+				
 				this._oViewCreatePR.open();
 			},
 			onDateChange: function(oEvent) {
@@ -217,6 +245,7 @@ sap.ui.define([
 						var oLocal = this.getLocalData();
 						oLocal.SourcePage = "planCal";
 						oLocal.mode = "Create";
+						oLocal.Change = null;
 						oLocal.Create = {};
 						oLocal.Create.Single = true;
 						oLocal.Create.DeliveryDate = this.getStringDate(oStartDate);
@@ -248,6 +277,83 @@ sap.ui.define([
 				
 			},
 			onChangePR: function(){
+				var oLocalData = this.getLocalData();
+				
+				if (oLocalData.Change.PRID) {
+					var PRID = oLocalData.Change.PRID;
+					var plantID = oLocalData.PlantID;
+					var oThis = this;
+					var bChanged = false;
+					
+					var oFrag =  sap.ui.core.Fragment;
+					var oDP = oFrag.byId("changePR", "prDate");
+					var newDate = oDP.getValue();
+					var oUP = oFrag.byId("changePR", "selectUPoint");
+					var newUP = oUP.getSelectedItem().getKey();
+					
+					var msg = this.getResourceBundle().getText("msgConfirmChangePR",[PRID]);
+					
+					if (oLocalData.Change.Date !== newDate ) {
+						msg = msg + "\n\r\n\r" + this.getResourceBundle().getText("msgDateFromTo",[oLocalData.Change.Date,newDate]);
+						bChanged = true;
+					}
+					
+					if (oLocalData.Change.UnloadingPoint !== newUP ) {
+						msg = msg + "\n\r\n\r" + this.getResourceBundle().getText("msgUPFromTo",[oLocalData.Change.UnloadingPoint,newUP]);
+						bChanged = true;
+					}
+					
+					if (bChanged){
+				
+						var dialog = new sap.m.Dialog({
+							title: this.getResourceBundle().getText("confirm"),
+							type: "Message",
+							content: new sap.m.Text({ text: msg }),
+							beginButton: new sap.m.Button({
+								text: this.getResourceBundle().getText("submit"),
+								press: function () {
+									
+									
+									sap.m.MessageToast.show(plantID + " - " + PRID);
+									var oModel = oThis.getView().getModel();
+									oModel.callFunction("/RunAutoPO", {
+								               method: "POST",
+								               urlParameters:  {"PlantID" : plantID, "PRID" : PRID  }, 
+												success: function(oData, oResponse) {
+													sap.m.MessageBox.success(oData.Message, {
+											            title: "Response",                                      
+											            initialFocus: null
+											        });
+												},
+												error: function(error) {
+												},
+												async: false
+												
+								    });
+									dialog.close();
+								}
+							}),
+							endButton: new sap.m.Button({
+								text: this.getResourceBundle().getText("cancel"),
+								press: function () {
+									dialog.close();
+								}
+							}),
+							afterClose: function() {
+								dialog.destroy();
+							}
+						});
+			
+						dialog.open();
+					} else {
+						//Nothing Changed
+						sap.m.MessageBox.warning(this.getResourceBundle().getText("msgNoChanged"), {
+										            title: this.getResourceBundle().getText("warning"),                                      
+										            initialFocus: null
+										        });
+					}
+				}
+				
 				this._oViewChangePR.close();
 			},
 			onCloseCreate: function(){
