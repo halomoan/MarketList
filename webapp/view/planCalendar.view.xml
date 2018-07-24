@@ -79,6 +79,12 @@
 				minScreenWidth="Tablet"
 				demandPopin="true"
 				hAlign="End">
+				<Text text="{i18n>po}" />
+			</Column>
+			<Column
+				minScreenWidth="Tablet"
+				demandPopin="true"
+				hAlign="End">
 				<Text text="{i18n>priceUnit}" />
 			</Column>
 			<Column
@@ -105,6 +111,8 @@
 				<ObjectIdentifier
 						title="{mktitem>MaterialID}"
 						text=" {mktitem>MaterialText}"/>
+					<ObjectIdentifier
+						title="{mktitem>Day0/POID}"/>
 					<ObjectNumber
 							number="{
 								parts:[{path:'mktitem>PriceUnit'},{path:'mktitem>Currency'}],

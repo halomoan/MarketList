@@ -49,7 +49,7 @@
 							<ObjectNumber
 								class="sapUiSmallMarginBegin"
 								number="{
-										parts:[{path:'detailView>/totalPrices'},{path:'detailView>/Currency'}],
+										parts:[{path:'detailView>/totalPrices'}],
 									
 										formatOptions: {showMeasure: false}
 									}"

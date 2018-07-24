@@ -6,11 +6,7 @@ sap.ui.define([
 
 	return BaseController.extend("sap.ui.demo.masterdetail.controller.planCalendar", {
 
-		/**
-		 * Called when a controller is instantiated and its View controls (if available) are already created.
-		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
-		 * @memberOf sap.ui.demo.masterdetail.view.planCalendar
-		 */
+		
 			onInit: function() {
 				var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({
 					pattern: "YYYY-MM-dd"
@@ -131,7 +127,6 @@ sap.ui.define([
 						      "$expand": "NavDetail"
 							},
 							success: function(rData) {
-								//console.log(rData.NavDetail);
 								var oJson = new JSONModel();
 								oJson.setData(rData.NavDetail);
 								oJson.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
@@ -175,7 +170,7 @@ sap.ui.define([
 				oLocalData.SourcePage = "planCal";
 				oLocalData.Change.PRID = sPRID.replace("PRID: ","");
 				oLocalData.Change.UnloadingPoint = oAppointment.getParent().getTitle();
-				oLocalData.Change.Date = this.getStringDate(oAppointment.getStartDate());
+				oLocalData.Change.DeliveryDate = this.getStringDate(oAppointment.getStartDate());
 				this.putLocalData(oLocalData);                         
 			},
 			handleIntervalSelect: function (oEvent) {
@@ -235,22 +230,27 @@ sap.ui.define([
 			},
 			onCreatePR: function(){
 				var oFrag =  sap.ui.core.Fragment;
-				//var oThis = this;
+				
 				if (oFrag.byId("addPR", "startDate").getValueState() !== sap.ui.core.ValueState.Error){
 					
 						this._oViewCreatePR.close();
 						
 					
 						var oStartDate = oFrag.byId("addPR", "startDate").getDateValue();
-					
-						var oLocal = this.getLocalData();
-						oLocal.SourcePage = "planCal";
-						oLocal.mode = "Create";
-						oLocal.Change = null;
-						oLocal.Create = {};
-						oLocal.Create.Single = true;
-						oLocal.Create.DeliveryDate = this.getStringDate(oStartDate);
-						this.putLocalData(oLocal); 
+					    var oSelect = oFrag.byId("addPR", "selectUPoint");
+						var oLocalData = this.getLocalData();
+						oLocalData.SourcePage = "planCal";
+						oLocalData.mode = "Create";
+						oLocalData.Change = null;
+						oLocalData.Create = {};
+						oLocalData.Create.Single = true;
+						oLocalData.Create.DeliveryDate = this.getStringDate(oStartDate);
+						if (oSelect.getSelectedItem()) {
+							oLocalData.Create.UnloadingPoint = oSelect.getSelectedItem().getKey();
+						} else {
+							oLocalData.Create.UnloadingPoint = oLocalData.UnloadingPoint;                         
+						}
+						this.putLocalData(oLocalData); 
 						
 						
 						this.getRouter().navTo("dsmaster", null, false);
@@ -298,8 +298,8 @@ sap.ui.define([
 						sap.m.MessageToast.show(this.getResourceBundle().getText("msgWrongDateFuture"));
 						return;
 					}
-					if (oLocalData.Change.Date !== newDate ) {
-						msg = msg + "\n\r\n\r" + this.getResourceBundle().getText("msgDateFromTo",[oLocalData.Change.Date,newDate]);
+					if (oLocalData.Change.DeliveryDate !== newDate ) {
+						msg = msg + "\n\r\n\r" + this.getResourceBundle().getText("msgDateFromTo",[oLocalData.Change.DeliveryDate,newDate]);
 						bChanged = true;
 					}
 					

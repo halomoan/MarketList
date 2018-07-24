@@ -15,6 +15,7 @@ sap.ui.define([
 					totalMaterials: 0,
 					totalPrice: 0.00,
 					deliveryDate : "9999-12-31",
+					Currency: "",
 					PurReqID: "",
 					TrackingNo : "HELD"
 				};
@@ -52,22 +53,24 @@ sap.ui.define([
 			_onMetadataLoaded: function(){
 		
 				var oViewModel = this.getModel("detailView");
-				//var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+				
 				var oLocalData = this.getLocalData();
 				
 				var oModelHeader = new JSONModel();
 				var oView = this.getView();
 				var oThis = this;
 				
+				console.log(oLocalData);
 				if (oLocalData) {
 					
 					oViewModel.setProperty("/PlantID",oLocalData.PlantID);
 					oViewModel.setProperty("/Plant",oLocalData.Plant);
 					oViewModel.setProperty("/CostCenterID",oLocalData.CostCenterID);
 					oViewModel.setProperty("/CostCenterText",oLocalData.CostCenter);
-					oViewModel.setProperty("/UnloadingPoint",oLocalData.UnloadingPoint);
+					
 					oViewModel.setProperty("/UserId",oLocalData.UserId);
 				}
+				
 				var oModel = this.getOwnerComponent().getModel();
 				var oFilters = [];
 				oFilters.push( new sap.ui.model.Filter("PlantID", sap.ui.model.FilterOperator.EQ, oLocalData.PlantID) );
@@ -76,13 +79,16 @@ sap.ui.define([
 				//oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, dateFormat.format(new Date( (new Date()).getTime() + (24 * 60 * 60 * 1000)))));
 				
 				if (oLocalData.mode === "Create") {				
+					oViewModel.setProperty("/UnloadingPoint",oLocalData.Create.UnloadingPoint);
 					oFilters.push( new sap.ui.model.Filter("MarketListHeaderID", sap.ui.model.FilterOperator.EQ, "CREATE"));
 					oFilters.push( new sap.ui.model.Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, oLocalData.Create.UnloadingPoint) );
 					oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, oLocalData.Create.DeliveryDate.replace(/-/g, "")));
 				} else if (oLocalData.mode === "Change"){
+					oViewModel.setProperty("/UnloadingPoint",oLocalData.Change.UnloadingPoint);
 					oFilters.push( new sap.ui.model.Filter("MarketListHeaderID", sap.ui.model.FilterOperator.EQ, oLocalData.Change.PRID));
 					oFilters.push( new sap.ui.model.Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, oLocalData.Change.UnloadingPoint) );
 				} else {
+					oViewModel.setProperty("/UnloadingPoint",oLocalData.UnloadingPoint);
 					oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, oLocalData.Date.replace(/-/g, "")));
 					oFilters.push( new sap.ui.model.Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, oLocalData.UnloadingPoint) );
 				}
@@ -99,11 +105,11 @@ sap.ui.define([
 				    	
 				    	var oHeader = rData.results[0];
 				    	
-				    	console.log(oHeader);
 				    	oLocalData.Recipient = oHeader.Recipient;
-				    	oLocalData.UnloadingPoint = oHeader.UnloadingPoint;
+				    	//oLocalData.UnloadingPoint = oHeader.UnloadingPoint;
 				    	//oLocalData.TrackingNo = oHeader.TrackingNo;
 				    	oLocalData.TrackingNo = "HELD";
+				    	
 				    	oViewModel.setProperty("/Recipient",oLocalData.Recipient);
 						oViewModel.setProperty("/TrackingNo",oLocalData.TrackingNo);
 				    	//oStorage.put("localStorage",oLocalData);
@@ -114,7 +120,7 @@ sap.ui.define([
 				    	
 				    	oThis.globalData.deliveryDate = oHeader.TableH.Date0;
 				    	oViewModel.setProperty("/deliveryDate",oHeader.TableH.Date0);
-				    	oViewModel.setProperty("/UnloadingPoint",oHeader.UnloadingPoint);
+				    	
 					    oViewModel.setProperty("/PurReqID",oHeader.TableH.PRID0);
 				    	
 				    	oModelHeader.setData(oHeader.TableH);
@@ -125,6 +131,9 @@ sap.ui.define([
 				    	if (!oDetail) {
 							oThis._oJsonModel.setData({ rows : [] } );
 						} else{
+							if (oDetail[0]) {	
+								oViewModel.setProperty("/Currency",oDetail[0].Currency);
+							}
 				    		oThis._oJsonModel.setData({ rows : oDetail } );
 				    		oThis._onTableChanged(oThis._oJsonModel);
 						}
@@ -196,9 +205,8 @@ sap.ui.define([
 				
 				if (oData ) {
 					
-					//var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-				
-						
+					
+					
 					var tableRows = this._oJsonModel.getData().rows;
 					if (!tableRows){
 						
@@ -230,6 +238,7 @@ sap.ui.define([
 							if (oLocalData.Create) {
 								oData.data[i].Day0.Date = oLocalData.Create.DeliveryDate;
 							}else{
+								
 								oData.data[i].Day0.Date = oLocalData.Change.DeliveryDate;
 							}
 							this.globalData.deliveryDate = oData.data[i].Day0.Date;
@@ -269,6 +278,7 @@ sap.ui.define([
 					}
 					
 					if (bAdded) {
+						console.log(tableRows);
 						this.globalData.tableChanged = true;
 						this._oJsonModel.refresh();
 						//sap.ui.getCore().byId("__component0---splitapp--idAppControl").hideMaster();
@@ -378,7 +388,7 @@ sap.ui.define([
 				var oHeader = {};
 				oHeader.PlantID = oLocalData.PlantID;
 				oHeader.CostCenterID = oLocalData.CostCenterID;
-				oHeader.UnloadingPoint = oLocalData.UnloadingPoint;
+				oHeader.UnloadingPoint = oLocalData.UnloadingPointID;
 				oHeader.MarketListHeaderID = oLocalData.MarketListHeaderID;
 				oHeader.CostCenterText = "";
 				oHeader.Plant = "";
