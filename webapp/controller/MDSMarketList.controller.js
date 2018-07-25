@@ -31,6 +31,7 @@ sap.ui.define([
 				this.setModel(oViewModel, "detailView");
 				this.setDeviceModel();
 				
+				
 				if(!sap.ui.Device.system.phone) {
 					this.getRouter().getRoute("dsmaster").attachPatternMatched(this._onMasterMatched, this);
 				}else{
@@ -328,7 +329,6 @@ sap.ui.define([
 									if (oSplit) {
 										oSplit.hideMaster();
 									}
-									//oThis.getRouter().navTo("home", null, false);
 									var oLocalData = oThis.getLocalData();
 									oThis.getRouter().navTo("plancalendar", {
 										plantId: oLocalData.PlantID,
@@ -503,6 +503,7 @@ sap.ui.define([
 				    	}
 				    	
 				    	oThis.globalData.tableChanged = false;
+				    	oThis.globalData.iRefresh = 0;
 				    	sap.m.MessageBox.success(oThis.getResourceBundle().getText("msgSuccessSave"), {
 				            title: "Success",                                      
 				            initialFocus: null                                   
