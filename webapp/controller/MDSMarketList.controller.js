@@ -113,7 +113,7 @@ sap.ui.define([
 				    	
 				    	oViewModel.setProperty("/Recipient",oLocalData.Recipient);
 						oViewModel.setProperty("/TrackingNo",oLocalData.TrackingNo);
-				    	//oStorage.put("localStorage",oLocalData);
+				    	oViewModel.setProperty("/Currency",oLocalData.Currency);
 				    	oThis.putLocalData(oLocalData);
 				    	
 				    	oThis.globalData.MarketListID = oHeader.MarketListHeaderID;
@@ -132,9 +132,6 @@ sap.ui.define([
 				    	if (!oDetail) {
 							oThis._oJsonModel.setData({ rows : [] } );
 						} else{
-							if (oDetail[0]) {	
-								oViewModel.setProperty("/Currency",oDetail[0].Currency);
-							}
 				    		oThis._oJsonModel.setData({ rows : oDetail } );
 				    		oThis._onTableChanged(oThis._oJsonModel);
 						}
@@ -279,7 +276,6 @@ sap.ui.define([
 					}
 					
 					if (bAdded) {
-						console.log(tableRows);
 						this.globalData.tableChanged = true;
 						this._oJsonModel.refresh();
 						//sap.ui.getCore().byId("__component0---splitapp--idAppControl").hideMaster();

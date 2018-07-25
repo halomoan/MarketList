@@ -135,11 +135,7 @@ sap.ui.define([
 				}
 			},
 
-			/**
-			 * Event handler for the sorter selection.
-			 * @param {sap.ui.base.Event} oEvent the select event
-			 * @public
-			 */
+		
 			onSort : function (oEvent) {
 				var sKey = oEvent.getSource().getSelectedItem().getKey(),
 					aSorters = this._oGroupSortState.sort(sKey);
@@ -147,11 +143,7 @@ sap.ui.define([
 				this._applyGroupSort(aSorters);
 			},
 
-			/**
-			 * Event handler for the grouper selection.
-			 * @param {sap.ui.base.Event} oEvent the search field event
-			 * @public
-			 */
+		
 			onGroup : function (oEvent) {
 				var sKey = oEvent.getSource().getSelectedItem().getKey(),
 					aSorters = this._oGroupSortState.group(sKey);
@@ -238,59 +230,63 @@ sap.ui.define([
 					
 				var jsonData = [];
 				
-				
+				var oLocalData = this.getLocalData();
+				var oThis = this;
 				 
 				this._oList.getSelectedItems().some(function(item){
 					
 					var oCtx = item.getBindingContext();
 					
-					
-					var oItem = {
-						"MaterialGroupID" : "",
-						"MaterialID" : "",
-						"MaterialText" : "",
-						"UnitPrice" : 0,
-						"Currency" : "",
-						"PriceUnit" : 0,
-						"Day0": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day1": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day2": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day3": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day4": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day5": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day6": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day7": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day8": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day9": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day10": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day11": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day12": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-						"Day13": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")}
-					};
-					
-					oItem.MaterialGroupID = oCtx.getProperty("MaterialGroupID");
-					oItem.MaterialID = oCtx.getProperty("MaterialID");
-					
-					oItem.UnitPrice = parseFloat(oCtx.getProperty("NetPrice"));
-					oItem.PriceUnit = parseFloat(oCtx.getProperty("PriceUnit"));
-					oItem.MinOrder = parseFloat(oCtx.getProperty("MinOrder"));
-					oItem.OrderUnit = oCtx.getProperty("OrderUnit");
-					oItem.FactorToUOM = oCtx.getProperty("FactorToUOM");
-					oItem.AllowDec = oCtx.getProperty("AllowDec");
-					oItem.InTemplate = oCtx.getProperty("InTemplate");
-					oItem.TemplatePRID = oCtx.getProperty("TemplatePRID");
-					
-					oItem.MaterialText = oCtx.getProperty("MaterialText");
-					oItem.Currency = oCtx.getProperty("Currency");
-					oItem.UOM = oCtx.getProperty("UnitOfMeasure");
-					
-					jsonData.push(oItem);
-					
-					
+					if (oLocalData.isAutoPO && oCtx.getProperty("Locked")) {
+						sap.m.MessageToast.show(oThis.getResourceBundle().getText("msgMaterialLocked",[oCtx.getProperty("MaterialText"),oCtx.getProperty("MaterialID")]));
+					} else {
+						var oItem = {
+							"MaterialGroupID" : "",
+							"MaterialID" : "",
+							"MaterialText" : "",
+							"UnitPrice" : 0,
+							"Currency" : "",
+							"PriceUnit" : 0,
+							"Day0": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+							"Day1": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+							"Day2": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+							"Day3": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+							"Day4": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+							"Day5": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+							"Day6": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+							"Day7": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+							"Day8": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+							"Day9": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+							"Day10": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+							"Day11": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+							"Day12": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+							"Day13": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")}
+						};
+						
+						oItem.MaterialGroupID = oCtx.getProperty("MaterialGroupID");
+						oItem.MaterialID = oCtx.getProperty("MaterialID");
+						
+						oItem.UnitPrice = parseFloat(oCtx.getProperty("NetPrice"));
+						oItem.PriceUnit = parseFloat(oCtx.getProperty("PriceUnit"));
+						oItem.MinOrder = parseFloat(oCtx.getProperty("MinOrder"));
+						oItem.OrderUnit = oCtx.getProperty("OrderUnit");
+						oItem.FactorToUOM = oCtx.getProperty("FactorToUOM");
+						oItem.AllowDec = oCtx.getProperty("AllowDec");
+						oItem.InTemplate = oCtx.getProperty("InTemplate");
+						oItem.TemplatePRID = oCtx.getProperty("TemplatePRID");
+						
+						oItem.MaterialText = oCtx.getProperty("MaterialText");
+						oItem.Currency = oCtx.getProperty("Currency");
+						oItem.UOM = oCtx.getProperty("UnitOfMeasure");
+						
+						jsonData.push(oItem);
+					}	
+						
 				});
-				
-				
-				sap.ui.getCore().getEventBus().publish("marketlist", "addMaterial", {data : jsonData}); 
+					
+				if(jsonData.length > 0){	
+					sap.ui.getCore().getEventBus().publish("marketlist", "addMaterial", {data : jsonData}); 
+				}
 				if (sap.ui.Device.system.phone) {
 					history.go(-2);
 				}
@@ -321,20 +317,6 @@ sap.ui.define([
 			 * @private
 			 */
 			_onMasterMatched :  function(oEvent) {
-				/*var objectId =  oEvent.getParameter("arguments").groupId;
-				var plantId =  oEvent.getParameter("arguments").plantId;
-				var costcenterId = oEvent.getParameter("arguments").ccId ;
-				
-				
-				this.getModel().metadataLoaded().then( function() {
-					var sObjectPath = this.getModel().createKey("MaterialGroups", {
-						MaterialGroupID :  objectId
-					});
-					this._bindView("/" + sObjectPath );
-				
-				}.bind(this));
-				*/
-				
 			
 				var oLocalData = this.getLocalData(); 
 				

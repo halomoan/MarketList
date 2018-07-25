@@ -70,6 +70,7 @@ sap.ui.define([
 					oViewModel.setProperty("/CostCenterID",oLocalData.CostCenterID);
 					oViewModel.setProperty("/CostCenterText",oLocalData.CostCenter);
 					oViewModel.setProperty("/UnloadingPoint",oLocalData.UnloadingPoint);
+					oViewModel.setProperty("/Currency",oLocalData.Currency);
 					oViewModel.setProperty("/UserId",oLocalData.UserId);
 				}
 				var oModel = this.getOwnerComponent().getModel();
@@ -111,11 +112,8 @@ sap.ui.define([
 				    	var oDetail = oHeader.NavDetail.results;
 				    	
 				    	if (!oDetail) {
-								oThis._oJsonModel.setData({ rows : [] } );
+							oThis._oJsonModel.setData({ rows : [] } );
 						} else{
-							if (oDetail[0]) {	
-								oViewModel.setProperty("/Currency",oDetail[0].Currency);
-							}
 				    		oThis._oJsonModel.setData({ rows : oDetail } );
 				    		oThis._onTableChanged(oThis._oJsonModel);
 						}

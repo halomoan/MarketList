@@ -15,9 +15,9 @@ sap.ui.define([
 				return false;
 			}
 			
-			var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+		
 
-			var oLocal = oStorage.get("localStorage");
+			var oLocal = this.getLocalData();
 			if (!oLocal) {
 				oLocal = {};
 			}
@@ -26,6 +26,12 @@ sap.ui.define([
 			if (oPlant) {
 				oLocal.PlantID = oPlant.getProperty("key");
 				oLocal.Plant = oPlant.getProperty("text");
+				var sPath = oPlant.getBindingContext().getPath();
+				var oData = oPlant.getModel().getProperty(sPath);
+				if (oData) {
+					oLocal.Currency = oData.Currency;
+					oLocal.isAutoPO = oData.IsAutoPO;
+				}
 			} else {
 				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectPlant"));
 				return false;
@@ -61,15 +67,17 @@ sap.ui.define([
 			} else {
 				oLocal.UseMobile = false;
 			}
-			oStorage.put("localStorage", oLocal);
+			this.putLocalData(oLocal);
+			
 			return true;
 		},
 		gotoForm: function() {
 			if (this.storeSelection()){ 
-				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-				var oLocal = oStorage.get("localStorage");
+			
+				var oLocal = this.getLocalData();
 				oLocal.SourcePage = null;
-				oStorage.put("localStorage", oLocal);
+				this.putLocalData(oLocal);
+				
 				
 				if (!sap.ui.Device.system.phone) {
 					if (oLocal.UseMobile) {
@@ -122,10 +130,10 @@ sap.ui.define([
 				"path": "/PlantSet",
 				"template": oItemSelectTemplate,
 				"events": {
+					
 					dataReceived: function() {
 						odetailView.setProperty("/busy", false);
-						oPlant.fireChange(oPlant.getFirstItem());						
-
+						oPlant.fireChange(oPlant.getFirstItem());
 					},
 					dataRequested: function() {
 						odetailView.setProperty("/busy", true);
