@@ -21,12 +21,6 @@ sap.ui.define([
 				var oViewModel = new JSONModel(oViewData);
 				this.setModel(oViewModel, "detailView");
 				
-				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-				var oLocal = oStorage.get("localStorage");
-				
-				oViewModel.setProperty("/Plant",oLocal.Plant);
-				oViewModel.setProperty("/CostCenter",oLocal.CostCenter);
-				
 				this.getRouter().getRoute("plancalendar").attachPatternMatched(this._onMasterMatched, this);
 			},
 			_onMasterMatched: function(oEvent){
@@ -34,6 +28,12 @@ sap.ui.define([
 				this.plantID = oEvent.getParameter("arguments").plantId;
 				this.CostCenterID = oEvent.getParameter("arguments").ccId;
 				this.oDate = new Date(oEvent.getParameter("arguments").date);
+				
+				var oViewModel = this.getModel("detailView");
+				var oLocalData = this.getLocalData();
+				oViewModel.setProperty("/Plant",oLocalData.Plant);
+				oViewModel.setProperty("/CostCenter",oLocalData.CostCenter);
+				
 				this.refreshSchedule();
 				
 				
@@ -209,7 +209,17 @@ sap.ui.define([
 					
 					var oFrag =  sap.ui.core.Fragment;
 					var oSelect = oFrag.byId("addPR", "selectUPoint");
+					var oItems = oSelect.getItems();
+					
+					if(oItems.length === 0) {
+						var item = new sap.ui.core.Item({
+							key : oLocalData.UnloadingPointID,
+							text : oLocalData.UnloadingPoint
+						});
+						oSelect.addItem(item);
+					}
 					oSelect.setSelectedKey(oLocalData.UnloadingPointID);
+					
 					var oDP = oFrag.byId("addPR","startDate");
 			
 					oDP.setValue(oLocalData.Date);  
@@ -252,28 +262,7 @@ sap.ui.define([
 						}
 						this.putLocalData(oLocalData); 
 						
-						
 						this.getRouter().navTo("dsmaster", null, false);
-						/*
-						
-						var oStartDate = oFrag.byId("addPR", "startDate").getDateValue();
-						var oNewPR = {
-							StartDate: new Date(oStartDate.setHours(0,0,0)),
-							EndDate: new Date(oStartDate.setHours(23,59,59)),
-							Title: "- None -",
-							Type: "Type05",
-							Info: "New PR"
-						};
-						var oModel = this.getView().getModel("calModel");
-						var sPath = "/scheduleheader/" + oFrag.byId("addPR", "selectUPoint").getSelectedIndex() + "/NavHeaderToItem";
-						
-						var oPRList = oModel.getProperty(sPath);
-						oPRList.push(oNewPR);
-
-						oModel.setProperty(sPath, oPRList);
-						
-						this._oViewCreatePR.close();
-						*/
 				}
 				
 			},
@@ -370,10 +359,7 @@ sap.ui.define([
 				if (oLocalData.mode === "Change") {
 					this.getRouter().navTo("dsmaster", null, false);	
 				}
-				
-				
-				
-				
+
 			},
 			onCloseCreate: function(){
 				this._oViewCreatePR.close();

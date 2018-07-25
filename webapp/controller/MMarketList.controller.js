@@ -15,6 +15,7 @@ sap.ui.define([
 					totalMaterials: 0,
 					totalPrice: 0.00,
 					deliveryDate : "9999-12-31",
+					Currency: "",
 					PurReqID: "",
 					TrackingNo : "HELD"
 				};
@@ -112,6 +113,9 @@ sap.ui.define([
 				    	if (!oDetail) {
 								oThis._oJsonModel.setData({ rows : [] } );
 						} else{
+							if (oDetail[0]) {	
+								oViewModel.setProperty("/Currency",oDetail[0].Currency);
+							}
 				    		oThis._oJsonModel.setData({ rows : oDetail } );
 				    		oThis._onTableChanged(oThis._oJsonModel);
 						}

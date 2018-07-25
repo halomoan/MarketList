@@ -60,7 +60,6 @@ sap.ui.define([
 				var oView = this.getView();
 				var oThis = this;
 				
-				console.log(oLocalData);
 				if (oLocalData) {
 					
 					oViewModel.setProperty("/PlantID",oLocalData.PlantID);

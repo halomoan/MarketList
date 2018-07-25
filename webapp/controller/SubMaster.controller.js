@@ -84,13 +84,7 @@ sap.ui.define([
 			/* event handlers                                              */
 			/* =========================================================== */
 
-			/**
-			 * After list data is available, this handler method updates the
-			 * master list counter and hides the pull to refresh control, if
-			 * necessary.
-			 * @param {sap.ui.base.Event} oEvent the update finished event
-			 * @public
-			 */
+		
 			onUpdateFinished : function (oEvent) {
 				// update the master list object counter after new data is loaded
 				this._updateListItemCount(oEvent.getParameter("total"));
@@ -100,14 +94,7 @@ sap.ui.define([
 			
 			},
 
-			/**
-			 * Event handler for the master search field. Applies current
-			 * filter value and triggers a new search. If the search field's
-			 * 'refresh' button has been pressed, no new search is triggered
-			 * and the list binding is refresh instead.
-			 * @param {sap.ui.base.Event} oEvent the search event
-			 * @public
-			 */
+		
 			onSearch : function (oEvent) {
 				if (oEvent.getParameters().refreshButtonPressed) {
 					this.onRefresh();
@@ -348,8 +335,8 @@ sap.ui.define([
 				}.bind(this));
 				*/
 				
-				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-				var oLocalData = oStorage.get("localStorage");
+			
+				var oLocalData = this.getLocalData(); 
 				
 				var objectId =  oEvent.getParameter("arguments").groupId;
 				var template =  oEvent.getParameter("arguments").template;

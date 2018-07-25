@@ -124,7 +124,7 @@ sap.ui.define([
 				"events": {
 					dataReceived: function() {
 						odetailView.setProperty("/busy", false);
-						oPlant.fireChange(oPlant.getFirstItem());
+						oPlant.fireChange(oPlant.getFirstItem());						
 
 					},
 					dataRequested: function() {
