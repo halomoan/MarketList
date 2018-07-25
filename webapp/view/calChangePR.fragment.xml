@@ -2,6 +2,7 @@
 	<ResponsivePopover
 		title="{i18n>pr}"
 		class="sapUiPopupWithPadding"
+		placement="Auto"
 		 >
 		<content>
 			<f:SimpleForm editable="false" layout="ResponsiveGridLayout">

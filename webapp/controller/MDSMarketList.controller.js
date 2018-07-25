@@ -82,6 +82,7 @@ sap.ui.define([
 					oFilters.push( new sap.ui.model.Filter("MarketListHeaderID", sap.ui.model.FilterOperator.EQ, "CREATE"));
 					oFilters.push( new sap.ui.model.Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, oLocalData.Create.UnloadingPoint) );
 					oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, oLocalData.Create.DeliveryDate.replace(/-/g, "")));
+					
 				} else if (oLocalData.mode === "Change"){
 					oViewModel.setProperty("/UnloadingPoint",oLocalData.Change.UnloadingPoint);
 					oFilters.push( new sap.ui.model.Filter("MarketListHeaderID", sap.ui.model.FilterOperator.EQ, oLocalData.Change.PRID));

@@ -8,7 +8,7 @@
 	<uxap:ObjectPageHeaderContent>
 		<uxap:content>
 			<l:VerticalLayout  class="sapUiSmallMargin">
-			<Image src="images/PPHGLogo.png" height="50%"/>
+			<Image src="images/Logo.png" height="50%"/>
 			</l:VerticalLayout>
 			<l:VerticalLayout class="sapUiSmallMargin">
 				<Title text="Purchasing Requisition" level="H1" titleStyle="H1"/>

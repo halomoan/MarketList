@@ -191,7 +191,7 @@
 						"submaster"
 					]
 				},
-					{
+				{
 					"pattern": "subdsmaster/groupId/{groupId}/template/:template:",
 					"name": "subdsmaster",
 					"target": [

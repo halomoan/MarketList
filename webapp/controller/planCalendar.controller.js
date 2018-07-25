@@ -298,7 +298,7 @@ sap.ui.define([
 					}
 					
 					if (bChanged){
-				
+						
 						var dialog = new sap.m.Dialog({
 							title: this.getResourceBundle().getText("confirm"),
 							type: "Message",
@@ -318,6 +318,7 @@ sap.ui.define([
 											            title: "Response",                                      
 											            initialFocus: null
 											        });
+											        oThis.refreshSchedule();
 												},
 												error: function(error) {
 												},
