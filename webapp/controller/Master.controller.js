@@ -47,9 +47,7 @@ sap.ui.define([
 
 				this.setModel(oViewModel, "masterView");
 				this.setDeviceModel();
-				// Make sure, busy indication is showing immediately so there is no
-				// break after the busy indication for loading the view's meta data is
-				// ended (see promise 'oWhenMetadataIsLoaded' in AppController)
+			
 				oList.attachEventOnce("updateFinished", function(){
 					// Restore original busy indicator delay for the list
 					oViewModel.setProperty("/delay", iOriginalBusyDelay);
@@ -61,12 +59,10 @@ sap.ui.define([
 					}.bind(this)
 				});
 				*/
-
-				
-				
+	
 				if (!sap.ui.Device.system.phone) {
-					var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-					var oLocalData = oStorage.get("localStorage");	
+					
+					var oLocalData = this.getLocalData();
 					if(oLocalData.UseMobile) {
 						this.getRouter().getRoute("dmaster").attachPatternMatched(this._onMasterMatched, this);
 					} else {
@@ -80,17 +76,6 @@ sap.ui.define([
 				this.getRouter().attachBypassed(this.onBypassed, this);
 			},
 
-			/* =========================================================== */
-			/* event handlers                                              */
-			/* =========================================================== */
-
-			/**
-			 * After list data is available, this handler method updates the
-			 * master list counter and hides the pull to refresh control, if
-			 * necessary.
-			 * @param {sap.ui.base.Event} oEvent the update finished event
-			 * @public
-			 */
 			onUpdateFinished : function (oEvent) {
 				// update the master list object counter after new data is loaded
 				this._updateListItemCount(oEvent.getParameter("total"));
@@ -98,14 +83,6 @@ sap.ui.define([
 				this.byId("pullToRefresh").hide();
 			},
 
-			/**
-			 * Event handler for the master search field. Applies current
-			 * filter value and triggers a new search. If the search field's
-			 * 'refresh' button has been pressed, no new search is triggered
-			 * and the list binding is refresh instead.
-			 * @param {sap.ui.base.Event} oEvent the search event
-			 * @public
-			 */
 			onSearch : function (oEvent) {
 				if (oEvent.getParameters().refreshButtonPressed) {
 					// Search field's 'refresh' button has been pressed.
@@ -129,20 +106,10 @@ sap.ui.define([
 
 			},
 
-			/**
-			 * Event handler for refresh event. Keeps filter, sort
-			 * and group settings and refreshes the list binding.
-			 * @public
-			 */
 			onRefresh : function () {
 				this._oList.getBinding("items").refresh();
 			},
 
-			/**
-			 * Event handler for the sorter selection.
-			 * @param {sap.ui.base.Event} oEvent the select event
-			 * @public
-			 */
 			onSort : function (oEvent) {
 				var sKey = oEvent.getSource().getSelectedItem().getKey(),
 					aSorters = this._oGroupSortState.sort(sKey);
@@ -162,13 +129,6 @@ sap.ui.define([
 				this._applyGroupSort(aSorters);
 			},
 
-			/**
-			 * Event handler for the filter button to open the ViewSettingsDialog.
-			 * which is used to add or remove filters to the master list. This
-			 * handler method is also called when the filter bar is pressed,
-			 * which is added to the beginning of the master list when a filter is applied.
-			 * @public
-			 */
 			onOpenViewSettings : function () {
 				if (!this._oViewSettingsDialog) {
 					this._oViewSettingsDialog = sap.ui.xmlfragment("sap.ui.demo.masterdetail.view.ViewSettingsDialog", this);
@@ -179,15 +139,6 @@ sap.ui.define([
 				this._oViewSettingsDialog.open();
 			},
 
-			/**
-			 * Event handler called when ViewSettingsDialog has been confirmed, i.e.
-			 * has been closed with 'OK'. In the case, the currently chosen filters
-			 * are applied to the master list, which can also mean that the currently
-			 * applied filters are removed from the master list, in case the filter
-			 * settings are removed in the ViewSettingsDialog.
-			 * @param {sap.ui.base.Event} oEvent the confirm event
-			 * @public
-			 */
 			onConfirmViewSettingsDialog : function (oEvent) {
 				var aFilterItems = oEvent.getParameters().filterItems,
 					aFilters = [],
@@ -214,11 +165,6 @@ sap.ui.define([
 				this._applyFilterSearch();
 			},
 
-			/**
-			 * Event handler for the list selection event
-			 * @param {sap.ui.base.Event} oEvent the list selectionChange event
-			 * @public
-			 */
 			onSelectionChange : function (oEvent) {
 				// get the list item, either from the listItem parameter or from the event's source itself (will depend on the device-dependent mode).
 				this._showDetail(oEvent.getParameter("listItem") || oEvent.getSource());
@@ -227,23 +173,11 @@ sap.ui.define([
 			onListClick : function(oEvent) {
 				this._showSubMaster(oEvent.getParameter("listItem") || oEvent.getSource());
 			},
-			/**
-			 * Event handler for the bypassed event, which is fired when no routing pattern matched.
-			 * If there was an object selected in the master list, that selection is removed.
-			 * @public
-			 */
+
 			onBypassed : function () {
 				this._oList.removeSelections(true);
 			},
 
-			/**
-			 * Used to create GroupHeaders with non-capitalized caption.
-			 * These headers are inserted into the master list to
-			 * group the master list's items.
-			 * @param {Object} oGroup group whose text is to be displayed
-			 * @public
-			 * @returns {sap.m.GroupHeaderListItem} group header with non-capitalized caption.
-			 */
 			createGroupHeader : function (oGroup) {
 				return new GroupHeaderListItem({
 					title : oGroup.text,
@@ -278,23 +212,12 @@ sap.ui.define([
 				});
 			},
 
-			/**
-			 * If the master route was hit (empty hash) we have to set
-			 * the hash to to the first item in the list as soon as the
-			 * listLoading is done and the first item in the list is known
-			 * @private
-			 */
 			_onMasterMatched :  function(oEvent) {
-				/*var plantId =  oEvent.getParameter("arguments").plantId;
-				var costcenterId =  oEvent.getParameter("arguments").ccId;
-				*/
 
+				this.oLocalData = this.getLocalData();
 				
-				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-				var oLocalData = oStorage.get("localStorage");
-				
-				var plantId = oLocalData.PlantID;
-				var costcenterId = oLocalData.CostCenterID;
+				var plantId = this.oLocalData.PlantID;
+				var costcenterId = this.oLocalData.CostCenterID;
 				
 				
 				if (this.PlantID !== plantId ) {
@@ -322,15 +245,13 @@ sap.ui.define([
 
 			_showSubMaster : function(oItem) {
 				var sObjectId = oItem.getBindingContext().getProperty("MaterialGroupID");
-				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-				var oLocalData = oStorage.get("localStorage");
-				
+			
 				if (sObjectId === "TEMPLATE") {
 					if (!sap.ui.Device.system.phone) {
-							if(oLocalData.SourcePage === "planCal") {
+							if(this.oLocalData.SourcePage === "planCal") {
 								this.getRouter().navTo("subdsmaster", {groupId : sObjectId,template: "X" }, false);
 							} else{
-								if(oLocalData.UseMobile) {
+								if(this.oLocalData.UseMobile) {
 									this.getRouter().navTo("subdmaster", {groupId : sObjectId,template: "X" }, false);
 								} else {
 								this.getRouter().navTo("submaster", {groupId : sObjectId,template: "X" }, false);
@@ -343,10 +264,10 @@ sap.ui.define([
 				} else {
 					if (!sap.ui.Device.system.phone) {
 					
-							if(oLocalData.SourcePage === "planCal") {
+							if(this.oLocalData.SourcePage === "planCal") {
 								this.getRouter().navTo("subdsmaster", {groupId : sObjectId}, false);
 							} else{
-									if(oLocalData.UseMobile) {
+									if(this.oLocalData.UseMobile) {
 										this.getRouter().navTo("subdmaster", {groupId : sObjectId }, false);
 									} else {
 										this.getRouter().navTo("submaster", {groupId : sObjectId}, false);
@@ -371,10 +292,6 @@ sap.ui.define([
 				}
 			},
 
-			/**
-			 * Internal helper method to apply both filter and search state together on the list binding
-			 * @private
-			 */
 			_applyFilterSearch : function () {
 				var aFilters = this._oListFilterState.aSearch.concat(this._oListFilterState.aFilter),
 					oViewModel = this.getModel("masterView");
@@ -389,20 +306,10 @@ sap.ui.define([
 				}
 			},
 
-			/**
-			 * Internal helper method to apply both group and sort state together on the list binding
-			 * @param {sap.ui.model.Sorter[]} aSorters an array of sorters
-			 * @private
-			 */
 			_applyGroupSort : function (aSorters) {
 				this._oList.getBinding("items").sort(aSorters);
 			},
 
-			/**
-			 * Internal helper method that sets the filter bar visibility property and the label's caption to be shown
-			 * @param {string} sFilterBarText the selected filter value
-			 * @private
-			 */
 			_updateFilterBar : function (sFilterBarText) {
 				var oViewModel = this.getModel("masterView");
 				oViewModel.setProperty("/isFilterBarVisible", (this._oListFilterState.aFilter.length > 0));

@@ -216,25 +216,23 @@ sap.ui.define([
 				var oThis = this;
 				
 				
-				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-				var oLocalData = oStorage.get("localStorage");
 				
-				oLocalData.Recipient = oViewModel.getProperty("/Recipient");
-				oLocalData.TrackingNo = oViewModel.getProperty("/TrackingNo");
-				oLocalData.UnloadingPoint = oViewModel.getProperty("/UnloadingPoint");
-				oLocalData.MarketListHeaderID = this.globalData.MarketListID;
-				oStorage.put("localStorage",oLocalData);
+				this.oLocalData.Recipient = oViewModel.getProperty("/Recipient");
+				this.oLocalData.TrackingNo = oViewModel.getProperty("/TrackingNo");
+				this.oLocalData.UnloadingPoint = oViewModel.getProperty("/UnloadingPoint");
+				this.oLocalData.MarketListHeaderID = this.globalData.MarketListID;
+				this.putLocalData(this.oLocalData);
                             	
 				var oHeader = {};
-				oHeader.PlantID = oLocalData.PlantID;
-				oHeader.CostCenterID = oLocalData.CostCenterID;
-				oHeader.UnloadingPoint = oLocalData.UnloadingPoint;
-				oHeader.MarketListHeaderID = oLocalData.MarketListHeaderID;
+				oHeader.PlantID = this.oLocalData.PlantID;
+				oHeader.CostCenterID = this.oLocalData.CostCenterID;
+				oHeader.UnloadingPoint = this.oLocalData.UnloadingPoint;
+				oHeader.MarketListHeaderID = this.oLocalData.MarketListHeaderID;
 				oHeader.CostCenterText = "";
 				oHeader.Plant = "";
-				oHeader.Requisitioner = oLocalData.UserId;
-				oHeader.Recipient = oLocalData.Recipient;
-				oHeader.TrackingNo = oLocalData.TrackingNo;
+				oHeader.Requisitioner = this.oLocalData.UserId;
+				oHeader.Recipient = this.oLocalData.Recipient;
+				oHeader.TrackingNo = this.oLocalData.TrackingNo;
 				oHeader.PurchGroup = this.globalData.PurchasingGroup;
 				oHeader.Date = "";
 				oHeader.TableH = [];
@@ -275,8 +273,8 @@ sap.ui.define([
 			
 				for(var i in tableRows){
 					var oDetail = {};
-					oDetail.MarketListDetailID = oLocalData.MarketListDetailID ?  oLocalData.MarketListDetailID : this.globalData.MarketListDetailID ;
-					oDetail.MarketListHeaderID = oLocalData.MarketListHeaderID ? oLocalData.MarketListHeaderID : this.globalData.MarketListHeaderID ;
+					oDetail.MarketListDetailID = this.oLocalData.MarketListDetailID ?  this.oLocalData.MarketListDetailID : this.globalData.MarketListDetailID ;
+					oDetail.MarketListHeaderID = this.oLocalData.MarketListHeaderID ? this.oLocalData.MarketListHeaderID : this.globalData.MarketListHeaderID ;
 					oDetail.MaterialGroupID = tableRows[i].MaterialGroupID;
 					oDetail.MaterialID = tableRows[i].MaterialID;
 					oDetail.MaterialText = tableRows[i].MaterialText;
@@ -593,17 +591,17 @@ sap.ui.define([
 				var oView = this.getView();
 				var oThis = this;
 				
-				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-				var oLocalData = oStorage.get("localStorage");
 				
-				if (oLocalData) {
+				this.oLocalData = this.getLocalData();
+				
+				if (this.oLocalData) {
 					
-					oViewModel.setProperty("/PlantID",oLocalData.PlantID);
-					oViewModel.setProperty("/Plant",oLocalData.Plant);
-					oViewModel.setProperty("/CostCenterID",oLocalData.CostCenterID);
-					oViewModel.setProperty("/CostCenterText",oLocalData.CostCenter);
-					oViewModel.setProperty("/UnloadingPoint",oLocalData.UnloadingPoint);
-					oViewModel.setProperty("/UserId",oLocalData.UserId);
+					oViewModel.setProperty("/PlantID",this.oLocalData.PlantID);
+					oViewModel.setProperty("/Plant",this.oLocalData.Plant);
+					oViewModel.setProperty("/CostCenterID",this.oLocalData.CostCenterID);
+					oViewModel.setProperty("/CostCenterText",this.oLocalData.CostCenter);
+					oViewModel.setProperty("/UnloadingPoint",this.oLocalData.UnloadingPoint);
+					oViewModel.setProperty("/UserId",this.oLocalData.UserId);
 					
 					for (var i = 0; i < 14; i++){
 						oViewModel.setProperty("/columns/" + i + "/noItem",0);
@@ -615,11 +613,11 @@ sap.ui.define([
 				var oModel = this.getOwnerComponent().getModel();
 				
 				var oFilters = [];
-				oFilters.push( new sap.ui.model.Filter("PlantID", sap.ui.model.FilterOperator.EQ, oLocalData.PlantID) );
-				oFilters.push( new sap.ui.model.Filter("CostCenterID", sap.ui.model.FilterOperator.EQ, oLocalData.CostCenterID) );
-				oFilters.push( new sap.ui.model.Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, oLocalData.UnloadingPoint) );
+				oFilters.push( new sap.ui.model.Filter("PlantID", sap.ui.model.FilterOperator.EQ, this.oLocalData.PlantID) );
+				oFilters.push( new sap.ui.model.Filter("CostCenterID", sap.ui.model.FilterOperator.EQ, this.oLocalData.CostCenterID) );
+				oFilters.push( new sap.ui.model.Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, this.oLocalData.UnloadingPoint) );
 				//oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, dateFormat.format(new Date( (new Date()).getTime() + (24 * 60 * 60 * 1000)))));
-				oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, oLocalData.Date.replace(/-/g, "")));
+				oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, this.oLocalData.Date.replace(/-/g, "")));
 				
 				sap.ui.core.BusyIndicator.show();
 				oModel.read("/MarketListHeaderSet", {
@@ -632,13 +630,12 @@ sap.ui.define([
 				    	
 				    	var oHeader = rData.results[0];
 				    	
-				    	oLocalData = oStorage.get("localStorage");
-				    	oLocalData.Recipient = oHeader.Recipient;
-				    	//oLocalData.TrackingNo = oHeader.TrackingNo;
-				    	oLocalData.TrackingNo = "HELD";
-				    	oViewModel.setProperty("/Recipient",oLocalData.Recipient);
-						oViewModel.setProperty("/TrackingNo",oLocalData.TrackingNo);
-				    	oStorage.put("localStorage",oLocalData);
+				    	
+				    	oThis.oLocalData.Recipient = oHeader.Recipient;
+				    	oThis.oLocalData.TrackingNo = "HELD";
+				    	oViewModel.setProperty("/Recipient",oThis.oLocalData.Recipient);
+						oViewModel.setProperty("/TrackingNo",oThis.oLocalData.TrackingNo);
+				    	oThis.putLocalData(oThis.oLocalData);
 				    	
 				    	oModelHeader.setData(oHeader.TableH);
 				    	oThis.getView().setModel(oModelHeader,"TableH");

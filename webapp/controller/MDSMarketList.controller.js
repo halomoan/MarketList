@@ -47,6 +47,9 @@ sap.ui.define([
 				
 			},
 			_onMasterMatched :  function() {
+				
+				this.this.oLocalData = this.getLocalData();
+				
 				if (this.globalData.iRefresh === 0) {
 					this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
 				}
@@ -55,43 +58,41 @@ sap.ui.define([
 		
 				var oViewModel = this.getModel("detailView");
 				
-				var oLocalData = this.getLocalData();
-				
 				var oModelHeader = new JSONModel();
 				var oView = this.getView();
 				var oThis = this;
 				
-				if (oLocalData) {
+				if (this.oLocalData) {
 					
-					oViewModel.setProperty("/PlantID",oLocalData.PlantID);
-					oViewModel.setProperty("/Plant",oLocalData.Plant);
-					oViewModel.setProperty("/CostCenterID",oLocalData.CostCenterID);
-					oViewModel.setProperty("/CostCenterText",oLocalData.CostCenter);
+					oViewModel.setProperty("/PlantID",this.oLocalData.PlantID);
+					oViewModel.setProperty("/Plant",this.oLocalData.Plant);
+					oViewModel.setProperty("/CostCenterID",this.oLocalData.CostCenterID);
+					oViewModel.setProperty("/CostCenterText",this.oLocalData.CostCenter);
 					
-					oViewModel.setProperty("/UserId",oLocalData.UserId);
+					oViewModel.setProperty("/UserId",this.oLocalData.UserId);
 				}
 				
 				var oModel = this.getOwnerComponent().getModel();
 				var oFilters = [];
-				oFilters.push( new sap.ui.model.Filter("PlantID", sap.ui.model.FilterOperator.EQ, oLocalData.PlantID) );
-				oFilters.push( new sap.ui.model.Filter("CostCenterID", sap.ui.model.FilterOperator.EQ, oLocalData.CostCenterID) );
+				oFilters.push( new sap.ui.model.Filter("PlantID", sap.ui.model.FilterOperator.EQ, this.oLocalData.PlantID) );
+				oFilters.push( new sap.ui.model.Filter("CostCenterID", sap.ui.model.FilterOperator.EQ, this.oLocalData.CostCenterID) );
 				
 				//oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, dateFormat.format(new Date( (new Date()).getTime() + (24 * 60 * 60 * 1000)))));
 				
-				if (oLocalData.mode === "Create") {				
-					oViewModel.setProperty("/UnloadingPoint",oLocalData.Create.UnloadingPoint);
+				if (this.oLocalData.mode === "Create") {				
+					oViewModel.setProperty("/UnloadingPoint",this.oLocalData.Create.UnloadingPoint);
 					oFilters.push( new sap.ui.model.Filter("MarketListHeaderID", sap.ui.model.FilterOperator.EQ, "CREATE"));
-					oFilters.push( new sap.ui.model.Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, oLocalData.Create.UnloadingPoint) );
-					oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, oLocalData.Create.DeliveryDate.replace(/-/g, "")));
+					oFilters.push( new sap.ui.model.Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, this.oLocalData.Create.UnloadingPoint) );
+					oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, this.oLocalData.Create.DeliveryDate.replace(/-/g, "")));
 					
-				} else if (oLocalData.mode === "Change"){
-					oViewModel.setProperty("/UnloadingPoint",oLocalData.Change.UnloadingPoint);
-					oFilters.push( new sap.ui.model.Filter("MarketListHeaderID", sap.ui.model.FilterOperator.EQ, oLocalData.Change.PRID));
-					oFilters.push( new sap.ui.model.Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, oLocalData.Change.UnloadingPoint) );
+				} else if (this.oLocalData.mode === "Change"){
+					oViewModel.setProperty("/UnloadingPoint",this.oLocalData.Change.UnloadingPoint);
+					oFilters.push( new sap.ui.model.Filter("MarketListHeaderID", sap.ui.model.FilterOperator.EQ, this.oLocalData.Change.PRID));
+					oFilters.push( new sap.ui.model.Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, this.oLocalData.Change.UnloadingPoint) );
 				} else {
-					oViewModel.setProperty("/UnloadingPoint",oLocalData.UnloadingPoint);
-					oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, oLocalData.Date.replace(/-/g, "")));
-					oFilters.push( new sap.ui.model.Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, oLocalData.UnloadingPoint) );
+					oViewModel.setProperty("/UnloadingPoint",this.oLocalData.UnloadingPoint);
+					oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, this.oLocalData.Date.replace(/-/g, "")));
+					oFilters.push( new sap.ui.model.Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, this.oLocalData.UnloadingPoint) );
 				}
 				
 				
@@ -106,15 +107,15 @@ sap.ui.define([
 				    	
 				    	var oHeader = rData.results[0];
 				    	
-				    	oLocalData.Recipient = oHeader.Recipient;
-				    	//oLocalData.UnloadingPoint = oHeader.UnloadingPoint;
-				    	//oLocalData.TrackingNo = oHeader.TrackingNo;
-				    	oLocalData.TrackingNo = "HELD";
+				    	this.oLocalData.Recipient = oHeader.Recipient;
+				    	//this.oLocalData.UnloadingPoint = oHeader.UnloadingPoint;
+				    	//this.oLocalData.TrackingNo = oHeader.TrackingNo;
+				    	this.oLocalData.TrackingNo = "HELD";
 				    	
-				    	oViewModel.setProperty("/Recipient",oLocalData.Recipient);
-						oViewModel.setProperty("/TrackingNo",oLocalData.TrackingNo);
-				    	oViewModel.setProperty("/Currency",oLocalData.Currency);
-				    	oThis.putLocalData(oLocalData);
+				    	oViewModel.setProperty("/Recipient",this.oLocalData.Recipient);
+						oViewModel.setProperty("/TrackingNo",this.oLocalData.TrackingNo);
+				    	oViewModel.setProperty("/Currency",this.oLocalData.Currency);
+				    	oThis.putLocalData(this.oLocalData);
 				    	
 				    	oThis.globalData.MarketListID = oHeader.MarketListHeaderID;
 				    	
@@ -232,12 +233,11 @@ sap.ui.define([
 						if (bNew) {
 				
 							//var oTableH = this.getView().getModel("TableH").getData();
-							var oLocalData = this.getLocalData();
-							if (oLocalData.Create) {
-								oData.data[i].Day0.Date = oLocalData.Create.DeliveryDate;
+							if (this.oLocalData.Create) {
+								oData.data[i].Day0.Date = this.oLocalData.Create.DeliveryDate;
 							}else{
 								
-								oData.data[i].Day0.Date = oLocalData.Change.DeliveryDate;
+								oData.data[i].Day0.Date = this.oLocalData.Change.DeliveryDate;
 							}
 							this.globalData.deliveryDate = oData.data[i].Day0.Date;
 							/*oData.data[i].Day1.Date = oTableH.Date1;
@@ -284,12 +284,7 @@ sap.ui.define([
 				}
 			},
 			tabChanged : function(oEvent){
-				/*var mode = this.byId("LDay" + this.globalData.dayId).getMode();
-				if (mode !== sap.m.ListMode.None) {
-					this.byId("LDay" + this.globalData.dayId).setMode(sap.m.ListMode.None);
-					this.byId("toggleTemplate").setText("Show Template");
-				}
-				*/
+			
 				var oViewModel = this.getModel("detailView");
 				if (this.globalData.templtChanged) {
 					this.globalData.templtChanged = false;
@@ -325,11 +320,10 @@ sap.ui.define([
 									if (oSplit) {
 										oSplit.hideMaster();
 									}
-									var oLocalData = oThis.getLocalData();
 									oThis.getRouter().navTo("plancalendar", {
-										plantId: oLocalData.PlantID,
-										ccId: oLocalData.CostCenterID,
-										date : oLocalData.Date
+										plantId: oThis.oLocalData.PlantID,
+										ccId: oThis.oLocalData.CostCenterID,
+										date : oThis.oLocalData.Date
 									}, false);
 								
 								}
@@ -341,12 +335,10 @@ sap.ui.define([
 					if (oSplit) {
 						oSplit.hideMaster();
 					}
-					//this.getRouter().navTo("home", null, false);
-					var oLocalData = this.getLocalData();
 					this.getRouter().navTo("plancalendar", {
-						plantId: oLocalData.PlantID,
-						ccId: oLocalData.CostCenterID,
-						date : oLocalData.Date
+						plantId: this.oLocalData.PlantID,
+						ccId: this.oLocalData.CostCenterID,
+						date : this.oLocalData.Date
 					}, false);
 					
 				}
@@ -372,25 +364,22 @@ sap.ui.define([
 				var oThis = this;
 				
 				
-				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-				var oLocalData = oStorage.get("localStorage");
-				
-				oLocalData.Recipient = oViewModel.getProperty("/Recipient");
-				oLocalData.TrackingNo = oViewModel.getProperty("/TrackingNo");
-				oLocalData.UnloadingPoint = oViewModel.getProperty("/UnloadingPoint");
-				oLocalData.MarketListHeaderID = this.globalData.MarketListID;
-				oStorage.put("localStorage",oLocalData);
+				this.oLocalData.Recipient = oViewModel.getProperty("/Recipient");
+				this.oLocalData.TrackingNo = oViewModel.getProperty("/TrackingNo");
+				this.oLocalData.UnloadingPoint = oViewModel.getProperty("/UnloadingPoint");
+				this.oLocalData.MarketListHeaderID = this.globalData.MarketListID;
+				this.putLocalData(this.oLocalData);
                             	
 				var oHeader = {};
-				oHeader.PlantID = oLocalData.PlantID;
-				oHeader.CostCenterID = oLocalData.CostCenterID;
-				oHeader.UnloadingPoint = oLocalData.UnloadingPointID;
-				oHeader.MarketListHeaderID = oLocalData.MarketListHeaderID;
+				oHeader.PlantID = this.oLocalData.PlantID;
+				oHeader.CostCenterID = this.oLocalData.CostCenterID;
+				oHeader.UnloadingPoint = this.oLocalData.UnloadingPointID;
+				oHeader.MarketListHeaderID = this.oLocalData.MarketListHeaderID;
 				oHeader.CostCenterText = "";
 				oHeader.Plant = "";
-				oHeader.Requisitioner = oLocalData.UserId;
-				oHeader.Recipient = oLocalData.Recipient;
-				oHeader.TrackingNo = oLocalData.TrackingNo;
+				oHeader.Requisitioner = this.oLocalData.UserId;
+				oHeader.Recipient = this.oLocalData.Recipient;
+				oHeader.TrackingNo = this.oLocalData.TrackingNo;
 				oHeader.PurchGroup = this.globalData.PurchasingGroup;
 				oHeader.Date = "";
 				oHeader.TableH = [];
@@ -431,8 +420,8 @@ sap.ui.define([
 			
 				for(var i in tableRows){
 					var oDetail = {};
-					oDetail.MarketListDetailID = oLocalData.MarketListDetailID ?  oLocalData.MarketListDetailID : this.globalData.MarketListDetailID ;
-					oDetail.MarketListHeaderID = oLocalData.MarketListHeaderID ? oLocalData.MarketListHeaderID : this.globalData.MarketListHeaderID ;
+					oDetail.MarketListDetailID = this.oLocalData.MarketListDetailID ?  this.oLocalData.MarketListDetailID : this.globalData.MarketListDetailID ;
+					oDetail.MarketListHeaderID = this.oLocalData.MarketListHeaderID ? this.oLocalData.MarketListHeaderID : this.globalData.MarketListHeaderID ;
 					oDetail.MaterialGroupID = tableRows[i].MaterialGroupID;
 					oDetail.MaterialID = tableRows[i].MaterialID;
 					oDetail.MaterialText = tableRows[i].MaterialText;
@@ -507,9 +496,9 @@ sap.ui.define([
 				    	if (oThis._oViewFormSubmit) {
 							oThis._oViewFormSubmit.close();
 							oThis.getRouter().navTo("plancalendar", {
-								plantId: oLocalData.PlantID,
-								ccId: oLocalData.CostCenterID,
-								date : oLocalData.Date
+								plantId: this.oLocalData.PlantID,
+								ccId: this.oLocalData.CostCenterID,
+								date : this.oLocalData.Date
 							}, false);
 						}
 				    },
@@ -817,10 +806,8 @@ sap.ui.define([
 				this._oHPopover.openBy(oEvent.getSource());
 			},
 			onAddMaterial : function(){
-				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-				var oLocalData = oStorage.get("localStorage");
-				if (oLocalData) {
-					this.getRouter().navTo("masterpage", {plantId : oLocalData.PlantID, ccId : oLocalData.CostCenterID}, false);
+				if (this.oLocalData) {
+					this.getRouter().navTo("masterpage", {plantId : this.oLocalData.PlantID, ccId : this.oLocalData.CostCenterID}, false);
 				}
 			
 			},

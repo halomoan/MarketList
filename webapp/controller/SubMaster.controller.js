@@ -64,8 +64,7 @@ sap.ui.define([
 				
 				//oList.attachUpdateFinished(null,this._listUpdated,this);
 				if (!sap.ui.Device.system.phone) {
-					var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-					var oLocalData = oStorage.get("localStorage");
+					var oLocalData = this.getLocalData();
 					
 					if(oLocalData.UseMobile) {
 						this.getRouter().getRoute("subdmaster").attachPatternMatched(this._onMasterMatched, this);
@@ -230,7 +229,6 @@ sap.ui.define([
 					
 				var jsonData = [];
 				
-				var oLocalData = this.getLocalData();
 				var oThis = this;
 				var bClose = true;
 				 
@@ -238,7 +236,7 @@ sap.ui.define([
 					
 					var oCtx = item.getBindingContext();
 					
-					if (oLocalData.isAutoPO && oCtx.getProperty("Locked")) {
+					if (oThis.oLocalData.isAutoPO && oCtx.getProperty("Locked")) {
 						sap.m.MessageToast.show(oThis.getResourceBundle().getText("msgMaterialLocked",[oCtx.getProperty("MaterialText"),oCtx.getProperty("MaterialID")]));
 						bClose = false;
 					} else {
@@ -323,12 +321,12 @@ sap.ui.define([
 			 */
 			_onMasterMatched :  function(oEvent) {
 			
-				var oLocalData = this.getLocalData(); 
+				this.oLocalData = this.getLocalData(); 
 				
 				var objectId =  oEvent.getParameter("arguments").groupId;
 				var template =  oEvent.getParameter("arguments").template;
-				var plantId =  oLocalData.PlantID;
-				var costcenterId = oLocalData.CostCenterID;
+				var plantId =  this.oLocalData.PlantID;
+				var costcenterId = this.oLocalData.CostCenterID;
 				
 				var sObjectPath = this.getModel().createKey("/MaterialGroups", {
 						MaterialGroupID :  objectId
