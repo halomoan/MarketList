@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:commons="sap.ui.commons">
 	<ResponsivePopover
-		title="{i18n>pr}"
+		title="{i18n>pr} [{detailView>/PurReqID}]"
 		class="sapUiPopupWithPadding"
 		placement="Auto"
 		 >

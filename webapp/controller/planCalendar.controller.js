@@ -103,6 +103,9 @@ sap.ui.define([
 				var oThis = this;
 				var oButton =  this.byId("showDetail");
 				var oViewModel = this.getModel("detailView");
+				var sPRID = oAppointment.getTitle();
+				sPRID = sPRID.replace( /^\D+/g, ""); 
+				oViewModel.setProperty("/PurReqID",sPRID);
 				
 				if(oAppointment.getType() === "Type06" && oButton.getText() === this.getResourceBundle().getText("showDetail")) {
 					this._handlePRChange(oAppointment);
@@ -112,8 +115,7 @@ sap.ui.define([
 				
 					if (oAppointment) {
 						//var sSelected = oAppointment.getSelected() ? "selected" : "deselected";
-						var sPRID = oAppointment.getTitle();
-						sPRID = sPRID.replace( /^\D+/g, ""); 
+					
 						
 						var oLocalData = this.getLocalData();
 						oLocalData.mode = "Change";
@@ -216,7 +218,6 @@ sap.ui.define([
 					this.getView().addDependent(this._oViewCreatePR);
 					this._oViewCreatePR.addStyleClass(this.getOwnerComponent().getContentDensityClass());
 				}
-			
 					var oLocalData = this.getLocalData();
 					
 					var oFrag =  sap.ui.core.Fragment;

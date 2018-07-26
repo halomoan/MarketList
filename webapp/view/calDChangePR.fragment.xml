@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:commons="sap.ui.commons">
 	<Dialog
-		title="{i18n>pr}"
+		title="{i18n>pr} [{detailView>/PurReqID}]"
 		draggable="true">
 		<content>
 			<f:SimpleForm editable="false" layout="ResponsiveGridLayout">

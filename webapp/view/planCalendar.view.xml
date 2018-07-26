@@ -66,7 +66,7 @@
 		<headerToolbar>
 			<Toolbar>
 				<content>
-					<Title text="{i18n>products}" level="H2"/>
+					<Title text="PRID: {detailView>/PurReqID}" level="H2"/>
 					<ToolbarSpacer />
 					<Button icon="sap-icon://edit" text="{i18n>change}" press="onChangeProduct"></Button>
 				</content>
@@ -74,7 +74,7 @@
 		</headerToolbar>
 		<columns>
 			<Column>
-				<Text text="{i18n>product}" />
+				<Text text="{i18n>material}" />
 			</Column>
 			<Column
 				minScreenWidth="Tablet"

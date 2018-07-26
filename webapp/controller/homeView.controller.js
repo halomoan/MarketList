@@ -53,6 +53,15 @@ sap.ui.define([
 				return false;
 			}
 
+			var oUPointItems = this.getView().byId("unloadingpoint").getItems();
+			var oUPoints = [];
+			for(var i in oUPointItems) {
+				oUPoints.push(oUPointItems[i].getKey());
+				
+			}
+			
+			oLocal.UPoints = JSON.stringify(oUPoints);
+			
 			var oDate = this.getView().byId("DP1");
 			if (oDate.getValueState() === sap.ui.core.ValueState.Error) {
 				sap.m.MessageToast.show(this.getResourceBundle().getText("msgWrongDateFuture"));
@@ -148,6 +157,7 @@ sap.ui.define([
 		},
 
 		_onMetadataLoaded: function() {
+			var oThis = this;
 			this.getView().bindElement({
 				path: "/UserProfileSet('USP001')",
 				events: {
@@ -155,13 +165,13 @@ sap.ui.define([
 						var oData = rData.getParameter("data");
 						if (oData) {
 
-							var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-							var oLocal = {};
+						
+							var oLocalData = {};
 
-							oLocal.UserId = oData.UserId;
-							oLocal.Name = oData.Name;
+							oLocalData.UserId = oData.UserId;
+							oLocalData.Name = oData.Name;
 
-							oStorage.put("localStorage", oLocal);
+							oThis.putLocalData(oLocalData);
 						}
 					}
 				}
