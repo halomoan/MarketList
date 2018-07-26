@@ -545,27 +545,29 @@ sap.ui.define([
 				            title: "Information",                                      
 				            initialFocus: null,
 				            onClose: function(){
-				            	if (matDay.Quantity > 500) {
-									sap.m.MessageToast.show(oThis.getResourceBundle().getText("msgMoreThen",[500]));
-								}
-								var price = matDay.Quantity * material.UnitPrice / material.PriceUnit;
-								if (price > 1000){
-									sap.m.MessageToast.show(oThis.getResourceBundle().getText("msgCostMore",[1000]));
-								}
+				            	oThis.inputWarning(matDay,material);
 				            }
 				        });
 					} else {
-						if (matDay.Quantity > 500) {
-							sap.m.MessageToast.show(oThis.getResourceBundle().getText("msgMoreThen",[500]));
-						}
-						var price = matDay.Quantity * material.UnitPrice / material.PriceUnit;
-						if (price > 1000){
-						sap.m.MessageToast.show(oThis.getResourceBundle().getText("msgCostMore",[1000]));
-						}
+						this.inputWarning(matDay,material);
 					} 
 					
 				}
 				this.globalData.tableChanged = true;
+			},
+			inputWarning: function(matDay,material){
+				var msg = "";
+				if (matDay.Quantity > 500) {
+					msg = this.getResourceBundle().getText("msgMoreThen",[500]);
+					
+				}
+				var price = matDay.Quantity * material.UnitPrice / material.PriceUnit;
+				if (price > 1000){
+					msg = msg + "\n\r" + this.getResourceBundle().getText("msgCostMore",[material.Currency,1000]);
+				}
+				if (msg) {
+					sap.m.MessageToast.show(msg);
+				}
 			},
 			addCommentPress: function(oEvent){
 				var oSource = oEvent.getSource();

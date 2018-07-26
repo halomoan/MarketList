@@ -116,12 +116,12 @@ sap.ui.define([
 						sPRID = sPRID.replace( /^\D+/g, ""); 
 						
 						var oLocalData = this.getLocalData();
-						oLocalData.mode = "View";
-						oLocalData.View = {};
+						oLocalData.mode = "Change";
+						oLocalData.Change = {};
 						
-						oLocalData.View.PRID = sPRID;
-						oLocalData.View.Date = this.getStringDate(oAppointment.getStartDate());
-						oLocalData.View.UnloadingPoint = oAppointment.getParent().getTitle();
+						oLocalData.Change.PRID = sPRID;
+						oLocalData.Change.DeliveryDate = this.getStringDate(oAppointment.getStartDate());
+						oLocalData.Change.UnloadingPoint = oAppointment.getParent().getTitle();
 						this.putLocalData(oLocalData);
 						
 						
@@ -162,7 +162,7 @@ sap.ui.define([
 			},
 			_handlePRChange: function(oAppointment){
 				if (!this._oViewChangePR) {
-					this._oViewChangePR = sap.ui.xmlfragment("changePR", "sap.ui.demo.masterdetail.view.calChangePR", this);
+					this._oViewChangePR = sap.ui.xmlfragment("changePR", "sap.ui.demo.masterdetail.view.calRChangePR", this);
 					this.getView().addDependent(this._oViewChangePR);
 				}
 				this._oViewChangePR.openBy(oAppointment);
@@ -279,7 +279,9 @@ sap.ui.define([
 				
 			},
 			onChangePR: function(){
+				
 				var oLocalData = this.getLocalData();
+				
 				
 				if (oLocalData.Change.PRID) {
 					var PRID = oLocalData.Change.PRID;
@@ -378,11 +380,27 @@ sap.ui.define([
 				this._oViewCreatePR.close();
 			},
 			onCloseChange: function(){
-				this._oViewChangePR.close();
+				if (this._oViewChangePR) {
+					this._oViewChangePR.close();	
+				}
+				
+				if (this._oViewDChangePR) {
+					this._oViewDChangePR.close();
+				}
 			},
 			onChangeProduct: function(){
 				var oLocalData = this.getLocalData();
-				console.log(oLocalData);
+				
+				if (!this._oViewDChangePR) {
+					this._oViewDChangePR = sap.ui.xmlfragment("DchangePR", "sap.ui.demo.masterdetail.view.calDChangePR", this);
+					this.getView().addDependent(this._oViewDChangePR);
+				}
+				this._oViewDChangePR.open();
+				var oFrag =  sap.ui.core.Fragment;
+				var oDP = oFrag.byId("DchangePR", "prDate");
+				oDP.setValue(oLocalData.View.Date);
+				var oUP = oFrag.byId("DchangePR", "selectUPoint");
+				oUP.setSelectedKey(oLocalData.View.UnloadingPoint);
 			}
 
 	});

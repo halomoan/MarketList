@@ -855,9 +855,10 @@ sap.ui.define([
 				    matDay.Error = true;
 				    
 				    
-				}else if( matDay.Quantity > 0 ) {
-					
+				} else if( matDay.Quantity > 0 ) {
+				
 					if (matDay.UOM !== material.OrderUnit) {
+						
 						var orderqty = (material.FactorToUOM > 0) ? matDay.Quantity / material.FactorToUOM : 0;
 						sMsg = this.getResourceBundle().getText("msgConvertedOrder",[oNumberFormat.format(orderqty),material.OrderUnit]);
 						
@@ -881,13 +882,7 @@ sap.ui.define([
 				            title: "Information",                                      
 				            initialFocus: null,
 				            onClose: function(){
-				            	if (matDay.Quantity > 500) {
-									sap.m.MessageToast.show(oThis.getResourceBundle().getText("msgMoreThen",[500]));
-								}
-								var price = matDay.Quantity * material.UnitPrice / material.PriceUnit;
-								if (price > 1000){
-									sap.m.MessageToast.show(oThis.getResourceBundle().getText("msgCostMore",[1000]));
-								}
+				            	oThis.inputWarning(matDay,material);
 				            }
 				        });
 					} else{
@@ -900,20 +895,34 @@ sap.ui.define([
 						            title: "Information",                                      
 						            initialFocus: null,
 						            onClose: function(){
-						            	if (matDay.Quantity > 500) {
-											sap.m.MessageToast.show(oThis.getResourceBundle().getText("msgMoreThen",[500]));
-										}
-										var price = matDay.Quantity * material.UnitPrice / material.PriceUnit;
-										if (price > 1000){
-											sap.m.MessageToast.show(oThis.getResourceBundle().getText("msgCostMore",[1000]));
-										}
+						            	oThis.inputWarning(matDay,material);
 						            }
 						        });
+							}else{
+								this.inputWarning(matDay,material);
 							}
+						} else{
+							this.inputWarning(matDay,material);
+							
 						}
 					}
 				}
+			},
+			inputWarning: function(matDay,material){
+				var msg = "";
+				if (matDay.Quantity > 500) {
+					msg = this.getResourceBundle().getText("msgMoreThen",[500]);
+					
+				}
+				var price = matDay.Quantity * material.UnitPrice / material.PriceUnit;
+				if (price > 1000){
+					msg = msg + "\n\r" + this.getResourceBundle().getText("msgCostMore",[material.Currency,1000]);
+				}
+				if (msg) {
+					sap.m.MessageToast.show(msg);
+				}
 			}
+			
 			
 			
 	});
