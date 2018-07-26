@@ -68,6 +68,7 @@
 				<content>
 					<Title text="{i18n>products}" level="H2"/>
 					<ToolbarSpacer />
+					<Button icon="sap-icon://edit" text="{i18n>change}" press="onChangeProduct"></Button>
 				</content>
 			</Toolbar>
 		</headerToolbar>

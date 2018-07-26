@@ -232,6 +232,7 @@ sap.ui.define([
 				
 				var oLocalData = this.getLocalData();
 				var oThis = this;
+				var bClose = true;
 				 
 				this._oList.getSelectedItems().some(function(item){
 					
@@ -239,6 +240,7 @@ sap.ui.define([
 					
 					if (oLocalData.isAutoPO && oCtx.getProperty("Locked")) {
 						sap.m.MessageToast.show(oThis.getResourceBundle().getText("msgMaterialLocked",[oCtx.getProperty("MaterialText"),oCtx.getProperty("MaterialID")]));
+						bClose = false;
 					} else {
 						var oItem = {
 							"MaterialGroupID" : "",
@@ -287,8 +289,11 @@ sap.ui.define([
 				if(jsonData.length > 0){	
 					sap.ui.getCore().getEventBus().publish("marketlist", "addMaterial", {data : jsonData}); 
 				}
+				
 				if (sap.ui.Device.system.phone) {
-					history.go(-2);
+					if (bClose) {
+						history.go(-2);
+					}
 				}
 			},
 

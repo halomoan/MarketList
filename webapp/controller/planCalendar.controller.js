@@ -104,7 +104,7 @@ sap.ui.define([
 				var oButton =  this.byId("showDetail");
 				var oViewModel = this.getModel("detailView");
 				
-				if(oAppointment.getType() === "Type06") {
+				if(oAppointment.getType() === "Type06" && oButton.getText() === this.getResourceBundle().getText("showDetail")) {
 					this._handlePRChange(oAppointment);
 				} 
 				
@@ -114,6 +114,18 @@ sap.ui.define([
 						//var sSelected = oAppointment.getSelected() ? "selected" : "deselected";
 						var sPRID = oAppointment.getTitle();
 						sPRID = sPRID.replace( /^\D+/g, ""); 
+						
+						var oLocalData = this.getLocalData();
+						oLocalData.mode = "View";
+						oLocalData.View = {};
+						
+						oLocalData.View.PRID = sPRID;
+						oLocalData.View.Date = this.getStringDate(oAppointment.getStartDate());
+						oLocalData.View.UnloadingPoint = oAppointment.getParent().getTitle();
+						this.putLocalData(oLocalData);
+						
+						
+						
 						
 						var sObjectPath = this.getModel().createKey("/MarketListHeaderSet", {
 							MarketListHeaderID :  sPRID
@@ -367,6 +379,10 @@ sap.ui.define([
 			},
 			onCloseChange: function(){
 				this._oViewChangePR.close();
+			},
+			onChangeProduct: function(){
+				var oLocalData = this.getLocalData();
+				console.log(oLocalData);
 			}
 
 	});
