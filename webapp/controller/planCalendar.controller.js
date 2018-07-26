@@ -6,7 +6,7 @@ sap.ui.define([
 
 	return BaseController.extend("sap.ui.demo.masterdetail.controller.planCalendar", {
 
-		
+			
 			onInit: function() {
 				var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({
 					pattern: "YYYY-MM-dd"
@@ -21,6 +21,8 @@ sap.ui.define([
 				var oViewModel = new JSONModel(oViewData);
 				this.setModel(oViewModel, "detailView");
 				
+			
+				
 				this.getRouter().getRoute("plancalendar").attachPatternMatched(this._onMasterMatched, this);
 			},
 			_onMasterMatched: function(oEvent){
@@ -30,9 +32,11 @@ sap.ui.define([
 				this.oDate = new Date(oEvent.getParameter("arguments").date);
 				
 				var oViewModel = this.getModel("detailView");
-				var oLocalData = this.getLocalData();
-				oViewModel.setProperty("/Plant",oLocalData.Plant);
-				oViewModel.setProperty("/CostCenter",oLocalData.CostCenter);
+				
+				this.oLocalData = this.getLocalData();
+				
+				oViewModel.setProperty("/Plant",this.oLocalData.Plant);
+				oViewModel.setProperty("/CostCenter",this.oLocalData.CostCenter);
 				
 				this.refreshSchedule();
 				
@@ -117,14 +121,14 @@ sap.ui.define([
 						//var sSelected = oAppointment.getSelected() ? "selected" : "deselected";
 					
 						
-						var oLocalData = this.getLocalData();
-						oLocalData.mode = "Change";
-						oLocalData.Change = {};
+						//var oLocalData = this.getLocalData();
+						this.oLocalData.mode = "Change";
+						this.oLocalData.Change = {};
 						
-						oLocalData.Change.PRID = sPRID;
-						oLocalData.Change.DeliveryDate = this.getStringDate(oAppointment.getStartDate());
-						oLocalData.Change.UnloadingPoint = oAppointment.getParent().getTitle();
-						this.putLocalData(oLocalData);
+						this.oLocalData.Change.PRID = sPRID;
+						this.oLocalData.Change.DeliveryDate = this.getStringDate(oAppointment.getStartDate());
+						this.oLocalData.Change.UnloadingPoint = oAppointment.getParent().getTitle();
+						this.putLocalData(this.oLocalData);
 						
 						
 						
@@ -174,43 +178,43 @@ sap.ui.define([
 				var oUP = oFrag.byId("changePR", "selectUPoint");
 				oUP.setSelectedKey(oAppointment.getParent().getTitle());
 				
-				var oLocalData = this.getLocalData();
-				oLocalData.mode = "Change";
-				oLocalData.Change = {};
-				oLocalData.Create = null;
+				
+				this.oLocalData.mode = "Change";
+				this.oLocalData.Change = {};
+				this.oLocalData.Create = null;
 				
 				
 				var sPRID = oAppointment.getTitle();
-				oLocalData.SourcePage = "planCal";
-				oLocalData.Change.PRID = sPRID.replace("PRID: ","");
-				oLocalData.Change.UnloadingPoint = oAppointment.getParent().getTitle();
-				oLocalData.Change.DeliveryDate = this.getStringDate(oAppointment.getStartDate());
-				this.putLocalData(oLocalData);                         
+				this.oLocalData.SourcePage = "planCal";
+				this.oLocalData.Change.PRID = sPRID.replace("PRID: ","");
+				this.oLocalData.Change.UnloadingPoint = oAppointment.getParent().getTitle();
+				this.oLocalData.Change.DeliveryDate = this.getStringDate(oAppointment.getStartDate());
+				this.putLocalData(this.oLocalData);                         
 			},
 			handleIntervalSelect: function (oEvent) {
 			
 				var oRow = oEvent.getParameter("row");
 				var oStartDate = oEvent.getParameter("startDate");
 				
-				var oLocalData = this.getLocalData();
+				
 				
 				if (oRow) {
 				
-					oLocalData.UnloadingPointID = oRow.getTitle();
-					oLocalData.UnloadingPoint = oRow.getTitle();
+					this.oLocalData.UnloadingPointID = oRow.getTitle();
+					this.oLocalData.UnloadingPoint = oRow.getTitle();
 				} else {
 					var oPC = oEvent.oSource;
 					var aSelectedRows = oPC.getSelectedRows();
 					for (var i = 0; i < aSelectedRows.length; i++) {
 					
-						oLocalData.UnloadingPointID = aSelectedRows[i];
-						oLocalData.UnloadingPoint = aSelectedRows[i];
+						this.oLocalData.UnloadingPointID = aSelectedRows[i];
+						this.oLocalData.UnloadingPoint = aSelectedRows[i];
 					}
 				}
 				
-				oLocalData.Date = this.getStringDate(oStartDate);                             
+				this.oLocalData.Date = this.getStringDate(oStartDate);                             
 			
-				this.putLocalData(oLocalData);          
+				this.putLocalData(this.oLocalData);          
 			},
 			onAddPR: function(){
 				if (!this._oViewCreatePR) {
@@ -218,24 +222,25 @@ sap.ui.define([
 					this.getView().addDependent(this._oViewCreatePR);
 					this._oViewCreatePR.addStyleClass(this.getOwnerComponent().getContentDensityClass());
 				}
-					var oLocalData = this.getLocalData();
+					
 					
 					var oFrag =  sap.ui.core.Fragment;
 					var oSelect = oFrag.byId("addPR", "selectUPoint");
-					var oItems = oSelect.getItems();
+					oSelect.destroyItems();
+					var oUPItems = JSON.parse(this.oLocalData.UPoints);
 					
-					if(oItems.length === 0) {
+					for (var i in oUPItems) {
 						var item = new sap.ui.core.Item({
-							key : oLocalData.UnloadingPointID,
-							text : oLocalData.UnloadingPoint
+							key : oUPItems[i],
+							text :oUPItems[i]
 						});
 						oSelect.addItem(item);
 					}
-					oSelect.setSelectedKey(oLocalData.UnloadingPointID);
+					oSelect.setSelectedKey(this.oLocalData.UnloadingPointID);
 					
 					var oDP = oFrag.byId("addPR","startDate");
 			
-					oDP.setValue(oLocalData.Date);  
+					oDP.setValue(this.oLocalData.Date);  
 				
 				this._oViewCreatePR.open();
 			},
@@ -261,19 +266,20 @@ sap.ui.define([
 					
 						var oStartDate = oFrag.byId("addPR", "startDate").getDateValue();
 					    var oSelect = oFrag.byId("addPR", "selectUPoint");
-						var oLocalData = this.getLocalData();
-						oLocalData.SourcePage = "planCal";
-						oLocalData.mode = "Create";
-						oLocalData.Change = null;
-						oLocalData.Create = {};
-						oLocalData.Create.Single = true;
-						oLocalData.Create.DeliveryDate = this.getStringDate(oStartDate);
+						
+						
+						this.oLocalData.SourcePage = "planCal";
+						this.oLocalData.mode = "Create";
+						this.oLocalData.Change = null;
+						this.oLocalData.Create = {};
+						this.oLocalData.Create.Single = true;
+						this.oLocalData.Create.DeliveryDate = this.getStringDate(oStartDate);
 						if (oSelect.getSelectedItem()) {
-							oLocalData.Create.UnloadingPoint = oSelect.getSelectedItem().getKey();
+							this.oLocalData.Create.UnloadingPoint = oSelect.getSelectedItem().getKey();
 						} else {
-							oLocalData.Create.UnloadingPoint = oLocalData.UnloadingPoint;                         
+							this.oLocalData.Create.UnloadingPoint = this.oLocalData.UnloadingPoint;                         
 						}
-						this.putLocalData(oLocalData); 
+						this.putLocalData(this.oLocalData); 
 						
 						this.getRouter().navTo("dsmaster", null, false);
 				}
@@ -281,12 +287,12 @@ sap.ui.define([
 			},
 			onChangePR: function(){
 				
-				var oLocalData = this.getLocalData();
 				
 				
-				if (oLocalData.Change.PRID) {
-					var PRID = oLocalData.Change.PRID;
-					var plantID = oLocalData.PlantID;
+				
+				if (this.oLocalData.Change.PRID) {
+					var PRID = this.oLocalData.Change.PRID;
+					var plantID = this.oLocalData.PlantID;
 					var oThis = this;
 					var bChanged = false;
 					
@@ -302,13 +308,13 @@ sap.ui.define([
 						sap.m.MessageToast.show(this.getResourceBundle().getText("msgWrongDateFuture"));
 						return;
 					}
-					if (oLocalData.Change.DeliveryDate !== newDate ) {
-						msg = msg + "\n\r\n\r" + this.getResourceBundle().getText("msgDateFromTo",[oLocalData.Change.DeliveryDate,newDate]);
+					if (this.oLocalData.Change.DeliveryDate !== newDate ) {
+						msg = msg + "\n\r\n\r" + this.getResourceBundle().getText("msgDateFromTo",[this.oLocalData.Change.DeliveryDate,newDate]);
 						bChanged = true;
 					}
 					
-					if (oLocalData.Change.UnloadingPoint !== newUP ) {
-						msg = msg + "\n\r\n\r" + this.getResourceBundle().getText("msgUPFromTo",[oLocalData.Change.UnloadingPoint,newUP]);
+					if (this.oLocalData.Change.UnloadingPoint !== newUP ) {
+						msg = msg + "\n\r\n\r" + this.getResourceBundle().getText("msgUPFromTo",[this.oLocalData.Change.UnloadingPoint,newUP]);
 						bChanged = true;
 					}
 					
@@ -370,9 +376,9 @@ sap.ui.define([
 			onChangePRDetail : function(){
 				this._oViewChangePR.close();
 				
-				var oLocalData = this.getLocalData();
+			
 				
-				if (oLocalData.mode === "Change") {
+				if (this.oLocalData.mode === "Change") {
 					this.getRouter().navTo("dsmaster", null, false);	
 				}
 
@@ -390,7 +396,7 @@ sap.ui.define([
 				}
 			},
 			onChangeProduct: function(){
-				var oLocalData = this.getLocalData();
+			
 				
 				if (!this._oViewDChangePR) {
 					this._oViewDChangePR = sap.ui.xmlfragment("DchangePR", "sap.ui.demo.masterdetail.view.calDChangePR", this);
@@ -399,9 +405,9 @@ sap.ui.define([
 				this._oViewDChangePR.open();
 				var oFrag =  sap.ui.core.Fragment;
 				var oDP = oFrag.byId("DchangePR", "prDate");
-				oDP.setValue(oLocalData.View.Date);
+				oDP.setValue(this.oLocalData.Change.DeliveryDate);
 				var oUP = oFrag.byId("DchangePR", "selectUPoint");
-				oUP.setSelectedKey(oLocalData.View.UnloadingPoint);
+				oUP.setSelectedKey(this.oLocalData.Change.UnloadingPoint);
 			}
 
 	});
