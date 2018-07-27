@@ -68,7 +68,7 @@
 				<content>
 					<Title text="PRID: {detailView>/PurReqID}" level="H2"/>
 					<ToolbarSpacer />
-					<Button icon="sap-icon://edit" text="{i18n>change}" press="onChangeProduct"></Button>
+					<Button icon="sap-icon://edit" text="{i18n>change}" visible="{detailView>/showChange}" press="onChangeProduct"></Button>
 				</content>
 			</Toolbar>
 		</headerToolbar>

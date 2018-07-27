@@ -1,13 +1,11 @@
 <core:View 
-	xmlns:core="sap.ui.core" 
+	xmlns:core="sap.ui.core"
 	xmlns="sap.m"  
 	xmlns:uxap="sap.uxap" 
-	xmlns:semantic="sap.m.semantic"
-	xmlns:layout="sap.ui.layout"
-	controllerName="sap.ui.demo.masterdetail.controller.MDSMarketList" 
-	xmlns:html="http://www.w3.org/1999/xhtml">
-	<semantic:DetailPage title="M A R K E T L I S T" showHeader="true" enableScrolling="true">
-		<semantic:content>
+	xmlns:layout="sap.ui.layout" 
+	controllerName="sap.ui.demo.masterdetail.controller.MSMarketList" 
+    xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page showHeader="false">
 			<uxap:ObjectPageLayout
 					enableLazyLoading="true"
 					useIconTabBar="true"
@@ -34,28 +32,8 @@
 				</uxap:headerTitle>	
 				<uxap:headerContent>
 					<layout:VerticalLayout>
-						<layout:HorizontalLayout class="sapUiNoMargin">
-						<Label text="{i18n>totalMaterial} :"/>
-							<ObjectNumber
-								class="sapUiSmallMarginBegin sapUiLargeMarginEnd"
-								number="{
-										parts:[{path:'detailView>/totalMaterials'},{path:'detailView>/UOM'}],
-										formatOptions: {showMeasure: false}
-									}"
-								unit="{detailView>/UOM}"
-								state="Success" />
-					
-						<Label text="{i18n>totalCost} :"/>
-							<ObjectNumber
-								class="sapUiSmallMarginBegin"
-								number="{
-										parts:[{path:'detailView>/totalPrices'}],
-									
-										formatOptions: {showMeasure: false}
-									}"
-								unit="{detailView>/Currency}"
-								state="Error" />
-						</layout:HorizontalLayout>
+						<Label text="{i18n>totalMaterial} : {detailView>/totalMaterials}"/>
+						<Label text="{i18n>totalCost} : {detailView>/totalPrices}"/>
 					</layout:VerticalLayout>
 					
 				</uxap:headerContent>
@@ -92,19 +70,18 @@
 						</uxap:ObjectPageSubSection>
 					</uxap:subSections>
 				</uxap:ObjectPageSection>		
-			
+				
 				</uxap:sections>
 			</uxap:ObjectPageLayout>	
-		</semantic:content>	
-		
-		
-		<semantic:negativeAction>
-	    <semantic:NegativeAction text="{i18n>close}" press="onClose"/>
-	    </semantic:negativeAction>
-		
-		<semantic:positiveAction>
-			<semantic:PositiveAction text="{i18n>submit}" press="onSubmit"/>
-		</semantic:positiveAction>
-		
-	</semantic:DetailPage>	
+			<footer>
+			<Toolbar>
+				<content>
+					<Button icon="sap-icon://add-product" type="Transparent" press="onAddMaterial"></Button>
+					<ToolbarSpacer/>
+					<Button type="Accept" text="{i18n>submit}" press="onSubmit"/>
+					<Button type="Reject" text="{i18n>close}" press="onClose"/>
+				</content>
+			</Toolbar>
+		</footer>
+		</Page>
 </core:View>

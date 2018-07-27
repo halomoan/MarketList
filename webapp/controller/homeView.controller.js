@@ -14,8 +14,6 @@ sap.ui.define([
 				});
 				return false;
 			}
-			
-		
 
 			var oLocal = this.getLocalData();
 			if (!oLocal) {
@@ -88,7 +86,7 @@ sap.ui.define([
 				this.putLocalData(oLocal);
 				
 				
-				if (!sap.ui.Device.system.phone) {
+				if (sap.ui.Device.system.phone) {
 					if (oLocal.UseMobile) {
 						
 						this.getRouter().navTo("dmaster", {

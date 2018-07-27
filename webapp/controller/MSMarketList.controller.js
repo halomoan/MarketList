@@ -5,7 +5,7 @@ sap.ui.define([
 ], function(BaseController,JSONModel,formatter) {
 	"use strict";
 
-	return BaseController.extend("sap.ui.demo.masterdetail.controller.MDSMarketList", {
+	return BaseController.extend("sap.ui.demo.masterdetail.controller.MSMarketList", {
 			formatter: formatter,
 	
 			_oJsonModel : new JSONModel(),
@@ -26,28 +26,23 @@ sap.ui.define([
 			    	dayId : 0,
 			    	templtChanged : false
 				};
-			
+				
 				var oViewModel = new JSONModel(oViewData);
 				this.setModel(oViewModel, "detailView");
 				this.setDeviceModel();
 				
-				
-				if(!sap.ui.Device.system.phone) {
-					this.getRouter().getRoute("dsmaster").attachPatternMatched(this._onMasterMatched, this);
-				}else{
-					this.getRouter().getRoute("mastermobile").attachPatternMatched(this._onMasterMatched, this);
-				}
-				
 				var binding =  new sap.ui.model.Binding(this._oJsonModel, "/rows", this._oJsonModel.getContext("/rows"));
-							binding.attachChange(function() {
-									this._onTableChanged(this._oJsonModel);
-									
-							}.bind(this));
-					    
+				binding.attachChange(function() {
+					this._onTableChanged(this._oJsonModel);
+				}.bind(this));
+				
+			
+				this.getRouter().getRoute("mdsmaster").attachPatternMatched(this._onMasterMatched, this);
+			
 				
 			},
 			_onMasterMatched :  function() {
-				
+
 				this.oLocalData = this.getLocalData();
 				
 				if (this.globalData.iRefresh === 0) {
@@ -55,12 +50,13 @@ sap.ui.define([
 				}
 			},
 			_onMetadataLoaded: function(){
-		
 				var oViewModel = this.getModel("detailView");
 				
 				var oModelHeader = new JSONModel();
 				var oView = this.getView();
 				var oThis = this;
+
+			
 				
 				if (this.oLocalData) {
 					
@@ -68,16 +64,16 @@ sap.ui.define([
 					oViewModel.setProperty("/Plant",this.oLocalData.Plant);
 					oViewModel.setProperty("/CostCenterID",this.oLocalData.CostCenterID);
 					oViewModel.setProperty("/CostCenterText",this.oLocalData.CostCenter);
-					
+					oViewModel.setProperty("/UnloadingPoint",this.oLocalData.UnloadingPoint);
+					oViewModel.setProperty("/Currency",this.oLocalData.Currency);
 					oViewModel.setProperty("/UserId",this.oLocalData.UserId);
 				}
-				
 				var oModel = this.getOwnerComponent().getModel();
+				
+				
 				var oFilters = [];
 				oFilters.push( new sap.ui.model.Filter("PlantID", sap.ui.model.FilterOperator.EQ, this.oLocalData.PlantID) );
 				oFilters.push( new sap.ui.model.Filter("CostCenterID", sap.ui.model.FilterOperator.EQ, this.oLocalData.CostCenterID) );
-				
-				//oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, dateFormat.format(new Date( (new Date()).getTime() + (24 * 60 * 60 * 1000)))));
 				
 				if (this.oLocalData.mode === "Create") {				
 					oViewModel.setProperty("/UnloadingPoint",this.oLocalData.Create.UnloadingPoint);
@@ -97,6 +93,8 @@ sap.ui.define([
 				
 				
 				sap.ui.core.BusyIndicator.show();
+				
+				
 				oModel.read("/MarketListHeaderSet", {
 				    urlParameters: {
 				        "$expand": "NavDetail"
@@ -108,21 +106,17 @@ sap.ui.define([
 				    	var oHeader = rData.results[0];
 				    	
 				    	oThis.oLocalData.Recipient = oHeader.Recipient;
-				    	//this.oLocalData.UnloadingPoint = oHeader.UnloadingPoint;
 				    	//this.oLocalData.TrackingNo = oHeader.TrackingNo;
 				    	oThis.oLocalData.TrackingNo = "HELD";
-				    	
 				    	oViewModel.setProperty("/Recipient",oThis.oLocalData.Recipient);
 						oViewModel.setProperty("/TrackingNo",oThis.oLocalData.TrackingNo);
-				    	oViewModel.setProperty("/Currency",oThis.oLocalData.Currency);
+						oViewModel.setProperty("/Currency",oThis.oLocalData.Currency);
 				    	oThis.putLocalData(oThis.oLocalData);
 				    	
 				    	oThis.globalData.MarketListID = oHeader.MarketListHeaderID;
 				    	
-				    	
 				    	oThis.globalData.deliveryDate = oHeader.TableH.Date0;
 				    	oViewModel.setProperty("/deliveryDate",oHeader.TableH.Date0);
-				    	
 					    oViewModel.setProperty("/PurReqID",oHeader.TableH.PRID0);
 				    	
 				    	oModelHeader.setData(oHeader.TableH);
@@ -139,7 +133,6 @@ sap.ui.define([
 				    	
 					    oView.setModel(oThis._oJsonModel,"mktlist");
 					    
-					    
 				    	sap.ui.core.BusyIndicator.hide();
 				    	
 				    },
@@ -154,23 +147,19 @@ sap.ui.define([
 			_onTableChanged : function(oModelJson) {
 				
 					var data = oModelJson.getProperty("/rows");
-			
-							
+					
 					if(data) {
 					
 						var noItems = [], totals = [];
 						
 						for (var key in data) {
 							for (var prop in data[key]){
-								
-								
-								if(prop.substring(0,4) === "Day0") {
+								if(prop.substring(0,3) === "Day") {
 									
 									var oDay = data[key][prop];
-
+										
 									if (oDay.Enabled && oDay.Quantity > 0) {
 										noItems[oDay.Date] = isNaN(noItems[oDay.Date]) ? 1 : (noItems[oDay.Date] + 1);
-										
 										if (isNaN(totals[oDay.Date])) {
 											totals[oDay.Date] = (oDay.Quantity / data[key].PriceUnit * data[key].UnitPrice);
 										}else{
@@ -190,7 +179,6 @@ sap.ui.define([
 						}
 						
 						var oViewModel = this.getModel("detailView");
-					
 						
 						oViewModel.setProperty("/totalMaterials", noItems[this.globalData.deliveryDate]);
 						oViewModel.setProperty("/totalPrices",formatter.currencyValue(totals[this.globalData.deliveryDate] ));
@@ -204,16 +192,8 @@ sap.ui.define([
 				
 				if (oData ) {
 					
-					
-					
+				
 					var tableRows = this._oJsonModel.getData().rows;
-					if (!tableRows){
-						
-						this._oJsonModel.setData({ rows : [] } );
-						this.getView().setModel(this._oJsonModel,"mktlist");
-						tableRows = this._oJsonModel.getData().rows;
-						
-					}
 					
 					var bNew = true,bAdded = false;
 					for (var i = 0; i < oData.data.length; i++ ){
@@ -232,15 +212,17 @@ sap.ui.define([
 						
 						if (bNew) {
 				
-							//var oTableH = this.getView().getModel("TableH").getData();
+							var oTableH = this.getView().getModel("TableH").getData();
+							//this.globalData.deliveryDate = oTableH.Date0;
 							if (this.oLocalData.Create) {
 								oData.data[i].Day0.Date = this.oLocalData.Create.DeliveryDate;
 							}else{
 								
 								oData.data[i].Day0.Date = this.oLocalData.Change.DeliveryDate;
 							}
-							this.globalData.deliveryDate = oData.data[i].Day0.Date;
-							/*oData.data[i].Day1.Date = oTableH.Date1;
+							
+							/*oData.data[i].Day0.Date = oTableH.Date0;
+							oData.data[i].Day1.Date = oTableH.Date1;
 							oData.data[i].Day2.Date = oTableH.Date2;
 							oData.data[i].Day3.Date = oTableH.Date3;
 							oData.data[i].Day4.Date = oTableH.Date4;
@@ -269,6 +251,8 @@ sap.ui.define([
 						
 							
 							tableRows.push(oData.data[i]);
+							
+						
 							bAdded = true;
 						} else {
 							sap.m.MessageToast.show(oData.data[i].MaterialID + " - " + oData.data[i].MaterialText + " is already in the table.",{});	
@@ -284,7 +268,6 @@ sap.ui.define([
 				}
 			},
 		/*	tabChanged : function(oEvent){
-			
 				var oViewModel = this.getModel("detailView");
 				if (this.globalData.templtChanged) {
 					this.globalData.templtChanged = false;
@@ -320,12 +303,7 @@ sap.ui.define([
 									if (oSplit) {
 										oSplit.hideMaster();
 									}
-									oThis.getRouter().navTo("plancalendar", {
-										plantId: oThis.oLocalData.PlantID,
-										ccId: oThis.oLocalData.CostCenterID,
-										date : oThis.oLocalData.Date
-									}, false);
-								
+									oThis.onNavBack();
 								}
 							}
 						});
@@ -335,11 +313,8 @@ sap.ui.define([
 					if (oSplit) {
 						oSplit.hideMaster();
 					}
-					this.getRouter().navTo("plancalendar", {
-						plantId: this.oLocalData.PlantID,
-						ccId: this.oLocalData.CostCenterID,
-						date : this.oLocalData.Date
-					}, false);
+				
+					this.onNavBack();
 					
 				}
 			
@@ -364,6 +339,8 @@ sap.ui.define([
 				var oThis = this;
 				
 				
+			
+				
 				this.oLocalData.Recipient = oViewModel.getProperty("/Recipient");
 				this.oLocalData.TrackingNo = oViewModel.getProperty("/TrackingNo");
 				this.oLocalData.UnloadingPoint = oViewModel.getProperty("/UnloadingPoint");
@@ -373,7 +350,7 @@ sap.ui.define([
 				var oHeader = {};
 				oHeader.PlantID = this.oLocalData.PlantID;
 				oHeader.CostCenterID = this.oLocalData.CostCenterID;
-				oHeader.UnloadingPoint = this.oLocalData.UnloadingPointID;
+				oHeader.UnloadingPoint = this.oLocalData.UnloadingPoint;
 				oHeader.MarketListHeaderID = this.oLocalData.MarketListHeaderID;
 				oHeader.CostCenterText = "";
 				oHeader.Plant = "";
@@ -475,31 +452,24 @@ sap.ui.define([
 				    	
 				    	oViewModel.setProperty("/PurReqID",oTableH.getProperty("/PRID" + oThis.globalData.dayId));
 				    	
-				    	if(data.NavDetail) {
-					    	for(i in data.NavDetail.results) {
-								tableRows[i].Day0 = data.NavDetail.results[i].Day0;
-								tableRows[i].Day1 = data.NavDetail.results[i].Day1;
-								tableRows[i].Day2 = data.NavDetail.results[i].Day2;
-								tableRows[i].Day3 = data.NavDetail.results[i].Day3;
-								tableRows[i].Day4 = data.NavDetail.results[i].Day4;
-								tableRows[i].Day5 = data.NavDetail.results[i].Day5;
-								tableRows[i].Day6 = data.NavDetail.results[i].Day6;
-							}
-				    	}
+				    	for(i in data.NavDetail.results) {
+							tableRows[i].Day0 = data.NavDetail.results[i].Day0;
+							tableRows[i].Day1 = data.NavDetail.results[i].Day1;
+							tableRows[i].Day2 = data.NavDetail.results[i].Day2;
+							tableRows[i].Day3 = data.NavDetail.results[i].Day3;
+							tableRows[i].Day4 = data.NavDetail.results[i].Day4;
+							tableRows[i].Day5 = data.NavDetail.results[i].Day5;
+							tableRows[i].Day6 = data.NavDetail.results[i].Day6;
+						}
+						
 				    	
 				    	oThis.globalData.tableChanged = false;
-				    	oThis.globalData.iRefresh = 0;
 				    	sap.m.MessageBox.success(oThis.getResourceBundle().getText("msgSuccessSave"), {
 				            title: "Success",                                      
 				            initialFocus: null                                   
 				        });
 				    	if (oThis._oViewFormSubmit) {
 							oThis._oViewFormSubmit.close();
-							oThis.getRouter().navTo("plancalendar", {
-								plantId: oThis.oLocalData.PlantID,
-								ccId: oThis.oLocalData.CostCenterID,
-								date : oThis.oLocalData.Date
-							}, false);
 						}
 				    },
 				    error: function(e) {
@@ -536,7 +506,7 @@ sap.ui.define([
 				var material = this.getView().getModel("mktlist").getProperty(sPath);
 				var id = oEvent.getParameters().id.substring(7, 8);
 				var sMsg = "";
-			
+				
 				var matDay = material["Day" + id];
 				
 				matDay.Error = false;
@@ -553,7 +523,6 @@ sap.ui.define([
 				} else if( matDay.Quantity > 0 ) {
 					
 					if (matDay.UOM === material.OrderUnit) {
-						
 						if (!material.AllowDec) {
 							if (matDay.Quantity % 1 !== 0) {
 								matDay.Error = true;
@@ -562,15 +531,15 @@ sap.ui.define([
 						            title: "Information",                                      
 						            initialFocus: null,
 						            onClose: function(){
-						            
+						            	
 						            }
 						        });
 							}
-						}
+						} 
 							
 						
 						
-					} else{
+					} else {
 						var orderqty = (material.FactorToUOM > 0) ? matDay.Quantity / material.FactorToUOM : 0;
 						sMsg = this.getResourceBundle().getText("msgConvertedOrder",[oNumberFormat.format(orderqty),material.OrderUnit]);
 						
@@ -614,7 +583,6 @@ sap.ui.define([
 			},
 			inputWarning: function(matDay,material){
 				var msg = "";
-				
 				if (matDay.Quantity > 500) {
 					msg = this.getResourceBundle().getText("msgMoreThen",[500]);
 					
@@ -740,7 +708,7 @@ sap.ui.define([
 				var material = oItem.getModel("mktlist").getProperty(sPath);
 				
 				
-				if (material.hasOwnProperty("New") || material.MarketListHeaderID === "CREATE" ){
+				if (material.hasOwnProperty("New")){
 					var tableRows = this._oJsonModel.getData().rows;
 					for (var i in tableRows){
 						if (tableRows[i].MaterialID === material.MaterialID) {

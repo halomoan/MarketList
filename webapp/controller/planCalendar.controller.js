@@ -14,6 +14,7 @@ sap.ui.define([
 				var oViewData = {
 					calbusy : false,
 					calbusyindicator: 0,
+					showChange : false,
 					listbusy: false,
 					listbusyindicator: 0,
 					Date: dateFormat.format(new Date((new Date()).getTime() + (24 * 60 * 60 * 1000)))
@@ -119,7 +120,11 @@ sap.ui.define([
 				
 					if (oAppointment) {
 						//var sSelected = oAppointment.getSelected() ? "selected" : "deselected";
-					
+						if(oAppointment.getType() === "Type06"){
+							oViewModel.setProperty("/showChange",true);
+						} else{
+							oViewModel.setProperty("/showChange",false);
+						}
 						
 						//var oLocalData = this.getLocalData();
 						this.oLocalData.mode = "Change";
@@ -176,6 +181,18 @@ sap.ui.define([
 				var oDP = oFrag.byId("changePR", "prDate");
 				oDP.setValue(this.getStringDate(oAppointment.getStartDate()));
 				var oUP = oFrag.byId("changePR", "selectUPoint");
+				
+				oUP.destroyItems();					
+				var oUPItems = JSON.parse(this.oLocalData.UPoints);
+					
+				for (var i in oUPItems) {
+						var item = new sap.ui.core.Item({
+							key : oUPItems[i],
+							text :oUPItems[i]
+						});
+						oUP.addItem(item);
+				}
+					
 				oUP.setSelectedKey(oAppointment.getParent().getTitle());
 				
 				
@@ -281,14 +298,15 @@ sap.ui.define([
 						}
 						this.putLocalData(this.oLocalData); 
 						
-						this.getRouter().navTo("dsmaster", null, false);
+						if (sap.ui.Device.system.phone) {
+							this.getRouter().navTo("dsmaster", null, false);
+						} else {	
+							this.getRouter().navTo("mdsmaster", null, false);
+						}
 				}
 				
 			},
 			onChangePR: function(){
-				
-				
-				
 				
 				if (this.oLocalData.Change.PRID) {
 					var PRID = this.oLocalData.Change.PRID;
@@ -298,8 +316,15 @@ sap.ui.define([
 					
 					var oFrag =  sap.ui.core.Fragment;
 					var oDP = oFrag.byId("changePR", "prDate");
+					if (!oDP) {
+						oDP = oFrag.byId("DchangePR", "prDate");
+					}
 					var newDate = oDP.getValue();
 					var oUP = oFrag.byId("changePR", "selectUPoint");
+					if (!oUP){
+						oUP = oFrag.byId("DchangePR", "selectUPoint");
+					}
+					
 					var newUP = oUP.getSelectedItem().getKey();
 					
 					var msg = this.getResourceBundle().getText("msgConfirmChangePR",[PRID]);
@@ -364,22 +389,34 @@ sap.ui.define([
 					} else {
 						//Nothing Changed
 						sap.m.MessageBox.information(this.getResourceBundle().getText("msgNoChanged"), {
-										            title: this.getResourceBundle().getText("warning"),                                      
-										            initialFocus: null
-										        });
+						    title: this.getResourceBundle().getText("warning"),                                      
+						    initialFocus: null
+						});
 					}
-					this._oViewChangePR.close();
+					if(this._oViewChangePR) {
+						this._oViewChangePR.close();
+					}else if(this.oViewDChangePR) {
+						this._oViewChangePR.close();
+					}
 				}
 				
 				
 			},
 			onChangePRDetail : function(){
-				this._oViewChangePR.close();
+				if(this._oViewChangePR) {
+						this._oViewChangePR.close();
+					}else if(this.oViewDChangePR) {
+						this._oViewChangePR.close();
+				}
 				
 			
 				
 				if (this.oLocalData.mode === "Change") {
-					this.getRouter().navTo("dsmaster", null, false);	
+					if (sap.ui.Device.system.phone) {
+						this.getRouter().navTo("dsmaster", null, false);	
+					}else{
+						this.getRouter().navTo("mdsmaster", null, false);	
+					}
 				}
 
 			},
@@ -407,7 +444,18 @@ sap.ui.define([
 				var oDP = oFrag.byId("DchangePR", "prDate");
 				oDP.setValue(this.oLocalData.Change.DeliveryDate);
 				var oUP = oFrag.byId("DchangePR", "selectUPoint");
-				oUP.setSelectedKey(this.oLocalData.Change.UnloadingPoint);
+				oUP.destroyItems();
+					
+				var oUPItems = JSON.parse(this.oLocalData.UPoints);
+				
+				for (var i in oUPItems) {
+					var item = new sap.ui.core.Item({
+						key : oUPItems[i],
+						text :oUPItems[i]
+					});
+					oUP.addItem(item);
+				}
+				oUP.setSelectedKey(this.oLocalData.UnloadingPointID);
 			}
 
 	});

@@ -83,7 +83,7 @@
 				}
 			},
 			"": {
-				"dataSource": "ZMARKETLIST_SRV"
+				"dataSource": "mainService"
 			}
 		},
 		"resources": {
@@ -138,6 +138,13 @@
 					"target": [
 						"dsmobile",
 						"master"
+					]
+				},
+				{
+					"pattern": "mdsmaster",
+					"name": "mdsmaster",
+					"target": [
+						"smobile"
 					]
 				},
 				{
@@ -281,7 +288,12 @@
 				},
 				"mobile": {
 					"viewName": "MMarketList",
-					"viewId": "detail",
+					"viewId": "mobile",
+					"viewLevel": 2
+				},
+				"smobile": {
+					"viewName": "MSMarketList",
+					"viewId": "smobile",
 					"viewLevel": 2
 				},
 				"plancalendar": {

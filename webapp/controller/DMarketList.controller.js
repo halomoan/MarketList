@@ -839,7 +839,7 @@ sap.ui.define([
 				var material = this.getView().getModel("mktlist").getProperty(sPath);
 				var id = oParam.id.substring(7, 8);
 				var sMsg = "";
-				var oThis = this;
+				
 				var matDay = material["Day" + id];
 				matDay.Error = false;
 				
@@ -854,7 +854,25 @@ sap.ui.define([
 				    
 				} else if( matDay.Quantity > 0 ) {
 				
-					if (matDay.UOM !== material.OrderUnit) {
+					if (matDay.UOM === material.OrderUnit) {
+						if (matDay.UOM === material.OrderUnit) {
+						
+						if (!material.AllowDec) {
+							if (matDay.Quantity % 1 !== 0) {
+								matDay.Error = true;
+								sMsg = sMsg + "\n\r" + 	this.getResourceBundle().getText("msgOrderAsWhole",[oNumberFormat.format(matDay.Quantity)]);
+								sap.m.MessageBox.error(sMsg, {
+						            title: "Information",                                      
+						            initialFocus: null,
+						            onClose: function(){
+						            
+						            }
+						        });
+							}
+						} 
+						
+						
+					} else {
 						
 						var orderqty = (material.FactorToUOM > 0) ? matDay.Quantity / material.FactorToUOM : 0;
 						sMsg = this.getResourceBundle().getText("msgConvertedOrder",[oNumberFormat.format(orderqty),material.OrderUnit]);
@@ -879,30 +897,13 @@ sap.ui.define([
 				            title: "Information",                                      
 				            initialFocus: null,
 				            onClose: function(){
-				            	oThis.inputWarning(matDay,material);
+				            
 				            }
 				        });
-					} else{
-						if (!material.AllowDec) {
-							if ((matDay.Quantity % 1) !== 0) {
-							
-								matDay.Error = true;
-								sMsg = sMsg + "\n\r" + 	this.getResourceBundle().getText("msgOrderAsWhole",[oNumberFormat.format(matDay.Quantity)]);
-								sap.m.MessageBox.success(sMsg, {
-						            title: "Information",                                      
-						            initialFocus: null,
-						            onClose: function(){
-						            	oThis.inputWarning(matDay,material);
-						            }
-						        });
-							}else{
-								this.inputWarning(matDay,material);
-							}
-						} else{
-							this.inputWarning(matDay,material);
-							
-						}
+					} 
+					this.inputWarning(matDay,material);
 					}
+					this.globalData.tableChanged = true;
 				}
 			},
 			inputWarning: function(matDay,material){

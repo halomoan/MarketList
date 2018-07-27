@@ -8,13 +8,7 @@
 				<Select
 					id="selectUPoint"
 					forceSelection="false"
-					selectedKey="{calModel>/scheduleheader/0/Name}"
-					items="{
-						path: 'calModel>/scheduleheader',
-						sorter: { path: 'Name' }
-					}">
-					<core:Item key="{calModel>Name}" text="{calModel>Name}" />
-				</Select>
+				></Select>
 				<Label text="{i18n>deliveryDate}" labelFor="prDate"/>
 				<DatePicker
 					id="prDate"
