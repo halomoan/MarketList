@@ -501,84 +501,90 @@ sap.ui.define([
 				  decimalSeparator: "."
 				});
 				
-				var qty = oEvent.getParameters().value.replace(/[\,|\.]/g,"");
+				
+				var qty = oEvent.getParameters().value;
 				var sPath = oEvent.getSource().getBindingContext("mktlist").getPath();
 				var material = this.getView().getModel("mktlist").getProperty(sPath);
 				var id = oEvent.getParameters().id.substring(7, 8);
+				var oThis = this;
 				var sMsg = "";
+				var bConverted = false;
 				
 				var matDay = material["Day" + id];
 				
 				matDay.Error = false;
+				var regex = /^\d+([,|\.]\d{3})*([,|\.]\d{2})?$/;
 				
-				if (isNaN(qty)) {
+				if (!regex.test(qty)) {
 					sMsg = this.getResourceBundle().getText("msgErrNumber");
 					sap.m.MessageBox.success(sMsg, {
 				            title: "Error",                                      
 				            initialFocus: null                                   
 				        });
 				    matDay.Error = true;
+				    return;
 				    
-				    
-				} else if( matDay.Quantity > 0 ) {
-					
-					if (matDay.UOM === material.OrderUnit) {
-						if (!material.AllowDec) {
-							if (matDay.Quantity % 1 !== 0) {
-								matDay.Error = true;
-								sMsg = sMsg + "\n\r" + 	this.getResourceBundle().getText("msgOrderAsWhole",[oNumberFormat.format(matDay.Quantity)]);
-								sap.m.MessageBox.error(sMsg, {
-						            title: "Information",                                      
-						            initialFocus: null,
-						            onClose: function(){
-						            	
-						            }
-						        });
-							}
-						} 
-							
+				}
+				
+				var orderqty = 0;
+				if (matDay.UOM === material.OrderUnit) {
+					orderqty = matDay.Quantity;
+				}else{
+					orderqty = (material.FactorToUOM > 0) ? matDay.Quantity / material.FactorToUOM : 0;
+					bConverted = true;
+					sMsg =  this.getResourceBundle().getText("msgUnitConversion",[oNumberFormat.format(material.FactorToUOM),matDay.UOM,material.OrderUnit]) + "\n\r";
+				}
 						
+			
+				if (orderqty < material.MinOrder) {
+					if (bConverted) {
+						sMsg = sMsg + this.getResourceBundle().getText("msgConvertedOrder",[oNumberFormat.format(orderqty),material.OrderUnit]) + "\n\r\n\r ";
 						
-					} else {
-						var orderqty = (material.FactorToUOM > 0) ? matDay.Quantity / material.FactorToUOM : 0;
-						sMsg = this.getResourceBundle().getText("msgConvertedOrder",[oNumberFormat.format(orderqty),material.OrderUnit]);
+					}
+					sMsg = sMsg + this.getResourceBundle().getText("msgMinOrder",[oNumberFormat.format(orderqty),oNumberFormat.format(material.MinOrder)]);
+					sap.m.MessageBox.error(sMsg, {
+				            title: "Information",                                      
+				            initialFocus: null,
+				            onClose: function(){
+				            
+				            }
+				    });
+					matDay.Error = true;
+					return;						
+				}
+				if (!material.AllowDec) {
+					if (orderqty % 1 !== 0) {
 						
-						if (!material.AllowDec) {
-							if (orderqty % 1 !== 0) {
-								
-					
-								matDay.Error = true;
-								sMsg = sMsg + "\n\r" + 	this.getResourceBundle().getText("msgOrderAsWhole",[oNumberFormat.format(orderqty)]);
-							}
+						if (bConverted) {
+							sMsg = sMsg + this.getResourceBundle().getText("msgConvertedOrder",[oNumberFormat.format(orderqty),material.OrderUnit]) + "\n\r\n\r ";
 						}
-					
-						if (orderqty < material.MinOrder) {
-							sMsg = sMsg + "\n\r" + this.getResourceBundle().getText("msgMinOrder",[oNumberFormat.format(orderqty),oNumberFormat.format(material.MinOrder)]);
-					
-							matDay.Error = true;
-							
-						
-						}
-						
-						if (!material.AllowDec) {
-							if ((matDay.Quantity % 1) !== 0) {
-					
-								matDay.Error = true;
-								sMsg = sMsg + "\n\r" + 	this.getResourceBundle().getText("msgOrderAsWhole",[oNumberFormat.format(matDay.Quantity)]);
-							}
-						}
-						
-						sMsg = sMsg + "\n\r\n\r" + this.getResourceBundle().getText("msgUnitConversion",[oNumberFormat.format(material.FactorToUOM),matDay.UOM,material.OrderUnit]);
-						sap.m.MessageBox.success(sMsg, {
+					    sMsg = sMsg +  this.getResourceBundle().getText("msgOrderAsWhole",[oNumberFormat.format(orderqty)]);
+						sap.m.MessageBox.error(sMsg, {
 				            title: "Information",                                      
 				            initialFocus: null,
 				            onClose: function(){
 				            
 				            }
 				        });
-					} 
+				        matDay.Error = true;
+				        return;
+					}
+					
+				} 
+					
+				if (bConverted) {
+				sap.m.MessageBox.information(sMsg, {
+				          title: "Information",                                      
+				          initialFocus: null,
+				          onClose: function(){
+				    		    oThis.inputWarning(matDay,material); 
+				          }
+				 });
+				} else {
+				
 					this.inputWarning(matDay,material);
 				}
+				
 				this.globalData.tableChanged = true;
 			},
 			inputWarning: function(matDay,material){

@@ -61,7 +61,7 @@ sap.ui.define([
 				*/
 				
 				//oList.attachUpdateFinished(null,this._listUpdated,this);
-				if (sap.ui.Device.system.phone) {
+				if (!sap.ui.Device.system.phone) {
 					var oLocalData = this.getLocalData();
 					
 					if(oLocalData.UseMobile) {

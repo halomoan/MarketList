@@ -298,7 +298,7 @@ sap.ui.define([
 						}
 						this.putLocalData(this.oLocalData); 
 						
-						if (sap.ui.Device.system.phone) {
+						if (!sap.ui.Device.system.phone) {
 							this.getRouter().navTo("dsmaster", null, false);
 						} else {	
 							this.getRouter().navTo("mdsmaster", null, false);
@@ -412,7 +412,7 @@ sap.ui.define([
 			
 				
 				if (this.oLocalData.mode === "Change") {
-					if (sap.ui.Device.system.phone) {
+					if (!sap.ui.Device.system.phone) {
 						this.getRouter().navTo("dsmaster", null, false);	
 					}else{
 						this.getRouter().navTo("mdsmaster", null, false);	

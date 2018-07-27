@@ -60,7 +60,7 @@ sap.ui.define([
 				});
 				*/
 	
-				if (sap.ui.Device.system.phone) {
+				if (!sap.ui.Device.system.phone) {
 					
 					var oLocalData = this.getLocalData();
 					if(oLocalData.UseMobile) {
@@ -247,7 +247,7 @@ sap.ui.define([
 				var sObjectId = oItem.getBindingContext().getProperty("MaterialGroupID");
 			
 				if (sObjectId === "TEMPLATE") {
-					if (sap.ui.Device.system.phone) {
+					if (!sap.ui.Device.system.phone) {
 							if(this.oLocalData.SourcePage === "planCal") {
 								this.getRouter().navTo("subdsmaster", {groupId : sObjectId,template: "X" }, false);
 							} else{
@@ -262,7 +262,7 @@ sap.ui.define([
 						this.getRouter().navTo("submasterpage", {plantId: this.PlantID, groupId : sObjectId,ccId: this.CostCenterID }, false);
 					}
 				} else {
-					if (sap.ui.Device.system.phone) {
+					if (!sap.ui.Device.system.phone) {
 					
 							if(this.oLocalData.SourcePage === "planCal") {
 								this.getRouter().navTo("subdsmaster", {groupId : sObjectId}, false);
