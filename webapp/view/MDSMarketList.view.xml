@@ -28,6 +28,13 @@
 						<Text text="{detailView>/CostCenterID} - {detailView>/CostCenterText}"/>
 					</uxap:snappedContent>
 					<uxap:actions>
+						<SearchField
+							id="searchField"
+							showRefreshButton="{= !${device>/isTouch} }"
+							tooltip="{i18n>searchTooltip}"
+							width="auto"
+							search="onSearch">
+						</SearchField>
 						<uxap:ObjectPageHeaderActionButton type="Transparent" id="toggleTemplate" text="Delivery Date: {path: 'detailView>/deliveryDate', formatter: '.formatter.dayFormat'}, {detailView>/deliveryDate}" hideText="false" hideIcon="true" press="headerInfoPopover"/>
 					</uxap:actions>	
 				</uxap:ObjectPageDynamicHeaderTitle>	

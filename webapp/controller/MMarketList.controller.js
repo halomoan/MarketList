@@ -519,7 +519,7 @@ sap.ui.define([
 				    return;
 				    
 				}
-				
+
 				var orderqty = 0;
 				if (matDay.UOM === material.OrderUnit) {
 					orderqty = matDay.Quantity;
@@ -672,20 +672,6 @@ sap.ui.define([
 
 				dialog.open();
 			},
-			/*toggleTemplate: function(){
-				var oList = this.byId("LDay" + this.globalData.dayId);
-				var oItems = oList.getSelectedItems();
-
-				var mode = oList.getMode();
-				if (mode === sap.m.ListMode.None) {
-					this.byId("toggleTemplate").setText("Hide Template");
-					this.byId("LDay" + this.globalData.dayId).setMode(sap.m.ListMode.MultiSelect);
-				} else {
-					this.byId("toggleTemplate").setText("Show Template");
-					this.byId("LDay" + this.globalData.dayId).setMode(sap.m.ListMode.None);
-				}
-				oList.setSelectedItem(oItems,false);
-			},*/
 			toggleTemplate: function(oEvent){
 				var oSource = oEvent.getSource();
 				var sPath = oSource.getBindingContext("mktlist").getPath();

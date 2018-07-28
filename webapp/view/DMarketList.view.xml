@@ -105,7 +105,7 @@
 									<!--<m:Label text="{path: 'TableH>/Date0', formatter: '.formatter.dateFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor1" press="headerInfoPopover"/>-->
 									<m:Button text="{path: 'TableH>/Date0', formatter: '.formatter.dateFormat'}" type="Transparent"  textAlign="Center" class="hcolor1"  width="100%" id="bDay0" press="headerInfoPopover"/>
 									<m:Label text="{detailView>/columns/0/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/0/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{detailView>/Currency} {detailView>/columns/0/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date0', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor1"/>
 								</multiLabels>
 								<template>
@@ -127,7 +127,7 @@
 									<!--<m:Label text="{path: 'TableH>/Date1', formatter: '.formatter.dateFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor2" tooltip="PReq: {TableH>/PRID1}"/>-->
 									<m:Button text="{path: 'TableH>/Date1', formatter: '.formatter.dateFormat'}" type="Transparent"  textAlign="Center" class="hcolor2"  width="100%" id="bDay1" press="headerInfoPopover"/>
 									<m:Label text="{detailView>/columns/1/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/1/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{detailView>/Currency} {detailView>/columns/1/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date1', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor2"/>
 								</multiLabels>
 								<template>
@@ -149,7 +149,7 @@
 									<!--<m:Label text="{path: 'TableH>/Date2', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor3" tooltip="PReq: {TableH>/PRID2}"/>-->
 									<m:Button text="{path: 'TableH>/Date2', formatter: '.formatter.dateFormat'}" type="Transparent"  textAlign="Center" class="hcolor2"  width="100%" id="bDay2" press="headerInfoPopover"/>
 									<m:Label text="{detailView>/columns/2/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/2/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{detailView>/Currency} {detailView>/columns/2/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date2', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor3"/>
 								</multiLabels>
 								<template>
@@ -171,7 +171,7 @@
 									<!--<m:Label text="{path: 'TableH>/Date3', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor4" tooltip="PReq: {TableH>/PRID3}"/>-->
 									<m:Button text="{path: 'TableH>/Date3', formatter: '.formatter.dateFormat'}" type="Transparent"  textAlign="Center" class="hcolor2"  width="100%" id="bDay3" press="headerInfoPopover"/>
 									<m:Label text="{detailView>/columns/3/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/3/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{detailView>/Currency} {detailView>/columns/3/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date3', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor4"/>
 								</multiLabels>
 								<template>
@@ -193,7 +193,7 @@
 									<!--<m:Label text="{path: 'TableH>/Date4', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor5" tooltip="PReq: {TableH>/PRID4}"/>-->
 									<m:Button text="{path: 'TableH>/Date4', formatter: '.formatter.dateFormat'}" type="Transparent"  textAlign="Center" class="hcolor2"  width="100%" id="bDay4" press="headerInfoPopover"/>
 									<m:Label text="{detailView>/columns/4/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/4/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{detailView>/Currency} {detailView>/columns/4/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date4', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor5"/>
 								</multiLabels>
 								<template>
@@ -215,7 +215,7 @@
 									<!--<m:Label text="{path: 'TableH>/Date5', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor6" tooltip="PReq: {TableH>/PRID5}"/>-->
 									<m:Button text="{path: 'TableH>/Date5', formatter: '.formatter.dateFormat'}" type="Transparent"  textAlign="Center" class="hcolor2"  width="100%" id="bDay5" press="headerInfoPopover"/>
 									<m:Label text="{detailView>/columns/5/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/5/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{detailView>/Currency} {detailView>/columns/5/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date5', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor6"/>
 								</multiLabels>
 								<template>
@@ -237,7 +237,7 @@
 									<!--<m:Label text="{path: 'TableH>/Date6', formatter: '.formatter.dateFormat'  }" textAlign="Center" width="100%" design="Bold" class="hcolor7" tooltip="PReq: {TableH>/PRID6}"/>-->
 									<m:Button text="{path: 'TableH>/Date6', formatter: '.formatter.dateFormat'}" type="Transparent"  textAlign="Center" class="hcolor2"  width="100%" id="bDay6" press="headerInfoPopover"/>
 									<m:Label text="{detailView>/columns/6/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/6/total}" textAlign="End" width="100%" design="Bold" class="green"/>
+									<m:Label text="{detailView>/Currency} {detailView>/columns/6/total}" textAlign="End" width="100%" design="Bold" class="green"/>
 									<m:Label text="{path: 'TableH>/Date6', formatter: '.formatter.dayFormat'}" textAlign="Center" width="100%" design="Bold" class="hcolor7"/>
 								</multiLabels>
 								<template>
@@ -259,7 +259,7 @@
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date7', formatter: '.formatter.dateFormat'  }" design="Bold" textAlign="Center" width="100%" class="hcolor7"/>
 									<m:Label text="{detailView>/columns/7/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/7/total}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/Currency} {detailView>/columns/7/total}" textAlign="End" width="100%"/>
 									<m:Label text="{path: 'TableH>/Date7', formatter: '.formatter.dayFormat'}" design="Bold" textAlign="Center" width="100%" class="hcolor7"/>
 								</multiLabels>
 								<template>
@@ -270,7 +270,7 @@
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date8', formatter: '.formatter.dateFormat'  }" design="Bold" textAlign="Center" width="100%" class="hcolor6"/>
 									<m:Label text="{detailView>/columns/8/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/8/total}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/Currency} {detailView>/columns/8/total}" textAlign="End" width="100%"/>
 									<m:Label text="{path: 'TableH>/Date8', formatter: '.formatter.dayFormat'}" design="Bold" textAlign="Center" width="100%" class="hcolor6"/>
 								</multiLabels>
 								<template>
@@ -281,7 +281,7 @@
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date9', formatter: '.formatter.dateFormat'  }" design="Bold" textAlign="Center" width="100%" class="hcolor5" />
 									<m:Label text="{detailView>/columns/9/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/9/total}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/Currency} {detailView>/columns/9/total}" textAlign="End" width="100%"/>
 									<m:Label text="{path: 'TableH>/Date9', formatter: '.formatter.dayFormat'}" design="Bold" textAlign="Center" width="100%" class="hcolor5"/>
 								</multiLabels>
 								<template>
@@ -292,7 +292,7 @@
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date10', formatter: '.formatter.dateFormat'  }" design="Bold" textAlign="Center" width="100%" class="hcolor4"/>
 									<m:Label text="{detailView>/columns/10/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/10/total}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/Currency} {detailView>/columns/10/total}" textAlign="End" width="100%"/>
 									<m:Label text="{path: 'TableH>/Date10', formatter: '.formatter.dayFormat'}" design="Bold" textAlign="Center" width="100%" class="hcolor4"/>
 								</multiLabels>
 								<template>
@@ -303,7 +303,7 @@
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date11', formatter: '.formatter.dateFormat'  }" design="Bold" textAlign="Center" width="100%" class="hcolor3"/>
 									<m:Label text="{detailView>/columns/11/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/11/total}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/Currency} {detailView>/columns/11/total}" textAlign="End" width="100%"/>
 									<m:Label text="{path: 'TableH>/Date11', formatter: '.formatter.dayFormat'}" design="Bold" textAlign="Center" width="100%" class="hcolor3"/>
 								</multiLabels>
 								<template>
@@ -314,7 +314,7 @@
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date12', formatter: '.formatter.dateFormat'  }" design="Bold" textAlign="Center" width="100%" class="hcolor2"/>
 									<m:Label text="{detailView>/columns/12/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/12/total}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/Currency} {detailView>/columns/12/total}" textAlign="End" width="100%"/>
 									<m:Label text="{path: 'TableH>/Date12', formatter: '.formatter.dayFormat'}" design="Bold" textAlign="Center" width="100%" class="hcolor2"/>
 								</multiLabels>
 								<template>
@@ -325,7 +325,7 @@
 								<multiLabels>
 									<m:Label text="{path: 'TableH>/Date13', formatter: '.formatter.dateFormat'  }" design="Bold" extAlign="Center" width="100%" class="hcolor1"/>
 									<m:Label text="{detailView>/columns/13/noItem}" textAlign="End" width="100%"/>
-									<m:Label text="{detailView>/columns/13/total}" textAlign="End" width="100%"/>
+									<m:Label text="{detailView>/Currency} {detailView>/columns/13/total}" textAlign="End" width="100%"/>
 									<m:Label text="{path: 'TableH>/Date13', formatter: '.formatter.dayFormat'}" design="Bold" textAlign="Center" width="100%" class="hcolor1"/>
 								</multiLabels>
 								<template>

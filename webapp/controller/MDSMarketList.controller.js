@@ -820,6 +820,24 @@ sap.ui.define([
 				}
 			
 			},
+			onSearch: function(oEvent){
+				var oList = this.byId("LDay" + this.globalData.dayId);
+				var sQuery = oEvent.getParameter("query");
+				
+				var filters = [];
+				var binding = oList.getBinding("items");
+				
+				filters.push(new sap.ui.model.Filter({
+				    filters: [
+				    new sap.ui.model.Filter("MaterialID", sap.ui.model.FilterOperator.Contains, sQuery),
+				    new sap.ui.model.Filter("MaterialText", sap.ui.model.FilterOperator.Contains, sQuery)
+				    ],
+				    and: false
+				}));
+				
+				
+				binding.filter(filters);
+			},
 			onExit: function() {
 				sap.ui.getCore().getEventBus().unsubscribe("marketlist","addMaterial",this._addMaterial,this);
 				if (this._oMaterialDialog) {

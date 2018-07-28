@@ -53,6 +53,7 @@ sap.ui.define([
 					noOfDays: [],
 					PlantID: "",
 					Plant: "",
+					Currency: "",
 					CostCenterID : "",
 					CostCenterText: "",
 					UnloadingPoint: "",
@@ -88,8 +89,6 @@ sap.ui.define([
 			},
 			_onMasterMatched :  function() {
 				if (this.globalData.iRefresh === 0) {
-					//console.log(oEvent.getParameter("arguments"));
-					//this.globalData.MarketListHeaderID = oEvent.getParameter("arguments").marketlistID;
 					this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
 				}
 			},
@@ -527,8 +526,6 @@ sap.ui.define([
 				
 					var data = oModelJson.getProperty("/rows");
 					
-					
-					//if (data && this.globalData.tableChanged) {
 					if(data) {
 					
 						
@@ -540,8 +537,8 @@ sap.ui.define([
 								if(prop.substring(0,3) === "Day") {
 									
 									var oDay = data[key][prop];
-									
-									if (oDay.Enabled && oDay.Quantity > 0) {
+									//if (oDay.Enabled && oDay.Quantity > 0) {
+									if (oDay.Quantity > 0) {
 										noItems[oDay.Date] = isNaN(noItems[oDay.Date]) ? 1 : (noItems[oDay.Date] + 1);
 										if (isNaN(totals[oDay.Date])) {
 											totals[oDay.Date] = (oDay.Quantity / data[key].PriceUnit * data[key].UnitPrice);
@@ -593,6 +590,7 @@ sap.ui.define([
 				
 				
 				this.oLocalData = this.getLocalData();
+				oViewModel.setProperty("/Currency",this.oLocalData.Currency);
 				
 				if (this.oLocalData) {
 					
