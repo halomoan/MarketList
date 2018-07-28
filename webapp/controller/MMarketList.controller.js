@@ -253,6 +253,11 @@ sap.ui.define([
 					this.byId("toggleTemplate").setText("Show Template");
 				}
 				*/
+				
+				var oList = this.byId("LDay" + this.globalData.dayId);
+				var binding = oList.getBinding("items");
+				binding.filter([]);
+				
 				var oViewModel = this.getModel("detailView");
 				if (this.globalData.templtChanged) {
 					this.globalData.templtChanged = false;
@@ -267,6 +272,9 @@ sap.ui.define([
 				var oTableH = this.getView().getModel("TableH").getData();
 				oViewModel.setProperty("/deliveryDate",oTableH["Date"+ this.globalData.dayId]);
 				oViewModel.setProperty("/PurReqID",oTableH["PRID"+ this.globalData.dayId]);
+				
+				var oSearchField = this.getView().byId("searchField");
+				oSearchField.setValue("");
 				
 				this._onTableChanged(this._oJsonModel);
 				
@@ -788,6 +796,24 @@ sap.ui.define([
 					this.getRouter().navTo("masterpage", {plantId : this.oLocalData.PlantID, ccId : this.oLocalData.CostCenterID}, false);
 				}
 			
+			},
+			onSearch: function(oEvent){
+				var oList = this.byId("LDay" + this.globalData.dayId);
+				var sQuery = oEvent.getParameter("query");
+				
+				var filters = [];
+				var binding = oList.getBinding("items");
+				
+				filters.push(new sap.ui.model.Filter({
+				    filters: [
+				    new sap.ui.model.Filter("MaterialID", sap.ui.model.FilterOperator.Contains, sQuery),
+				    new sap.ui.model.Filter("MaterialText", sap.ui.model.FilterOperator.Contains, sQuery)
+				    ],
+				    and: false
+				}));
+				
+				
+				binding.filter(filters);
 			},
 			onExit: function() {
 				sap.ui.getCore().getEventBus().unsubscribe("marketlist","addMaterial",this._addMaterial,this);
