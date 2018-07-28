@@ -49,8 +49,6 @@ sap.ui.define([
 
 				this.oLocalData = this.getLocalData();
 				
-				console.log(this.globalData.iRefresh);
-				
 				if (this.globalData.iRefresh === 0) {
 					this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
 				}

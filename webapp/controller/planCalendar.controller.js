@@ -112,6 +112,8 @@ sap.ui.define([
 				sPRID = sPRID.replace( /^\D+/g, ""); 
 				oViewModel.setProperty("/PurReqID",sPRID);
 				
+				
+				
 				if(oAppointment.getType() === "Type06" && oButton.getText() === this.getResourceBundle().getText("showDetail")) {
 					this._handlePRChange(oAppointment);
 				} 
@@ -126,7 +128,9 @@ sap.ui.define([
 							oViewModel.setProperty("/showChange",false);
 						}
 						
-						//var oLocalData = this.getLocalData();
+						var oSearchField = this.getView().byId("searchField");
+						oSearchField.setValue("");
+				
 						this.oLocalData.mode = "Change";
 						this.oLocalData.Change = {};
 						
@@ -160,13 +164,6 @@ sap.ui.define([
 								oViewModel.setProperty("/listbusy",false);
 							}
 						});
-					
-						/*
-						//console.log("'" + sPRID + "' " + sSelected + ". \n Selected appointments: " + this.byId("PC1").getSelectedAppointments().length);
-						} else {
-						var aAppointments = oEvent.getParameter("appointments");
-						var sValue = aAppointments.length + " Appointments selected";
-						console.log(sValue);*/
 					}
 				}	
 				
@@ -456,7 +453,25 @@ sap.ui.define([
 					oUP.addItem(item);
 				}
 				oUP.setSelectedKey(this.oLocalData.UnloadingPointID);
+			},
+			onSearch: function(oEvent){
+				var oList = this.getView().byId("PRItemList");
+				var sQuery = oEvent.getParameter("query");
+				
+				var filters = [];
+				var binding = oList.getBinding("items");
+				
+				filters.push(new sap.ui.model.Filter({
+				    filters: [
+				    new sap.ui.model.Filter("MaterialID", sap.ui.model.FilterOperator.Contains, sQuery),
+				    new sap.ui.model.Filter("MaterialText", sap.ui.model.FilterOperator.Contains, sQuery)
+				    ],
+				    and: false
+				}));
+				
+				binding.filter(filters);
 			}
+			
 
 	});
 

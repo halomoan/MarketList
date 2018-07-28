@@ -42,6 +42,7 @@
 					<uxap:subSections>
 						<uxap:ObjectPageSubSection title="">
 						<uxap:blocks>
+							
 							<List id="LDay0" mode="Delete" items="{path: 'mktlist>/rows'}" delete="deleteRow">
 									<CustomListItem>
 										<HBox>

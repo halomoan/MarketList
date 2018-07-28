@@ -16,7 +16,7 @@
 					<SearchField
 							id="searchField"
 							showRefreshButton="{= !${device>/isTouch} }"
-							tooltip="{i18n>masterSearchTooltip}"
+							tooltip="{i18n>searchTooltip}"
 							width="100%"
 							search="onSearch">
 					</SearchField>

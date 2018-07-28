@@ -286,7 +286,7 @@ sap.ui.define([
 					sap.ui.getCore().getEventBus().publish("marketlist", "addMaterial", {data : jsonData}); 
 				}
 				
-				if (sap.ui.Device.system.phone) {
+				if (!sap.ui.Device.system.phone) {
 					if (bClose) {
 						history.go(-2);
 					}
