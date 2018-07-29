@@ -51,9 +51,15 @@
 												<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
 													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]"
 														design="{= parseFloat(${mktlist>Day0/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
+													<layout:Grid defaultSpan="L12 M12 S12">
+													<VBox width="15rem">
 													<Label text="Price Unit: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 													<Label
 														text="Unit Price: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day0/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day0/UOM} : ${mktlist>Day0/UOM} + ' *' }"/>
+													 <layoutData>
+												          <layout:GridData span="L4 M4 S12" />
+												     </layoutData>													
+													</VBox>	
 													<HBox>
 														<Input valueState="{= ${mktlist>Day0/Error} ? 'Error': 'None'}"
 															value="{path: 'mktlist>Day0/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}"
@@ -66,7 +72,13 @@
 																<core:CustomData key="Enabled" value="{mktlist>Day0/Enabled}" writeToDom="false"/>
 															</customData>
 														</Button>
+													<layoutData>
+												          <layout:GridData span="L8 M8 S12" />
+												     </layoutData>	
 													</HBox>
+													
+													
+													</layout:Grid>	
 												</VBox>
 											</HBox>
 										</CustomListItem>
@@ -87,9 +99,15 @@
 												<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
 													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]"
 														design="{= parseFloat(${mktlist>Day1/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
+													<layout:Grid>
+													<VBox width="15rem">
 													<Label text="Price Unit: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 													<Label
 														text="Unit Price: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day1/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day1/UOM} : ${mktlist>Day1/UOM} + ' *' }"/>
+													 <layoutData>
+												          <layout:GridData span="L4 M4 S12" />
+												     </layoutData>	
+													</VBox>
 													<HBox>
 														<Input valueState="{= ${mktlist>Day1/Error} ? 'Error': 'None'}"
 															value="{path: 'mktlist>Day1/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}"
@@ -102,7 +120,11 @@
 																<core:CustomData key="Enabled" value="{mktlist>Day1/Enabled}" writeToDom="false"/>
 															</customData>
 														</Button>
+													<layoutData>
+												          <layout:GridData span="L8 M8 S12" />
+												     </layoutData>
 													</HBox>
+													</layout:Grid>
 												</VBox>
 											</HBox>
 										</CustomListItem>
@@ -123,9 +145,15 @@
 												<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
 													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]"
 														design="{= parseFloat(${mktlist>Day2/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
+													<layout:Grid>
+													<VBox width="15rem">
 													<Label text="Price Unit: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 													<Label
 														text="Unit Price: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day2/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day2/UOM} : ${mktlist>Day2/UOM} + ' *' }"/>
+													 <layoutData>
+												           <layout:GridData span="L4 M4 S12" />
+												     </layoutData>	
+													</VBox>
 													<HBox>
 														<Input valueState="{= ${mktlist>Day2/Error} ? 'Error': 'None'}"
 															value="{path: 'mktlist>Day2/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}"
@@ -138,7 +166,11 @@
 																<core:CustomData key="Enabled" value="{mktlist>Day2/Enabled}" writeToDom="false"/>
 															</customData>
 														</Button>
+														<layoutData>
+												          <layout:GridData span="L8 M8 S12" />
+												     </layoutData>
 													</HBox>
+													</layout:Grid>
 												</VBox>
 											</HBox>
 										</CustomListItem>
@@ -159,9 +191,15 @@
 												<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
 													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]"
 														design="{= parseFloat(${mktlist>Day3/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
+													<layout:Grid>
+													<VBox width="15rem">
 													<Label text="Price Unit: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 													<Label
 														text="Unit Price: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day3/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day3/UOM} : ${mktlist>Day3/UOM} + ' *' }"/>
+													 <layoutData>
+												           <layout:GridData span="L4 M4 S12" />
+												     </layoutData>	
+													</VBox>
 													<HBox>
 														<Input valueState="{= ${mktlist>Day3/Error} ? 'Error': 'None'}"
 															value="{path: 'mktlist>Day3/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}"
@@ -174,7 +212,11 @@
 																<core:CustomData key="Enabled" value="{mktlist>Day3/Enabled}" writeToDom="false"/>
 															</customData>
 														</Button>
+														<layoutData>
+												          <layout:GridData span="L8 M8 S12" />
+												     </layoutData>
 													</HBox>
+													</layout:Grid>
 												</VBox>
 											</HBox>
 										</CustomListItem>
@@ -195,9 +237,15 @@
 												<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
 													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]"
 														design="{= parseFloat(${mktlist>Day4/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
+													<layout:Grid>
+													<VBox width="15rem">
 													<Label text="Price Unit: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 													<Label
 														text="Unit Price: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day4/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day4/UOM} : ${mktlist>Day4/UOM} + ' *' }"/>
+													 <layoutData>
+												           <layout:GridData span="L4 M4 S12" />
+												     </layoutData>	
+													</VBox>
 													<HBox>
 														<Input valueState="{= ${mktlist>Day4/Error} ? 'Error': 'None'}"
 															value="{path: 'mktlist>Day4/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}"
@@ -210,7 +258,11 @@
 																<core:CustomData key="Enabled" value="{mktlist>Day4/Enabled}" writeToDom="false"/>
 															</customData>
 														</Button>
+														<layoutData>
+												          <layout:GridData span="L8 M8 S12" />
+												     </layoutData>
 													</HBox>
+													</layout:Grid>
 												</VBox>
 											</HBox>
 										</CustomListItem>
@@ -231,9 +283,15 @@
 												<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
 													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]"
 														design="{= parseFloat(${mktlist>Day5/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
+													<layout:Grid>
+													<VBox width="15rem">
 													<Label text="Price Unit: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 													<Label
 														text="Unit Price: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day5/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day5/UOM} : ${mktlist>Day5/UOM} + ' *' }"/>
+													 <layoutData>
+												           <layout:GridData span="L4 M4 S12" />
+												     </layoutData>	
+													</VBox>
 													<HBox>
 														<Input valueState="{= ${mktlist>Day5/Error} ? 'Error': 'None'}"
 															value="{path: 'mktlist>Day5/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}"
@@ -246,7 +304,11 @@
 																<core:CustomData key="Enabled" value="{mktlist>Day5/Enabled}" writeToDom="false"/>
 															</customData>
 														</Button>
+														<layoutData>
+												          <layout:GridData span="L8 M8 S12" />
+												     </layoutData>
 													</HBox>
+													</layout:Grid>
 												</VBox>
 											</HBox>
 										</CustomListItem>
@@ -267,9 +329,15 @@
 												<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
 													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]"
 														design="{= parseFloat(${mktlist>Day6/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
+													<layout:Grid>
+													<VBox width="15rem">
 													<Label text="Price Unit: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 													<Label
 														text="Unit Price: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day6/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day6/UOM} : ${mktlist>Day6/UOM} + ' *' }"/>
+													 <layoutData>
+												           <layout:GridData span="L4 M4 S12" />
+												     </layoutData>	
+													</VBox>														
 													<HBox>
 														<Input valueState="{= ${mktlist>Day6/Error} ? 'Error': 'None'}"
 															value="{path: 'mktlist>Day6/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}"
@@ -282,7 +350,11 @@
 																<core:CustomData key="Enabled" value="{mktlist>Day6/Enabled}" writeToDom="false"/>
 															</customData>
 														</Button>
+														<layoutData>
+												          <layout:GridData span="L8 M8 S12" />
+												     </layoutData>
 													</HBox>
+													</layout:Grid>
 												</VBox>
 											</HBox>
 										</CustomListItem>
