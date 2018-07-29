@@ -547,7 +547,7 @@ sap.ui.define([
 				
 				if (!regex.test(qty)) {
 					sMsg = this.getResourceBundle().getText("msgErrNumber");
-					sap.m.MessageBox.success(sMsg, {
+					sap.m.MessageBox.error(sMsg, {
 				            title: "Error",                                      
 				            initialFocus: null                                   
 				        });
