@@ -35,6 +35,8 @@ sap.ui.define([
 				var oViewModel = this.getModel("detailView");
 				
 				this.oLocalData = this.getLocalData();
+				this.oLocalData.SourcePage = "planCal";
+				this.putLocalData(this.oLocalData);
 				
 				oViewModel.setProperty("/Plant",this.oLocalData.Plant);
 				oViewModel.setProperty("/CostCenter",this.oLocalData.CostCenter);
@@ -199,7 +201,7 @@ sap.ui.define([
 				
 				
 				var sPRID = oAppointment.getTitle();
-				this.oLocalData.SourcePage = "planCal";
+				//this.oLocalData.SourcePage = "planCal";
 				this.oLocalData.Change.PRID = sPRID.replace("PRID: ","");
 				this.oLocalData.Change.UnloadingPoint = oAppointment.getParent().getTitle();
 				this.oLocalData.Change.DeliveryDate = this.getStringDate(oAppointment.getStartDate());
@@ -282,7 +284,7 @@ sap.ui.define([
 					    var oSelect = oFrag.byId("addPR", "selectUPoint");
 						
 						
-						this.oLocalData.SourcePage = "planCal";
+						//this.oLocalData.SourcePage = "planCal";
 						this.oLocalData.mode = "Create";
 						this.oLocalData.Change = null;
 						this.oLocalData.Create = {};

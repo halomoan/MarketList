@@ -527,9 +527,7 @@ sap.ui.define([
 					var data = oModelJson.getProperty("/rows");
 					
 					if(data) {
-					
-						
-						
+
 						var noItems = [], totals = [];
 						
 						for (var key in data) {
@@ -537,8 +535,7 @@ sap.ui.define([
 								if(prop.substring(0,3) === "Day") {
 									
 									var oDay = data[key][prop];
-									//if (oDay.Enabled && oDay.Quantity > 0) {
-									if (oDay.Quantity > 0) {
+									if (oDay.Enabled && oDay.Quantity > 0) {
 										noItems[oDay.Date] = isNaN(noItems[oDay.Date]) ? 1 : (noItems[oDay.Date] + 1);
 										if (isNaN(totals[oDay.Date])) {
 											totals[oDay.Date] = (oDay.Quantity / data[key].PriceUnit * data[key].UnitPrice);

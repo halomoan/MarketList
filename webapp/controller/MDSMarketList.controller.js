@@ -655,8 +655,8 @@ sap.ui.define([
 								value : sComment
 							})
 						],
-							buttons : [
-				        new sap.m.Button({
+						buttons : [
+				       /* new sap.m.Button({
 				            text: (enabled ? this.getResourceBundle().getText("delete") : this.getResourceBundle().getText("undelete")),
 				            press: function(){
 				            	
@@ -673,7 +673,7 @@ sap.ui.define([
 								}
 				            	dialog.close();
 				            }
-				        }),
+				        }),*/
 				        new sap.m.Button({
 							text:  this.getResourceBundle().getText("saveComment"),
 							press: function () {
@@ -725,8 +725,36 @@ sap.ui.define([
 				
 				this.globalData.templtChanged = true;
 			},
-			
-			deleteRow: function(oEvent){
+			onDeleteRow: function(oEvent){
+				var oSource = oEvent.getSource();
+				var sId = oSource.data("myId");
+				var itemId = sId.substr(0,sId.length - 3);
+				var itemIdx = parseInt(sId.slice(-2));
+				var isNew = oSource.data("myNew");
+				var key;
+				var tableRows = this._oJsonModel.getData().rows;
+				
+				if (isNew){
+						for (key in tableRows){
+						if (tableRows[key].MaterialID === itemId) {
+							tableRows.splice(key,1);
+							this._oJsonModel.refresh();
+							break;
+						}
+					}
+				
+				} else{
+					for(key in tableRows) {
+						if (tableRows[key].MaterialID === itemId){
+							tableRows[key]["Day" + itemIdx].Enabled = !(tableRows[key]["Day" + itemIdx].Enabled);
+							this._oJsonModel.refresh();
+							this.globalData.tableChanged = true;
+							break;
+						}
+					}
+				}
+			},
+		/*	deleteRow: function(oEvent){
 				var oItem = oEvent.getParameter("listItem");
 				var sPath = oItem.getBindingContext("mktlist").getPath();
 				var material = oItem.getModel("mktlist").getProperty(sPath);
@@ -748,7 +776,7 @@ sap.ui.define([
 				        });	
 				}
 				
-			},
+			},*/
 			generatePO: function() {
 				var oViewModel = this.getModel("detailView");
 				var plantID = oViewModel.getProperty("/PlantID");
