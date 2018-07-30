@@ -433,7 +433,7 @@ sap.ui.define([
 			},
 			onChangeProduct: function(){
 			
-				
+				//console.log(this.oLocalData);
 				if (!this._oViewDChangePR) {
 					this._oViewDChangePR = sap.ui.xmlfragment("DchangePR", "sap.ui.demo.masterdetail.view.calDChangePR", this);
 					this.getView().addDependent(this._oViewDChangePR);

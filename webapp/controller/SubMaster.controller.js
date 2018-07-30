@@ -62,14 +62,14 @@ sap.ui.define([
 				
 				//oList.attachUpdateFinished(null,this._listUpdated,this);
 				if (!sap.ui.Device.system.phone) {
-					var oLocalData = this.getLocalData();
+					//var oLocalData = this.getLocalData();
 					
-					if(oLocalData.UseMobile) {
+					//if(oLocalData.UseMobile) {
 						this.getRouter().getRoute("subdmaster").attachPatternMatched(this._onMasterMatched, this);
-					} else {
+					//} else {
 						this.getRouter().getRoute("submaster").attachPatternMatched(this._onMasterMatched, this);
 						this.getRouter().getRoute("subdsmaster").attachPatternMatched(this._onMasterMatched, this);
-					}
+					//}
 				} else{
 					//this.getRouter().getRoute("submobile").attachPatternMatched(this._onMasterMatched, this);
 					this.getRouter().getRoute("submasterpage").attachPatternMatched(this._onMasterMatched, this);

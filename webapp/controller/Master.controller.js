@@ -61,17 +61,16 @@ sap.ui.define([
 				*/
 				
 				
-	
 				if (!sap.ui.Device.system.phone) {
 					
-					var oLocalData = this.getLocalData();
+					//var oLocalData = this.getLocalData();
 					
-					if(oLocalData.UseMobile) {
+					//if(oLocalData.UseMobile) {
 						this.getRouter().getRoute("dmaster").attachPatternMatched(this._onMasterMatched, this);
-					} else {
+					//} else {
 						this.getRouter().getRoute("master").attachPatternMatched(this._onMasterMatched, this);
 						this.getRouter().getRoute("dsmaster").attachPatternMatched(this._onMasterMatched, this);
-					}
+					//}
 				} else {
 					//this.getRouter().getRoute("mastermobile").attachPatternMatched(this._onMasterMatched, this);
 					this.getRouter().getRoute("masterpage").attachPatternMatched(this._onMasterMatched, this);
@@ -218,10 +217,10 @@ sap.ui.define([
 			_onMasterMatched :  function(oEvent) {
 
 				this.oLocalData = this.getLocalData();
+			
 		
 				var plantId = this.oLocalData.PlantID;
 				var costcenterId = this.oLocalData.CostCenterID;
-				
 				
 				if (this.PlantID !== plantId ) {
 					var oList = this.getView().byId("matgrouplist");
@@ -238,7 +237,7 @@ sap.ui.define([
 							andFilters.push( new Filter({path: "CostCenterID", operator: sap.ui.model.FilterOperator.EQ, value1: "'" + costcenterId + "'"}) );
 						}	
 					}
-					
+				
 					oBinding.filter(new Filter( andFilters, true ));
 					
 				}

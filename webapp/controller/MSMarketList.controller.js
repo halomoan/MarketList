@@ -433,8 +433,6 @@ sap.ui.define([
 					oHeader.NavDetail.results.push(oDetail);
 				}
 				
-				//console.log(oHeader);
-				//return;
 				oModel.create("/MarketListHeaderSet", oHeader, {
 			    	method: "POST",
 				    success: function(data) {

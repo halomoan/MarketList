@@ -36,13 +36,13 @@ sap.ui.define([
 					this._onTableChanged(this._oJsonModel);
 				}.bind(this));
 				
-				var oLocalData = this.getLocalData();
+				//var oLocalData = this.getLocalData();
 				
-				if(oLocalData.UseMobile) {
+				//if(oLocalData.UseMobile) {
 					this.getRouter().getRoute("dmaster").attachPatternMatched(this._onMasterMatched, this);
-				}else{
+				//}else{
 					this.getRouter().getRoute("mastermobile").attachPatternMatched(this._onMasterMatched, this);
-				}
+				//}
 				
 			},
 			_onMasterMatched :  function() {
@@ -176,8 +176,6 @@ sap.ui.define([
 			_addMaterial: function(sChannel,sEvent,oData){
 				
 				if (oData ) {
-					
-					console.log(oData);
 				
 					var tableRows = this._oJsonModel.getData().rows;
 					
