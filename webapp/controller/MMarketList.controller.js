@@ -59,7 +59,7 @@ sap.ui.define([
 				var oModelHeader = new JSONModel();
 				var oView = this.getView();
 				var oThis = this;
-
+				
 			
 				
 				if (this.oLocalData) {
