@@ -23,7 +23,7 @@
 			showWeekNumbers="true"
 		>
 			<toolbarContent>
-				<Button icon="sap-icon://nav-back" press="onNavHome"></Button>
+				<Button icon="sap-icon://nav-back" text="{i18n>back}" press="onNavHome"></Button>
 				<Title text="{detailView>/Plant} / {detailView>/CostCenter}" titleStyle="H4"/>
 				
 				<ToolbarSpacer></ToolbarSpacer>

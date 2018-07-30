@@ -83,7 +83,9 @@
 														<VBox width="15rem">
 															<Label text="Price Unit: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 															<Label
-																text="Unit Price: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day0/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day0/UOM} : ${mktlist>Day0/UOM} + ' *' }"/>
+																text="Unit Price: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day0/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day0/UOM} : ${mktlist>Day0/UOM} + ' *' }"
+																tooltip="{= ${mktlist>Day0/UOM} === ${mktlist>OrderUnit} ? '' : 'Order Unit is ' + ${mktlist>OrderUnit}}"
+																/>
 															<layoutData>
 																<layout:GridData span="L4 M4 S12"/>
 															</layoutData>
