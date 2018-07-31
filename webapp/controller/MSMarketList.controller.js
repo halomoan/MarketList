@@ -503,7 +503,8 @@ sap.ui.define([
 				var qty = oEvent.getParameters().value;
 				var sPath = oEvent.getSource().getBindingContext("mktlist").getPath();
 				var material = this.getView().getModel("mktlist").getProperty(sPath);
-				var id = oEvent.getParameters().id.substring(7, 8);
+				var sId = oEvent.getParameters().id;
+				var id = sId.substring(sId.indexOf("qty")+3,sId.indexOf("qty")+4);
 				var oThis = this;
 				var sMsg = "";
 				var bConverted = false;

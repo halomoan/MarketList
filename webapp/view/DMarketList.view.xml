@@ -118,7 +118,7 @@
     											<core:CustomData key="Enabled" value="{mktlist>Day0/Enabled}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input valueState="{= ${mktlist>Day0/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day0/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" textAlign="End" enabled="{mktlist>Day0/Enabled}" description="{mktlist>Day0/UOM}" fieldWidth="70%" change="inputChange"/>
+										<m:Input id="qty0" valueState="{= ${mktlist>Day0/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day0/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2}}" textAlign="End" enabled="{mktlist>Day0/Enabled}" description="{mktlist>Day0/UOM}" fieldWidth="70%" change="inputChange"/>
 									</m:HBox>	
 								</template>
 							</Column>
@@ -140,7 +140,7 @@
     											<core:CustomData key="Enabled" value="{mktlist>Day1/Enabled}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input valueState="{= ${mktlist>Day1/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day1/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" enabled="{mktlist>Day1/Enabled}" textAlign="End" description="{mktlist>Day1/UOM}" fieldWidth="70%" change="inputChange"/>
+										<m:Input id="qty1" valueState="{= ${mktlist>Day1/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day1/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" enabled="{mktlist>Day1/Enabled}" textAlign="End" description="{mktlist>Day1/UOM}" fieldWidth="70%" change="inputChange"/>
 									</m:HBox>
 								</template>
 							</Column>
@@ -162,7 +162,7 @@
     											<core:CustomData key="Enabled" value="{mktlist>Day2/Enabled}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input valueState="{= ${mktlist>Day2/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day2/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" enabled="{mktlist>Day2/Enabled}" textAlign="End" description="{mktlist>Day2/UOM}" fieldWidth="70%" change="inputChange"/>
+										<m:Input id="qty2" valueState="{= ${mktlist>Day2/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day2/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" enabled="{mktlist>Day2/Enabled}" textAlign="End" description="{mktlist>Day2/UOM}" fieldWidth="70%" change="inputChange"/>
 									</m:HBox>									
 								</template>
 							</Column>
@@ -184,7 +184,7 @@
     											<core:CustomData key="Enabled" value="{mktlist>Day3/Enabled}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input valueState="{= ${mktlist>Day3/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day3/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" enabled="{mktlist>Day3/Enabled}" textAlign="End" description="{mktlist>Day3/UOM}" fieldWidth="70%" change="inputChange"/>
+										<m:Input id="qty3" valueState="{= ${mktlist>Day3/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day3/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" enabled="{mktlist>Day3/Enabled}" textAlign="End" description="{mktlist>Day3/UOM}" fieldWidth="70%" change="inputChange"/>
 									</m:HBox>
 								</template>
 							</Column>
@@ -206,7 +206,7 @@
     											<core:CustomData key="Enabled" value="{mktlist>Day4/Enabled}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input valueState="{= ${mktlist>Day4/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day4/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" enabled="{mktlist>Day4/Enabled}" textAlign="End" description="{mktlist>Day4/UOM}" fieldWidth="70%" change="inputChange"/>
+										<m:Input id="qty4" valueState="{= ${mktlist>Day4/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day4/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" enabled="{mktlist>Day4/Enabled}" textAlign="End" description="{mktlist>Day4/UOM}" fieldWidth="70%" change="inputChange"/>
 									</m:HBox>
 								</template>
 							</Column>
@@ -228,7 +228,7 @@
     											<core:CustomData key="Enabled" value="{mktlist>Day5/Enabled}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input valueState="{= ${mktlist>Day5/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day5/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" enabled="{mktlist>Day5/Enabled}" textAlign="End" description="{mktlist>Day5/UOM}" fieldWidth="70%" change="inputChange"/>
+										<m:Input id="qty5" valueState="{= ${mktlist>Day5/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day5/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" enabled="{mktlist>Day5/Enabled}" textAlign="End" description="{mktlist>Day5/UOM}" fieldWidth="70%" change="inputChange"/>
 									</m:HBox>
 								</template>
 							</Column>
@@ -250,7 +250,7 @@
     											<core:CustomData key="Enabled" value="{mktlist>Day6/Enabled}" writeToDom="false"/>
 											</m:customData>
 										</m:Button>	
-										<m:Input valueState="{= ${mktlist>Day6/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day6/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" enabled="{mktlist>Day6/Enabled}" textAlign="End" description="{mktlist>Day6/UOM}" fieldWidth="70%" change="inputChange"/>
+										<m:Input id="qty6" valueState="{= ${mktlist>Day6/Error} ? 'Error': 'None'}" value="{path: 'mktlist>Day6/Quantity', type:'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2},constraints: {minimum: 0, maximum: 9999}}" enabled="{mktlist>Day6/Enabled}" textAlign="End" description="{mktlist>Day6/UOM}" fieldWidth="70%" change="inputChange"/>
 									</m:HBox>
 								</template>
 							</Column>
