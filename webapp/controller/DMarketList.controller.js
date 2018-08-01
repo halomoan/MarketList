@@ -787,21 +787,22 @@ sap.ui.define([
 			deleteRows : function(){
 				var oViewModel = this.getModel("detailView");
 				var oTable = this.byId("mktlistTable");
-				var oItem;
 				var indices = oTable.getSelectedIndices();
 				var allDeleted = true;
-				
+				var oItem;
 				var tableRows = this._oJsonModel.getData().rows;
 				
-				for(var i in indices){
-					oItem = tableRows[indices[i]];
-					
+				var idx = indices.length;
+				
+				while(idx--){
+					oItem = tableRows[indices[idx]];
 					if (oItem.hasOwnProperty("New")) {
-						tableRows.splice(indices[i],1);
+						tableRows.splice(indices[idx],1);
 					} else {
 						allDeleted = false;
 					}
 				}
+				
 				oTable.clearSelection();
 				this._oJsonModel.refresh();
 				
@@ -815,6 +816,9 @@ sap.ui.define([
 					
 					oTable.setSelectionMode(sap.ui.table.SelectionMode.None);
 					oViewModel.setProperty("/toogleDelete",false);	
+				}
+				if (tableRows.length === 0){
+					this.globalData.tableChanged = false;	
 				}
 				
 				
