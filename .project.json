@@ -34,14 +34,14 @@
   },
   "dataBinding": {},
   "mockpreview": {
-    "mockUri": "/sm1/sap/opu/odata/sap/ZMARKETLIST_SRV",
-    "metadataFilePath": "localService/metadata.xml",
+    "mockUri": "/f30/sap/opu/odata/sap/ZMARKETLIST_SRV/",
+    "metadataFilePath": "localService/ZMARKETLIST_SRV/metadata.xml",
     "loadJSONFiles": true,
     "loadCustomRequests": false,
     "mockRequestsFilePath": ""
   },
   "deploy": {
-    "destination": "sm1",
+    "destination": "f30",
     "name": "ZMARKETLIST"
   }
 }

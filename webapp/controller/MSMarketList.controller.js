@@ -338,9 +338,7 @@ sap.ui.define([
 				var oTableH = this.getView().getModel("TableH");
 				var oThis = this;
 				
-				
-			
-				
+
 				this.oLocalData.Recipient = oViewModel.getProperty("/Recipient");
 				this.oLocalData.TrackingNo = oViewModel.getProperty("/TrackingNo");
 				this.oLocalData.UnloadingPoint = oViewModel.getProperty("/UnloadingPoint");
@@ -394,7 +392,7 @@ sap.ui.define([
 				oHeader.NavDetail = {};
 				oHeader.NavDetail.results = [];
 			
-			
+				var isValid = true;
 				for(var i in tableRows){
 					var oDetail = {};
 					oDetail.MarketListDetailID = this.oLocalData.MarketListDetailID ?  this.oLocalData.MarketListDetailID : this.globalData.MarketListDetailID ;
@@ -410,25 +408,75 @@ sap.ui.define([
 
 					
 					oDetail.Day0 = tableRows[i].Day0;
-					delete oDetail.Day0.Error;
+					if(oDetail.Day0.hasOwnProperty("Error") && oDetail.Day0.Error) {
+						isValid = false;
+						this._oViewFormSubmit.close();
+					} else {
+						delete oDetail.Day0.Error;
+					}
+						
 					
 					oDetail.Day1 = tableRows[i].Day1;
-					delete oDetail.Day1.Error;
+					if(oDetail.Day1.hasOwnProperty("Error") && oDetail.Day1.Error) {
+						isValid = false;
+						this._oViewFormSubmit.close();
+					} else {
+						delete oDetail.Day1.Error;
+					}
+					
 					
 					oDetail.Day2 = tableRows[i].Day2;
-					delete oDetail.Day2.Error;
+					if(oDetail.Day2.hasOwnProperty("Error") && oDetail.Day2.Error) {
+						isValid = false;
+						this._oViewFormSubmit.close();
+					} else {
+						delete oDetail.Day2.Error;
+					}
+					
 					
 					oDetail.Day3 = tableRows[i].Day3;
-					delete oDetail.Day3.Error;
+					if(oDetail.Day3.hasOwnProperty("Error") && oDetail.Day3.Error) {
+						isValid = false;
+						this._oViewFormSubmit.close();
+					} else {
+						delete oDetail.Day3.Error;
+					}
+					
 					
 					oDetail.Day4 = tableRows[i].Day4;
-					delete oDetail.Day4.Error;
+					if(oDetail.Day4.hasOwnProperty("Error") && oDetail.Day4.Error) {
+						isValid = false;
+						this._oViewFormSubmit.close();
+					} else {
+						delete oDetail.Day4.Error;
+					}
+					
 					
 					oDetail.Day5 = tableRows[i].Day5;
-					delete oDetail.Day5.Error;
+					if(oDetail.Day5.hasOwnProperty("Error") && oDetail.Day5.Error) {
+						isValid = false;
+						this._oViewFormSubmit.close();
+					} else {
+						delete oDetail.Day5.Error;
+					}
+					
 					
 					oDetail.Day6 = tableRows[i].Day6;
-					delete oDetail.Day6.Error;
+					if(oDetail.Day6.hasOwnProperty("Error") && oDetail.Day6.Error) {
+						isValid = false;
+						this._oViewFormSubmit.close();
+					} else {
+						delete oDetail.Day6.Error;
+					}
+					
+					
+					if (!isValid){
+						sap.m.MessageBox.error(this.getResourceBundle().getText("msgQtyWrong",[oDetail.MaterialText,oDetail.MaterialID]), {
+				            title: "Error",                                      
+				            initialFocus: null                                   
+				        });
+				        return;
+					}
 					
 					oHeader.NavDetail.results.push(oDetail);
 				}
@@ -535,7 +583,7 @@ sap.ui.define([
 				}
 						
 			
-				if (orderqty < material.MinOrder) {
+				if (orderqty > 0 && orderqty < material.MinOrder) {
 					if (bConverted) {
 						sMsg = sMsg + this.getResourceBundle().getText("msgConvertedOrder",[oNumberFormat.format(orderqty),material.OrderUnit]) + "\n\r\n\r ";
 						

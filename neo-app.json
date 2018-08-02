@@ -20,12 +20,12 @@
       "description": "SAPUI5 Test Resources"
     },
     {
-      "path": "/sm1",
+      "path": "/f30",
       "target": {
         "type": "destination",
-        "name": "sm1"
+        "name": "f30"
       },
-      "description": "sm1"
+      "description": "f30"
     }
   ],
   "sendWelcomeFileRedirect": true

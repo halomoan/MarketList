@@ -26,7 +26,7 @@
 				"uri": "/sap/opu/odata/sap/ZMARKETLIST_SRV/"
 			},
 			"ZMARKETLIST_SRV": {
-				"uri": "/sm1/sap/opu/odata/sap/ZMARKETLIST_SRV/",
+				"uri": "/f30/sap/opu/odata/sap/ZMARKETLIST_SRV/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0",

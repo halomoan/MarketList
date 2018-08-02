@@ -5,7 +5,7 @@
 				<items>
 					<FlexBox class="columns" alignItems="Start" justifyContent="SpaceBetween">
 						<items>
-							<Image width="auto" height="auto" src="images/PPHGLogo.png"/>
+							<Image width="auto" height="auto" src="images/Logo.png" class="sapUiSmallMarginBegin"/>
 							<VBox class="sapUiSmallMargin" alignItems="End">
 								<Label text="{i18n>purchasingGroup}" class="bigLabel"/>
 								<Text text="037" class="font250x"/>

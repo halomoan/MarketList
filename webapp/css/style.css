@@ -48,14 +48,6 @@
  color: #FFC233 !important;
 }
 
-.bgcolor1 {
-	background-color: rgb(201, 76, 76);
-}
-
-.bgcolor2 {
-	background-color: rgba(201, 76, 76, 0.3);
-}
-
 .sapUiSizeCompact .sapUxAPBlockContainerTablet, .sapUiSizeCompact .sapUxAPBlockContainerPhone {
 	padding:0 !important; 
 	margin:0 !important;
