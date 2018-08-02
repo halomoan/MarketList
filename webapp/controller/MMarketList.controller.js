@@ -582,15 +582,15 @@ sap.ui.define([
 				}else{
 					orderqty = (material.FactorToUOM > 0) ? matDay.Quantity / material.FactorToUOM : 0;
 					bConverted = true;
-					sMsg =  this.getResourceBundle().getText("msgUnitConversion",[oNumberFormat.format(material.FactorToUOM),matDay.UOM,material.OrderUnit]) + "\n\r";
+					sMsg =  this.getResourceBundle().getText("msgConvertedOrder",[oNumberFormat.format(orderqty),material.OrderUnit]) + "\n\r\n\r ";
+					sMsg = sMsg + this.getResourceBundle().getText("msgUnitConversion",[oNumberFormat.format(material.FactorToUOM),matDay.UOM,material.OrderUnit]) + "\n\r";
 				}
 						
 			
 				if (orderqty > 0 && orderqty < material.MinOrder) {
-					if (bConverted) {
-						sMsg = sMsg + this.getResourceBundle().getText("msgConvertedOrder",[oNumberFormat.format(orderqty),material.OrderUnit]) + "\n\r\n\r ";
-						
-					}
+					//if (bConverted) {
+					//	sMsg = sMsg + this.getResourceBundle().getText("msgConvertedOrder",[oNumberFormat.format(orderqty),material.OrderUnit]) + "\n\r\n\r ";
+					//}
 					sMsg = sMsg + this.getResourceBundle().getText("msgMinOrder",[oNumberFormat.format(orderqty),oNumberFormat.format(material.MinOrder)]);
 					sap.m.MessageBox.error(sMsg, {
 				            title: "Information",                                      
@@ -605,9 +605,9 @@ sap.ui.define([
 				if (!material.AllowDec) {
 					if (orderqty % 1 !== 0) {
 						
-						if (bConverted) {
-							sMsg = sMsg + this.getResourceBundle().getText("msgConvertedOrder",[oNumberFormat.format(orderqty),material.OrderUnit]) + "\n\r\n\r ";
-						}
+						//if (bConverted) {
+						//	sMsg = sMsg + this.getResourceBundle().getText("msgConvertedOrder",[oNumberFormat.format(orderqty),material.OrderUnit]) + "\n\r\n\r ";
+						//}
 					    sMsg = sMsg +  this.getResourceBundle().getText("msgOrderAsWhole",[oNumberFormat.format(orderqty)]);
 						sap.m.MessageBox.error(sMsg, {
 				            title: "Information",                                      
@@ -656,7 +656,7 @@ sap.ui.define([
 				var oSource = oEvent.getSource();
 				var text = oSource.data("myText");
 				var sId = oSource.data("myId");
-				var enabled = oSource.data("Enabled");
+				//var enabled = oSource.data("Enabled");
 				var sComment = oSource.data("myComment");
 				var oModel = this._oJsonModel;
 				var oThis = this;

@@ -127,14 +127,14 @@
 								type: 'sap.ui.model.type.Currency',
 								formatOptions: {showMeasure: false}
 							}"
-							unit="{mktitem>Currency}" />
+							unit="{mktitem>Day0/UOM}" />
 					<ObjectNumber
 							number="{
 								parts:[{path:'mktitem>UnitPrice'},{path:'mktitem>Day0/UOM'}],
 								type: 'sap.ui.model.type.Currency',
 								formatOptions: {showMeasure: false}
 							}"
-							unit="{mktitem>Day0/UOM}" />	
+							unit="{mktitem>Currency}" />	
 					<ObjectNumber
 							number="{
 								parts:[{path:'mktitem>Day0/Quantity'},{path:'mktitem>Day0/UOM'}],
