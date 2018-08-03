@@ -52,9 +52,9 @@
 														design="{= parseFloat(${mktlist>Day0/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<layout:Grid defaultSpan="L12 M12 S12">
 														<VBox width="15rem">
-															<Label text="Price Unit: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
+															<Label text="Unit Price: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 															<Label
-																text="Unit Price: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day0/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day0/UOM} : ${mktlist>Day0/UOM} + ' *' }"/>
+																text="Price Unit: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day0/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day0/UOM} : ${mktlist>Day0/UOM} + ' *' }"/>
 															<layoutData>
 																<layout:GridData span="L4 M4 S12"/>
 															</layoutData>
