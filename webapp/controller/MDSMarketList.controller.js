@@ -638,9 +638,9 @@ sap.ui.define([
 				if (!material.AllowDec) {
 					if (orderqty % 1 !== 0) {
 						
-						if (bConverted) {
-							sMsg = sMsg + this.getResourceBundle().getText("msgConvertedOrder",[oNumberFormat.format(orderqty),material.OrderUnit]) + "\n\r\n\r ";
-						}
+						//if (bConverted) {
+						//	sMsg = sMsg + this.getResourceBundle().getText("msgConvertedOrder",[oNumberFormat.format(orderqty),material.OrderUnit]) + "\n\r\n\r ";
+						//}
 					    sMsg = sMsg +  this.getResourceBundle().getText("msgOrderAsWhole",[oNumberFormat.format(orderqty)]);
 						sap.m.MessageBox.error(sMsg, {
 				            title: "Information",                                      
