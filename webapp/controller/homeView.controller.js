@@ -307,17 +307,15 @@ sap.ui.define([
 						username: '', //dummy credentials: when request fails, will clear the authentication header  
 						password: '',  
 						statusCode: { 401: function() {  
-							//This empty handler function will prevent authentication pop-up in chrome/firefox  
+							window.location.replace("/sap/bc/ui5_ui5/sap/zmarketlist/index.html");
 						} },  
 						error: function() {  
-						//alert('reached error of wrong username password')  
+							window.location.replace("/sap/bc/ui5_ui5/sap/zmarketlist/index.html");
 						}  
 					}).done(function(){
-						console.log('redirect');
 						window.location.replace("/sap/bc/ui5_ui5/sap/zmarketlist/index.html");
 					});  
 				} else{
-					console.log('redirect');
 					window.location.replace("sap/bc/ui5_ui5/sap/zmarketlist/index.html");
 				}  
 			});
