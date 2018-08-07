@@ -15,6 +15,10 @@
 				<Title text="SAP Material Management" level="H4" titleStyle="H4"/>
 				<ObjectStatus title="User ID" text="{UserId}"/>
 			</l:VerticalLayout>
+			
+			<l:VerticalLayout class="sapUiSmallMargin">
+				<Button icon="sap-icon://log" text="Logout" press="logout"></Button>
+			</l:VerticalLayout>
 		</uxap:content>	
 	</uxap:ObjectPageHeaderContent>	
 	

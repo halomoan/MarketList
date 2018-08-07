@@ -293,7 +293,36 @@ sap.ui.define([
 					date : oLocal.Date
 				}, false);
 			}	
+		},
+		logout:function(){
+			$.ajax({  
+				type: "GET",  
+				url: "/sap/public/bc/icf/logoff"  //Clear SSO cookies: SAP Provided service to do that  
+			}).done(function(){ //Now clear the authentication header stored in the browser  
+				if (!document.execCommand("ClearAuthenticationCache")) {  
+				//"ClearAuthenticationCache" will work only for IE. Below code for other browsers  
+					$.ajax({  
+						type: "GET",  
+						url: "/sap/public/bc/icf/logoff", //any URL to a Gateway service  
+						username: '', //dummy credentials: when request fails, will clear the authentication header  
+						password: '',  
+						statusCode: { 401: function() {  
+							//This empty handler function will prevent authentication pop-up in chrome/firefox  
+						} },  
+						error: function() {  
+						//alert('reached error of wrong username password')  
+						}  
+					}).done(function(){
+						console.log('redirect');
+						window.location.replace("/sap/bc/ui5_ui5/sap/zmarketlist/index.html");
+					});  
+				} else{
+					console.log('redirect');
+					window.location.replace("sap/bc/ui5_ui5/sap/zmarketlist/index.html");
+				}  
+			});
 		}
+		
 	});
 
 });
