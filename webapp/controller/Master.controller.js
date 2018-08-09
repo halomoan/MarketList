@@ -246,6 +246,8 @@ sap.ui.define([
 			_showSubMaster : function(oItem) {
 				var sObjectId = oItem.getBindingContext().getProperty("MaterialGroupID");
 				
+				this.getView().byId("matgrouplist").setSelectedItem(oItem, false);
+				
 				this.oLocalData = this.getLocalData();
 				
 				if (sObjectId === "TEMPLATE") {
