@@ -158,7 +158,7 @@ sap.ui.define([
 									
 									var oDay = data[key][prop];
 										
-									if (oDay.Enabled && oDay.Quantity > 0) {
+									if (!oDay.Deleted && oDay.Quantity > 0) {
 										noItems[oDay.Date] = isNaN(noItems[oDay.Date]) ? 1 : (noItems[oDay.Date] + 1);
 										if (isNaN(totals[oDay.Date])) {
 											totals[oDay.Date] = (oDay.Quantity / data[key].PriceUnit * data[key].UnitPrice);
@@ -777,6 +777,7 @@ sap.ui.define([
 					for(key in tableRows) {
 						if (tableRows[key].MaterialID === itemId){
 							tableRows[key]["Day" + itemIdx].Enabled = !(tableRows[key]["Day" + itemIdx].Enabled);
+							tableRows[key]["Day" + itemIdx].Deleted = !(tableRows[key]["Day" + itemIdx].Deleted);
 							this._oJsonModel.refresh();
 							this.globalData.tableChanged = true;
 							break;

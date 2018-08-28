@@ -152,6 +152,7 @@ sap.ui.define([
 								for(var key in rows) {
 									if (rows[key].MaterialID === itemId){
 										rows[key]["Day" + itemIdx].Enabled = !(rows[key]["Day" + itemIdx].Enabled);
+										rows[key]["Day" + itemIdx].Deleted = !(rows[key]["Day" + itemIdx].Deleted);
 										oModel.refresh();
 										oThis.globalData.tableChanged = true;
 										break;
@@ -283,9 +284,9 @@ sap.ui.define([
 					oDetail.PriceUnit = tableRows[i].PriceUnit;
 					oDetail.InTemplate = tableRows[i].InTemplate;
 					oDetail.TemplatePRID = tableRows[i].TemplatePRID;
-					
+				
 					oDetail.Day0 = tableRows[i].Day0;
-					if (!oDetail.Day0.Enabled) {
+					if (oTableH.getProperty("/LOCK0")) {
 						oDetail.Day0.Quantity = 0;
 					}
 					if(oDetail.Day0.hasOwnProperty("Error") && oDetail.Day0.Error) {
@@ -297,7 +298,7 @@ sap.ui.define([
 						
 					
 					oDetail.Day1 = tableRows[i].Day1;
-					if (!oDetail.Day1.Enabled) {
+					if (oTableH.getProperty("/LOCK1")) {
 						oDetail.Day1.Quantity = 0;
 					}
 					if(oDetail.Day1.hasOwnProperty("Error") && oDetail.Day1.Error) {
@@ -309,7 +310,7 @@ sap.ui.define([
 					
 					
 					oDetail.Day2 = tableRows[i].Day2;
-					if (!oDetail.Day2.Enabled) {
+					if (oTableH.getProperty("/LOCK2")) {
 						oDetail.Day2.Quantity = 0;
 					}
 					if(oDetail.Day2.hasOwnProperty("Error") && oDetail.Day2.Error) {
@@ -321,7 +322,7 @@ sap.ui.define([
 					
 					
 					oDetail.Day3 = tableRows[i].Day3;
-					if (!oDetail.Day3.Enabled) {
+					if (oTableH.getProperty("/LOCK3")) {
 						oDetail.Day3.Quantity = 0;
 					}
 					if(oDetail.Day3.hasOwnProperty("Error") && oDetail.Day3.Error) {
@@ -333,7 +334,7 @@ sap.ui.define([
 					
 					
 					oDetail.Day4 = tableRows[i].Day4;
-					if (!oDetail.Day4.Enabled) {
+					if (oTableH.getProperty("/LOCK4")) {
 						oDetail.Day4.Quantity = 0;
 					}
 					if(oDetail.Day4.hasOwnProperty("Error") && oDetail.Day4.Error) {
@@ -345,7 +346,7 @@ sap.ui.define([
 					
 					
 					oDetail.Day5 = tableRows[i].Day5;
-					if (!oDetail.Day5.Enabled) {
+					if (oTableH.getProperty("/LOCK5")) {
 						oDetail.Day5.Quantity = 0;
 					}
 					if(oDetail.Day5.hasOwnProperty("Error") && oDetail.Day5.Error) {
@@ -357,7 +358,7 @@ sap.ui.define([
 					
 					
 					oDetail.Day6 = tableRows[i].Day6;
-					if (!oDetail.Day6.Enabled) {
+					if (oTableH.getProperty("/LOCK6")) {
 						oDetail.Day6.Quantity = 0;
 					}
 					if(oDetail.Day6.hasOwnProperty("Error") && oDetail.Day6.Error) {
@@ -602,11 +603,12 @@ sap.ui.define([
 						var noItems = [], totals = [];
 						
 						for (var key in data) {
+							
 							for (var prop in data[key]){
 								if(prop.substring(0,3) === "Day") {
 									
 									var oDay = data[key][prop];
-									if (oDay.Enabled && oDay.Quantity > 0) {
+									if (!oDay.Deleted && oDay.Quantity > 0) {
 										noItems[oDay.Date] = isNaN(noItems[oDay.Date]) ? 1 : (noItems[oDay.Date] + 1);
 										if (isNaN(totals[oDay.Date])) {
 											totals[oDay.Date] = (oDay.Quantity / data[key].PriceUnit * data[key].UnitPrice);

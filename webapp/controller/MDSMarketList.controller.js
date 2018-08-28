@@ -168,7 +168,7 @@ sap.ui.define([
 									
 									var oDay = data[key][prop];
 
-									if (oDay.Enabled && oDay.Quantity > 0) {
+									if (!oDay.Deleted && oDay.Quantity > 0) {
 										noItems[oDay.Date] = isNaN(noItems[oDay.Date]) ? 1 : (noItems[oDay.Date] + 1);
 										
 										if (isNaN(totals[oDay.Date])) {
@@ -433,6 +433,9 @@ sap.ui.define([
 
 					
 					oDetail.Day0 = tableRows[i].Day0;
+					if (oTableH.getProperty("/LOCK0")) {
+						oDetail.Day0.Quantity = 0;
+					}
 					if(oDetail.Day0.hasOwnProperty("Error") && oDetail.Day0.Error) {
 						isValid = false;
 						this._oViewFormSubmit.close();
@@ -442,6 +445,9 @@ sap.ui.define([
 						
 					
 					oDetail.Day1 = tableRows[i].Day1;
+					if (oTableH.getProperty("/LOCK1")) {
+						oDetail.Day1.Quantity = 0;
+					}
 					if(oDetail.Day1.hasOwnProperty("Error") && oDetail.Day1.Error) {
 						isValid = false;
 						this._oViewFormSubmit.close();
@@ -451,6 +457,9 @@ sap.ui.define([
 					
 					
 					oDetail.Day2 = tableRows[i].Day2;
+					if (oTableH.getProperty("/LOCK2")) {
+						oDetail.Day2.Quantity = 0;
+					}
 					if(oDetail.Day2.hasOwnProperty("Error") && oDetail.Day2.Error) {
 						isValid = false;
 						this._oViewFormSubmit.close();
@@ -460,6 +469,9 @@ sap.ui.define([
 					
 					
 					oDetail.Day3 = tableRows[i].Day3;
+					if (oTableH.getProperty("/LOCK3")) {
+						oDetail.Day3.Quantity = 0;
+					}
 					if(oDetail.Day3.hasOwnProperty("Error") && oDetail.Day3.Error) {
 						isValid = false;
 						this._oViewFormSubmit.close();
@@ -469,6 +481,9 @@ sap.ui.define([
 					
 					
 					oDetail.Day4 = tableRows[i].Day4;
+					if (oTableH.getProperty("/LOCK4")) {
+						oDetail.Day4.Quantity = 0;
+					}
 					if(oDetail.Day4.hasOwnProperty("Error") && oDetail.Day4.Error) {
 						isValid = false;
 						this._oViewFormSubmit.close();
@@ -478,6 +493,9 @@ sap.ui.define([
 					
 					
 					oDetail.Day5 = tableRows[i].Day5;
+					if (oTableH.getProperty("/LOCK5")) {
+						oDetail.Day5.Quantity = 0;
+					}
 					if(oDetail.Day5.hasOwnProperty("Error") && oDetail.Day5.Error) {
 						isValid = false;
 						this._oViewFormSubmit.close();
@@ -487,6 +505,9 @@ sap.ui.define([
 					
 					
 					oDetail.Day6 = tableRows[i].Day6;
+					if (oTableH.getProperty("/LOCK6")) {
+						oDetail.Day6.Quantity = 0;
+					}
 					if(oDetail.Day6.hasOwnProperty("Error") && oDetail.Day6.Error) {
 						isValid = false;
 						this._oViewFormSubmit.close();
@@ -800,6 +821,7 @@ sap.ui.define([
 					for(key in tableRows) {
 						if (tableRows[key].MaterialID === itemId){
 							tableRows[key]["Day" + itemIdx].Enabled = !(tableRows[key]["Day" + itemIdx].Enabled);
+							tableRows[key]["Day" + itemIdx].Deleted = !(tableRows[key]["Day" + itemIdx].Deleted);
 							this._oJsonModel.refresh();
 							this.globalData.tableChanged = true;
 							break;
