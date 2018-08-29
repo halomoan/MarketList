@@ -45,7 +45,7 @@
 							startDate="{calModel>StartDate}"
 							endDate="{calModel>EndDate}"
 							icon="{calModel>Pic}"
-							title="PRID: {calModel>Title}"
+							title="PR: {calModel>Title}"
 							text="{calModel>Info}"
 							type="{calModel>Type}"
 							tentative="{calModel>Tentative}">
@@ -66,8 +66,9 @@
 		<headerToolbar>
 			<Toolbar>
 				<content>
-					<Title text="PRID: {detailView>/PurReqID}" level="H2"/>
+					<Title text="PR: {detailView>/PurReqID}" level="H2"/>
 					<ToolbarSpacer />
+					<Button icon="sap-icon://print" press="onPrint"></Button>
 					<SearchField
 							id="searchField"
 							showRefreshButton="{= !${device>/isTouch} }"
