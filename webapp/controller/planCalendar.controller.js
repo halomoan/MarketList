@@ -484,7 +484,7 @@ sap.ui.define([
 				bhtml += "<basefont face='arial, verdana, sans-serif' color='#ff0000'>";
 				var ehtml = "</body></html>";
 				var header = "<center><h3>Market List Report</h3></center><hr>";
-					header = header + "<div align='right'><button onclick='window.print(); window.close();'>Print</button></div>";
+					header = header + "<div align='right'><button id='printPageButton' onclick='window.print(); window.close();'>Print</button></div>";
 					header = header + "<table width='100%' align='left'><thead><tr>";	
 					header = header +"<th align='left'>Purchase Requisition #: " + this.oLocalData.Change.PRID + "</th>";
 					header = header +"<th align='right'>Delivery Date: " + this.oLocalData.Change.DeliveryDate + "</th>";
@@ -517,8 +517,6 @@ sap.ui.define([
 				
 				var wind = window.open("","Print",ctrlstr);
 				wind.document.write(bhtml + header + table + ehtml);
-				//wind.print();
-				//wind.close();
 				
 			}
 			

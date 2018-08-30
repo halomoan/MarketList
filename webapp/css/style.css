@@ -1,4 +1,13 @@
 /* Enter your custom styles here */
+@media print {
+  #printPageButton {
+    display: none;
+  }
+  table.blueTable thead th {
+	  color: black !important;
+  }
+
+}
 
 .font250x {
 	font-size: 250% !important;
