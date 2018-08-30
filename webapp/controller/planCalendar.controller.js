@@ -1,7 +1,8 @@
 sap.ui.define([
 	"sap/ui/demo/masterdetail/controller/BaseController",
-	"sap/ui/model/json/JSONModel"
-], function(BaseController,JSONModel) {
+	"sap/ui/model/json/JSONModel",
+	"sap/ui/demo/masterdetail/model/formatter"
+], function(BaseController,JSONModel,formatter) {
 	"use strict";
 
 	return BaseController.extend("sap.ui.demo.masterdetail.controller.planCalendar", {
@@ -160,6 +161,9 @@ sap.ui.define([
 								oJson.setData(rData.NavDetail);
 								oJson.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
 								oThis.setModel(oJson,"mktitem");
+								oThis.oLocalData.Change.Recipient = rData.Recipient;
+								oThis.oLocalData.Change.Requisitioner = rData.Requisitioner;
+								oThis.putLocalData(oThis.oLocalData);
 								oViewModel.setProperty("/listbusy",false);
 							},
 							error: function(oError) {
@@ -475,45 +479,46 @@ sap.ui.define([
 			},
 			onPrint: function(){
 				var oData = this.getModel("mktitem").getData();
-				console.log(oData);
 				
-			
-				var bhtml = "<html><head><title>Print it!</title><link rel='stylesheet' type='text/css' href='css/style.css'></head><body>";
+				var bhtml = "<html><head><title>Market List</title><link rel='stylesheet' type='text/css' href='css/style.css'></head><body>";
+				bhtml += "<basefont face='arial, verdana, sans-serif' color='#ff0000'>";
 				var ehtml = "</body></html>";
 				var header = "<center><h3>Market List Report</h3></center><hr>";
-					header = header + "<table width='100%'><thead><tr>";	
-					header = header +"<th colspan = '2'><strong>Purchase Requisition #</strong>: 1234545</th>";
-					header = header +"<th  colspan = '2'>Delivery Date: 20-May-2018</th>";
+					header = header + "<div align='right'><button onclick='window.print(); window.close();'>Print</button></div>";
+					header = header + "<table width='100%' align='left'><thead><tr>";	
+					header = header +"<th align='left'>Purchase Requisition #: " + this.oLocalData.Change.PRID + "</th>";
+					header = header +"<th align='right'>Delivery Date: " + this.oLocalData.Change.DeliveryDate + "</th>";
 					header = header +"</tr><tr>";
-					header = header +"<td><strong>Cost Center: </strong></td><td>12345 - myCost Center</td>";
-					header = header +"<td><strong>Recipient: </strong></td><td>CHef</td>";
+					header = header +"<td><strong>Cost Center: </strong>" + this.oLocalData.CostCenterID + " - " + this.oLocalData.CostCenter + "</td>";
+					header = header +"<td align='right'><strong>Recipient: </strong>" + this.oLocalData.Change.Recipient + "</td>";
 					header = header +"</tr><tr>";
-					header = header +"<td><strong>Requisitioner: </strong></td><td>Sun Wu</td>";
-					header = header +"<td><strong>Unloading point: </strong></td><td>Kitchen</td>";
+					header = header +"<td><strong>Requisitioner: </strong>" + this.oLocalData.Change.Requisitioner + "</td>";
+					header = header +"<td align='right'><strong>Unloading point: </strong>" + this.oLocalData.Change.UnloadingPoint + "</td>";
 					header = header +"</tr></thead>";
 					header = header +"<tbody></tbody></table><br>";
 					
 				var table ="<table class='blueTable' width='100%'>";
-				table = table + "<tr><th>Item No</th>";
+				table = table + "<thead><tr><th>Item No</th>";
 				table = table + "<th>PO No</th>";
 				table = table + "<th>Material #</th>";
 				table = table + "<th>Description</th>";
-				table = table + "<th>Quantity</th>";
+				table = table + "<th>Quantity</th></thead>";
 				for(var i = 0; i < oData.results.length; i++){
 					table += "<tr>";
 					table += "<td>" + oData.results[i].Day0.PRID + "</td>";
 					table += "<td>" + oData.results[i].Day0.POID + "</td>";
 					table += "<td>" + oData.results[i].MaterialID + "</td>";
 					table += "<td>" + oData.results[i].MaterialText + "</td>";
-					table += "<td>" + parseFloat(oData.results[i].Day0.Quantity) + " " +  oData.results[i].Day0.UOM + "</td>";
+					table += "<td>" + formatter.currencyValue(oData.results[i].Day0.Quantity) + " " +  oData.results[i].Day0.UOM + "</td>";
 					table += "</tr>";
 				}
 				table += "</table>";
-				var ctrlstr = "width=500px,height=600px";
+				var ctrlstr = "toolbar=no,width=700px,height=600px";
 				
 				var wind = window.open("","Print",ctrlstr);
 				wind.document.write(bhtml + header + table + ehtml);
 				//wind.print();
+				//wind.close();
 				
 			}
 			
