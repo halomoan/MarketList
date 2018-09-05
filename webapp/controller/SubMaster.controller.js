@@ -99,7 +99,7 @@ sap.ui.define([
 				}
 
 				var sQuery = oEvent.getParameter("query");
-				var regNumeric = /^\d+$/;
+				var regNumeric = /^[\/|\d]\d+[\/|\d]$/;
 				
 				
 				if (sQuery) {
