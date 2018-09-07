@@ -481,12 +481,12 @@ sap.ui.define([
 					oHeader.NavDetail.results.push(oDetail);
 				}
 				
+				sap.ui.core.BusyIndicator.show();
 				oModel.create("/MarketListHeaderSet", oHeader, {
 			    	method: "POST",
 				    success: function(data) {
 				    	
-				    	//console.log(data.TableH);
-				    	
+				    	sap.ui.core.BusyIndicator.hide();
 				    	
 				    	oTableH.setProperty("/PRID0",data.TableH.PRID0);
 				    	oTableH.setProperty("/PRID1",data.TableH.PRID1);
@@ -519,6 +519,7 @@ sap.ui.define([
 						}
 				    },
 				    error: function(e) {
+				    	sap.ui.core.BusyIndicator.hide();
 				    	sap.m.MessageBox.success(oThis.getResourceBundle().getText("msgFailSave"), {
 				            title: "Failed",                                      
 				            initialFocus: null                                   

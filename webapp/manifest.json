@@ -83,7 +83,7 @@
 				}
 			},
 			"": {
-				"dataSource": "mainService"
+				"dataSource": "ZMARKETLIST_SRV"
 			}
 		},
 		"resources": {
