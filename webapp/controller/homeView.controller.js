@@ -140,7 +140,9 @@ sap.ui.define([
 					
 					dataReceived: function() {
 						odetailView.setProperty("/busy", false);
-						oPlant.fireChange(oPlant.getFirstItem());
+						if(oPlant.getFirstItem()){
+							oPlant.fireChange(oPlant.getFirstItem());
+						}
 					},
 					dataRequested: function() {
 						odetailView.setProperty("/busy", true);
@@ -286,7 +288,6 @@ sap.ui.define([
 			if (this.storeSelection()){ 
 				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 				var oLocal = oStorage.get("localStorage");
-				
 				this.getRouter().navTo("plancalendar", {
 					plantId: oLocal.PlantID,
 					ccId: oLocal.CostCenterID,

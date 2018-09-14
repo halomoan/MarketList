@@ -699,7 +699,7 @@ sap.ui.define([
 				    	
 				    	
 				    	var oHeader = rData.results[0];
-				    	
+				    	console.log(oHeader);
 				    	oThis.oLocalData.Recipient = oHeader.Recipient;
 				    	oThis.oLocalData.TrackingNo = "HELD";
 				    	oViewModel.setProperty("/Recipient",oThis.oLocalData.Recipient);

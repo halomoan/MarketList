@@ -67,6 +67,7 @@
 			<Toolbar>
 				<content>
 					<Title text="PR: {detailView>/PurReqID}" level="H2"/>
+					<Button icon="sap-icon://duplicate" press="onCreatePO" visible="{= !${detailView>/POCreated} }"></Button>
 					<ToolbarSpacer />
 					<Button icon="sap-icon://print" press="onPrint"></Button>
 					<SearchField

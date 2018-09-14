@@ -17,6 +17,8 @@ sap.ui.define([
 					calbusyindicator: 0,
 					showChange : false,
 					listbusy: false,
+					POCreated: true,
+					PurReqID: "",
 					listbusyindicator: 0,
 					Date: dateFormat.format(new Date((new Date()).getTime() + (24 * 60 * 60 * 1000)))
 				};
@@ -37,10 +39,17 @@ sap.ui.define([
 				
 				this.oLocalData = this.getLocalData();
 				this.oLocalData.SourcePage = "planCal";
+				this.oLocalData.Change = {};
+				this.oLocalData.Change.PRID = null;
 				this.putLocalData(this.oLocalData);
 				
 				oViewModel.setProperty("/Plant",this.oLocalData.Plant);
 				oViewModel.setProperty("/CostCenter",this.oLocalData.CostCenter);
+				oViewModel.setProperty("/POCreated",true);
+				oViewModel.setProperty("/PurReqID","");
+				
+				var oJson = new JSONModel();
+				this.setModel(oJson,"mktitem");
 				
 				this.refreshSchedule();
 				
@@ -112,9 +121,10 @@ sap.ui.define([
 				var oButton =  this.byId("showDetail");
 				var oViewModel = this.getModel("detailView");
 				var sPRID = oAppointment.getTitle();
+				//var sStatus = oAppointment.getText();
 				sPRID = sPRID.replace( /^\D+/g, ""); 
 				oViewModel.setProperty("/PurReqID",sPRID);
-				
+				oViewModel.setProperty("/POCreated",true);
 				
 				
 				if(oAppointment.getType() === "Type06" && oButton.getText() === this.getResourceBundle().getText("showDetail")) {
@@ -158,12 +168,18 @@ sap.ui.define([
 							},
 							success: function(rData) {
 								var oJson = new JSONModel();
+								
 								oJson.setData(rData.NavDetail);
 								oJson.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
 								oThis.setModel(oJson,"mktitem");
 								oThis.oLocalData.Change.Recipient = rData.Recipient;
 								oThis.oLocalData.Change.Requisitioner = rData.Requisitioner;
 								oThis.putLocalData(oThis.oLocalData);
+								
+								if(!rData.TableH.LOCK0){
+									oViewModel.setProperty("/POCreated",false);
+								} 
+								
 								oViewModel.setProperty("/listbusy",false);
 							},
 							error: function(oError) {
@@ -437,7 +453,6 @@ sap.ui.define([
 			},
 			onChangeProduct: function(){
 			
-				//console.log(this.oLocalData);
 				if (!this._oViewDChangePR) {
 					this._oViewDChangePR = sap.ui.xmlfragment("DchangePR", "sap.ui.demo.masterdetail.view.calDChangePR", this);
 					this.getView().addDependent(this._oViewDChangePR);
@@ -477,9 +492,59 @@ sap.ui.define([
 				
 				binding.filter(filters);
 			},
+			onCreatePO: function() {
+				
+				var PRID = this.oLocalData.Change.PRID;
+				var plantID = this.oLocalData.PlantID;
+				if (PRID) {
+				
+				var oThis = this;
+				var msg = this.getResourceBundle().getText("msgConfirmCreatePO",[PRID]);
+				var dialog = new sap.m.Dialog({
+					title: "Generate PO",
+					type: "Message",
+					content: new sap.m.Text({ text: msg }),
+					beginButton: new sap.m.Button({
+						text: this.getResourceBundle().getText("submit"),
+						press: function () {
+							
+							var oModel = oThis.getView().getModel();
+							oModel.callFunction("/RunAutoPO", {
+							    method: "POST",
+							    urlParameters:  {"PlantID" : plantID, "PRID" : PRID  }, 
+								success: function(oData, oResponse) {
+									sap.m.MessageBox.success(oData.Message, {
+								         title: "Response",                                      
+								         initialFocus: null
+								     });
+								     oThis.refreshSchedule();
+								},
+								error: function(error) {
+								},
+								async: false
+								
+							});
+							dialog.close();
+						}
+					}),
+					endButton: new sap.m.Button({
+						text: this.getResourceBundle().getText("cancel"),
+						press: function () {
+							dialog.close();
+						}
+					}),
+					afterClose: function() {
+						dialog.destroy();
+					}
+				});
+			
+				dialog.open();
+				}
+			},
 			onPrint: function(){
 				var oData = this.getModel("mktitem").getData();
 				
+				if (oData.results) {
 				var bhtml = "<html><head><title>Market List</title><link rel='stylesheet' type='text/css' href='css/style.css'></head><body>";
 				bhtml += "<basefont face='arial, verdana, sans-serif' color='#ff0000'>";
 				var ehtml = "</body></html>";
@@ -517,11 +582,8 @@ sap.ui.define([
 				
 				var wind = window.open("","Print",ctrlstr);
 				wind.document.write(bhtml + header + table + ehtml);
-				
+				}				
 			}
-			
-			
-
 	});
 
 });
