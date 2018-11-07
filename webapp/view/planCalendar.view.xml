@@ -11,7 +11,6 @@
 
 		<PlanningCalendar
 			id="PC1"
-			startDate="{path: 'calModel>/Date'}"
 			rows="{path: 'calModel>/scheduleheader'}"
 			viewKey="Week"
 			appointmentsVisualization="Filled"

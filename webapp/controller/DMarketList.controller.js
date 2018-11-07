@@ -699,7 +699,6 @@ sap.ui.define([
 				    	
 				    	
 				    	var oHeader = rData.results[0];
-				    	console.log(oHeader);
 				    	oThis.oLocalData.Recipient = oHeader.Recipient;
 				    	oThis.oLocalData.TrackingNo = "HELD";
 				    	oViewModel.setProperty("/Recipient",oThis.oLocalData.Recipient);
@@ -1007,7 +1006,18 @@ sap.ui.define([
 				if (msg) {
 					sap.m.MessageToast.show(msg);
 				}
+			},
+			doDaySort: function(oEvent){
+				var id = oEvent.getSource().getId();
+				var idx = id.substr(id.length - 1);
+
+				var tableRows = this._oJsonModel.getData().rows;
+				tableRows.sort(function(a,b){
+					return b["Day" + idx].Quantity - a["Day" + idx].Quantity;
+				});
+				this._oJsonModel.refresh();
 			}
+			
 			
 			
 			

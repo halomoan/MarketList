@@ -73,6 +73,7 @@ sap.ui.define([
 					filters: oFilters,
 					success: function(rData) {
 						var oSchedule = rData.results[0]; 
+						
 						var oJsonData = {};
 						oJsonData.scheduleheader = oSchedule.NavScheduleToHeader.results;
 						for (var idx in oJsonData.scheduleheader){
@@ -109,10 +110,15 @@ sap.ui.define([
 			},
 			onStartDateChange: function(oEvent){
 				var oStartDate = oEvent.getSource().getStartDate();
-				if (oStartDate.getFullYear() !== this.oDate.getFullYear()){
+				
+				if (oStartDate.getMonth() !== this.oDate.getMonth()){
 					this.oDate = oStartDate;
 					this.refreshSchedule();
 				}
+				/*if (oStartDate.getFullYear() !== this.oDate.getFullYear()){
+					this.oDate = oStartDate;
+					this.refreshSchedule();
+				}*/
 				
 			},
 			onAppointmentSelect: function (oEvent) {
