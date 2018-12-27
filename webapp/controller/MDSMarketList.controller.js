@@ -79,7 +79,8 @@ sap.ui.define([
 				
 				//oFilters.push( new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, dateFormat.format(new Date( (new Date()).getTime() + (24 * 60 * 60 * 1000)))));
 			
-				if (this.oLocalData.mode === "Create") {				
+				if (this.oLocalData.mode === "Create") {
+					console.log(this.oLocalData);
 					oViewModel.setProperty("/UnloadingPoint",this.oLocalData.Create.UnloadingPoint);
 					oFilters.push( new sap.ui.model.Filter("MarketListHeaderID", sap.ui.model.FilterOperator.EQ, "CREATE"));
 					oFilters.push( new sap.ui.model.Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, this.oLocalData.Create.UnloadingPoint) );
@@ -366,7 +367,7 @@ sap.ui.define([
 				
 				this.oLocalData.Recipient = oViewModel.getProperty("/Recipient");
 				this.oLocalData.TrackingNo = oViewModel.getProperty("/TrackingNo");
-				this.oLocalData.UnloadingPoint = oViewModel.getProperty("/UnloadingPoint");
+				this.oLocalData.UnloadingPointID = oViewModel.getProperty("/UnloadingPoint");
 				this.oLocalData.MarketListHeaderID = this.globalData.MarketListID;
 				this.putLocalData(this.oLocalData);
                             	
@@ -527,7 +528,7 @@ sap.ui.define([
 					oHeader.NavDetail.results.push(oDetail);
 				}
 				
-				sap.ui.core.BusyIndicator.show();
+			    sap.ui.core.BusyIndicator.show(0);
 				oModel.create("/MarketListHeaderSet", oHeader, {
 			    	method: "POST",
 				    success: function(data) {

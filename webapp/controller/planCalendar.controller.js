@@ -20,6 +20,7 @@ sap.ui.define([
 					POCreated: true,
 					PurReqID: "",
 					listbusyindicator: 0,
+					totalAmount: "0.00",
 					Date: dateFormat.format(new Date((new Date()).getTime() + (24 * 60 * 60 * 1000)))
 				};
 				var oViewModel = new JSONModel(oViewData);
@@ -176,6 +177,8 @@ sap.ui.define([
 								var oJson = new JSONModel();
 								
 								oJson.setData(rData.NavDetail);
+								//Show Total Amount
+								oThis._calcTotal(rData.NavDetail.results);
 								oJson.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
 								oThis.setModel(oJson,"mktitem");
 								oThis.oLocalData.Change.Recipient = rData.Recipient;
@@ -194,6 +197,27 @@ sap.ui.define([
 						});
 					}
 				}	
+				
+			},
+			_calcTotal : function(data){
+				var oViewModel = this.getModel("detailView");
+				var totals = 0;
+				var currency = '';
+				if(data) {
+					for (var key in data) {
+						currency = data[key].Currency;
+						for (var prop in data[key]){
+							if(prop.substring(0,4) === "Day0") {
+								var oDay = data[key][prop];
+								if (!oDay.Deleted && oDay.Quantity > 0) {
+									totals = totals + (oDay.Quantity / data[key].PriceUnit * data[key].UnitPrice);
+								}
+							} 
+						}
+					}
+				} 
+				oViewModel.setProperty("/totalAmount",formatter.currencyValue(totals));
+				oViewModel.setProperty("/currency",currency);
 				
 			},
 			_handlePRChange: function(oAppointment){
@@ -228,7 +252,7 @@ sap.ui.define([
 				
 				var sPRID = oAppointment.getTitle();
 				//this.oLocalData.SourcePage = "planCal";
-				this.oLocalData.Change.PRID = sPRID.replace("PRID: ","");
+				this.oLocalData.Change.PRID = sPRID.replace("PR: ","");
 				this.oLocalData.Change.UnloadingPoint = oAppointment.getParent().getTitle();
 				this.oLocalData.Change.DeliveryDate = this.getStringDate(oAppointment.getStartDate());
 				this.putLocalData(this.oLocalData);                         
@@ -278,13 +302,14 @@ sap.ui.define([
 						});
 						oSelect.addItem(item);
 					}
-					oSelect.setSelectedKey(this.oLocalData.UnloadingPointID);
+					oSelect.setSelectedKey(this.oLocalData.UnloadingPoint);
+					
 					
 					var oDP = oFrag.byId("addPR","startDate");
 			
 					oDP.setValue(this.oLocalData.Date);  
 				
-				this._oViewCreatePR.open();
+					this._oViewCreatePR.open();
 			},
 			onDateChange: function(oEvent) {
 				var oDP = oEvent.oSource;
@@ -318,11 +343,14 @@ sap.ui.define([
 						this.oLocalData.Create.DeliveryDate = this.getStringDate(oStartDate);
 						if (oSelect.getSelectedItem()) {
 							this.oLocalData.Create.UnloadingPoint = oSelect.getSelectedItem().getKey();
+							this.oLocalData.Create.UnloadingPointID = oSelect.getSelectedItem().getKey();
 						} else {
-							this.oLocalData.Create.UnloadingPoint = this.oLocalData.UnloadingPoint;                         
+							this.oLocalData.Create.UnloadingPoint = this.oLocalData.UnloadingPoint;   
+							this.oLocalData.Create.UnloadingPointID = this.oLocalData.UnloadingPoint;  
 						}
 						this.putLocalData(this.oLocalData); 
 						
+					
 						if (!sap.ui.Device.system.phone) {
 							this.getRouter().navTo("dsmaster", null, false);
 						} else {	

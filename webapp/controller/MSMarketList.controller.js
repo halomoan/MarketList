@@ -92,8 +92,7 @@ sap.ui.define([
 				}
 				
 				
-				sap.ui.core.BusyIndicator.show();
-				
+				sap.ui.core.BusyIndicator.show(0);
 				
 				oModel.read("/MarketListHeaderSet", {
 				    urlParameters: {

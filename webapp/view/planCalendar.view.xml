@@ -68,6 +68,15 @@
 					<Title text="PR: {detailView>/PurReqID}" level="H2"/>
 					<Button icon="sap-icon://duplicate" press="onCreatePO" visible="{= !${detailView>/POCreated} }"></Button>
 					<ToolbarSpacer />
+					<Text text="{i18n>totalCost}:"></Text>
+					<ObjectNumber
+							number="{
+								parts:[{path:'detailView>/totalAmount'},{path:'detailView>/currency'}],
+								type: 'sap.ui.model.type.Currency',
+								formatOptions: {showMeasure: false}
+							}"
+							unit="{detailView>/currency}"
+							state="Success" />		
 					<Button icon="sap-icon://print" press="onPrint"></Button>
 					<SearchField
 							id="searchField"
@@ -111,7 +120,7 @@
 			</Column>
 			<Column
 				hAlign="End">
-				<Text text="{i18n>estimated} {i18n>cost}" />
+				<Text text="{i18n>item} {i18n>cost}" />
 			</Column>
 		</columns>
 		<items>

@@ -476,7 +476,7 @@ sap.ui.define([
 					oHeader.NavDetail.results.push(oDetail);
 				}
 				
-				sap.ui.core.BusyIndicator.show();
+				sap.ui.core.BusyIndicator.show(0);
 				oModel.create("/MarketListHeaderSet", oHeader, {
 			    	method: "POST",
 				    success: function(data) {
