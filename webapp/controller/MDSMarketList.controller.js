@@ -70,6 +70,7 @@ sap.ui.define([
 					oViewModel.setProperty("/CostCenterText",this.oLocalData.CostCenter);
 					
 					oViewModel.setProperty("/UserId",this.oLocalData.UserId);
+					oViewModel.setProperty("/UserType",this.oLocalData.UserType);
 				}
 				
 				var oModel = this.getOwnerComponent().getModel();

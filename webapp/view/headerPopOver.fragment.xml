@@ -16,7 +16,7 @@
 						text="Generate PO"
 						width="100%"
 						press="generatePO"
-						visible="{= ${detailView>/PurReqID} !== 'CREATE'}"/>
+						visible="{= ${detailView>/PurReqID} !== 'CREATE' &amp;&amp; ${detailView>/UserType} === 'M'}"/>
 		</content>
 	</ResponsivePopover>
 </core:FragmentDefinition>

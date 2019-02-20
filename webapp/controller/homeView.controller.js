@@ -170,7 +170,7 @@ sap.ui.define([
 
 							oLocalData.UserId = oData.UserId;
 							oLocalData.Name = oData.Name;
-
+							oLocalData.UserType = oData.UserType;
 							oThis.putLocalData(oLocalData);
 						}
 					}

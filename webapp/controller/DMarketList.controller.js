@@ -673,6 +673,7 @@ sap.ui.define([
 					oViewModel.setProperty("/CostCenterText",this.oLocalData.CostCenter);
 					oViewModel.setProperty("/UnloadingPoint",this.oLocalData.UnloadingPoint);
 					oViewModel.setProperty("/UserId",this.oLocalData.UserId);
+					oViewModel.setProperty("/UserType",this.oLocalData.UserType);
 					
 					for (var i = 0; i < 14; i++){
 						oViewModel.setProperty("/columns/" + i + "/noItem",0);
