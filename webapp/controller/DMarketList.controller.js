@@ -216,7 +216,6 @@ sap.ui.define([
 				var oThis = this;
 				
 				
-				
 				this.oLocalData.Recipient = oViewModel.getProperty("/Recipient");
 				this.oLocalData.TrackingNo = oViewModel.getProperty("/TrackingNo");
 				this.oLocalData.UnloadingPoint = oViewModel.getProperty("/UnloadingPoint");
@@ -241,30 +240,37 @@ sap.ui.define([
 
 				oHeaderD.Date0 = oTableH.getProperty("/Date0");
 				oHeaderD.PRID0 = oTableH.getProperty("/PRID0");
+				oHeaderD.PRTXT0 = oTableH.getProperty("/PRTXT0");
 				oHeader.TableH = oHeaderD;
 				
 				oHeaderD.Date1 = oTableH.getProperty("/Date1");
 				oHeaderD.PRID1 = oTableH.getProperty("/PRID1");
+				oHeaderD.PRTXT1 = oTableH.getProperty("/PRTXT1");
 				oHeader.TableH = oHeaderD;
 			                                               
 				oHeaderD.Date2 = oTableH.getProperty("/Date2");
 				oHeaderD.PRID2 = oTableH.getProperty("/PRID2");
+				oHeaderD.PRTXT2 = oTableH.getProperty("/PRTXT2");
 				oHeader.TableH = oHeaderD;
 			
 				oHeaderD.Date3 = oTableH.getProperty("/Date3");
 				oHeaderD.PRID3 = oTableH.getProperty("/PRID3");
+				oHeaderD.PRTXT3 = oTableH.getProperty("/PRTXT3");
 				oHeader.TableH = oHeaderD;
 
 				oHeaderD.Date4 = oTableH.getProperty("/Date4");
 				oHeaderD.PRID4 = oTableH.getProperty("/PRID4");
+				oHeaderD.PRTXT4 = oTableH.getProperty("/PRTXT4");
 				oHeader.TableH = oHeaderD;
 			
 				oHeaderD.Date5 = oTableH.getProperty("/Date5");
 				oHeaderD.PRID5 = oTableH.getProperty("/PRID5");
+				oHeaderD.PRTXT5 = oTableH.getProperty("/PRTXT5");
 				oHeader.TableH = oHeaderD;
 			
 				oHeaderD.Date6 = oTableH.getProperty("/Date6");
 				oHeaderD.PRID6 = oTableH.getProperty("/PRID6");
+				oHeaderD.PRTXT6 = oTableH.getProperty("/PRTXT6");
 				oHeader.TableH = oHeaderD;
 			
 				oHeader.NavDetail = {};
@@ -429,11 +435,7 @@ sap.ui.define([
 					this._oViewFormSubmit.close();
 				}
 			},
-			closeInfoDialog: function(){
-					if (this._oHPopover) {
-					this._oHPopover.close();
-				}
-			},
+		
 			onClose: function(){
 				var oThis = this;
 				
@@ -461,6 +463,7 @@ sap.ui.define([
 				}
 			
 			},
+		
 			/*onRowsDelete: function() {
 					var oThis = this;
 					
@@ -849,15 +852,36 @@ sap.ui.define([
 				var oViewModel = this.getModel("detailView");
 				var oTableH = this.getView().getModel("TableH");
 
+				
 				oViewModel.setProperty("/deliveryDate",oTableH.getProperty("/Date" + idx));
 				oViewModel.setProperty("/PurReqID",oTableH.getProperty("/PRID" + idx));
 				
+				oViewModel.setProperty("/PurReqIdx",idx);
+				oViewModel.setProperty("/PurReqComment",oTableH.getProperty("/PRTXT" + idx));
+					
 				if (!this._oHPopover) {
-					this._oHPopover = sap.ui.xmlfragment("sap.ui.demo.masterdetail.view.headerPopOver", this);
+					this._oHPopover = sap.ui.xmlfragment("dm","sap.ui.demo.masterdetail.view.headerPopOver", this);
 					this.getView().addDependent(this._oHPopover);
 				}
+				
+				sap.ui.getCore().byId("dm--btnInfoDialog").setText("Close");
 	
 				this._oHPopover.openBy(oEvent.getSource());
+			},
+			closeInfoDialog: function(){
+				if (this._oHPopover) {
+					var oViewModel = this.getModel("detailView");
+					
+					var oTableH = this.getView().getModel("TableH");
+					oTableH.setProperty("/PRTXT" + oViewModel.getProperty("/PurReqIdx"),oViewModel.getProperty("/PurReqComment"));
+					this._oHPopover.close();
+				
+				}
+			},
+			onPRCommentChange : function() {
+				if(sap.ui.getCore().byId("dm--btnInfoDialog").getText() === "Close") {
+					sap.ui.getCore().byId("dm--btnInfoDialog").setText("Update/Close");
+				}
 			},
 			deleteRows : function(){
 				var oViewModel = this.getModel("detailView");

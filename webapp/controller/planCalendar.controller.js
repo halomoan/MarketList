@@ -48,6 +48,7 @@ sap.ui.define([
 				oViewModel.setProperty("/CostCenter",this.oLocalData.CostCenter);
 				oViewModel.setProperty("/POCreated",true);
 				oViewModel.setProperty("/PurReqID","");
+				oViewModel.setProperty("/UserType",this.oLocalData.UserType);
 				
 				var oJson = new JSONModel();
 				this.setModel(oJson,"mktitem");
@@ -183,6 +184,7 @@ sap.ui.define([
 								oThis.setModel(oJson,"mktitem");
 								oThis.oLocalData.Change.Recipient = rData.Recipient;
 								oThis.oLocalData.Change.Requisitioner = rData.Requisitioner;
+								oThis.oLocalData.Change.PRTXT = rData.TableH.PRTXT0;
 								oThis.putLocalData(oThis.oLocalData);
 								
 								if(!rData.TableH.LOCK0){
@@ -593,6 +595,8 @@ sap.ui.define([
 					header = header +"</tr><tr>";
 					header = header +"<td><strong>Requisitioner: </strong>" + this.oLocalData.Change.Requisitioner + "</td>";
 					header = header +"<td align='right'><strong>Unloading point: </strong>" + this.oLocalData.Change.UnloadingPoint + "</td>";
+					header = header +"</tr><tr>";
+					header = header +"<td><strong>Remark: </strong>" + this.oLocalData.Change.PRTXT + "</td>";
 					header = header +"</tr></thead>";
 					header = header +"<tbody></tbody></table><br>";
 					

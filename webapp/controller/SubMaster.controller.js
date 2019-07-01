@@ -325,6 +325,7 @@ sap.ui.define([
 				var template =  oEvent.getParameter("arguments").template;
 				var plantId =  this.oLocalData.PlantID;
 				var costcenterId = this.oLocalData.CostCenterID;
+				var unloadingPoint = this.oLocalData.UnloadingPoint;
 				
 				var sObjectPath = this.getModel().createKey("/MaterialGroups", {
 						MaterialGroupID :  objectId
@@ -343,6 +344,7 @@ sap.ui.define([
 				    oFilters.push( new Filter("PlantID", sap.ui.model.FilterOperator.EQ, plantId) );
 				    if (template === "X") {
 				    	oFilters.push( new Filter("CostCenterID", sap.ui.model.FilterOperator.EQ, "'" + costcenterId + "'") );
+				    	oFilters.push( new Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, "'" + unloadingPoint + "'") );
 				    }
 				}
 				

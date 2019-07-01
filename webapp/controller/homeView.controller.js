@@ -125,6 +125,8 @@ sap.ui.define([
 			var odetailView = new JSONModel(oViewData);
 			this.setModel(odetailView, "detailView");
 			this.setDeviceModel();
+			
+			this.clearLocalData();
 
 			var oPlant = this.getView().byId("plant");
 			var oItemSelectTemplate = new sap.ui.core.Item({
@@ -133,6 +135,7 @@ sap.ui.define([
 			});
 
 			odetailView.setProperty("/busy", true);
+			
 			oPlant.bindItems({
 				"path": "/PlantSet",
 				"template": oItemSelectTemplate,
@@ -158,6 +161,8 @@ sap.ui.define([
 
 		_onMetadataLoaded: function() {
 			var oThis = this;
+			
+			
 			this.getView().bindElement({
 				path: "/UserProfileSet('USP001')",
 				events: {

@@ -6,11 +6,14 @@
 		class="sapUiPopupWithPadding"
 		placement="Bottom" >
 		<beginButton>
-			<Button text="{i18n>close}" press="closeInfoDialog" />
+			<Button id="btnInfoDialog" text="{i18n>close}" press="closeInfoDialog" />
 		</beginButton>
 		<content>
+			<VBox>
 			<Label text="Purch. Requisition No: {= ${detailView>/PurReqID} !== 'CREATE' ? ${detailView>/PurReqID}: 'None'}"></Label>
 			
+			<Label text="{i18n>remark}:"></Label><TextArea value="{detailView>/PurReqComment}" maxLength="132" width="100%" rows="3" liveChange="onPRCommentChange" />
+			</VBox>
 			<Button 
 						class="sapUiSmallMarginBottom"
 						text="Generate PO"

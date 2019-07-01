@@ -92,6 +92,11 @@ sap.ui.define([
 			putLocalData: function(oData){
 				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
 				 oStorage.put("localStorage",oData);
+			},
+			clearLocalData: function(){
+				if (jQuery.sap.storage.isSupported()) {
+					jQuery.sap.storage.clear();
+				}
 			}
 			
 
