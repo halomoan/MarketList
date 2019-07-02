@@ -15,8 +15,7 @@ sap.ui.define([
 				if (!sValue) {
 					return "0.00";
 				}
-
-				return parseFloat(sValue).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+				return parseFloat(sValue).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');	
 			},
 			
 			dateFormat : function(value) {

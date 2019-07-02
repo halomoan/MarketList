@@ -20,7 +20,7 @@ sap.ui.define([
 					POCreated: true,
 					PurReqID: "",
 					listbusyindicator: 0,
-					totalAmount: "0.00",
+					totalAmount: 0.00,
 					Date: dateFormat.format(new Date((new Date()).getTime() + (24 * 60 * 60 * 1000)))
 				};
 				var oViewModel = new JSONModel(oViewData);
@@ -218,7 +218,7 @@ sap.ui.define([
 						}
 					}
 				} 
-				oViewModel.setProperty("/totalAmount",formatter.currencyValue(totals));
+				oViewModel.setProperty("/totalAmount",totals);
 				oViewModel.setProperty("/currency",currency);
 				
 			},
