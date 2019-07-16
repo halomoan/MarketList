@@ -103,10 +103,9 @@
 				minScreenWidth="Tablet"
 				demandPopin="true"
 				hAlign="End">
-				<Text text="{i18n>priceUnit}" />
+				<Text text="{i18n>orderQty}" />
 			</Column>
 			<Column
-				
 				minScreenWidth="Tablet"
 				demandPopin="true"
 				hAlign="End">
@@ -116,7 +115,7 @@
 				minScreenWidth="Tablet"
 				demandPopin="true"
 				hAlign="End">
-				<Text text="{i18n>orderQty}" />
+				<Text text="{i18n>priceUnit}" />
 			</Column>
 			<Column
 				hAlign="End">
@@ -133,7 +132,7 @@
 						title="{mktitem>Day0/POID}"/>
 					<ObjectNumber
 							number="{
-								parts:[{path:'mktitem>PriceUnit'},{path:'mktitem>Currency'}],
+								parts:[{path:'mktitem>Day0/Quantity'},{path:'mktitem>Day0/UOM'}],
 								type: 'sap.ui.model.type.Currency',
 								formatOptions: {showMeasure: false}
 							}"
@@ -147,11 +146,13 @@
 							unit="{mktitem>Currency}" />	
 					<ObjectNumber
 							number="{
-								parts:[{path:'mktitem>Day0/Quantity'},{path:'mktitem>Day0/UOM'}],
+								parts:[{path:'mktitem>PriceUnit'},{path:'mktitem>Currency'}],
 								type: 'sap.ui.model.type.Currency',
 								formatOptions: {showMeasure: false}
 							}"
 							unit="{mktitem>Day0/UOM}" />
+						
+				
 						<ObjectNumber
 							number="{
 								parts:[{path:'mktitem>Day0/Cost'},{path:'mktitem>Currency'}],
