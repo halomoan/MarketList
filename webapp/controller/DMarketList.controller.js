@@ -376,7 +376,8 @@ sap.ui.define([
 					
 					
 					if (!isValid){
-						sap.m.MessageBox.error(this.getResourceBundle().getText("msgQtyWrong",[oDetail.MaterialText,oDetail.MaterialID]), {
+						//sap.m.MessageBox.error(this.getResourceBundle().getText("msgQtyWrong",[oDetail.MaterialText,oDetail.MaterialID]), {
+						sap.m.MessageBox.error(this.getResourceBundle().getText("msgItemWrong",[oDetail.MaterialText,oDetail.MaterialID]), {
 				            title: "Error",                                      
 				            initialFocus: null                                   
 				        });
@@ -519,6 +520,8 @@ sap.ui.define([
 	
 				
 				if (PRID) {
+					
+					
 					var dialog = new sap.m.Dialog({
 						title: this.getResourceBundle().getText("confirm"),
 						type: "Message",
@@ -559,6 +562,7 @@ sap.ui.define([
 					});
 		
 					dialog.open();
+					
 				} else {
 					sap.m.MessageBox.warning(this.getResourceBundle().getText("msgNoPR"), {
 				        title: "Warning",                                      
@@ -704,6 +708,7 @@ sap.ui.define([
 				    	
 				    	
 				    	var oHeader = rData.results[0];
+				    	
 				    	oThis.oLocalData.Recipient = oHeader.Recipient;
 				    	oThis.oLocalData.TrackingNo = "HELD";
 				    	oViewModel.setProperty("/Recipient",oThis.oLocalData.Recipient);
@@ -714,6 +719,7 @@ sap.ui.define([
 				    	oThis.getView().setModel(oModelHeader,"TableH");
 				    	
 				    	var oDetail = oHeader.NavDetail.results;
+				    	
 				    	oModelJson.setData({ rows : oDetail } );
 					    oView.setModel(oModelJson,"mktlist");
 					    oTable.bindRows("mktlist>/rows");
@@ -818,6 +824,7 @@ sap.ui.define([
 
 				}
 			},
+			
 			toggleTemplate: function(oEvent){
 				var oSource = oEvent.getSource();
 				var sPath = oSource.getBindingContext("mktlist").getPath();
@@ -968,13 +975,9 @@ sap.ui.define([
 						
 			
 				if (orderqty > 0 && orderqty < material.MinOrder) {
-					//if (bConverted) {
-					//	sMsg = sMsg + this.getResourceBundle().getText("msgConvertedOrder",[oNumberFormat.format(orderqty),material.OrderUnit]) + "\n\r\n\r ";
-					//	
-					//}
 					sMsg = sMsg + this.getResourceBundle().getText("msgMinOrder",[oNumberFormat.format(orderqty),oNumberFormat.format(material.MinOrder)]);
 					sap.m.MessageBox.error(sMsg, {
-				            title: "Information",                                      
+				            title: "Error",                                      
 				            initialFocus: null,
 				            onClose: function(){
 				            
@@ -991,7 +994,7 @@ sap.ui.define([
 						//}
 					    sMsg = sMsg +  this.getResourceBundle().getText("msgOrderAsWhole",[oNumberFormat.format(orderqty)]);
 						sap.m.MessageBox.error(sMsg, {
-				            title: "Information",                                      
+				            title: "Error",                                      
 				            initialFocus: null,
 				            onClose: function(){
 				            
@@ -1002,6 +1005,20 @@ sap.ui.define([
 					}
 					
 				} 
+				
+				var itemCost = matDay.Quantity * material.UnitPrice / material.PriceUnit;
+				if(itemCost > this.oLocalData.MaxItemCost){
+					sMsg = sMsg +  this.getResourceBundle().getText("msgMaxItemCost",[oNumberFormat.format(itemCost),oNumberFormat.format(this.oLocalData.MaxItemCost)]);
+					sap.m.MessageBox.error(sMsg, {
+				            title: "Error",                                      
+				            initialFocus: null,
+				            onClose: function(){
+				            
+				            }
+				        });
+				        matDay.Error = true;
+				        return;
+				}
 					
 				if (bConverted) {
 					sap.m.MessageBox.information(sMsg, {

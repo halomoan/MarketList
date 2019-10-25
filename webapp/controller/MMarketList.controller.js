@@ -115,6 +115,7 @@ sap.ui.define([
 				    	if (!oDetail) {
 							oThis._oJsonModel.setData({ rows : [] } );
 						} else{
+							oThis._oJsonModel.setSizeLimit(500);
 				    		oThis._oJsonModel.setData({ rows : oDetail } );
 				    		oThis._onTableChanged(oThis._oJsonModel);
 						}
@@ -480,7 +481,7 @@ sap.ui.define([
 					
 					
 					if (!isValid){
-						sap.m.MessageBox.error(this.getResourceBundle().getText("msgQtyWrong",[oDetail.MaterialText,oDetail.MaterialID]), {
+						sap.m.MessageBox.error(this.getResourceBundle().getText("msgItemWrong",[oDetail.MaterialText,oDetail.MaterialID]), {
 				            title: "Error",                                      
 				            initialFocus: null                                   
 				        });
@@ -602,7 +603,7 @@ sap.ui.define([
 					//}
 					sMsg = sMsg + this.getResourceBundle().getText("msgMinOrder",[oNumberFormat.format(orderqty),oNumberFormat.format(material.MinOrder)]);
 					sap.m.MessageBox.error(sMsg, {
-				            title: "Information",                                      
+				            title: "Error",                                      
 				            initialFocus: null,
 				            onClose: function(){
 				            
@@ -619,7 +620,7 @@ sap.ui.define([
 						//}
 					    sMsg = sMsg +  this.getResourceBundle().getText("msgOrderAsWhole",[oNumberFormat.format(orderqty)]);
 						sap.m.MessageBox.error(sMsg, {
-				            title: "Information",                                      
+				            title: "Error",                                      
 				            initialFocus: null,
 				            onClose: function(){
 				            
@@ -630,6 +631,20 @@ sap.ui.define([
 					}
 					
 				} 
+				
+				var itemCost = matDay.Quantity * material.UnitPrice / material.PriceUnit;
+				if(itemCost > this.oLocalData.MaxItemCost){
+					sMsg = sMsg +  this.getResourceBundle().getText("msgMaxItemCost",[oNumberFormat.format(itemCost),oNumberFormat.format(this.oLocalData.MaxItemCost)]);
+					sap.m.MessageBox.error(sMsg, {
+				            title: "Error",                                      
+				            initialFocus: null,
+				            onClose: function(){
+				            
+				            }
+				        });
+				        matDay.Error = true;
+				        return;
+				}
 					
 				if (bConverted) {
 				sap.m.MessageBox.information(sMsg, {

@@ -82,6 +82,7 @@ sap.ui.define([
 							 oJsonData.scheduleheader[idx].NavHeaderToItem = oJsonData.scheduleheader[idx].NavHeaderToItem.results;
 						}
 						var oJson = new JSONModel();
+						oJson.setSizeLimit(200);
 						oJson.setData(oJsonData);
 						oJson.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
 						
@@ -605,6 +606,7 @@ sap.ui.define([
 				table = table + "<th>PO No</th>";
 				table = table + "<th>Material #</th>";
 				table = table + "<th>Description</th>";
+				table = table + "<th>Vendor</th>";
 				table = table + "<th>Quantity</th>";
 				table = table + "<th>Item Cost</th></thead>";
 				for(var i = 0; i < oData.results.length; i++){
@@ -613,6 +615,7 @@ sap.ui.define([
 					table += "<td>" + oData.results[i].Day0.POID + "</td>";
 					table += "<td>" + oData.results[i].MaterialID + "</td>";
 					table += "<td>" + oData.results[i].MaterialText + "</td>";
+					table += "<td>" + oData.results[i].VendorName + "</td>";
 					table += "<td align='right'>" + formatter.currencyValue(oData.results[i].Day0.Quantity) + " " +  oData.results[i].Day0.UOM + "</td>";
 					table += "<td align='right'>" + formatter.currencyValue(oData.results[i].Day0.Quantity / oData.results[i].PriceUnit * oData.results[i].UnitPrice) + " " +  oData.results[i].Currency + "</td>";
 					table += "</tr>";

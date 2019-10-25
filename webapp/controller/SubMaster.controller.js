@@ -263,6 +263,7 @@ sap.ui.define([
 						
 						oItem.MaterialGroupID = oCtx.getProperty("MaterialGroupID");
 						oItem.MaterialID = oCtx.getProperty("MaterialID");
+						oItem.VendorName =  oCtx.getProperty("VendorName");
 						
 						oItem.UnitPrice = parseFloat(oCtx.getProperty("NetPrice"));
 						oItem.PriceUnit = parseFloat(oCtx.getProperty("PriceUnit"));

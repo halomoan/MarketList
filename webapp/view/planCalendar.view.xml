@@ -93,6 +93,12 @@
 			<Column>
 				<Text text="{i18n>material}" />
 			</Column>
+				<Column
+				minScreenWidth="Tablet"
+				demandPopin="true"
+				hAlign="End">
+				<Text text="{i18n>fixedvendor}" />
+			</Column>
 			<Column
 				minScreenWidth="Tablet"
 				demandPopin="true"
@@ -124,10 +130,12 @@
 		</columns>
 		<items>
 			<ColumnListItem>
-				<cells>
+				<cells tooltip="{= ${mktitem>VendorName} ? 'Fixed Vendor: ' + ${mktitem>VendorName} : 'No Fixed Vendor'}">
 				<ObjectIdentifier
 						title="{mktitem>MaterialID}"
 						text=" {mktitem>MaterialText}"/>
+					<ObjectIdentifier
+						title="{mktitem>VendorName}"/>
 					<ObjectIdentifier
 						title="{mktitem>Day0/POID}"/>
 					<ObjectNumber

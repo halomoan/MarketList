@@ -49,7 +49,7 @@
 												<core:Icon size="2rem" src="sap-icon://add-favorite" color="{=${mktlist>InTemplate} ? 'Critical' : 'Neutral'}"
 													class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" press="toggleTemplate" tooltip="{=${mktlist>InTemplate} ? 'Part Of Template' : ''}"/>
 												<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
-													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]"
+													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]" tooltip="{= ${mktlist>VendorName} ? 'Fixed Vendor: ' + ${mktlist>VendorName} : 'No Fixed Vendor'}"
 														design="{= parseFloat(${mktlist>Day0/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<layout:Grid defaultSpan="L12 M12 S12">
 														<VBox width="15rem">
@@ -103,7 +103,7 @@
 												<core:Icon size="2rem" src="sap-icon://add-favorite" color="{=${mktlist>InTemplate} ? 'Critical' : 'Neutral'}"
 													class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" press="toggleTemplate" tooltip="{=${mktlist>InTemplate} ? 'Part Of Template' : ''}"/>
 												<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
-													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]"
+													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]" tooltip="{= ${mktlist>VendorName} ? 'Fixed Vendor: ' + ${mktlist>VendorName} : 'No Fixed Vendor'}"
 														design="{= parseFloat(${mktlist>Day1/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<layout:Grid>
 														<VBox width="15rem">
@@ -157,7 +157,7 @@
 												<core:Icon size="2rem" src="sap-icon://add-favorite" color="{=${mktlist>InTemplate} ? 'Critical' : 'Neutral'}"
 													class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" press="toggleTemplate" tooltip="{=${mktlist>InTemplate} ? 'Part Of Template' : ''}"/>
 												<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
-													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]"
+													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]" tooltip="{= ${mktlist>VendorName} ? 'Fixed Vendor: ' + ${mktlist>VendorName} : 'No Fixed Vendor'}"
 														design="{= parseFloat(${mktlist>Day2/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<layout:Grid>
 														<VBox width="15rem">
@@ -211,7 +211,7 @@
 												<core:Icon size="2rem" src="sap-icon://add-favorite" color="{=${mktlist>InTemplate} ? 'Critical' : 'Neutral'}"
 													class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" press="toggleTemplate" tooltip="{=${mktlist>InTemplate} ? 'Part Of Template' : ''}"/>
 												<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
-													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]"
+													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]" tooltip="{= ${mktlist>VendorName} ? 'Fixed Vendor: ' + ${mktlist>VendorName} : 'No Fixed Vendor'}"
 														design="{= parseFloat(${mktlist>Day3/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<layout:Grid>
 														<VBox width="15rem">
@@ -265,7 +265,7 @@
 												<core:Icon size="2rem" src="sap-icon://add-favorite" color="{=${mktlist>InTemplate} ? 'Critical' : 'Neutral'}"
 													class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" press="toggleTemplate" tooltip="{=${mktlist>InTemplate} ? 'Part Of Template' : ''}"/>
 												<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
-													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]"
+													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]" tooltip="{= ${mktlist>VendorName} ? 'Fixed Vendor: ' + ${mktlist>VendorName} : 'No Fixed Vendor'}"
 														design="{= parseFloat(${mktlist>Day4/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<layout:Grid>
 														<VBox width="15rem">
@@ -319,7 +319,7 @@
 												<core:Icon size="2rem" src="sap-icon://add-favorite" color="{=${mktlist>InTemplate} ? 'Critical' : 'Neutral'}"
 													class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" press="toggleTemplate" tooltip="{=${mktlist>InTemplate} ? 'Part Of Template' : ''}"/>
 												<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
-													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]"
+													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]" tooltip="{= ${mktlist>VendorName} ? 'Fixed Vendor: ' + ${mktlist>VendorName} : 'No Fixed Vendor'}"
 														design="{= parseFloat(${mktlist>Day5/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<layout:Grid>
 														<VBox width="15rem">
@@ -373,7 +373,7 @@
 												<core:Icon size="2rem" src="sap-icon://add-favorite" color="{=${mktlist>InTemplate} ? 'Critical' : 'Neutral'}"
 													class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" press="toggleTemplate" tooltip="{=${mktlist>InTemplate} ? 'Part Of Template' : ''}"/>
 												<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
-													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]"
+													<Label class="midLabel" text="{mktlist>MaterialText} [{mktlist>MaterialID}]" tooltip="{= ${mktlist>VendorName} ? 'Fixed Vendor: ' + ${mktlist>VendorName} : 'No Fixed Vendor'}"
 														design="{= parseFloat(${mktlist>Day6/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<layout:Grid>
 														<VBox width="15rem">

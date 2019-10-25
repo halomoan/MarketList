@@ -43,9 +43,11 @@ sap.ui.define([
 				return false;
 			}
 			var oUnloadingPoint = this.getView().byId("unloadingpoint").getSelectedItem();
+			
 			if (oUnloadingPoint) {
 				oLocal.UnloadingPointID = oUnloadingPoint.getProperty("key");
 				oLocal.UnloadingPoint = oUnloadingPoint.getProperty("text");
+				oLocal.MaxItemCost = parseFloat(oUnloadingPoint.data("MaxItemCost"));
 			} else {
 				sap.m.MessageToast.show(this.getResourceBundle().getText("msgSelectUnloadingPoint"));
 				return false;
@@ -260,6 +262,10 @@ sap.ui.define([
 				text: "{UnLoadingPoint}"
 			});
 
+			var oCustomData = new sap.ui.core.CustomData({key:"MaxItemCost"});
+			oCustomData.bindProperty("value", "MaxItemCost");
+			oItemSelectTemplate.addCustomData(oCustomData);
+			
 			odetailView.setProperty("/busy", true);
 			oUnloadingPoint.bindAggregation("items", {
 				"path": path + "/CCUnloadingPoint",
