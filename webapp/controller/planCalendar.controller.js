@@ -46,6 +46,8 @@ sap.ui.define([
 				
 				oViewModel.setProperty("/Plant",this.oLocalData.Plant);
 				oViewModel.setProperty("/CostCenter",this.oLocalData.CostCenter);
+				
+				oViewModel.setProperty("/ShowVendor",this.oLocalData.ShowVendor);
 				oViewModel.setProperty("/POCreated",true);
 				oViewModel.setProperty("/PurReqID","");
 				oViewModel.setProperty("/UserType",this.oLocalData.UserType);
@@ -606,7 +608,9 @@ sap.ui.define([
 				table = table + "<th>PO No</th>";
 				table = table + "<th>Material #</th>";
 				table = table + "<th>Description</th>";
-				table = table + "<th>Vendor</th>";
+				if (this.oLocalData.ShowVendor) {
+					table = table + "<th>Vendor</th>";
+				}
 				table = table + "<th>Quantity</th>";
 				table = table + "<th>Item Cost</th></thead>";
 				for(var i = 0; i < oData.results.length; i++){
@@ -615,7 +619,9 @@ sap.ui.define([
 					table += "<td>" + oData.results[i].Day0.POID + "</td>";
 					table += "<td>" + oData.results[i].MaterialID + "</td>";
 					table += "<td>" + oData.results[i].MaterialText + "</td>";
-					table += "<td>" + oData.results[i].VendorName + "</td>";
+					if (this.oLocalData.ShowVendor) {
+						table += "<td>" + oData.results[i].VendorName + "</td>";
+					}
 					table += "<td align='right'>" + formatter.currencyValue(oData.results[i].Day0.Quantity) + " " +  oData.results[i].Day0.UOM + "</td>";
 					table += "<td align='right'>" + formatter.currencyValue(oData.results[i].Day0.Quantity / oData.results[i].PriceUnit * oData.results[i].UnitPrice) + " " +  oData.results[i].Currency + "</td>";
 					table += "</tr>";

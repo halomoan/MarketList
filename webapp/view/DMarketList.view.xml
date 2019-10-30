@@ -63,7 +63,7 @@
 								<m:Label text="{i18n>materialText}" textAlign="Center" width="100%"/>
 								</multiLabels>
 								<template>
-								<m:Text text="{mktlist>MaterialText}" tooltip="{= ${mktlist>VendorName} ? 'Fixed Vendor: ' + ${mktlist>VendorName} : 'No Fixed Vendor'}"/>
+								<m:Text text="{mktlist>MaterialText}" tooltip="{= ${mktlist>VendorName} ? 'Fixed Vendor: ' + ${mktlist>VendorName} : ''}"/>
 								</template>
 							</Column>
 							<Column width="8rem" sortProperty="MaterialID" filterProperty="MaterialID" hAlign="Center">

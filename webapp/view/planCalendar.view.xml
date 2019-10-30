@@ -96,7 +96,8 @@
 				<Column
 				minScreenWidth="Tablet"
 				demandPopin="true"
-				hAlign="End">
+				hAlign="End"
+				visible="{detailView>/ShowVendor}">
 				<Text text="{i18n>fixedvendor}" />
 			</Column>
 			<Column
