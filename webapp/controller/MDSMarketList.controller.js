@@ -349,15 +349,44 @@ sap.ui.define([
 			
 			},
 			onSubmit: function() {
-				if (!this._oViewFormSubmit) {
-					this._oViewFormSubmit = sap.ui.xmlfragment("sap.ui.demo.masterdetail.view.submitForm", this);
-					this.getView().addDependent(this._oViewFormSubmit);
-					// forward compact/cozy style into Dialog
-					this._oViewFormSubmit.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+				
+				var oNumberFormat = sap.ui.core.format.NumberFormat.getFloatInstance({
+				  maxFractionDigits: 2,
+				  groupingEnabled: true,
+				  groupingSeparator: ",",
+				  decimalSeparator: "."
+				});
+				var oViewModel = this.getModel("detailView");
+				var oTableH = this.getView().getModel("TableH");
+				var maxItemCost = this.oLocalData.MaxItemCost;
+				var iTotalCost = 0;
+				var sMsg = "";
+				
+				iTotalCost = parseFloat(oViewModel.getProperty("/totalPrices").replace(',',''));
+				if (iTotalCost > maxItemCost) {
+					sMsg = sMsg +  this.getResourceBundle().getText("msgMaxOrderCost",[oTableH.getProperty("/Date0"),oNumberFormat.format(iTotalCost),oNumberFormat.format(maxItemCost)]) + '\n';
 				}
 				
-				
-				this._oViewFormSubmit.open();
+				if(sMsg){
+					sap.m.MessageBox.error(sMsg, {
+				            title: "Error",                                      
+				            initialFocus: null,
+				            onClose: function(){
+				            
+				            }
+				        });
+				        return;
+				} else{
+					if (!this._oViewFormSubmit) {
+						this._oViewFormSubmit = sap.ui.xmlfragment("sap.ui.demo.masterdetail.view.submitForm", this);
+						this.getView().addDependent(this._oViewFormSubmit);
+						// forward compact/cozy style into Dialog
+						this._oViewFormSubmit.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+					}
+					
+					
+					this._oViewFormSubmit.open();
+				}
 			},
 			doSaveData: function() {
 				
@@ -677,7 +706,7 @@ sap.ui.define([
 					
 				} 
 				
-				var itemCost = matDay.Quantity * material.UnitPrice / material.PriceUnit;
+			/*	var itemCost = matDay.Quantity * material.UnitPrice / material.PriceUnit;
 				if(itemCost > this.oLocalData.MaxItemCost){
 					sMsg = sMsg +  this.getResourceBundle().getText("msgMaxItemCost",[oNumberFormat.format(itemCost),oNumberFormat.format(this.oLocalData.MaxItemCost)]);
 					sap.m.MessageBox.error(sMsg, {
@@ -689,7 +718,7 @@ sap.ui.define([
 				        });
 				        matDay.Error = true;
 				        return;
-				}
+				}*/
 				
 				if (bConverted) {
 				sap.m.MessageBox.information(sMsg, {

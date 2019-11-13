@@ -171,6 +171,7 @@ sap.ui.define([
 						
 						oViewModel.setProperty("/totalMaterials", noItems[this.globalData.deliveryDate]);
 						oViewModel.setProperty("/totalPrices",formatter.currencyValue(totals[this.globalData.deliveryDate] ));
+						oViewModel.setProperty("/Costs",totals);
 						
 					}
 					this.globalData.iRefresh++;
@@ -321,15 +322,44 @@ sap.ui.define([
 			
 			},
 			onSubmit: function() {
-				if (!this._oViewFormSubmit) {
-					this._oViewFormSubmit = sap.ui.xmlfragment("sap.ui.demo.masterdetail.view.submitForm", this);
-					this.getView().addDependent(this._oViewFormSubmit);
-					// forward compact/cozy style into Dialog
-					this._oViewFormSubmit.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+				var oNumberFormat = sap.ui.core.format.NumberFormat.getFloatInstance({
+				  maxFractionDigits: 2,
+				  groupingEnabled: true,
+				  groupingSeparator: ",",
+				  decimalSeparator: "."
+				});
+				var oViewModel = this.getModel("detailView");
+				var maxItemCost = this.oLocalData.MaxItemCost;
+				var sMsg = "";
+				
+				var Costs = oViewModel.getProperty("/Costs");
+				
+				for(var index in Costs) {
+					if (Costs[index] > maxItemCost) {
+						sMsg = sMsg +  this.getResourceBundle().getText("msgMaxOrderCost",[index,oNumberFormat.format(Costs[index]),oNumberFormat.format(maxItemCost)]) + "\n";
+					}
 				}
-				
-				
-				this._oViewFormSubmit.open();
+			
+				if(sMsg){
+					sap.m.MessageBox.error(sMsg, {
+				            title: "Error",                                      
+				            initialFocus: null,
+				            onClose: function(){
+				            
+				            }
+				        });
+				        return;
+				} else{
+					if (!this._oViewFormSubmit) {
+						this._oViewFormSubmit = sap.ui.xmlfragment("sap.ui.demo.masterdetail.view.submitForm", this);
+						this.getView().addDependent(this._oViewFormSubmit);
+						// forward compact/cozy style into Dialog
+						this._oViewFormSubmit.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+					}
+					
+					
+					this._oViewFormSubmit.open();
+				}
 			},
 			doSaveData: function() {
 				
@@ -632,7 +662,7 @@ sap.ui.define([
 					
 				} 
 				
-				var itemCost = matDay.Quantity * material.UnitPrice / material.PriceUnit;
+			/*	var itemCost = matDay.Quantity * material.UnitPrice / material.PriceUnit;
 				if(itemCost > this.oLocalData.MaxItemCost){
 					sMsg = sMsg +  this.getResourceBundle().getText("msgMaxItemCost",[oNumberFormat.format(itemCost),oNumberFormat.format(this.oLocalData.MaxItemCost)]);
 					sap.m.MessageBox.error(sMsg, {
@@ -644,7 +674,7 @@ sap.ui.define([
 				        });
 				        matDay.Error = true;
 				        return;
-				}
+				}*/
 					
 				if (bConverted) {
 				sap.m.MessageBox.information(sMsg, {

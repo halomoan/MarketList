@@ -197,14 +197,44 @@ sap.ui.define([
 			},
 			
 			onSubmit: function() {
-				if (!this._oViewFormSubmit) {
-					this._oViewFormSubmit = sap.ui.xmlfragment("sap.ui.demo.masterdetail.view.submitForm", this);
-					this.getView().addDependent(this._oViewFormSubmit);
-					// forward compact/cozy style into Dialog
-					this._oViewFormSubmit.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+				var oNumberFormat = sap.ui.core.format.NumberFormat.getFloatInstance({
+				  maxFractionDigits: 2,
+				  groupingEnabled: true,
+				  groupingSeparator: ",",
+				  decimalSeparator: "."
+				});
+				var oViewModel = this.getModel("detailView");
+				var oTableH = this.getView().getModel("TableH");
+				var maxItemCost = this.oLocalData.MaxItemCost;
+				var iTotalCost = 0;
+				var sMsg = "";
+				for(var i = 0; i < 7; i++){
+					iTotalCost = parseFloat(oViewModel.getProperty("/columns/" + i + "/total").replace(',',''));
+					if (iTotalCost > maxItemCost) {
+						
+						sMsg = sMsg +  this.getResourceBundle().getText("msgMaxOrderCost",[oTableH.getProperty("/Date" + i),oNumberFormat.format(iTotalCost),oNumberFormat.format(maxItemCost)]) + '\n';
+					}
 				}
 				
-				this._oViewFormSubmit.open();
+				if(sMsg){
+					sap.m.MessageBox.error(sMsg, {
+				            title: "Error",                                      
+				            initialFocus: null,
+				            onClose: function(){
+				            
+				            }
+				        });
+				        return;
+				} else{
+					if (!this._oViewFormSubmit) {
+						this._oViewFormSubmit = sap.ui.xmlfragment("sap.ui.demo.masterdetail.view.submitForm", this);
+						this.getView().addDependent(this._oViewFormSubmit);
+						// forward compact/cozy style into Dialog
+						this._oViewFormSubmit.addStyleClass(this.getOwnerComponent().getContentDensityClass());
+					}
+					
+					this._oViewFormSubmit.open();
+				}
 			},
 			
 			doSaveData: function() {
@@ -465,53 +495,6 @@ sap.ui.define([
 			
 			},
 		
-			/*onRowsDelete: function() {
-					var oThis = this;
-					
-					
-					if (oThis.byId("mktlistTable").getSelectedIndex() >= 0) {
-						sap.m.MessageBox.confirm(oThis.getResourceBundle().getText("confirmDelMaterial"),{
-							icon: sap.m.MessageBox.Icon.INFORMATION,
-							title: oThis.getResourceBundle().getText("confirm"),
-							actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
-							onClose: function(oAction){
-								if (oAction === sap.m.MessageBox.Action.YES) {
-									oThis._deleteRows(oThis);	
-								}
-							}
-						});
-					} else{
-						sap.m.MessageBox.error(oThis.getResourceBundle().getText("noSelection"), {
-						    title: oThis.getResourceBundle().getText("warning"),                                     
-						    onClose: null,                                       
-						    styleClass: "",                                       
-						    initialFocus: null,                                  
-						    textDirection: sap.ui.core.TextDirection.Inherit     
-						});
-					}
-			},
-			
-			_deleteRows : function(oThis) {
-				var oTable = oThis.byId("mktlistTable");
-				var iCount = 0;
-				var tableRows = oThis._oJsonModel.getData().rows;
-				
-				var aIndices = oTable.getSelectedIndices();
-				
-				for (var i = aIndices.length - 1; i >=0; i--){
-					tableRows.splice(aIndices[i],1);
-					iCount++;
-				}
-				
-				
-				if(iCount > 0) {
-					oTable.clearSelection();
-					oThis._oJsonModel.refresh();
-				}
-				this.globalData.tableChanged = true;
-				
-				
-			},*/
 			generatePO: function() {
 				var oViewModel = this.getModel("detailView");
 				var plantID = oViewModel.getProperty("/PlantID");
@@ -745,10 +728,6 @@ sap.ui.define([
 						this._onTableChanged(oModelJson);
 						
 				}.bind(this));
-				
-			
-			
-			
 			},
 			
 			_addMaterial: function(sChannel,sEvent,oData){
@@ -989,9 +968,6 @@ sap.ui.define([
 				if (!material.AllowDec) {
 					if (orderqty % 1 !== 0) {
 						
-						//if (bConverted) {
-						//	sMsg = sMsg + this.getResourceBundle().getText("msgConvertedOrder",[oNumberFormat.format(orderqty),material.OrderUnit]) + "\n\r\n\r ";
-						//}
 					    sMsg = sMsg +  this.getResourceBundle().getText("msgOrderAsWhole",[oNumberFormat.format(orderqty)]);
 						sap.m.MessageBox.error(sMsg, {
 				            title: "Error",                                      
@@ -1006,19 +982,19 @@ sap.ui.define([
 					
 				} 
 				
-				var itemCost = matDay.Quantity * material.UnitPrice / material.PriceUnit;
-				if(itemCost > this.oLocalData.MaxItemCost){
-					sMsg = sMsg +  this.getResourceBundle().getText("msgMaxItemCost",[oNumberFormat.format(itemCost),oNumberFormat.format(this.oLocalData.MaxItemCost)]);
-					sap.m.MessageBox.error(sMsg, {
-				            title: "Error",                                      
-				            initialFocus: null,
-				            onClose: function(){
+				// var itemCost = matDay.Quantity * material.UnitPrice / material.PriceUnit;
+				// if(itemCost > this.oLocalData.MaxItemCost){
+				// 	sMsg = sMsg +  this.getResourceBundle().getText("msgMaxItemCost",[oNumberFormat.format(itemCost),oNumberFormat.format(this.oLocalData.MaxItemCost)]);
+				// 	sap.m.MessageBox.error(sMsg, {
+				//             title: "Error",                                      
+				//             initialFocus: null,
+				//             onClose: function(){
 				            
-				            }
-				        });
-				        matDay.Error = true;
-				        return;
-				}
+				//             }
+				//         });
+				//         matDay.Error = true;
+				//         return;
+				// }
 					
 				if (bConverted) {
 					sap.m.MessageBox.information(sMsg, {
