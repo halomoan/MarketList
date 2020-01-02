@@ -74,13 +74,13 @@ sap.ui.define([
 			},
 			getStringDate : function(oDate){
 				var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({
-					pattern: "YYYY-MM-dd"
+					pattern: "yyyy-MM-dd"
 				});
 				return dateFormat.format(oDate); 
 			},
 			getSAPDate: function(oDate){
 					var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({
-					pattern: "YYYYMMdd"
+					pattern: "yyyyMMdd"
 				});
 				return dateFormat.format(oDate); 
 			},

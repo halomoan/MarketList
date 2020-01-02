@@ -20,7 +20,7 @@ sap.ui.define([
 			
 			dateFormat : function(value) {
 				var d = new Date(value);
-				var dFormat = DateFormat.getDateTimeInstance({pattern: "dd/MMM/YYYY"});
+				var dFormat = DateFormat.getDateTimeInstance({pattern: "dd/MMM/yyyy"});
 				return dFormat.format(d);
 			},
 			dayFormat: function(value) {

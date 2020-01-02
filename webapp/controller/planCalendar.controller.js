@@ -10,7 +10,7 @@ sap.ui.define([
 			
 			onInit: function() {
 				var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({
-					pattern: "YYYY-MM-dd"
+					pattern: "yyyy-MM-dd"
 				});
 				var oViewData = {
 					calbusy : false,
