@@ -754,8 +754,6 @@ sap.ui.define([
 						}
 						
 						if (bNew) {
-				
-							
 							oData.data[i].Day0.Date = oTableH.Date0;
 							oData.data[i].Day1.Date = oTableH.Date1;
 							oData.data[i].Day2.Date = oTableH.Date2;
@@ -772,13 +770,49 @@ sap.ui.define([
 							oData.data[i].Day5.PRID = "00000";
 							oData.data[i].Day6.PRID = "00000";
 							
-							oData.data[i].Day0.Enabled = true;
-							oData.data[i].Day1.Enabled = true;
-							oData.data[i].Day2.Enabled = true;
-							oData.data[i].Day3.Enabled = true;
-							oData.data[i].Day4.Enabled = true;
-							oData.data[i].Day5.Enabled = true;
-							oData.data[i].Day6.Enabled = true;
+							var lDate = oTableH.Date0.replace(/-/g,""); 
+							if(lDate > oData.data[i].LockSDate) {
+								oData.data[i].Day0.Enabled = false;
+							} else {
+								oData.data[i].Day0.Enabled = true;
+							}
+							
+							lDate = oTableH.Date1.replace(/-/g,""); 
+							if(lDate > oData.data[i].LockSDate) {
+								oData.data[i].Day1.Enabled = false;
+							} else {
+								oData.data[i].Day1.Enabled = true;
+							}
+							lDate = oTableH.Date2.replace(/-/g,""); 
+							if(lDate > oData.data[i].LockSDate) {
+								oData.data[i].Day2.Enabled = false;
+							} else {
+								oData.data[i].Day2.Enabled = true;
+							}
+							lDate = oTableH.Date3.replace(/-/g,""); 
+							if(lDate > oData.data[i].LockSDate) {
+								oData.data[i].Day3.Enabled = false;
+							} else {
+								oData.data[i].Day3.Enabled = true;
+							}
+							lDate = oTableH.Date4.replace(/-/g,""); 
+							if(lDate > oData.data[i].LockSDate) {
+								oData.data[i].Day4.Enabled = false;
+							} else {
+								oData.data[i].Day4.Enabled = true;
+							}
+							lDate = oTableH.Date5.replace(/-/g,""); 
+							if(lDate > oData.data[i].LockSDate) {
+								oData.data[i].Day5.Enabled = false;
+							} else {
+								oData.data[i].Day5.Enabled = true;
+							}
+							lDate = oTableH.Date6.replace(/-/g,""); 
+							if(lDate > oData.data[i].LockSDate) {
+								oData.data[i].Day6.Enabled = false;
+							} else {
+								oData.data[i].Day6.Enabled = true;
+							}
 							
 							oData.data[i].MarketListHeaderID =  this.globalData.MarketListID;
 							oData.data[i].MarketListDetailID = "MKD0001";

@@ -258,7 +258,8 @@ sap.ui.define([
 							"Day10": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
 							"Day11": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
 							"Day12": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-							"Day13": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")}
+							"Day13": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+							"LockSDate" : oCtx.getProperty("LockSDate")
 						};
 						
 						oItem.MaterialGroupID = oCtx.getProperty("MaterialGroupID");
