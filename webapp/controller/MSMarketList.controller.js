@@ -213,7 +213,7 @@ sap.ui.define([
 						
 						if (bNew) {
 				
-							var oTableH = this.getView().getModel("TableH").getData();
+							//var oTableH = this.getView().getModel("TableH").getData();
 							//this.globalData.deliveryDate = oTableH.Date0;
 							if (this.oLocalData.Create) {
 								oData.data[i].Day0.Date = this.oLocalData.Create.DeliveryDate;
@@ -237,14 +237,7 @@ sap.ui.define([
 							oData.data[i].Day4.PRID = "00000";
 							oData.data[i].Day5.PRID = "00000";
 							oData.data[i].Day6.PRID = "00000";*/
-							
-							var lDate = oData.data[i].Day0.Date.replace(/-/g,"");
-							
-							if (lDate > oData.data[i].LockSDate) {
-								oData.data[i].Day0.Enabled = false;
-							} else {
-								oData.data[i].Day0.Enabled = true;
-							}	
+						
 							/*oData.data[i].Day1.Enabled = true;
 							oData.data[i].Day2.Enabled = true;
 							oData.data[i].Day3.Enabled = true;

@@ -14,12 +14,8 @@ sap.ui.define([
 				});
 				return false;
 			}
-
-			var oLocal = this.getLocalData();
-			if (!oLocal) {
-				oLocal = {};
-			}
-
+			
+			var	oLocal = {};
 			var oPlant = this.getView().byId("plant").getSelectedItem();
 			if (oPlant) {
 				oLocal.PlantID = oPlant.getProperty("key");

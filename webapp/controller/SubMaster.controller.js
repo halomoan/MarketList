@@ -221,12 +221,9 @@ sap.ui.define([
 				}
 			},
 			
-			onAddItemPress: function(oEvent){
+			onAddItemPress: function(){
 				
-					
-					
 				var jsonData = [];
-				
 				var oThis = this;
 				var bClose = true;
 				 
@@ -245,21 +242,20 @@ sap.ui.define([
 							"UnitPrice" : 0,
 							"Currency" : "",
 							"PriceUnit" : 0,
-							"Day0": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-							"Day1": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-							"Day2": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-							"Day3": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-							"Day4": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-							"Day5": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-							"Day6": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
+							"Day0": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure"), "Enabled" : oCtx.getProperty("Day1").Enabled},
+							"Day1": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure"), "Enabled" : oCtx.getProperty("Day2").Enabled},
+							"Day2": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure"), "Enabled" : oCtx.getProperty("Day3").Enabled},
+							"Day3": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure"), "Enabled" : oCtx.getProperty("Day4").Enabled},
+							"Day4": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure"), "Enabled" : oCtx.getProperty("Day5").Enabled},
+							"Day5": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure"), "Enabled" : oCtx.getProperty("Day6").Enabled},
+							"Day6": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure"), "Enabled" : oCtx.getProperty("Day7").Enabled},
 							"Day7": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
 							"Day8": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
 							"Day9": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
 							"Day10": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
 							"Day11": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
 							"Day12": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-							"Day13": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")},
-							"LockSDate" : oCtx.getProperty("LockSDate")
+							"Day13": { "PRID" :"", "Date" : null, "Quantity" : 0, "UOM" : oCtx.getProperty("UnitOfMeasure")}
 						};
 						
 						oItem.MaterialGroupID = oCtx.getProperty("MaterialGroupID");
@@ -340,13 +336,18 @@ sap.ui.define([
 				this.CostCenterID = costcenterId;
 				
 				var oFilters = [];
-
 				
 				if (plantId){
 				    oFilters.push( new Filter("PlantID", sap.ui.model.FilterOperator.EQ, plantId) );
 				    if (template === "X") {
 				    	oFilters.push( new Filter("CostCenterID", sap.ui.model.FilterOperator.EQ, "'" + costcenterId + "'") );
 				    	oFilters.push( new Filter("UnloadingPoint", sap.ui.model.FilterOperator.EQ, "'" + unloadingPoint + "'") );
+				    }
+				    
+				    if (this.oLocalData.Create && this.oLocalData.Create.DeliveryDate) {
+				    	oFilters.push( new Filter("KeyDate", sap.ui.model.FilterOperator.EQ,  this.oLocalData.Create.DeliveryDate) );
+				    } else {
+				    	oFilters.push( new Filter("KeyDate", sap.ui.model.FilterOperator.EQ,  this.oLocalData.Date) );
 				    }
 				}
 				
