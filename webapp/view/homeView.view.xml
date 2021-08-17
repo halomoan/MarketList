@@ -44,6 +44,7 @@
 				<Toolbar id="TB1">
 					<Title text="{i18n>mktListProfile}" level="H4" titleStyle="H4"/>
 					<ToolbarSpacer />
+					<Button text="{i18n>manageTemplate}" press="onManageTemplate"></Button>
 					<Button text="{i18n>planCalendar}" press="onPlanCalendar"></Button>
 				</Toolbar>
 			</f:toolbar>

@@ -1,0 +1,26 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:t="sap.ui.table"
+	xmlns:l="sap.ui.layout" controllerName="sap.ui.demo.masterdetail.pages.controller.ManageTemplate">
+		<l:VerticalLayout class="sapUiContentPadding">
+		<t:Table id="loctbl" rows="{ path:'/LocationSet', filters : [{ path : 'Werks', operator : 'EQ', value1 : ''}]}" selectionMode="MultiToggle" visibleRowCount="7" paste="onPaste" ariaLabelledBy="title">
+			<t:extension>
+				<OverflowToolbar style="Clear">
+					<Title id="title" text="{i18n>Location}"/>
+				</OverflowToolbar>
+			</t:extension>
+			<t:columns>
+				<t:Column width="10rem" filterProperty="LocationID">
+					<Label text="{i18n>ID}"/>
+					<t:template>
+						<Text text="{LocationID}" wrapping="false"/>
+					</t:template>
+				</t:Column>
+				<t:Column width="20rem" filterProperty="Text">
+					<Label text="{i18n>Text}"/>
+					<t:template>
+						<Text text="{Text}" wrapping="false"/>
+					</t:template>
+				</t:Column>
+			</t:columns>
+		</t:Table>
+	</l:VerticalLayout>
+</mvc:View>
