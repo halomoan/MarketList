@@ -582,37 +582,49 @@ sap.ui.define([
 			},
 			onPrint: function(){
 				var oData = this.getModel("mktitem").getData();
+				var txtPrint = this.getResourceBundle().getText("print");
+				var txtPR = this.getResourceBundle().getText("pr");
+				var txtDeliveryDate = this.getResourceBundle().getText("deliveryDate");
+				var txtCC = this.getResourceBundle().getText("costCenter");
+				var txtReq = this.getResourceBundle().getText("requisitioner");
+				var txtUP = this.getResourceBundle().getText("unloadingPoint");
+				var txtRemark = this.getResourceBundle().getText("remark");
+				var txtItem = this.getResourceBundle().getText("item");
+				var txtMaterial = this.getResourceBundle().getText("material");
+				var txtDesc = this.getResourceBundle().getText("description");
+				var txtQty = this.getResourceBundle().getText("quantity");
+				var txtCost = txtItem + " " + this.getResourceBundle().getText("cost");
 				
 				if (oData.results) {
 				var bhtml = "<html><head><title>Market List</title><link rel='stylesheet' type='text/css' href='css/style.css'></head><body>";
 				bhtml += "<basefont face='arial, verdana, sans-serif' color='#ff0000'>";
 				var ehtml = "</body></html>";
 				var header = "<center><h3>Market List Report</h3></center><hr>";
-					header = header + "<div align='right'><button id='printPageButton' onclick='window.print(); window.close();'>Print</button></div>";
+					header = header + "<div align='right'><button id='printPageButton' onclick='window.print(); window.close();'>" + txtPrint + "</button></div>";
 					header = header + "<table width='100%' align='left'><thead><tr>";	
-					header = header +"<th align='left'>Purchase Requisition #: " + this.oLocalData.Change.PRID + "</th>";
-					header = header +"<th align='right'>Delivery Date: " + this.oLocalData.Change.DeliveryDate + "</th>";
+					header = header +"<th align='left'>"+ txtPR + " #: " + this.oLocalData.Change.PRID + "</th>";
+					header = header +"<th align='right'>"+ txtDeliveryDate + ": " + this.oLocalData.Change.DeliveryDate + "</th>";
 					header = header +"</tr><tr>";
-					header = header +"<td><strong>Cost Center: </strong>" + this.oLocalData.CostCenterID + " - " + this.oLocalData.CostCenter + "</td>";
+					header = header +"<td><strong>"+ txtCC + ": </strong>" + this.oLocalData.CostCenterID + " - " + this.oLocalData.CostCenter + "</td>";
 					header = header +"<td align='right'><strong>Recipient: </strong>" + this.oLocalData.Change.Recipient + "</td>";
 					header = header +"</tr><tr>";
-					header = header +"<td><strong>Requisitioner: </strong>" + this.oLocalData.Change.Requisitioner + "</td>";
-					header = header +"<td align='right'><strong>Unloading point: </strong>" + this.oLocalData.Change.UnloadingPoint + "</td>";
+					header = header +"<td><strong>"+ txtReq + ": </strong>" + this.oLocalData.Change.Requisitioner + "</td>";
+					header = header +"<td align='right'><strong>"+ txtUP + ": </strong>" + this.oLocalData.Change.UnloadingPoint + "</td>";
 					header = header +"</tr><tr>";
-					header = header +"<td><strong>Remark: </strong>" + this.oLocalData.Change.PRTXT + "</td>";
+					header = header +"<td><strong>"+txtRemark + ": </strong>" + this.oLocalData.Change.PRTXT + "</td>";
 					header = header +"</tr></thead>";
 					header = header +"<tbody></tbody></table><br>";
 					
 				var table ="<table class='blueTable' width='100%'>";
-				table = table + "<thead><tr><th>Item No</th>";
+				table = table + "<thead><tr><th>"+ txtItem + "</th>";
 				table = table + "<th>PO No</th>";
-				table = table + "<th>Material #</th>";
-				table = table + "<th>Description</th>";
+				table = table + "<th>"+ txtMaterial + " #</th>";
+				table = table + "<th>"+ txtDesc + "</th>";
 				if (this.oLocalData.ShowVendor) {
 					table = table + "<th>Vendor</th>";
 				}
-				table = table + "<th>Quantity</th>";
-				table = table + "<th>Item Cost</th></thead>";
+				table = table + "<th align='center'>" + txtQty + "</th>";
+				table = table + "<th align='center'>"+ txtCost + "</th></thead>";
 				for(var i = 0; i < oData.results.length; i++){
 					table += "<tr>";
 					table += "<td>" + oData.results[i].Day0.PRID + "</td>";

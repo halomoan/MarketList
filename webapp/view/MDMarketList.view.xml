@@ -20,7 +20,7 @@
 						<uxap:actions>
 							<SearchField id="searchField" showRefreshButton="{= !${device>/isTouch} }" tooltip="{i18n>searchTooltip}" width="auto" search="onSearch"></SearchField>
 							<uxap:ObjectPageHeaderActionButton type="Transparent" id="toggleTemplate"
-								text="Delivery Date: {path: 'detailView>/deliveryDate', formatter: '.formatter.dayFormat'}, {detailView>/deliveryDate}" hideText="false"
+								text="{i18n>deliveryDate}: {path: 'detailView>/deliveryDate', formatter: '.formatter.dayFormat'}, {detailView>/deliveryDate}" hideText="false"
 								hideIcon="true" press="headerInfoPopover"/>
 						</uxap:actions>
 					</uxap:ObjectPageDynamicHeaderTitle>
@@ -39,7 +39,7 @@
 					</layout:VerticalLayout>
 				</uxap:headerContent>
 				<uxap:sections>
-					<uxap:ObjectPageSection id="Day0" title="Delivery Date: {path: 'TableH>/Date0', formatter: '.formatter.dayFormat'}, {TableH>/Date0}">
+					<uxap:ObjectPageSection id="Day0" title="{i18n>deliveryDate}: {path: 'TableH>/Date0', formatter: '.formatter.dayFormat'}, {TableH>/Date0}">
 						<uxap:subSections>
 							<uxap:ObjectPageSubSection title="">
 								<uxap:blocks>
@@ -53,10 +53,10 @@
 														design="{= parseFloat(${mktlist>Day0/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<layout:Grid defaultSpan="L12 M12 S12">
 														<VBox width="15rem">
-															<Label text="Unit Price: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
+															<Label text="{i18n>unitPrice}: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 															<Label
-																text="Price Unit: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day0/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day0/UOM} : ${mktlist>Day0/UOM} + ' *' }"
-																tooltip="{= ${mktlist>Day0/UOM} === ${mktlist>OrderUnit} ? '' : 'Order Unit is ' + ${mktlist>OrderUnit}}"
+																text="{i18n>priceUnit}: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day0/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day0/UOM} : ${mktlist>Day0/UOM} + ' *' }"
+																tooltip="{= ${mktlist>Day0/UOM} === ${mktlist>OrderUnit} ? '' : ${i18n>orderUnit} + ': ' + ${mktlist>OrderUnit}}"
 																/>
 															<layoutData>
 																<layout:GridData span="L4 M4 S12"/>
@@ -93,7 +93,7 @@
 							</uxap:ObjectPageSubSection>
 						</uxap:subSections>
 					</uxap:ObjectPageSection>
-					<uxap:ObjectPageSection id="Day1" title="Delivery Date: {path: 'TableH>/Date1', formatter: '.formatter.dayFormat'}, {TableH>/Date1}">
+					<uxap:ObjectPageSection id="Day1" title="{i18n>deliveryDate}: {path: 'TableH>/Date1', formatter: '.formatter.dayFormat'}, {TableH>/Date1}">
 						<uxap:subSections>
 							<uxap:ObjectPageSubSection title=" ">
 								<uxap:blocks class="sapUiNoMargin">
@@ -107,10 +107,10 @@
 														design="{= parseFloat(${mktlist>Day1/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<layout:Grid>
 														<VBox width="15rem">
-															<Label text="Unit Price: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
+															<Label text="{i18n>unitPrice}: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 															<Label
-																text="Price Unit: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day1/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day1/UOM} : ${mktlist>Day1/UOM} + ' *' }"
-																tooltip="{= ${mktlist>Day1/UOM} === ${mktlist>OrderUnit} ? '' : 'Order Unit is ' + ${mktlist>OrderUnit}}"
+																text="{i18n>priceUnit}: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day1/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day1/UOM} : ${mktlist>Day1/UOM} + ' *' }"
+																tooltip="{= ${mktlist>Day1/UOM} === ${mktlist>OrderUnit} ? '' : '{i18n>orderUnit}: ' + ${mktlist>OrderUnit}}"
 																/>
 															<layoutData>
 																<layout:GridData span="L4 M4 S12"/>
@@ -147,7 +147,7 @@
 							</uxap:ObjectPageSubSection>
 						</uxap:subSections>
 					</uxap:ObjectPageSection>
-					<uxap:ObjectPageSection id="Day2" title="Delivery Date: {path: 'TableH>/Date2', formatter: '.formatter.dayFormat'}, {TableH>/Date2}">
+					<uxap:ObjectPageSection id="Day2" title="{i18n>deliveryDate}: {path: 'TableH>/Date2', formatter: '.formatter.dayFormat'}, {TableH>/Date2}">
 						<uxap:subSections>
 							<uxap:ObjectPageSubSection title=" ">
 								<uxap:blocks>
@@ -161,10 +161,10 @@
 														design="{= parseFloat(${mktlist>Day2/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<layout:Grid>
 														<VBox width="15rem">
-															<Label text="Unit Price: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
+															<Label text="{i18n>unitPrice}: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 															<Label
-																text="Price Unit: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day2/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day2/UOM} : ${mktlist>Day2/UOM} + ' *' }"
-																tooltip="{= ${mktlist>Day2/UOM} === ${mktlist>OrderUnit} ? '' : 'Order Unit is ' + ${mktlist>OrderUnit}}"
+																text="{i18n>priceUnit}: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day2/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day2/UOM} : ${mktlist>Day2/UOM} + ' *' }"
+																tooltip="{= ${mktlist>Day2/UOM} === ${mktlist>OrderUnit} ? '' : '{i18n>orderUnit}: ' + ${mktlist>OrderUnit}}"
 																/>
 															<layoutData>
 																<layout:GridData span="L4 M4 S12"/>
@@ -215,10 +215,10 @@
 														design="{= parseFloat(${mktlist>Day3/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<layout:Grid>
 														<VBox width="15rem">
-															<Label text="Unit Price: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
+															<Label text="{i18n>unitPrice}: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 															<Label
-																text="Price Unit: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day3/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day3/UOM} : ${mktlist>Day3/UOM} + ' *' }"
-																tooltip="{= ${mktlist>Day3/UOM} === ${mktlist>OrderUnit} ? '' : 'Order Unit is ' + ${mktlist>OrderUnit}}"
+																text="{i18n>priceUnit}: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day3/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day3/UOM} : ${mktlist>Day3/UOM} + ' *' }"
+																tooltip="{= ${mktlist>Day3/UOM} === ${mktlist>OrderUnit} ? '' : '{i18n>orderUnit}: ' + ${mktlist>OrderUnit}}"
 																/>
 															<layoutData>
 																<layout:GridData span="L4 M4 S12"/>
@@ -269,10 +269,10 @@
 														design="{= parseFloat(${mktlist>Day4/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<layout:Grid>
 														<VBox width="15rem">
-															<Label text="Unit Price: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
+															<Label text="{i18n>unitPrice}: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 															<Label
-																text="Price Unit: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day4/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day4/UOM} : ${mktlist>Day4/UOM} + ' *' }"
-																tooltip="{= ${mktlist>Day4/UOM} === ${mktlist>OrderUnit} ? '' : 'Order Unit is ' + ${mktlist>OrderUnit}}"
+																text="{i18n>priceUnit}: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day4/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day4/UOM} : ${mktlist>Day4/UOM} + ' *' }"
+																tooltip="{= ${mktlist>Day4/UOM} === ${mktlist>OrderUnit} ? '' : '{i18n>orderUnit}: ' + ${mktlist>OrderUnit}}"
 																/>
 															<layoutData>
 																<layout:GridData span="L4 M4 S12"/>
@@ -323,10 +323,10 @@
 														design="{= parseFloat(${mktlist>Day5/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<layout:Grid>
 														<VBox width="15rem">
-															<Label text="Unit Price: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
+															<Label text="{i18n>unitPrice}: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 															<Label
-																text="Price Unit: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day5/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day5/UOM} : ${mktlist>Day5/UOM} + ' *' }"
-																tooltip="{= ${mktlist>Day5/UOM} === ${mktlist>OrderUnit} ? '' : 'Order Unit is ' + ${mktlist>OrderUnit}}"
+																text="{i18n>priceUnit}: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day5/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day5/UOM} : ${mktlist>Day5/UOM} + ' *' }"
+																tooltip="{= ${mktlist>Day5/UOM} === ${mktlist>OrderUnit} ? '' : '{i18n>orderUnit}: ' + ${mktlist>OrderUnit}}"
 																/>
 															<layoutData>
 																<layout:GridData span="L4 M4 S12"/>
@@ -377,10 +377,10 @@
 														design="{= parseFloat(${mktlist>Day6/Quantity}) > 0 ? 'Bold' : 'Standard'}"/>
 													<layout:Grid>
 														<VBox width="15rem">
-															<Label text="Unit Price: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
+															<Label text="{i18n>unitPrice}: = {= parseFloat(${mktlist>UnitPrice})} {mktlist>Currency}"/>
 															<Label
-																text="Price Unit: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day6/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day6/UOM} : ${mktlist>Day6/UOM} + ' *' }"
-																tooltip="{= ${mktlist>Day6/UOM} === ${mktlist>OrderUnit} ? '' : 'Order Unit is ' + ${mktlist>OrderUnit}}"
+																text="{i18n>priceUnit}: = {= parseFloat(${mktlist>PriceUnit})} {= ${mktlist>Day6/UOM} === ${mktlist>OrderUnit} ? ${mktlist>Day6/UOM} : ${mktlist>Day6/UOM} + ' *' }"
+																tooltip="{= ${mktlist>Day6/UOM} === ${mktlist>OrderUnit} ? '' : '{i18n>orderUnit}: ' + ${mktlist>OrderUnit}}"
 																/>
 															<layoutData>
 																<layout:GridData span="L4 M4 S12"/>

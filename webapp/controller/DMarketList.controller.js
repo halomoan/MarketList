@@ -132,12 +132,12 @@ sap.ui.define([
 				var itemIdx = parseInt(sId.slice(-2));
 				
 				var dialog = new sap.m.Dialog({
-					title: this.getResourceBundle().getText("addComment") + " " + text + " (" + itemId + ")" ,
+					title: text + " (" + itemId + ")" ,
 					type: 'Message',
 					content: [
 							new sap.m.TextArea('commentTextArea', {
 								width: '100%',
-								placeholder: 'Add comment (optional)',
+								placeholder: this.getResourceBundle().getText("addComment")  + ' (optional)',
 								value : sComment
 							})
 						],
@@ -166,7 +166,7 @@ sap.ui.define([
 							press: function () {
 									
 								var sText = sap.ui.getCore().byId('commentTextArea').getValue();
-								sap.m.MessageToast.show('Add Comment : ' + sText);
+								sap.m.MessageToast.show(oThis.getResourceBundle().getText("saveComment") + " " + sText);
 								var rows = oModel.getData().rows;
 
 								for(var key in rows) {
@@ -988,7 +988,7 @@ sap.ui.define([
 					
 				if (bConverted) {
 					sap.m.MessageBox.information(sMsg, {
-					          title: "Information",                                      
+					          title: this.getResourceBundle().getText("information"),                                      
 					          initialFocus: null,
 					          onClose: function(){
 					    		    oThis.inputWarning(matDay,material); 

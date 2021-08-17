@@ -717,7 +717,7 @@ sap.ui.define([
 					content: [
 							new sap.m.TextArea('commentTextArea', {
 								width: '100%',
-								placeholder: 'Add comment (optional)',
+								placeholder:  oThis.getResourceBundle().getText("comment"),
 								value : sComment
 							})
 						],
@@ -745,7 +745,7 @@ sap.ui.define([
 							press: function () {
 									
 								var sText = sap.ui.getCore().byId('commentTextArea').getValue();
-								sap.m.MessageToast.show('Add Comment : ' + sText);
+								sap.m.MessageToast.show(oThis.getResourceBundle().getText("addComment") + ' : ' + sText);
 								var rows = oModel.getData().rows;
 
 								for(var key in rows) {

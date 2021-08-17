@@ -90,10 +90,9 @@
 							</Column>
 							<Column width="8rem">
 								<multiLabels>
-								<m:Label text="Delivery Date"  width="100%"/>	
-								<m:Label text="Total Items"  width="100%"/>	
-								<m:Label text="Total Amount"  width="100%"/>	
-								
+								<m:Label text="{i18n>deliveryDate}"  width="100%"/>	
+								<m:Label text="{i18n>totalItems}"  width="100%"/>	
+								<m:Label text="{i18n>totalAmount}"  width="100%"/>	
 								<m:Label text="{i18n>priceUnit}"  width="100%"/>
 								</multiLabels>
 								<template>

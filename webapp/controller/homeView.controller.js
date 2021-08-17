@@ -16,6 +16,11 @@ sap.ui.define([
 			}
 			
 			var	oLocal = {};
+			
+			oLocal.UserId = this.UserId;
+			oLocal.Name = this.Name;
+			oLocal.UserType = this.UserType;
+			
 			var oPlant = this.getView().byId("plant").getSelectedItem();
 			if (oPlant) {
 				oLocal.PlantID = oPlant.getProperty("key");
@@ -168,14 +173,9 @@ sap.ui.define([
 					dataReceived: function(rData) {
 						var oData = rData.getParameter("data");
 						if (oData) {
-
-						
-							var oLocalData = {};
-
-							oLocalData.UserId = oData.UserId;
-							oLocalData.Name = oData.Name;
-							oLocalData.UserType = oData.UserType;
-							oThis.putLocalData(oLocalData);
+							oThis.UserId = oData.UserId;
+							oThis.Name = oData.Name;
+							oThis.UserType = oData.UserType;
 						}
 					}
 				}
