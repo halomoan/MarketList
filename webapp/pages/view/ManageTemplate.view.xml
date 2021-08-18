@@ -7,20 +7,20 @@
 			
 			
 		<l:VerticalLayout class="sapUiContentPadding">
-		<t:Table id="loctbl" rows="{ path:'/MarketListTmplSet', filters : [{ path : 'Werks', operator : 'EQ', value1 : ''}]}" selectionMode="MultiToggle" visibleRowCount="7" paste="onPaste" ariaLabelledBy="title">
+		<t:Table id="tmpltbl" rows="{ path:'/MarketListTmplSet', filters : [{ path : 'PlantID', operator : 'EQ', value1 : ''}]}" selectionMode="MultiToggle" visibleRowCount="20" paste="onPaste" ariaLabelledBy="title">
 			<t:extension>
 				<OverflowToolbar style="Clear">
 					<Title text="{i18n>templateMaterial}"/>
 				</OverflowToolbar>
 			</t:extension>
 			<t:columns>
-				<t:Column filterProperty="ItemNo">
+				<t:Column width="5rem" filterProperty="ItemNo">
 					<Label text="{i18n>No}"/>
 					<t:template>
 						<Text text="{ItemNo}" wrapping="false"/>
 					</t:template>
 				</t:Column>
-				<t:Column width="10rem" filterProperty="MaterialID">
+				<t:Column width="6rem" filterProperty="MaterialID">
 					<Label text="{i18n>materialID}"/>
 					<t:template>
 						<Text text="{MaterialID}" wrapping="false"/>
