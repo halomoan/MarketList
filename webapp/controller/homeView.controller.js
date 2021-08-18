@@ -307,6 +307,17 @@ sap.ui.define([
 				}, false);
 			}	
 		},
+		onManageTemplate: function() {
+		
+			if (this.storeSelection()){ 
+				var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+				var oLocal = oStorage.get("localStorage");
+				this.getRouter().navTo("managetemplate", {
+					plantId: oLocal.PlantID,
+					ccId: oLocal.CostCenterID
+				}, false);
+			}	
+		},
 		logout:function(){
 			$.ajax({  
 				type: "GET",  

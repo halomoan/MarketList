@@ -1,26 +1,39 @@
 <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:t="sap.ui.table"
 	xmlns:l="sap.ui.layout" controllerName="sap.ui.demo.masterdetail.pages.controller.ManageTemplate">
+	
+	<Page showHeader="true" busy="{detailView>/calbusy}" showNavButton="true"
+			title="{i18n>manageTemplate}"
+			busyIndicatorDelay="{detailView>/calbusyindicator}">
+			
+			
 		<l:VerticalLayout class="sapUiContentPadding">
-		<t:Table id="loctbl" rows="{ path:'/LocationSet', filters : [{ path : 'Werks', operator : 'EQ', value1 : ''}]}" selectionMode="MultiToggle" visibleRowCount="7" paste="onPaste" ariaLabelledBy="title">
+		<t:Table id="loctbl" rows="{ path:'/MarketListTmplSet', filters : [{ path : 'Werks', operator : 'EQ', value1 : ''}]}" selectionMode="MultiToggle" visibleRowCount="7" paste="onPaste" ariaLabelledBy="title">
 			<t:extension>
 				<OverflowToolbar style="Clear">
-					<Title id="title" text="{i18n>Location}"/>
+					<Title text="{i18n>templateMaterial}"/>
 				</OverflowToolbar>
 			</t:extension>
 			<t:columns>
-				<t:Column width="10rem" filterProperty="LocationID">
-					<Label text="{i18n>ID}"/>
+				<t:Column filterProperty="ItemNo">
+					<Label text="{i18n>No}"/>
 					<t:template>
-						<Text text="{LocationID}" wrapping="false"/>
+						<Text text="{ItemNo}" wrapping="false"/>
 					</t:template>
 				</t:Column>
-				<t:Column width="20rem" filterProperty="Text">
-					<Label text="{i18n>Text}"/>
+				<t:Column width="10rem" filterProperty="MaterialID">
+					<Label text="{i18n>materialID}"/>
 					<t:template>
-						<Text text="{Text}" wrapping="false"/>
+						<Text text="{MaterialID}" wrapping="false"/>
+					</t:template>
+				</t:Column>
+				<t:Column filterProperty="MaterialText">
+					<Label text="{i18n>materialText}"/>
+					<t:template>
+						<Text text="{MaterialText}" wrapping="false"/>
 					</t:template>
 				</t:Column>
 			</t:columns>
 		</t:Table>
 	</l:VerticalLayout>
+	</Page>
 </mvc:View>

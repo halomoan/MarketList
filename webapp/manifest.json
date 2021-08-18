@@ -183,6 +183,13 @@
 					]
 				},
 				{
+					"pattern": "managetemplate/plantId/:plantId:/ccId/:ccId:",
+					"name": "managetemplate",
+					"target": [
+						"managetemplate"
+					]
+				},
+				{
 					"pattern": "submaster/groupId/{groupId}/template/:template:",
 					"name": "submaster",
 					"target": [
@@ -300,6 +307,11 @@
 					"viewName": "planCalendar",
 					"viewId": "plancalendar",
 					"viewLevel": 2
+				},
+				"managetemplate": {
+					"viewName": "ManageTemplate",
+					"viewId": "managetemplate",
+					"viewPath": "sap.ui.demo.masterdetail.pages.view"
 				},
 				"detailNotFound": {
 					"viewName": "DetailNotFound",
