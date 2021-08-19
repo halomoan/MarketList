@@ -1,6 +1,6 @@
 <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:t="sap.ui.table" xmlns:l="sap.ui.layout"
 	controllerName="sap.ui.demo.masterdetail.pages.controller.ManageTemplate">
-	<Page showHeader="true" busy="{detailView>/calbusy}" showNavButton="true" title="{i18n>manageTemplate}"
+	<Page showHeader="true" busy="{detailView>/calbusy}" showNavButton="true" navButtonPress="onNavBack" title="{i18n>manageTemplate}"
 		busyIndicatorDelay="{detailView>/calbusyindicator}">
 		<l:VerticalLayout class="sapUiContentPadding">
 			<t:Table id="tmpltbl" rows="{ path:'/MarketListTmplSet', sorter: { path: 'Matnr', descending: false } }" selectionMode="MultiToggle" visibleRowCount="20" paste="onPaste"

@@ -36,7 +36,7 @@ sap.ui.define([
 			});
 
 		},
-
+		
 		_onDelete: function() {
 			var oTable = this.byId("tmpltbl");
 			var aIndices = oTable.getSelectedIndices();
@@ -73,12 +73,26 @@ sap.ui.define([
 			var oModel = this.getModel();
 			var oViewModel = this.getModel("detailView");
 			oViewModel.setProperty("/calbusy", true);
+			
+			var sMatnr = "";
+			for(var i = 0; i < aMatnr.length; i++){
+				if (i > 0) {
+					sMatnr = sMatnr + ";" + aMatnr[i];
+				} else {
+					sMatnr = aMatnr[i];
+				}
+			}
 
-			oModel.callFunction("/ChangePR", {
+			console.log(sMatnr);
+			
+			oModel.callFunction("/ChangeTmpl", {
 				method: "POST",
 				urlParameters: {
 					"PlantID": this.plantID,
-					"PRID": this.PRID
+					"PRID": this.PRID,
+					"LISTMATNR": sMatnr,
+					"MODE": 'D',
+					
 				},
 				success: function(oData, oResponse) {
 					sap.m.MessageBox.success(oData.Message, {
