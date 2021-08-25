@@ -9,6 +9,7 @@
 					<OverflowToolbar style="Clear">
 						<Title text="{i18n>templateMaterial}"/>
 						<ToolbarSpacer/>
+						<Button icon="sap-icon://add" type="Transparent" tooltip="Add Material(s)" press=".onVHMaterialRequested"/>
 						<Button icon="sap-icon://decline" tooltip="{i18n>delete}" press="onDelete"/>
 					</OverflowToolbar>
 				</t:extension>

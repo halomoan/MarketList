@@ -16,7 +16,9 @@ sap.ui.define([
 			};
 			var oViewModel = new JSONModel(oViewData);
 			this.setModel(oViewModel, "detailView");
-
+			
+			this.oColModel = new JSONModel(sap.ui.require.toUrl("sap/ui/demo/masterdetail/fragments/") + "/VHMaterialColumnsModel.json");
+			
 			this.getRouter().getRoute("managetemplate").attachPatternMatched(this._onRouteMatched, this);
 		},
 
@@ -36,7 +38,87 @@ sap.ui.define([
 			});
 
 		},
+
+		onVHMaterialRequested: function() {
+
+			var sPlantID = this.plantID;
+
+			var aCols = this.oColModel.getData().cols;
+			
+			this._oBasicSearchField = new sap.m.SearchField({
+				showSearchButton: false
+			});
+	
+			if (!this._oValueHelpDialog) {
+				this._oValueHelpDialog = sap.ui.xmlfragment("sap.ui.demo.masterdetail.fragments.VHMaterial", this);
+				this.getView().addDependent(this._oValueHelpDialog);
+				
+				
+				var oMatGroup = sap.ui.getCore().byId("MatGroup");
+			
+
+				if (oMatGroup.getBinding("suggestionItems") === undefined) {
+					oMatGroup.bindAggregation("suggestionItems", {
+						path: "/MaterialGroups",
+						template: new sap.ui.core.Item({
+							key: "{MaterialGroupID}",
+							text: "{MaterialGroupName}"
+						}),
+						filters: [new Filter("PlantID", FilterOperator.EQ, sPlantID)]
+					});
+	
+				}
+			
+			}
 		
+
+			//this._oValueHelpDialog.setSupportMultiselect(false); 
+
+
+			 var oFilterBar = this._oValueHelpDialog.getFilterBar();
+			 oFilterBar.setFilterBarExpanded(false);
+			 oFilterBar.setBasicSearch(this._oBasicSearchField);
+
+			this._oValueHelpDialog.getTableAsync().then(function(oTable) {
+				oTable.setModel(this.oColModel, "columns");
+
+				if (oTable.bindRows) {
+					oTable.bindAggregation("rows", {
+						path: "/PlantMaterialSet",
+						filters: [this.oFilterPlant]
+					});
+				}
+
+				if (oTable.bindItems) {
+					oTable.bindAggregation("items", {
+						path: "/PlantMaterialSet",
+						filters: [this.oFilterPlant]
+					}, function() {
+						return new sap.m.ColumnListItem({
+							cells: aCols.map(function(column) {
+								return new sap.m.Label({
+									text: "{" + column.template + "}"
+								});
+							})
+						});
+					});
+				}
+
+				this._oValueHelpDialog.update();
+			}.bind(this));
+
+			this._oValueHelpDialog.open();
+		},
+		
+		onValueHelpCancelPress: function() {
+			this._oValueHelpDialog.close();
+		},
+
+		// onValueHelpAfterClose: function() {
+		// 	this._oValueHelpDialog.destroy();
+		// },
+
+
 		_onDelete: function() {
 			var oTable = this.byId("tmpltbl");
 			var aIndices = oTable.getSelectedIndices();
@@ -73,9 +155,9 @@ sap.ui.define([
 			var oModel = this.getModel();
 			var oViewModel = this.getModel("detailView");
 			oViewModel.setProperty("/calbusy", true);
-			
+
 			var sMatnr = "";
-			for(var i = 0; i < aMatnr.length; i++){
+			for (var i = 0; i < aMatnr.length; i++) {
 				if (i > 0) {
 					sMatnr = sMatnr + ";" + aMatnr[i];
 				} else {
@@ -83,8 +165,6 @@ sap.ui.define([
 				}
 			}
 
-			console.log(sMatnr);
-			
 			oModel.callFunction("/ChangeTmpl", {
 				method: "POST",
 				urlParameters: {
@@ -92,7 +172,7 @@ sap.ui.define([
 					"PRID": this.PRID,
 					"LISTMATNR": sMatnr,
 					"MODE": 'D',
-					
+
 				},
 				success: function(oData, oResponse) {
 					sap.m.MessageBox.success(oData.Message, {

@@ -1,0 +1,19 @@
+{
+	"cols": [
+		{
+			"label": "Material ID",
+			"template": "Matnr",
+			"width": "7rem"
+		},
+		{
+			"label": "Description",
+			"template": "Maktx"
+		},
+		{
+			"label": "Group",
+			"template": "Wgbez",
+			"width": "20rem"
+		}
+	
+	]
+}
