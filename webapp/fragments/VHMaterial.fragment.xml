@@ -9,9 +9,9 @@
 							<m:Input name="Matnr"/>
 						</fb:control>
 					</fb:FilterGroupItem>
-					<fb:FilterGroupItem groupName="__$INTERNAL$" name="Matkltx" label="Group Name" visibleInFilterBar="true">
+					<fb:FilterGroupItem groupName="__$INTERNAL$" name="Wgbez" label="Group Name" visibleInFilterBar="true">
 						<fb:control>
-							<m:Input id="MatGroup" name="Matkltx" showSuggestion="true" showValueHelp="false"/>
+							<m:Input id="MatGroup" name="Wgbez" showSuggestion="true" showValueHelp="false"/>
 						</fb:control>
 					</fb:FilterGroupItem>
 				</fb:filterGroupItems>

@@ -2,7 +2,7 @@ sap.ui.define([
 	"sap/ui/demo/masterdetail/controller/BaseController",
 	"sap/ui/model/json/JSONModel",
 	'sap/ui/model/Filter',
-	'sap/ui/model/FilterOperator'
+	'sap/ui/model/FilterOperator',
 ], function(BaseController, JSONModel, Filter, FilterOperator) {
 	"use strict";
 
@@ -108,6 +108,42 @@ sap.ui.define([
 			}.bind(this));
 
 			this._oValueHelpDialog.open();
+		},
+		
+		onValueHelpOkPress: function(oEvent) {
+			
+			
+			var aTokens = oEvent.getParameter("tokens");
+
+			if (aTokens.length) {
+				
+				var oModel = this.getModel();
+				var oViewModel = this.getModel("detailView");
+				oViewModel.setProperty("/calbusy", true);
+				
+				oModel.setUseBatch(true);
+				oModel.setDeferredGroups(["createTemplate"]);
+				var mParameters = { 
+						groupId:"createTemplate",
+						success:function(odata, resp){  oViewModel.setProperty("/calbusy", false); },
+						error: function(odata, resp) { oViewModel.setProperty("/calbusy", false); }
+					
+				};
+
+				
+				for (var i = 0; i < aTokens.length; i++) {
+					var oObject = aTokens[i].data().row;
+					var oMaterial = {
+						"PlantID": this.plantID,
+						"PRID" : this.PRID,
+						"Matnr" : oObject.Matnr,       
+						"InTemplt": true
+					};
+					oModel.create("/MarketListTmplSet", oMaterial, mParameters);
+				}
+				
+				oModel.submitChanges(mParameters);
+			}
 		},
 		
 		onFilterBarSearch: function(oEvent) {
