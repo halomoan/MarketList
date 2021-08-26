@@ -18,6 +18,8 @@ sap.ui.define([
 			var oViewModel = new JSONModel(oViewData);
 			this.setModel(oViewModel, "detailView");
 			
+			this._oBundle = this.getResourceBundle();
+			
 			this.oColModel = new JSONModel(sap.ui.require.toUrl("sap/ui/demo/masterdetail/fragments/") + "/VHMaterialColumnsModel.json");
 			
 			this.getRouter().getRoute("managetemplate").attachPatternMatched(this._onRouteMatched, this);
@@ -27,7 +29,7 @@ sap.ui.define([
 
 			sap.m.MessageBox.confirm(this.getResourceBundle().getText("msgConfirmDelMaterial"), {
 				icon: sap.m.MessageBox.Icon.INFORMATION,
-				title: this.getResourceBundle().getText("confirm"),
+				title: this._oBundle.getText("confirm"),
 				actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
 				onClose: function(oAction) {
 					if (oAction === sap.m.MessageBox.Action.YES) {
@@ -49,7 +51,7 @@ sap.ui.define([
 			this._oBasicSearchField = new sap.m.SearchField({
 				showSearchButton: false
 			});
-	
+			
 			if (!this._oValueHelpDialog) {
 				this._oValueHelpDialog = sap.ui.xmlfragment("sap.ui.demo.masterdetail.fragments.VHMaterial", this);
 				this.getView().addDependent(this._oValueHelpDialog);
@@ -218,9 +220,9 @@ sap.ui.define([
 			this._oValueHelpDialog.close();
 		},
 
-		// onValueHelpAfterClose: function() {
-		// 	this._oValueHelpDialog.destroy();
-		// },
+		onValueHelpAfterClose: function() {
+			this._oValueHelpDialog.destroy();
+		},
 
 		_filterTable: function(oFilter) {
 			var oValueHelpDialog = this._oValueHelpDialog;
@@ -271,6 +273,7 @@ sap.ui.define([
 
 		_postDelete: function(aMatnr) {
 
+			var oThis = this;
 			var oModel = this.getModel();
 			var oViewModel = this.getModel("detailView");
 			oViewModel.setProperty("/calbusy", true);
@@ -290,17 +293,16 @@ sap.ui.define([
 					"PlantID": this.plantID,
 					"PRID": this.PRID,
 					"LISTMATNR": sMatnr,
-					"MODE": 'D',
+					"MODE": 'X'
 
 				},
-				success: function(oData, oResponse) {
-					sap.m.MessageBox.success(oData.Message, {
-						title: "Response",
-						initialFocus: null
-					});
+				success: function(oData, oResponse) {					
+					sap.m.MessageToast.show(oData.Message);
+					oThis._refreshTable();
 					oViewModel.setProperty("/calbusy", false);
 				}.bind(this),
 				error: function(error) {
+					sap.m.MessageToast.show(oThis._oBundle.getText("msgFailSave"));
 					oViewModel.setProperty("/calbusy", false);
 				},
 				async: false
@@ -333,7 +335,6 @@ sap.ui.define([
 		_refreshTable: function() {
 			var oTable = this.byId("tmpltbl");
 			var oBinding = oTable.getBinding("rows");
-
 
 			if (oBinding) {
 				oBinding.filter([this.oFilterPlant, this.oFilterTmplID], sap.ui.model.FilterType.Application);
