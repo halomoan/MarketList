@@ -11,7 +11,8 @@ sap.ui.define([
 		onInit: function() {
 			var oViewData = {
 				calbusy: false,
-				calbusyindicator: 0
+				calbusyindicator: 0,
+				totalCount: 0
 
 			};
 			var oViewModel = new JSONModel(oViewData);
@@ -144,6 +145,7 @@ sap.ui.define([
 				
 				oModel.submitChanges(mParameters);
 			}
+			this._oValueHelpDialog.close();
 		},
 		
 		onFilterBarSearch: function(oEvent) {
@@ -315,6 +317,15 @@ sap.ui.define([
 			this.oFilterPlant = new Filter("PlantID", FilterOperator.EQ, this.plantID); // Filter Plant
 			this.oFilterTmplID = new Filter("PRID", FilterOperator.EQ, this.PRID); // Filter TemplateID
 
+			
+			var oTable = this.byId("tmpltbl");
+			var oBinding = oTable.getBinding("rows");
+			oBinding.attachChange(function(sReason) {
+				var oViewModel = this.getModel("detailView");
+				oViewModel.setProperty("/totalCount", oBinding.getLength());
+			   
+			}.bind(this));
+			
 			this._refreshTable();
 
 		},
@@ -322,6 +333,7 @@ sap.ui.define([
 		_refreshTable: function() {
 			var oTable = this.byId("tmpltbl");
 			var oBinding = oTable.getBinding("rows");
+
 
 			if (oBinding) {
 				oBinding.filter([this.oFilterPlant, this.oFilterTmplID], sap.ui.model.FilterType.Application);

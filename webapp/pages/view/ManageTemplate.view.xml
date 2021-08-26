@@ -3,11 +3,11 @@
 	<Page showHeader="true" busy="{detailView>/calbusy}" showNavButton="true" navButtonPress="onNavBack" title="{i18n>manageTemplate}"
 		busyIndicatorDelay="{detailView>/calbusyindicator}">
 		<l:VerticalLayout class="sapUiContentPadding">
-			<t:Table id="tmpltbl" rows="{ path:'/MarketListTmplSet', sorter: { path: 'Matnr', descending: false } }" selectionMode="MultiToggle" visibleRowCount="20" paste="onPaste"
+			<t:Table id="tmpltbl" rows="{ path:'/MarketListTmplSet', sorter: { path: 'Matnr', descending: false } }" selectionMode="MultiToggle" visibleRowCount="22" paste="onPaste"
 				ariaLabelledBy="title">
 				<t:extension>
 					<OverflowToolbar style="Clear">
-						<Title text="{i18n>templateMaterial}"/>
+						<Title text="{i18n>templateMaterial} ( {detailView>/totalCount} )"/>
 						<ToolbarSpacer/>
 						<Button icon="sap-icon://add" type="Transparent" tooltip="Add Material(s)" press=".onVHMaterialRequested"/>
 						<Button icon="sap-icon://decline" tooltip="{i18n>delete}" press="onDelete"/>
