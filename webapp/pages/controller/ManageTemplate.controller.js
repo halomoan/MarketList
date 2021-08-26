@@ -17,11 +17,11 @@ sap.ui.define([
 			};
 			var oViewModel = new JSONModel(oViewData);
 			this.setModel(oViewModel, "detailView");
-			
+
 			this._oBundle = this.getResourceBundle();
-			
+
 			this.oColModel = new JSONModel(sap.ui.require.toUrl("sap/ui/demo/masterdetail/fragments/") + "/VHMaterialColumnsModel.json");
-			
+
 			this.getRouter().getRoute("managetemplate").attachPatternMatched(this._onRouteMatched, this);
 		},
 
@@ -47,40 +47,33 @@ sap.ui.define([
 			var sPlantID = this.plantID;
 
 			var aCols = this.oColModel.getData().cols;
-			
+
 			this._oBasicSearchField = new sap.m.SearchField({
 				showSearchButton: false
 			});
-			
-			if (!this._oValueHelpDialog) {
-				this._oValueHelpDialog = sap.ui.xmlfragment("sap.ui.demo.masterdetail.fragments.VHMaterial", this);
-				this.getView().addDependent(this._oValueHelpDialog);
-				
-				
-				var oMatGroup = sap.ui.getCore().byId("MatGroup");
-			
 
-				if (oMatGroup.getBinding("suggestionItems") === undefined) {
-					oMatGroup.bindAggregation("suggestionItems", {
-						path: "/MaterialGroups",
-						template: new sap.ui.core.Item({
-							key: "{MaterialGroupID}",
-							text: "{MaterialGroupName}"
-						}),
-						filters: [new Filter("PlantID", FilterOperator.EQ, sPlantID)]
-					});
-	
-				}
-			
+			this._oValueHelpDialog = sap.ui.xmlfragment("sap.ui.demo.masterdetail.fragments.VHMaterial", this);
+			this.getView().addDependent(this._oValueHelpDialog);
+
+			var oMatGroup = sap.ui.getCore().byId("MatGroup");
+
+			if (oMatGroup.getBinding("suggestionItems") === undefined) {
+				oMatGroup.bindAggregation("suggestionItems", {
+					path: "/MaterialGroups",
+					template: new sap.ui.core.Item({
+						key: "{MaterialGroupID}",
+						text: "{MaterialGroupName}"
+					}),
+					filters: [new Filter("PlantID", FilterOperator.EQ, sPlantID)]
+				});
+
 			}
-		
 
 			//this._oValueHelpDialog.setSupportMultiselect(false); 
 
-
-			 var oFilterBar = this._oValueHelpDialog.getFilterBar();
-			 oFilterBar.setFilterBarExpanded(false);
-			 oFilterBar.setBasicSearch(this._oBasicSearchField);
+			var oFilterBar = this._oValueHelpDialog.getFilterBar();
+			oFilterBar.setFilterBarExpanded(false);
+			oFilterBar.setBasicSearch(this._oBasicSearchField);
 
 			this._oValueHelpDialog.getTableAsync().then(function(oTable) {
 				oTable.setModel(this.oColModel, "columns");
@@ -112,44 +105,46 @@ sap.ui.define([
 
 			this._oValueHelpDialog.open();
 		},
-		
+
 		onValueHelpOkPress: function(oEvent) {
-			
-			
+
 			var aTokens = oEvent.getParameter("tokens");
 
 			if (aTokens.length) {
-				
+
 				var oModel = this.getModel();
 				var oViewModel = this.getModel("detailView");
 				oViewModel.setProperty("/calbusy", true);
-				
+
 				oModel.setUseBatch(true);
 				oModel.setDeferredGroups(["createTemplate"]);
-				var mParameters = { 
-						groupId:"createTemplate",
-						success:function(odata, resp){  oViewModel.setProperty("/calbusy", false); },
-						error: function(odata, resp) { oViewModel.setProperty("/calbusy", false); }
-					
+				var mParameters = {
+					groupId: "createTemplate",
+					success: function(odata, resp) {
+						oViewModel.setProperty("/calbusy", false);
+					},
+					error: function(odata, resp) {
+						oViewModel.setProperty("/calbusy", false);
+					}
+
 				};
 
-				
 				for (var i = 0; i < aTokens.length; i++) {
 					var oObject = aTokens[i].data().row;
 					var oMaterial = {
 						"PlantID": this.plantID,
-						"PRID" : this.PRID,
-						"Matnr" : oObject.Matnr,       
+						"PRID": this.PRID,
+						"Matnr": oObject.Matnr,
 						"InTemplt": true
 					};
 					oModel.create("/MarketListTmplSet", oMaterial, mParameters);
 				}
-				
+
 				oModel.submitChanges(mParameters);
 			}
 			this._oValueHelpDialog.close();
 		},
-		
+
 		onFilterBarSearch: function(oEvent) {
 
 			var sSearchQuery = this._oBasicSearchField.getValue(),
@@ -215,7 +210,7 @@ sap.ui.define([
 				this._filterTable([]);
 			}
 		},
-		
+
 		onValueHelpCancelPress: function() {
 			this._oValueHelpDialog.close();
 		},
@@ -224,6 +219,21 @@ sap.ui.define([
 			this._oValueHelpDialog.destroy();
 		},
 
+		onMigrateOldTmpl: function(){
+			sap.m.MessageBox.confirm(this.getResourceBundle().getText("msgCfrmMigrateOldTmpl"), {
+				icon: sap.m.MessageBox.Icon.INFORMATION,
+				title: this._oBundle.getText("confirm"),
+				actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
+				onClose: function(oAction) {
+					if (oAction === sap.m.MessageBox.Action.YES) {
+
+						this._onDelete();
+
+					}
+				}.bind(this)
+			});
+
+		},
 		_filterTable: function(oFilter) {
 			var oValueHelpDialog = this._oValueHelpDialog;
 
@@ -251,7 +261,7 @@ sap.ui.define([
 				var aMatnr = [];
 				for (var i = 0; i < aIndices.length; i++) {
 
-					if (i > 0 && i % 5 === 0) {
+					if (i > 0 && i % 50 === 0) {
 						this._postDelete(aMatnr);
 
 						aMatnr = [];
@@ -296,7 +306,7 @@ sap.ui.define([
 					"MODE": 'X'
 
 				},
-				success: function(oData, oResponse) {					
+				success: function(oData, oResponse) {
 					sap.m.MessageToast.show(oData.Message);
 					oThis._refreshTable();
 					oViewModel.setProperty("/calbusy", false);
@@ -319,15 +329,14 @@ sap.ui.define([
 			this.oFilterPlant = new Filter("PlantID", FilterOperator.EQ, this.plantID); // Filter Plant
 			this.oFilterTmplID = new Filter("PRID", FilterOperator.EQ, this.PRID); // Filter TemplateID
 
-			
 			var oTable = this.byId("tmpltbl");
 			var oBinding = oTable.getBinding("rows");
 			oBinding.attachChange(function(sReason) {
 				var oViewModel = this.getModel("detailView");
 				oViewModel.setProperty("/totalCount", oBinding.getLength());
-			   
+
 			}.bind(this));
-			
+
 			this._refreshTable();
 
 		},

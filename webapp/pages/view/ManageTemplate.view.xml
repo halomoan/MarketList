@@ -9,6 +9,7 @@
 					<OverflowToolbar style="Clear">
 						<Title text="{i18n>templateMaterial} ( {detailView>/totalCount} )"/>
 						<ToolbarSpacer/>
+						<Button text="{i18n>migrate}" type="Transparent" tooltip="{i18n>migrateFromOldTmpl}" press=".onMigrateOldTmpl"/>
 						<Button icon="sap-icon://add" type="Transparent" tooltip="Add Material(s)" press=".onVHMaterialRequested"/>
 						<Button icon="sap-icon://decline" tooltip="{i18n>delete}" press="onDelete"/>
 					</OverflowToolbar>
