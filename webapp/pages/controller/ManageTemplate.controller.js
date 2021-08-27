@@ -227,7 +227,7 @@ sap.ui.define([
 				onClose: function(oAction) {
 					if (oAction === sap.m.MessageBox.Action.YES) {
 
-						this._onDelete();
+						this._onMigrateTmpl();
 
 					}
 				}.bind(this)
@@ -249,7 +249,30 @@ sap.ui.define([
 				oValueHelpDialog.update();
 			});
 		},
-
+		_onMigrateTmpl: function(){
+			var oThis = this;
+			var oModel = this.getModel();
+			var oViewModel = this.getModel("detailView");
+			oViewModel.setProperty("/calbusy", true);
+			
+			oModel.callFunction("/MigrateTmpl", {
+				method: "POST",
+				urlParameters: {
+					"PlantID": this.plantID,
+					"PRID": this.PRID,
+				},
+				success: function(oData, oResponse) {
+					sap.m.MessageToast.show(oData.Message);
+					oThis._refreshTable();
+					oViewModel.setProperty("/calbusy", false);
+				}.bind(this),
+				error: function(error) {
+					sap.m.MessageToast.show(oThis._oBundle.getText("msgFailSave"));
+					oViewModel.setProperty("/calbusy", false);
+				},
+				async: false
+			});
+		},
 		_onDelete: function() {
 			var oTable = this.byId("tmpltbl");
 			var aIndices = oTable.getSelectedIndices();
@@ -268,9 +291,11 @@ sap.ui.define([
 
 					}
 					var oContext = oTable.getContextByIndex(aIndices[i]);
-					var oItem = oContext.getObject();
-
-					aMatnr.push(oItem.Matnr);
+					if (oContext) {
+						var oItem = oContext.getObject();
+	
+						aMatnr.push(oItem.Matnr);
+					} 
 
 				}
 
