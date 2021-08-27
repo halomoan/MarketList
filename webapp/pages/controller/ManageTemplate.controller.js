@@ -284,7 +284,7 @@ sap.ui.define([
 				var aMatnr = [];
 				for (var i = 0; i < aIndices.length; i++) {
 
-					if (i > 0 && i % 50 === 0) {
+					if (i > 0 && i % 100 === 0 && aMatnr.length > 0) {
 						this._postDelete(aMatnr);
 
 						aMatnr = [];
@@ -300,6 +300,7 @@ sap.ui.define([
 				}
 
 				if (aMatnr.length > 0) {
+					
 					this._postDelete(aMatnr);
 				}
 
@@ -321,7 +322,6 @@ sap.ui.define([
 					sMatnr = aMatnr[i];
 				}
 			}
-
 			oModel.callFunction("/ChangeTmpl", {
 				method: "POST",
 				urlParameters: {
