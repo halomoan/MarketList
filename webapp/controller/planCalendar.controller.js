@@ -84,7 +84,7 @@ sap.ui.define([
 							 oJsonData.scheduleheader[idx].NavHeaderToItem = oJsonData.scheduleheader[idx].NavHeaderToItem.results;
 						}
 						var oJson = new JSONModel();
-						oJson.setSizeLimit(200);
+						oJson.setSizeLimit(300);
 						oJson.setData(oJsonData);
 						oJson.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
 						
@@ -116,6 +116,10 @@ sap.ui.define([
 			onStartDateChange: function(oEvent){
 				var oStartDate = oEvent.getSource().getStartDate();
 				
+				/*if (Math.abs(this._WeeksDiff(oStartDate,this.oDate)) >= 1) {
+					this.oDate = oStartDate;
+					this.refreshSchedule();
+				}*/
 				if (oStartDate.getMonth() !== this.oDate.getMonth()){
 					this.oDate = oStartDate;
 					this.refreshSchedule();
@@ -126,6 +130,13 @@ sap.ui.define([
 				}*/
 				
 			},
+			
+			_WeeksDiff: function(d1, d2) {
+		        var t2 = d2.getTime();
+		        var t1 = d1.getTime();
+		 
+		        return parseInt((t2-t1)/(24*3600*1000*7));
+		    },
 			onAppointmentSelect: function (oEvent) {
 				var oAppointment = oEvent.getParameter("appointment");
 				var oThis = this;
@@ -215,10 +226,19 @@ sap.ui.define([
 							if(prop.substring(0,4) === "Day0") {
 								var oDay = data[key][prop];
 								if (!oDay.Deleted && oDay.Quantity > 0) {
-									totals = totals + (oDay.Quantity / data[key].PriceUnit * data[key].UnitPrice);
+									var qty = parseFloat(oDay.Quantity);
+									if (isNaN(qty)) { qty = 0; }
+									var priceunit = parseFloat(data[key].PriceUnit);
+									if (isNaN(priceunit)) { priceunit = 0; }
+									var price =  parseFloat(data[key].UnitPrice)
+									if (isNaN(price)) { price = 0; }
+									if (priceunit > 0 ) {
+										totals = totals + (oDay.Quantity / priceunit * price);
+									} 
 								}
 							} 
 						}
+						
 					}
 				} 
 				oViewModel.setProperty("/totalAmount",totals);

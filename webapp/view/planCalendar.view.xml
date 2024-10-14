@@ -11,23 +11,24 @@
 
 		<PlanningCalendar
 			id="PC1"
-			rows="{path: 'calModel>/scheduleheader'}"
+			showRowHeaders="true"
 			viewKey="Week"
+			rows="{path: 'calModel>/scheduleheader'}"
 			appointmentsVisualization="Filled"
 			appointmentSelect="onAppointmentSelect"
 			intervalSelect="handleIntervalSelect"
 			showEmptyIntervalHeaders="false"
-			stickyHeader="true"
 			startDateChange = "onStartDateChange"
 			showWeekNumbers="true"
-		>
+			stickyHeader="true"
+			>
 			<toolbarContent>
-				<Button icon="sap-icon://nav-back" text="{i18n>back}" press="onNavHome"></Button>
+				
 				<Title text="{detailView>/Plant} / {detailView>/CostCenter}" titleStyle="H4"/>
 				
-				<ToolbarSpacer></ToolbarSpacer>
 				<Button id="addButton" icon="sap-icon://add" press="onAddPR" tooltip="Add"/>
 				<Button id="showDetail" text="{i18n>showDetail}" press="onShowDetail"></Button>
+				<Button icon="sap-icon://decline" text="{i18n>close}" press="onNavHome"></Button>
 			</toolbarContent>
 			<rows>
 				<PlanningCalendarRow            
@@ -73,7 +74,7 @@
 							number="{
 								parts:[{path:'detailView>/totalAmount'},{path:'detailView>/currency'}],
 								type: 'sap.ui.model.type.Currency',
-								formatOptions: {showMeasure: false}
+								formatOptions: {showMeasure: false, preserveDecimals: false }
 							}"
 							unit="{detailView>/currency}"
 							state="Success" />		
@@ -143,21 +144,21 @@
 							number="{
 								parts:[{path:'mktitem>Day0/Quantity'},{path:'mktitem>Day0/UOM'}],
 								type: 'sap.ui.model.type.Currency',
-								formatOptions: {showMeasure: false}
+								formatOptions: {showMeasure: false, preserveDecimals: false }
 							}"
 							unit="{mktitem>Day0/UOM}" />
 					<ObjectNumber
 							number="{
 								parts:[{path:'mktitem>UnitPrice'},{path:'mktitem>Day0/UOM'}],
 								type: 'sap.ui.model.type.Currency',
-								formatOptions: {showMeasure: false}
+								formatOptions: {showMeasure: false, preserveDecimals: false }
 							}"
 							unit="{mktitem>Currency}" />	
 					<ObjectNumber
 							number="{
 								parts:[{path:'mktitem>PriceUnit'},{path:'mktitem>Currency'}],
 								type: 'sap.ui.model.type.Currency',
-								formatOptions: {showMeasure: false}
+								formatOptions: {showMeasure: false, preserveDecimals: false }
 							}"
 							unit="{mktitem>Day0/UOM}" />
 						
@@ -166,7 +167,7 @@
 							number="{
 								parts:[{path:'mktitem>Day0/Cost'},{path:'mktitem>Currency'}],
 								type: 'sap.ui.model.type.Currency',
-								formatOptions: {showMeasure: false}
+								formatOptions: {showMeasure: false, preserveDecimals: false }
 							}"
 							unit="{mktitem>Currency}" />		
 				
