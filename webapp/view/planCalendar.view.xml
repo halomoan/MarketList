@@ -28,6 +28,7 @@
 				
 				<Button id="addButton" icon="sap-icon://add" press="onAddPR" tooltip="Add"/>
 				<Button id="showDetail" text="{i18n>showDetail}" press="onShowDetail"></Button>
+				<Button icon="sap-icon://sales-order-item" text="{= ${detailView>/ShowCosts} ? ${i18n>hideCosts}:${i18n>showCosts} }" press="onShowCosts"></Button>
 				<Button icon="sap-icon://decline" text="{i18n>close}" press="onNavHome"></Button>
 			</toolbarContent>
 			<rows>
@@ -45,8 +46,10 @@
 							startDate="{calModel>StartDate}"
 							endDate="{calModel>EndDate}"
 							icon="{calModel>Pic}"
-							title="PR: {calModel>Title}"
-							text="{calModel>Info}"
+							
+							title="{ path: 'calModel>Value', formatter: '.formatter.currencyValue'}"
+							text="{= ${calModel>Title}.length &gt; 0 ? 'PR: ' +  ${calModel>Title} : ''}"
+							color="{calModel>Color}"
 							type="{calModel>Type}"
 							tentative="{calModel>Tentative}">
 						</unified:CalendarAppointment>

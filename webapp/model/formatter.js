@@ -1,6 +1,7 @@
 sap.ui.define([
-		"sap/ui/core/format/DateFormat"
-	], function (DateFormat) {
+		"sap/ui/core/format/DateFormat",
+		 "sap/ui/core/format/NumberFormat"
+	], function (DateFormat,NumberFormat) {
 		"use strict";
 
 		return {
@@ -12,10 +13,14 @@ sap.ui.define([
 			 * @returns {string} formatted currency value with 2 digits
 			 */
 			currencyValue : function (sValue) {
-				if (!sValue) {
-					return "0.00";
-				}
-				return parseFloat(sValue).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');	
+				// if (!sValue) {
+				// 	return "0.00";
+				// }
+				// return parseFloat(sValue).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');	
+				var oCurrencyFormat = NumberFormat.getCurrencyInstance();
+				var value = oCurrencyFormat.format(sValue,"$ ");
+				return value;
+				
 			},
 			
 			dateFormat : function(value) {

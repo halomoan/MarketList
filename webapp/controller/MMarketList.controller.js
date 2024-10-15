@@ -513,6 +513,10 @@ sap.ui.define([
 					oHeader.NavDetail.results.push(oDetail);
 				}
 				
+				//console.log(tableRows);
+				//console.log(oHeader);
+				//return;
+				
 				sap.ui.core.BusyIndicator.show(0);
 				oModel.create("/MarketListHeaderSet", oHeader, {
 			    	method: "POST",
