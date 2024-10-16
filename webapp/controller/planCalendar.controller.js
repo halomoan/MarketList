@@ -738,9 +738,9 @@ sap.ui.define([
 			}
 
 			oHeader = {
-				"Name": "Cost",
+				"Name": this.getResourceBundle().getText("totalCost"),
 				"Pic": "sap-icon://money-bills",
-				"Role": "Valuation",
+				"Role": this.getResourceBundle().getText("valuation"),
 				"ScheduleHeaderID": "CALH000",
 				"ScheduleID": "CAL000",
 				"NavHeaderToItem": []

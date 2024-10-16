@@ -46,9 +46,9 @@
 							startDate="{calModel>StartDate}"
 							endDate="{calModel>EndDate}"
 							icon="{calModel>Pic}"
-							
+							tooltip="{calModel>Title}"
 							title="{ path: 'calModel>Value', formatter: '.formatter.currencyValue'}"
-							text="{= ${calModel>Title}.length &gt; 0 ? 'PR: ' +  ${calModel>Title} : ''}"
+							text="{= ${calModel>Title}.length &gt; 0 ? 'PR: ' +  ${calModel>Title} + ' ' + ${calModel>Info} : ''}"
 							color="{calModel>Color}"
 							type="{calModel>Type}"
 							tentative="{calModel>Tentative}">
