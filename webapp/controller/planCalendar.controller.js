@@ -42,6 +42,8 @@ sap.ui.define([
 			this.oLocalData.Change = {};
 			this.oLocalData.Change.PRID = null;
 			this.putLocalData(this.oLocalData);
+			
+			this.arrCalendarItems = [];
 
 			oViewModel.setProperty("/Plant", this.oLocalData.Plant);
 			oViewModel.setProperty("/CostCenter", this.oLocalData.CostCenter);
@@ -78,10 +80,22 @@ sap.ui.define([
 					var oJsonData = {};
 					oJsonData.scheduleheader = oSchedule.NavScheduleToHeader.results;
 
+					var arrItems = [];
 					for (var idx in oJsonData.scheduleheader) {
-						oJsonData.scheduleheader[idx].NavHeaderToItem = oJsonData.scheduleheader[idx].NavHeaderToItem.results;
+						var arrResults = oJsonData.scheduleheader[idx].NavHeaderToItem.results;
+						if (!arrResults){
+							arrResults = oJsonData.scheduleheader[idx].NavHeaderToItem;
+						}
+						
+						
+						oJsonData.scheduleheader[idx].NavHeaderToItem = arrResults;
+						arrItems.push(...arrResults);
 					}
 					var oJson = new JSONModel();
+					
+					oThis.arrCalendarItems = arrItems;
+					
+					
 					oJson.setSizeLimit(300);
 					oJson.setData(oJsonData);
 					oJson.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
@@ -118,11 +132,22 @@ sap.ui.define([
 		},
 		onStartDateChange: function(oEvent) {
 			var oStartDate = oEvent.getSource().getStartDate();
-
+			var sInterval = oEvent.getSource().getViewKey(); // "Week","One Month"
+			
+			var oEndDate = new Date(oStartDate);
+			
+			if(sInterval === "Week") {
+				oEndDate.setDate(oEndDate.getDate() + 6);	
+			} else {
+				oEndDate.setDate(oEndDate.getDate() + 30);	
+			}
+			
+			
 			/*if (Math.abs(this._WeeksDiff(oStartDate,this.oDate)) >= 1) {
 				this.oDate = oStartDate;
 				this.refreshSchedule();
 			}*/
+			
 			if (oStartDate.getMonth() !== this.oDate.getMonth()) {
 				this.oDate = oStartDate;
 				this.refreshSchedule();
@@ -154,8 +179,16 @@ sap.ui.define([
 			var sPRID = oAppointment.getText();
 			//var sStatus = oAppointment.getText();
 			sPRID = sPRID.replace(/^\D+/g, "");
+			sPRID = sPRID.trim();
 			oViewModel.setProperty("/PurReqID", sPRID);
 			oViewModel.setProperty("/POCreated", true);
+			
+			if (sPRID) {
+				 navigator.clipboard.writeText(sPRID);
+				 sap.m.MessageToast.show(this.getResourceBundle().getText("msgCopyToClipboard",sPRID));
+			} else {
+				return;
+			}
 
 			if (oAppointment.getType() === "Type06" && oButton.getText() === this.getResourceBundle().getText("showDetail")) {
 				this._handlePRChange(oAppointment);
@@ -691,11 +724,17 @@ sap.ui.define([
 			var oData = oModel.getData();
 			
 			if (oData.scheduleheader.length > 0) {
+				
 				var oHeader = oData.scheduleheader[0];
 				if (oHeader.ScheduleHeaderID === "CALH000") {
 					oData.scheduleheader.shift();
-					oModel.setData(oData, "calModel");
 				}
+					
+				for(var idx in oData.scheduleheader) {
+					oHeader = oData.scheduleheader[idx];
+					oHeader.Role = "Unloading Point";
+				}
+				oModel.setData(oData, "calModel");
 			}
 			
 		},
@@ -704,38 +743,57 @@ sap.ui.define([
 			var oModel = this.getView().getModel("calModel");
 			var oData = oModel.getData();
 
+			
+			
 			if (oData.scheduleheader.length > 0) {
 				var oHeader = oData.scheduleheader[0];
 				if (oHeader.ScheduleHeaderID === "CALH000") {
 					oData.scheduleheader.shift();
 				}
 			}
-
+			
+			var arrHeader = oData.scheduleheader;
+			
 			var oCalendar = this.byId("PC1");
 			var oStartDate = oCalendar.getStartDate();
 			var oEndDate = oCalendar.getEndDate();
 			//add 1 hour
 			oEndDate = oEndDate.setTime(oEndDate.getTime() + (60 * 60 * 1000));
-
-			var arrRows = oCalendar.getRows();
-			for (var idx in arrRows) {
-				var arrAppointments = arrRows[idx].mAggregations.appointments;
-				var dict = {};
+			
+			var dict = {};
+			var dictUP = {};
+			//var iTotal = 0;
+			for(var idx in arrHeader) {
+				var arrAppointments = arrHeader[idx].NavHeaderToItem;
+				
+				var UP = arrHeader[idx].Name;
+				
 				for (var i in arrAppointments) {
 					var oAppointment = arrAppointments[i];
-					var oProp = oAppointment.mProperties;
-					if (oProp.startDate >= oStartDate && oProp.startDate <= oEndDate) {
-						var oDate = new Date(oProp.startDate.getFullYear(), oProp.startDate.getMonth(), oProp.startDate.getDate());
-						var amount = parseFloat(oProp.title.replace("$", ""));
-
+					if (oAppointment.StartDate >= oStartDate && oAppointment.StartDate <= oEndDate) {
+						var oDate = new Date(oAppointment.StartDate.getFullYear(), oAppointment.StartDate.getMonth(), oAppointment.StartDate.getDate());
+						
+						var amount = parseFloat(oAppointment.Value);
 						if (dict[oDate]) {
 							dict[oDate] = dict[oDate] + amount;
 						} else {
 							dict[oDate] = amount;
 						}
+						
+						if (dictUP[UP]) {
+							dictUP[UP] = dictUP[UP] + amount;
+						} else {
+							dictUP[UP] = amount;
+						}
+						//iTotal = iTotal + amount;
 					}
 				}
+				
+				//arrHeader[idx].Role = this.formatter.currencyValue(iTotal);
+				
 			}
+			
+			console.log(dictUP);
 
 			oHeader = {
 				"Name": this.getResourceBundle().getText("totalCost"),

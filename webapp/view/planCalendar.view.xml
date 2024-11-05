@@ -21,6 +21,7 @@
 			startDateChange = "onStartDateChange"
 			showWeekNumbers="true"
 			stickyHeader="true"
+			builtInViews="Week,OneMonth"
 			>
 			<toolbarContent>
 				
@@ -28,9 +29,10 @@
 				
 				<Button id="addButton" icon="sap-icon://add" press="onAddPR" tooltip="Add"/>
 				<Button id="showDetail" text="{i18n>showDetail}" press="onShowDetail"></Button>
-				<Button icon="sap-icon://sales-order-item" text="{= ${detailView>/ShowCosts} ? ${i18n>hideCosts}:${i18n>showCosts} }" press="onShowCosts"></Button>
+				<Button icon="sap-icon://line-chart-time-axis" text="{= ${detailView>/ShowCosts} ? ${i18n>hideCosts}:${i18n>showCosts} }" press="onShowCosts"></Button>
 				<Button icon="sap-icon://decline" text="{i18n>close}" press="onNavHome"></Button>
 			</toolbarContent>
+				
 			<rows>
 				<PlanningCalendarRow            
 					icon="{calModel>Pic}"

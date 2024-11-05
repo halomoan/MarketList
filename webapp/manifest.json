@@ -183,6 +183,13 @@
 					]
 				},
 				{
+					"pattern": "costcharttime/plantId/:plantId:/ccId/:ccId:/date/:date:",
+					"name": "costcharttime",
+					"target": [
+						"costcharttime"
+					]
+				},
+				{
 					"pattern": "managetemplate/plantId/:plantId:/ccId/:ccId:",
 					"name": "managetemplate",
 					"target": [
@@ -306,6 +313,11 @@
 				"plancalendar": {
 					"viewName": "planCalendar",
 					"viewId": "plancalendar",
+					"viewLevel": 2
+				},
+				"costcharttime": {
+					"viewName": "CostChartTime",
+					"viewId": "costcharttime",
 					"viewLevel": 2
 				},
 				"managetemplate": {
