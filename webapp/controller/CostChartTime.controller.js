@@ -105,7 +105,7 @@ sap.ui.define([
 			var oEDP = this.getView().byId("EDP");
 			oEDP.setValue(this.oLocalData.EDate);
 			
-			
+			this.onRefresh();
 		},
 		
 		onSDPChange: function(oEvent){
