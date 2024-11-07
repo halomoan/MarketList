@@ -201,9 +201,11 @@ sap.ui.define([
 					success: function(oResponse){
 						var aResult = oResponse.results;
 						
-						// if ( aResult.length < 1 ) {
-						// 	return;
-						// }
+						if ( aResult.length < 1 ) {
+							var oGraphDataModel = new sap.ui.model.json.JSONModel({ "data" : [] });
+							oVizFrame.setModel(oGraphDataModel,"lcl");
+							return;
+						}
 						
 					
 						let aUP = aResult.map(a => a.UnloadingPointID.replace(" ","_"));
