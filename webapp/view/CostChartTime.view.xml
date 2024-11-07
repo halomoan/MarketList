@@ -1,9 +1,61 @@
-<core:View 
-xmlns:core="sap.ui.core" 
-xmlns="sap.m"
-controllerName="sap.ui.demo.masterdetail.controller.CostChartTime" xmlns:html="http://www.w3.org/1999/xhtml">
-	<Page title="Title">
-		<content></content>
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:layout="sap.ui.layout" xmlns:viz="sap.viz.ui5.controls"
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:viz.data="sap.viz.ui5.data"
+	controllerName="sap.ui.demo.masterdetail.controller.CostChartTime" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="{i18n>costAnalysis}" showNavButton="true" navButtonPress="onNavBack" class="" busy="{detailView>/busy}">
+		<content>
+			<layout:FixFlex id='chartFixFlex' minFlexSize="250">
+				<!--Below is the setting panel -->
+				<layout:fixContent>
+					<Panel id='settingsPanel' class="panelStyle" expandable="true" expanded="true" headerText="Settings" width="auto">
+						<content>
+							<HBox>
+								<VBox class="sapUiTinyMargin">
+									<Label text="{i18n>unloadingPoint}" labelFor="UP"></Label>
+									<ComboBox id="UP" width="20rem"></ComboBox>
+									<Label text="{i18n>blankForAll}" labelFor="UP"></Label>
+								</VBox>
+								<VBox class="sapUiTinyMargin">
+									<Label text="{i18n>startDate}" labelFor="SDP"></Label>
+									<DatePicker id="SDP" placeholder="Enter Date" valueFormat="yyyy-MM-dd" displayFormat="long" change="onSDPChange"
+										class="sapUiSmallMarginBottom"/>
+								</VBox>
+								<VBox class="sapUiTinyMargin">
+									<Label text="{i18n>endDate}" labelFor="EDP"></Label>
+									<HBox>
+										<DatePicker id="EDP" placeholder="Enter Date" valueFormat="yyyy-MM-dd" displayFormat="long" change="onEDPChange"/>
+										<Button text="{i18n>Refresh}" class="sapUiMediumMarginBegin" press="onRefresh"/>
+									</HBox>
+								</VBox>
+							</HBox>
+						</content>
+					</Panel>
+				</layout:fixContent>
+				<layout:flexContent>
+					<viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" height='100%' width="100%" vizType='timeseries_line'
+					
+						vizProperties="{plotArea: { drawingEffect: 'glossy'}, valueAxis: { visible: false}, title:{ visible: false, text:''}, dataLabel:{visible:true,showTotal:true}}"
+					>
+						<viz:dataset>
+							<viz.data:FlattenedDataset data="{lcl>/data}">
+								<viz.data:dimensions>
+									<viz.data:DimensionDefinition name="Date" value="{Date}" dataType="date"/>
+								</viz.data:dimensions>
+								<viz.data:measures>
+									<viz.data:MeasureDefinition name="Edge_Korean" value="{Edge_Korean}"/>
+									<viz.data:MeasureDefinition name="Edge_Sushi" value="{Edge_Sushi}"/>
+								</viz.data:measures>
+							</viz.data:FlattenedDataset>
+						</viz:dataset>
+						<viz:feeds>
+							<viz.feeds:FeedItem id='valueAxisFeed' uid="valueAxis" type="Measure" values="Edge_Korean,Edge_Sushi"/>
+							<viz.feeds:FeedItem id='categoryAxisFeed' uid="timeAxis" type="Dimension" values="Date"/>
+						</viz:feeds>
+						<viz:dependents>
+							<viz:Popover id="idPopOver"></viz:Popover>
+						</viz:dependents>
+					</viz:VizFrame>
+				</layout:flexContent>
+			</layout:FixFlex>
+		</content>
 	</Page>
-	
-</core:View>
+</mvc:View>

@@ -708,16 +708,28 @@ sap.ui.define([
 			}
 		},
 		onShowCosts: function() {
-			var oViewModel = this.getModel("detailView");
-			var bShowCosts = !oViewModel.getProperty("/ShowCosts");
+			var oCalendar = this.byId("PC1");
+			var oStartDate = oCalendar.getStartDate();
+			var oEndDate = oCalendar.getEndDate();
+			
+			var sMode = oCalendar.getViewKey();
+			
+			
+			this.getRouter().navTo("costcharttime", {  plantId: this.oLocalData.PlantID, ccId: this.oLocalData.CostCenterID, 
+						sdate: formatter.YYYYMMDD(oStartDate),
+						edate: formatter.YYYYMMDD(oEndDate),
+						view: sMode }, false);
+			
+			// var oViewModel = this.getModel("detailView");
+			// var bShowCosts = !oViewModel.getProperty("/ShowCosts");
 
-			if (bShowCosts) {
-				this._ShowCosts();
-			} else {
-				this._HideCosts();
+			// if (bShowCosts) {
+			// 	this._ShowCosts();
+			// } else {
+			// 	this._HideCosts();
 
-			}
-			oViewModel.setProperty("/ShowCosts", bShowCosts);
+			// }
+			// oViewModel.setProperty("/ShowCosts", bShowCosts);
 		},
 		_HideCosts: function() {
 			var oModel = this.getView().getModel("calModel");

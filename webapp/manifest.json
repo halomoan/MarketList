@@ -183,7 +183,7 @@
 					]
 				},
 				{
-					"pattern": "costcharttime/plantId/:plantId:/ccId/:ccId:/date/:date:",
+					"pattern": "costcharttime/plantId/:plantId:/ccId/:ccId:/sdate/:sdate:/edate/:edate:/view/:view:",
 					"name": "costcharttime",
 					"target": [
 						"costcharttime"

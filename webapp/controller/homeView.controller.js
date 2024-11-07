@@ -251,6 +251,7 @@ sap.ui.define([
 			} else {
 				path = oEvent.getSource().getFirstItem().getBindingContext().getPath();
 			}
+			
 			var oUnloadingPoint = this.getView().byId("unloadingpoint");
 			var odetailView = this.getModel("detailView");
 

@@ -32,7 +32,12 @@ sap.ui.define([
 				var d = new Date(value);
 				var sDay =  this.getResourceBundle().getText("day" + d.getDay());
 				return sDay;
-			}
+			},
+			YYYYMMDD : function(value) {
+				var d = new Date(value);
+				var dFormat = DateFormat.getDateTimeInstance({pattern: "yyyy-MM-dd"});
+				return dFormat.format(d);
+			},
 			
 		};
 
