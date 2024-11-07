@@ -9,7 +9,8 @@ sap.ui.define([
 		"sap/ui/demo/masterdetail/model/formatter"
 	], function (BaseController, JSONModel, CoreLibrary, FlattenedDataset, FeedItem, ChartFormatter, Format,formatter) {
 		"use strict";
-		var  ValueState = CoreLibrary.ValueState;
+		var ValueState = CoreLibrary.ValueState;
+	
 		
 	return BaseController.extend("sap.ui.demo.masterdetail.controller.CostChartTime", {
 		formatter: formatter,
@@ -18,41 +19,35 @@ sap.ui.define([
 			this.oLocalData = {};
 			var oViewData = {
 				busy: false,
-				busyIndicatorDelay: 0
+				busyIndicatorDelay: 0,
+				chartType: {
+					values: [
+						{
+							name: "Stacked Column Chart",
+							vizType: "stacked_column",
+							dim_val: "{lcl>Date_Formatted}",
+							dim_type: "string",
+							dim_uuid: "categoryAxis"
+						},
+						{
+							name: "Timeseries Chart",
+							vizType: "timeseries_line",
+							dim_val: "{lcl>Date}",
+							dim_type: "date",
+							dim_uuid: "timeAxis"
+						}
+					]
+				}
 			};
 			
-			var odetailView = new JSONModel(oViewData);
-			this.setModel(odetailView, "detailView");
+			var oViewModel = new JSONModel(oViewData);
+			this.setModel(oViewModel, "detailView");
 			this.setDeviceModel();
 			
+			var oVizFrame = this.getView().byId("idVizFrame");
 			Format.numericFormatter(ChartFormatter.getInstance());
 			var formatPattern = ChartFormatter.DefaultPattern;
-			var oVizFrame = this.getView().byId("idVizFrame");
-			// oVizFrame.setVizProperties({
-   //             plotArea: {
-   //                 dataLabel: {
-   //                     formatString:formatPattern.SHORTFLOAT_MFD2,
-   //                     visible: true
-   //                 }
-   //             },
-   //             valueAxis: {
-   //                 label: {
-   //                     formatString: formatPattern.SHORTFLOAT
-   //                 },
-   //                 title: {
-   //                     visible: false
-   //                 }
-   //             },
-   //             categoryAxis: {
-   //                 title: {
-   //                     visible: false
-   //                 }
-   //             },
-   //             title: {
-   //                 visible: false,
-   //                 text: 'Revenue by City and Store Name'
-   //             }
-   //         });
+			
             var oPopOver = this.getView().byId("idPopOver");
             oPopOver.connect(oVizFrame.getVizUid());
             oPopOver.setFormatString(formatPattern.STANDARDFLOAT);
@@ -63,6 +58,7 @@ sap.ui.define([
 		_onMasterMatched:  function(oEvent) {
 		
 			var oArguments = oEvent.getParameter("arguments");
+			this.oLocalData = this.getLocalData();
 			this.oLocalData.PlantID = oArguments.plantId;
 			this.oLocalData.CostCenterID = oArguments.ccId;
 			this.oLocalData.SDate = oArguments.sdate;
@@ -76,23 +72,26 @@ sap.ui.define([
 			
 			var path = "/CostCenterSet('"+ this.oLocalData.CostCenterID  +"')";
 			
-			var odetailView = this.getModel("detailView");
+			var oViewModel = this.getModel("detailView");
 			
 			var oUnloadingPoint = this.getView().byId("UP");
 			var oItemSelectTemplate = new sap.ui.core.Item({
 				key: "{UnLoadingPointID}",
 				text: "{UnLoadingPoint}"
 			});
+			
+		
+			oViewModel.setProperty("/CostCenter", this.oLocalData.CostCenter);
 		
 			oUnloadingPoint.bindAggregation("items", {
 				"path": path + "/CCUnloadingPoint",
 				"template": oItemSelectTemplate,
 				"events": {
 					dataReceived: function() {
-						odetailView.setProperty("/busy", false);
+						oViewModel.setProperty("/busy", false);
 					},
 					dataRequested: function() {
-						odetailView.setProperty("/busy", true);
+						oViewModel.setProperty("/busy", true);
 					}
 				}
 
@@ -153,6 +152,13 @@ sap.ui.define([
 		},
 		onRefresh: function(){
 			
+			var oViewModel = this.getModel("detailView");
+			
+			var oChartType = this.getView().byId("chartRadioGroup");
+			var iChartType = oChartType.getSelectedIndex();
+			
+			var aChartType = oViewModel.getProperty("/chartType/values");			
+			
 			var oFilters = [];
 			
 			var filter_plant = new sap.ui.model.Filter({
@@ -181,17 +187,23 @@ sap.ui.define([
 			var filter_date = new sap.ui.model.Filter({
 					path: 'Date', operator: sap.ui.model.FilterOperator.BT, value1: oSDP.getValue(), value2: oEDP.getValue()
 				});
-			oFilters.push(filter_date);
+			+oFilters.push(filter_date);
 			
 			var oVizFrame = this.getView().byId("idVizFrame");
+			oVizFrame.setVizType(aChartType[iChartType].vizType);
+			
 			var oModel = this.getView().getModel();
 			var oThis = this;
+			
 			oModel.read("/UPCostSet",
 				{
 					filters: oFilters,
 					success: function(oResponse){
 						var aResult = oResponse.results;
 						
+						// if ( aResult.length < 1 ) {
+						// 	return;
+						// }
 						
 					
 						let aUP = aResult.map(a => a.UnloadingPointID.replace(" ","_"));
@@ -207,16 +219,20 @@ sap.ui.define([
 							var iCost = aResult[i].Cost;
 							if (!oItem[sKey]) oItem[sKey] = {};
 							oItem[sKey]['Date'] = oDate;
+							oItem[sKey]['Date_Formatted'] = formatter.dateFormat(oDate);
 							oItem[sKey][sUP] = iCost;
 						
 							
 						}
+						
+					
 						var dataset = { 
 							data: {
 								path: "lcl>/data"
 							}
 						};
-		                var dimensions = [{ name: 'Date', value: "{lcl>Date}", dataType: 'date'}];
+		                var dimensions = [{ name: 'Delivery Date', value: aChartType[iChartType].dim_val , dataType: aChartType[iChartType].dim_type}];
+		                
 						var measures = [];
 						for (i = 0; i < aUP.length ; i++){
 							var dim = { name: aUP[i], value: "{lcl>" + aUP[i] + "}" }; 
@@ -238,9 +254,9 @@ sap.ui.define([
 				                });
 				        
 				        var feedTimeAxis = new FeedItem({
-				                    'uid': "timeAxis",
+				                    'uid': aChartType[iChartType].dim_uuid,
 				                    'type': "Dimension",
-				                    'values': ["Date"]
+				                    'values': ["Delivery Date"]
 				                });        
 		                
 		                oVizFrame.addFeed(feedValueAxis);

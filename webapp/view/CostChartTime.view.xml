@@ -6,9 +6,20 @@
 			<layout:FixFlex id='chartFixFlex' minFlexSize="250">
 				<!--Below is the setting panel -->
 				<layout:fixContent>
-					<Panel id='settingsPanel' class="panelStyle" expandable="true" expanded="true" headerText="Settings" width="auto">
+					<Panel id='settingsPanel' class="panelStyle" expandable="true" expanded="true" headerText="{detailView>/CostCenter}" width="auto">
 						<content>
 							<HBox>
+								
+								<VBox class='sapUiTinyMarginEnd'>
+			                        <Label text='{i18n>chartType}' design="Bold"></Label>
+			                        <RadioButtonGroup id='chartRadioGroup'
+			                            buttons="{path: 'detailView>/chartType/values'}" >
+			                            <buttons>
+			                                <RadioButton text="{detailView>name}" select='onTypeSelected'/>
+			                            </buttons>
+			                        </RadioButtonGroup>
+			                    </VBox>
+			                    
 								<VBox class="sapUiTinyMargin">
 									<Label text="{i18n>unloadingPoint}" labelFor="UP"></Label>
 									<ComboBox id="UP" width="20rem"></ComboBox>
@@ -26,12 +37,13 @@
 										<Button text="{i18n>Refresh}" class="sapUiMediumMarginBegin" press="onRefresh"/>
 									</HBox>
 								</VBox>
+							
 							</HBox>
 						</content>
 					</Panel>
 				</layout:fixContent>
 				<layout:flexContent>
-					<viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" height='100%' width="100%" vizType='timeseries_line'
+					<viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" height='100%' width="100%" vizType='stacked_column'
 					
 						vizProperties="{plotArea: { drawingEffect: 'glossy'}, valueAxis: { visible: false}, title:{ visible: false, text:''}, dataLabel:{visible:true,showTotal:true}}"
 					>
@@ -48,7 +60,7 @@
 						</viz:dataset>
 						<viz:feeds>
 							<viz.feeds:FeedItem id='valueAxisFeed' uid="valueAxis" type="Measure" values="Edge_Korean,Edge_Sushi"/>
-							<viz.feeds:FeedItem id='categoryAxisFeed' uid="timeAxis" type="Dimension" values="Date"/>
+							<viz.feeds:FeedItem id='categoryAxisFeed' uid="categoryAxis" type="Dimension" values="Date"/>
 						</viz:feeds>
 						<viz:dependents>
 							<viz:Popover id="idPopOver"></viz:Popover>
